@@ -8,11 +8,15 @@ Use npm or yarn to install
 
 ```bash
 npm i
+cd client
+npm i
 ```
 
 ## Run
 
 ```bash
+npm run server
+cd client
 npm start
 ```
 

@@ -24,6 +24,6 @@ mongoose
     return server.listen({ port: PORT || 5000 });
   })
   .then((res) => {
-    console.log(`Server is running at port: ${res.url}`);
+    console.log(`🚀 Server is running at port: ${res.url}`);
   })
   .catch((err) => console.log(err.message));

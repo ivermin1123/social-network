@@ -25,6 +25,42 @@ module.exports = {
         return post;
       } else throw new UserInputError("Post not found");
     },
+    createCommentChild: async (
+      _,
+      { postID, commentFatherID, body },
+      context
+    ) => {
+      const { username } = checkAuth(context);
+      if (body.trim() === "") {
+        throw new UserInputError("Empty comment", {
+          errors: {
+            body: "Comment body must not be empty",
+          },
+        });
+      }
+
+      const isLargeNumber = (element, index, array) => {
+        let IDhere = this.commentFatherID;
+        console.log("element", element);
+        console.log("index", index);
+        console.log("array", array);
+        console.log("IDhere", IDhere);
+        return element.id === this.commentFatherID;
+      };
+      //  element.id === commentFatherID;
+      const post = await Post.findById(postID);
+      const commentFather = await post.comments.indexOf(isLargeNumber);
+      console.log("commentFather", commentFather);
+      if (commentFather !== -1) {
+        post.comments[commentFather].commentChild.unshift({
+          body,
+          username,
+          createdAt: new Date().toISOString(),
+        });
+        await post.save();
+        return post;
+      } else throw new UserInputError("Post not found");
+    },
     deleteComment: async (_, { postID, commentID }, context) => {
       const { username } = checkAuth(context);
       const post = await Post.findById(postID);

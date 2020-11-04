@@ -11,25 +11,27 @@ function Home() {
     console.log({ data });
     if (data === undefined) return <p>ERROR</p>;
     return (
-        <Grid columns={2} >
+        <Grid columns={2}>
             <Grid.Row className="page-title">
                 <h1>Recent Post</h1>
             </Grid.Row>
-            <Grid.Row >
+            <Grid.Row>
                 {loading ? (
                     <h1>Loading post ...</h1>
                 ) : (
                     data.getPosts &&
                     data.getPosts.map((post) => {
                         return (
-                            <Grid.Column key={post.id} style={{ marginBottom: 20}}>
+                            <Grid.Column
+                                key={post.id}
+                                style={{ marginBottom: 20 }}
+                            >
                                 <PostCard post={post} />
                             </Grid.Column>
                         );
                     })
                 )}
             </Grid.Row>
-            
         </Grid>
     );
 }
@@ -43,11 +45,11 @@ const FETCH_POST_QUERY = gql`
             username
             likeCount
             commentCount
-            likes{
+            likes {
                 username
                 createdAt
             }
-            comments{
+            comments {
                 body
             }
         }

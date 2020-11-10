@@ -66,15 +66,17 @@ function Register({ history }) {
                     value={values.password}
                     error={errors.password ? true : false}
                     onChange={onChange}
+                    autoComplete="on"
                 />
                 <Form.Input
                     label="Confirm Password"
                     placeholder="Confirm Password .. "
-                    name="confirmPassword"
+                    name="confirm-password"
                     type="password"
                     value={values.confirmPassword}
                     error={errors.confirmPassword ? true : false}
                     onChange={onChange}
+                    autoComplete="on"
                 />
                 <Button type="submit" primary>
                     Register

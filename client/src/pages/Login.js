@@ -90,7 +90,4 @@ const LOGIN_USER = gql`
     }
 `;
 
-Login.propTypes = {
-    history: PropTypes.object.isRequired,
-};
 export default Login;

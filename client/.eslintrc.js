@@ -13,9 +13,11 @@ module.exports = {
     },
     plugins: ["react"],
     rules: {
-        indent: ["error", 4],
         "linebreak-style": ["error", "windows"],
         quotes: ["error", "double"],
         semi: ["error", "always"],
+        "no-console": 0,
+        "no-unused-vars": 0,
+        "react/prop-types": 0,
     },
 };

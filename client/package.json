@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^12.1.10",
     "graphql": "^15.4.0",
     "graphql-tag": "^2.11.0",
+    "jwt-decode": "^3.1.1",
     "moment": "^2.29.1",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",

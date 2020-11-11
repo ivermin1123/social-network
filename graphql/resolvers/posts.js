@@ -1,4 +1,4 @@
-const { AuthenticationError } = require("apollo-server");
+const { AuthenticationError } = require("apollo-server-express");
 const Post = require("../../models/Post");
 const checkAuth = require("../../utils/check-auth");
 
@@ -44,7 +44,6 @@ module.exports = {
         },
         async deletePost(_, { postID }, context) {
             const user = checkAuth(context);
-            console.log(user);
             try {
                 const post = await Post.findById(postID);
                 if (!post) throw new Error("Post not found");

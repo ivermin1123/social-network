@@ -15,13 +15,13 @@ function Home() {
     // console.log({ data });
     // if (data === undefined) return <p>ERROR</p>;
     return (
-        <Grid columns={3}>
+        <Grid columns={1} style={{ maxWidth: 600, margin: "auto" }}>
             <Grid.Row className="page-title">
                 <h1>Recent Post</h1>
             </Grid.Row>
             <Grid.Row>
                 {user && (
-                    <Grid.Column>
+                    <Grid.Column style={{ marginBottom: 10 }}>
                         <PostForm />
                     </Grid.Column>
                 )}

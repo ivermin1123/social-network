@@ -1,4 +1,4 @@
-const { gql } = require("apollo-server");
+const { gql } = require("apollo-server-express");
 
 module.exports = gql`
     type Post {
@@ -51,14 +51,10 @@ module.exports = gql`
         register(registerInput: RegisterInput): User!
         login(username: String!, password: String!): User!
         createPost(body: String!): Post!
-        deletePost(postID: String!): String!
-        createComment(postID: String!, body: String!): Post!
-        createCommentChild(
-            postID: String!
-            commentID: ID!
-            body: String!
-        ): Post!
-        deleteComment(postID: String!, commentID: ID!): Post!
+        deletePost(postID: ID!): String!
+        createComment(postID: ID!, body: String!): Post!
+        createCommentChild(postID: ID!, commentID: ID!, body: String!): Post!
+        deleteComment(postID: ID!, commentID: ID!): Post!
         likePost(postID: ID!): Post!
     }
 `;

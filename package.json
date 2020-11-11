@@ -13,7 +13,7 @@
   "author": "ivermin1123",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.18.2",
+    "apollo-server-express": "^2.19.0",
     "bcryptjs": "^2.4.3",
     "dotenv": "^8.2.0",
     "esm": "^3.2.25",

@@ -15,7 +15,7 @@ function Home() {
     // console.log({ data });
     // if (data === undefined) return <p>ERROR</p>;
     return (
-        <Grid columns={1} style={{ maxWidth: 600, margin: "auto" }}>
+        <Grid columns={1} style={{ maxWidth: 750, margin: "auto" }}>
             <Grid.Row className="page-title">
                 <h1>Recent Post</h1>
             </Grid.Row>

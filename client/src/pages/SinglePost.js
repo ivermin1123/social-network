@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { gql, useQuery } from "@apollo/client";
+import React, { useContext, useRef, useState } from "react";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import {
     Grid,
     Image,
@@ -10,6 +10,7 @@ import {
     CommentGroup,
     Header,
     Comment,
+    Input,
 } from "semantic-ui-react";
 import moment from "moment";
 
@@ -20,10 +21,21 @@ import DeleteButton from "../components/DeleteButton";
 function SinglePost(props) {
     const postID = props.match.params.postID;
     const { user } = useContext(AuthContext);
+    const [comment, setComment] = useState("");
 
     const { loading, data, error } = useQuery(FETCH_POST_QUERY, {
         variables: {
             postID,
+        },
+    });
+
+    const [postComment] = useMutation(POST_COMMENT_MUTATION, {
+        update(_, result) {
+            setComment("");
+        },
+        variables: {
+            postID,
+            body: comment,
         },
     });
 
@@ -47,7 +59,7 @@ function SinglePost(props) {
         } = data.getPost;
 
         postMarkup = (
-            <Grid columns={1} style={{ maxWidth: 500, margin: "auto" }}>
+            <Grid columns={1} style={{ maxWidth: 700, margin: "auto" }}>
                 <Grid.Column>
                     <Card fluid>
                         <Image
@@ -85,36 +97,53 @@ function SinglePost(props) {
                                 />
                             )}
                         </Card.Content>
-                        <CommentGroup
-                            style={{ marginLeft: 20, marginBottom: 10 }}
-                        >
-                            <Header as="h3" dividing>
-                                Comments
-                            </Header>
-                            {comments.map((comment) => (
-                                <Comment key={comment.id}>
-                                    <Comment.Avatar src="https://react.semantic-ui.com/images/avatar/small/matt.jpg" />
-                                    <Comment.Content>
-                                        <Comment.Author as="a">
-                                            {comment.username}
-                                        </Comment.Author>
-                                        <Comment.Metadata>
-                                            <div>
-                                                {moment(createdAt).fromNow()}
-                                            </div>
-                                        </Comment.Metadata>
-                                        <Comment.Text>
-                                            {comment.body}
-                                        </Comment.Text>
-                                        <Comment.Actions>
-                                            <Comment.Action>
-                                                Reply
-                                            </Comment.Action>
-                                        </Comment.Actions>
-                                    </Comment.Content>
-                                </Comment>
-                            ))}
-                        </CommentGroup>
+                        {user && (
+                            <Card fluid>
+                                <Card.Content>
+                                    <p>Post a comment</p>
+                                    <Input
+                                        type="text"
+                                        name="comment"
+                                        value={comment}
+                                        onChange={(e) =>
+                                            setComment(e.target.value)
+                                        }
+                                        action={{
+                                            icon: "comment",
+                                            disabled: comment.trim() === "",
+                                            onClick: postComment,
+                                        }}
+                                        placeholder="Coment..."
+                                    />
+                                </Card.Content>
+                            </Card>
+                        )}
+                        {comments.map((comment) => (
+                            <Card
+                                fluid
+                                key={comment.id}
+                                style={{ padding: 10 }}
+                            >
+                                <Card.Content>
+                                    {user &&
+                                        user.username === comment.username && (
+                                            <DeleteButton
+                                                postID={postID}
+                                                commentID={comment.id}
+                                            />
+                                        )}
+                                    <Card.Header>
+                                        {comment.username}
+                                    </Card.Header>
+                                    <Card.Meta>
+                                        {moment(createdAt).fromNow()}
+                                    </Card.Meta>
+                                    <Card.Description>
+                                        {comment.body}
+                                    </Card.Description>
+                                </Card.Content>
+                            </Card>
+                        ))}
                     </Card>
                 </Grid.Column>
             </Grid>
@@ -122,6 +151,21 @@ function SinglePost(props) {
     }
     return postMarkup;
 }
+
+const POST_COMMENT_MUTATION = gql`
+    mutation($postID: ID!, $body: String!) {
+        createComment(postID: $postID, body: $body) {
+            id
+            comments {
+                id
+                body
+                createdAt
+                username
+            }
+            commentCount
+        }
+    }
+`;
 
 const FETCH_POST_QUERY = gql`
     query($postID: ID!) {

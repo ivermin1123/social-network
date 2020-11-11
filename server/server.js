@@ -3,10 +3,14 @@ import { ApolloServer } from "apollo-server-express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
+import morgan from "morgan";
+
 import typeDefs from "./graphql/typeDefs";
 import resolvers from "./graphql/resolvers/";
 
+const PORT = process.env.PORT || 5000;
 const app = express();
+app.use(morgan("tiny"));
 
 dotenv.config();
 const server = new ApolloServer({
@@ -32,10 +36,8 @@ mongoose
     })
     .catch((err) => console.log(err.message));
 
-app.listen({ port: process.env.PORT || 5000 }, () =>
+app.listen({ port: PORT }, () =>
     console.log(
-        `🚀 Server ready at http://localhost:${process.env.PORT || 5000}${
-            server.graphqlPath
-        }`
+        `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
     )
 );

@@ -25,7 +25,7 @@ function Home() {
                         <PostForm />
                     </Grid.Column>
                 )}
-                {loading ? (
+                {/* {loading ? (
                     <h1>Loading post ...</h1>
                 ) : (
                     <Transition.Group>
@@ -41,7 +41,7 @@ function Home() {
                                 );
                             })}
                     </Transition.Group>
-                )}
+                )} */}
             </Grid.Row>
         </Grid>
     );

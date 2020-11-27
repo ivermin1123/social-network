@@ -1,93 +1,45 @@
-import React, { useContext, useState } from "react";
-import { Message, Button, Form } from "semantic-ui-react";
-import { gql, useMutation } from "@apollo/client";
-import PropTypes from "prop-types";
+import React from "react";
+import Field from "../components/Field";
 
-import { AuthContext } from "../context/auth";
-import { useForm } from "../utils/hooks";
-function Login({ history }) {
-    const context = useContext(AuthContext);
-    const [errors, setErrors] = useState({});
-
-    const { onChange, onSubmit, values } = useForm(loginUserCallback, {
-        username: "",
-        password: "",
-    });
-
-    const [loginUser, { loading }] = useMutation(LOGIN_USER, {
-        update(_, { data: { login: userData } }) {
-            context.login(userData);
-            history.push("/");
-        },
-        onError(err) {
-            console.log(err);
-            setErrors(err.graphQLErrors[0].extensions.exception.errors);
-        },
-        variables: values,
-    });
-
-    function loginUserCallback() {
-        loginUser();
+import "../scss/_form.scss";
+const Login = () => {
+    const handleSubmit = (username) =>{
+        console.log(username);
     }
-
     return (
-        <div className="form-container">
-            <Form
-                onSubmit={onSubmit}
-                noValidate
-                className={loading ? "loading" : ""}
-            >
-                <h1>Login</h1>
-                <Form.Input
-                    label="Username"
-                    placeholder="Username .. "
-                    name="username"
-                    type="text"
-                    value={values.username}
-                    error={errors.username ? true : false}
-                    onChange={onChange}
-                />
-                <Form.Input
-                    label="Password"
-                    placeholder="Password .. "
-                    name="password"
-                    type="password"
-                    value={values.password}
-                    error={errors.password ? true : false}
-                    onChange={onChange}
-                />
-                <Button type="submit" primary>
-                    Login
-                </Button>
-                {Object.keys(errors).length > 0 && (
-                    <Message negative>
-                        <Message.Header>Error</Message.Header>
-                        <Message.List>
-                            {Object.values(errors).map((value) => {
-                                return (
-                                    <Message.Item key={value}>
-                                        {value}
-                                    </Message.Item>
-                                );
-                            })}
-                        </Message.List>
-                    </Message>
-                )}
-            </Form>
+        <div className="row login">
+            <div className="col-md-5 col-xs-12 side-left">
+                <img src="../assets/image/imageLogin.jpg" alt="cat"/>
+            </div>
+            <div className="col-md-7 col-xs-12 side-right">
+                <div className="side-right-top">
+                    <form className='content' onSubmit={handleSubmit}>
+                        <div className="logo field">
+                            <h3>LOGO</h3>
+                        </div>
+                        <Field label='Tên đăng nhập' name='username'/>
+                        <Field label='Mật khẩu' name='password' password/>
+                        <div className="field">
+                            <input type="checkbox" name="save" />
+                            Nhớ mật khẩu
+                            <a className="mt-0">Quên mật khẩu</a>
+                        </div>
+                        <button className="btn-form" type="submit">
+                            ĐĂNG NHẬP
+                        </button>
+                    </form>
+                </div>
+                <div className="side-right-bottom">
+                    <div className='content'>
+                        <div>
+                            <p>Bạn chưa có tài khoản?</p>
+                            <a> Đăng ký ngay</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
-}
-
-const LOGIN_USER = gql`
-    mutation login($username: String!, $password: String!) {
-        login(username: $username, password: $password) {
-            id
-            email
-            username
-            createdAt
-            token
-        }
-    }
-`;
+};
 
 export default Login;

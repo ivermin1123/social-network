@@ -1,14 +1,12 @@
 import { React } from "react";
 import {
-    Redirect,
     BrowserRouter as Router,
     Route,
-    Switch,
 } from "react-router-dom";
 import { Container } from "semantic-ui-react";
 
 import "semantic-ui-css/semantic.min.css";
-import "./App.css";
+import "./App.scss";
 
 import { AuthProvider } from "./context/auth";
 import AuthRoute from "./utils/AuthRoute";

@@ -2,28 +2,46 @@ import React from "react";
 import Field from "../components/Field";
 
 const Register = () => {
+    const handleSubmit = () => {};
     return (
         <div className="register">
-            <form className="content">
+            <form className="content" onSubmit={handleSubmit}>
                 <div className="logo field">
                     <h3>LOGO</h3>
                 </div>
-                <div className="row">
-                    <Field label="Họ" name="firstname" />
-                    <Field label="Tên" name="lastname" />
+                <Field label="Tên đăng nhập" name="username" />
+                <div className="row mb-3">
+                    <div className="col-6">
+                        <Field label="Họ" name="firstname" />
+                    </div>
+                    <div className="col-6">
+                        <Field label="Tên" name="lastname" />
+                    </div>
                 </div>
-                <div className="row">
-                    <select>
-                        <option value="male">Nam</option>
-                        <option value="female">Nữ</option>
-                    </select>
+                <div className="row mb-3">
+                    <div className="col-6">
+                        <p className="label">
+                            Giới tính <sup>*</sup>
+                        </p>
+                        <select className="field">
+                            <option value="male">Nam</option>
+                            <option value="female">Nữ</option>
+                        </select>
+                    </div>
+                    <div className="col-6">
+                        <Field label="Ngày sinh" name="birthday" />
+                    </div>
+                </div>
+                <div className="row mb-3">
+                    <div className="col-6">
+                        <Field label="Số điện thoại" name="phone" />
+                    </div>
+                    <div className="col-6">
+                        <Field label="Email" name="email" />
+                    </div>
                 </div>
                 <Field label="Mật khẩu" name="password" password />
-                <div className="field">
-                    <input type="checkbox" name="save" />
-                    Nhớ mật khẩu
-                    <a className="mt-0">Quên mật khẩu</a>
-                </div>
+                <Field label="Nhập lại mật khẩu" name="rêpat" password />
                 <button className="btn-form" type="submit">
                     ĐĂNG KÝ
                 </button>

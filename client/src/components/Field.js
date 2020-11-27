@@ -6,7 +6,7 @@ return (
     <div className="field">
         <p className="label">
             {label}
-            <sup>*</sup>
+            <sup> *</sup>
         </p>
         <input name={name} type={password ? "password" : "text"} />
     </div>

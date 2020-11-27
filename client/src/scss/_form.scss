@@ -5,12 +5,13 @@
 };
 form{
     margin:auto;
-    width: 75%;
+    width: 80%;
     .logo{
         text-align: center;
     }
     div.field{
         margin-bottom: 5%;
+        width: 100%;
     }
     button{
         padding: .5rem 18px;
@@ -24,7 +25,7 @@ form{
     button:hover{
         background-color: #6c6c6c;
     }
-    input[type=text], input[type=password]{
+    input[type=text], input[type=password], select{
         padding: 0 10px; 
         height: 35px; 
         width:100%; 
@@ -87,7 +88,7 @@ form{
     }
 }
 .register{
-    max-width: 700px;
+    max-width: 600px;
     min-height: 700px;
     display: flex;
     .content{

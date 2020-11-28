@@ -1,4 +1,7 @@
 {
     "editor.formatOnSave": true,
-    "editor.formatOnPaste": true
+    "editor.formatOnPaste": true,
+    "files.eol": "\n",
+    "editor.detectIndentation": false,
+    "editor.insertSpaces": false
 }

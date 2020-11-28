@@ -1,36 +1,60 @@
-import { React } from "react";
+import React, { useEffect, Fragment, Suspense, lazy } from "react";
 import {
-    BrowserRouter as Router,
-    Route,
+	Redirect,
+	BrowserRouter as Router,
+	Route,
+	Switch,
 } from "react-router-dom";
-import { Container } from "semantic-ui-react";
+import { useDispatch, useSelector, connect } from "react-redux";
+import alertActions from "./actions/alert.actions";
+import { history } from "./helpers";
+import { PrivateRoute } from "./components";
 
-import "semantic-ui-css/semantic.min.css";
-import "./App.scss";
+// const HomePage = lazy(() => import("./pages/HomePage"));
+// const LoginPage = lazy(() => import("./pages/LoginPage"));
+// const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 
-import { AuthProvider } from "./context/auth";
-import AuthRoute from "./utils/AuthRoute";
-
-import MenuBar from "./components/MenuBar";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import SinglePost from "./pages/SinglePost";
-
+import { HomePage } from "./pages/HomePage";
+import { LoginPage } from "./pages/LoginPage";
+import { RegisterPage } from "./pages/RegisterPage";
 function App() {
-    return (
-        <AuthProvider>
-            <Router>
-                <Container>
-                    <MenuBar />
-                    <Route exact path="/" component={Home} />
-                    <AuthRoute exact path="/login" component={Login} />
-                    <AuthRoute exact path="/register" component={Register} />
-                    <Route exact path="/posts/:postID" component={SinglePost} />
-                </Container>
-            </Router>
-        </AuthProvider>
-    );
+	const alert = useSelector((state) => state.alert);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		history.listen((location, action) => {
+			// clear alert on location change
+			dispatch(alertActions.clear());
+		});
+	}, [dispatch]);
+
+	return (
+		<div className="jumbotron">
+			<div className="container">
+				<div className="col-md-8 offset-md-2">
+					{alert.message && (
+						<div className={`alert ${alert.type}`}>
+							{alert.message}
+						</div>
+					)}
+					<Router history={history}>
+						<Switch>
+							<PrivateRoute exact path="/" component={HomePage} />
+							<Route path="/login" component={LoginPage} />
+							<Route path="/register" component={RegisterPage} />
+							<Redirect from="*" to="/" />
+						</Switch>
+					</Router>
+				</div>
+			</div>
+		</div>
+	);
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+	authentication: state.authentication,
+});
+
+const connectedApp = connect(mapStateToProps)(App);
+
+export { connectedApp as default };

@@ -3,25 +3,8 @@ Joi.objectId = require("joi-objectid")(Joi);
 
 export function addUser(req, res, next) {
   const schema = Joi.object({
-    firstName: Joi.string()
-      .min(2)
-      .max(30)
-      .required()
-      .pattern(
-        new RegExp(
-          /^([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\.(?!\.))){0,28}(?:[A-Za-z0-9_]))?)$/
-        )
-      )
-      .required(),
-    lastName: Joi.string()
-      .min(2)
-      .max(30)
-      .pattern(
-        new RegExp(
-          /^([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\.(?!\.))){0,28}(?:[A-Za-z0-9_]))?)$/
-        )
-      )
-      .required(),
+    firstName: Joi.string().min(2).max(30).required(),
+    lastName: Joi.string().min(2).max(30).required(),
     birthday: Joi.string()
       .min(10)
       .max(10)
@@ -39,6 +22,7 @@ export function addUser(req, res, next) {
       )
       .required(),
     gender: Joi.number().required(),
+    phone: Joi.string(),
     email: Joi.string()
       .min(5)
       .max(30)

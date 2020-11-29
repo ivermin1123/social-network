@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Redirect, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "../scss/_form.scss";
@@ -47,28 +47,28 @@ function LoginPage(props) {
 				});
 		}
 	}
-	const Field = (label, type, name, value, onChangge, submitted) => {
-		return (
-			<div className="field">
-				<p className="label">
-					{label}
-					<sup> *</sup>
-				</p>
-				<input
-					type={type}
-					name={name}
-					value={value}
-					onChange={onChangge}
-					className={`form-control${
-						submitted && !value ? " is-invalid" : ""
-					}`}
-				/>
-				{submitted && !value && (
-					<div className="invalid-feedback">Password is required</div>
-				)}
-			</div>
-		);
-	};
+	// const Field = (label, type, name, value, onChangge, submitted) => {
+	// 	return (
+	// 		<div className="field">
+	// 			<p className="label">
+	// 				{label}
+	// 				<sup> *</sup>
+	// 			</p>
+	// 			<input
+	// 				type={type}
+	// 				name={name}
+	// 				value={value}
+	// 				onChange={onChangge}
+	// 				className={`form-control${
+	// 					submitted && !value ? " is-invalid" : ""
+	// 				}`}
+	// 			/>
+	// 			{submitted && !value && (
+	// 				<div className="invalid-feedback">Password is required</div>
+	// 			)}
+	// 		</div>
+	// 	);
+	// };
 
 	if (isLoggedIn) {
 		return <Redirect to="/" />;

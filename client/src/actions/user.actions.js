@@ -1,6 +1,5 @@
 import { userConstants, messageConstants } from "../constants";
 import userService from "../services/user.service";
-import { history } from "../helpers/history";
 
 const login = (username, password) => (dispatch) => {
 	return userService.login(username, password).then(
@@ -36,43 +35,44 @@ const login = (username, password) => (dispatch) => {
 
 const logout = () => (dispatch) => {
 	userService.logout();
-
 	dispatch({ type: userConstants.LOGOUT });
 };
 
-function register(user) {
-	return (dispatch) => {
-		function request(userR) {
-			return { type: userConstants.REGISTER_REQUEST, userR };
-		}
-		function success(userR) {
-			return { type: userConstants.REGISTER_SUCCESS, userR };
-		}
-		function failure(error) {
-			return { type: userConstants.REGISTER_FAILURE, error };
-		}
+const register = (username, email, password) => (dispatch) => {
+	return userService.register(username, email, password).then(
+		(response) => {
+			dispatch({
+				type: userConstants.REGISTER_SUCCESS,
+			});
 
-		dispatch(request(user));
+			dispatch({
+				type: messageConstants.SET_MESSAGE,
+				payload: response.data,
+			});
 
-		userService.register(user).then(
-			(userR) => {
-				dispatch(success());
-				history.push("/login");
-				dispatch({
-					type: messageConstants.SET_MESSAGE,
-					payload: "Registration successful",
-				});
-			},
-			(error) => {
-				dispatch(failure(error.toString()));
-				dispatch({
-					type: messageConstants.SET_MESSAGE,
-					payload: error.toString(),
-				});
-			}
-		);
-	};
-}
+			return Promise.resolve();
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: userConstants.REGISTER_FAILURE,
+			});
+
+			dispatch({
+				type: messageConstants.SET_MESSAGE,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
 
 const userActions = {
 	login,

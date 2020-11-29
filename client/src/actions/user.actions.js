@@ -1,39 +1,44 @@
-import { userConstants } from "../constants";
+import { userConstants, messageConstants } from "../constants";
 import userService from "../services/user.service";
-import alertActions from "./alert.actions";
-import { history } from "../helpers";
+import { history } from "../helpers/history";
 
-function login(username, password, from) {
-	return (dispatch) => {
-		function request(user) {
-			return { type: userConstants.LOGIN_REQUEST, user };
+const login = (username, password) => (dispatch) => {
+	return userService.login(username, password).then(
+		(data) => {
+			dispatch({
+				type: userConstants.LOGIN_SUCCESS,
+				payload: { user: data },
+			});
+
+			return Promise.resolve();
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: userConstants.LOGIN_FAILURE,
+			});
+
+			dispatch({
+				type: messageConstants.SET_MESSAGE,
+				payload: message,
+			});
+
+			return Promise.reject();
 		}
-		function success(user) {
-			return { type: userConstants.LOGIN_SUCCESS, user };
-		}
-		function failure(error) {
-			return { type: userConstants.LOGIN_FAILURE, error };
-		}
+	);
+};
 
-		dispatch(request({ username }));
-
-		userService.login(username, password).then(
-			(user) => {
-				dispatch(success(user));
-				history.push(from);
-			},
-			(error) => {
-				dispatch(failure(error.toString()));
-				dispatch(alertActions.error(error.toString()));
-			}
-		);
-	};
-}
-
-function logout() {
+const logout = () => (dispatch) => {
 	userService.logout();
-	return { type: userConstants.LOGOUT };
-}
+
+	dispatch({ type: userConstants.LOGOUT });
+};
 
 function register(user) {
 	return (dispatch) => {
@@ -53,11 +58,17 @@ function register(user) {
 			(userR) => {
 				dispatch(success());
 				history.push("/login");
-				dispatch(alertActions.success("Registration successful"));
+				dispatch({
+					type: messageConstants.SET_MESSAGE,
+					payload: "Registration successful",
+				});
 			},
 			(error) => {
 				dispatch(failure(error.toString()));
-				dispatch(alertActions.error(error.toString()));
+				dispatch({
+					type: messageConstants.SET_MESSAGE,
+					payload: error.toString(),
+				});
 			}
 		);
 	};

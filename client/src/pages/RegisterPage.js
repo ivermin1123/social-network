@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import userActions from "../actions/user.actions";
@@ -10,20 +10,16 @@ function RegisterPage() {
 		lastName: "",
 		username: "",
 		password: "",
-		gender:"",
-		birthday:"",
-		phone:"",
-		email:"",
-		repeat:""
+		gender: "",
+		birthday: "",
+		phone: "",
+		email: "",
+		repeat: "",
 	});
 	const [submitted, setSubmitted] = useState(false);
 	const registering = useSelector((state) => state.registration.registering);
+	const { isLoggedIn } = useSelector((state) => state.authentication);
 	const dispatch = useDispatch();
-
-	// reset login status
-	useEffect(() => {
-		dispatch(userActions.logout());
-	}, [dispatch]);
 
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -42,10 +38,16 @@ function RegisterPage() {
 			user.gender &&
 			user.phone &&
 			user.birthday &&
-			user.email && user.repeat
-		) if( user.password == user.repeat){
-			dispatch(userActions.register(user));
-		}
+			user.email &&
+			user.repeat
+		)
+			if (user.password == user.repeat) {
+				dispatch(userActions.register(user));
+			}
+	}
+
+	if (isLoggedIn) {
+		return <Redirect to="/" />;
 	}
 	return (
 		<div className="register">

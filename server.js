@@ -110,7 +110,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/user/", usersRouter);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Swagger
+const options = {
+  explorer: true,
+};
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(swaggerDocument, options)
+);
 
 app.get("/auth/reset/password/:jwt", function (req, res) {
   return res.status(404).json({ message: "go to port 3000" });

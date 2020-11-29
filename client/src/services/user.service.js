@@ -1,4 +1,7 @@
 import config from "config";
+import axios from "axios";
+
+const API_URL = config.apiUrl;
 
 function logout() {
 	// remove user from local storage to log user out
@@ -23,26 +26,17 @@ function handleResponse(response) {
 	});
 }
 function login(email, password) {
-	const requestOptions = {
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify({ email, password }),
-	};
+	return axios
+		.post(`${API_URL}/api/user/login`, {
+			email,
+			password,
+		})
+		.then((response) => {
+			if (response.data.user) {
+				localStorage.setItem("user", JSON.stringify(response.data));
+			}
 
-	console.log({ email, password, config });
-
-	return fetch(`${config.apiUrl}/api/user/login`, requestOptions)
-		.then(handleResponse)
-		.then((res) => {
-			// store user details and jwt token in local storage to keep user logged in between page refreshes
-			localStorage.setItem(
-				"user",
-				JSON.stringify({
-					token: res.user.token,
-					username: res.user.username,
-				})
-			);
-			return res.user;
+			return response.data;
 		});
 }
 

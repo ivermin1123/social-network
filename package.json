@@ -38,6 +38,7 @@
     "nodemailer-express-handlebars": "^4.0.0",
     "nodemon": "^2.0.6",
     "path": "^0.12.7",
+    "react-datepicker": "^3.3.0",
     "socket.io": "^3.0.3",
     "socket_io": "^1.0.0",
     "swagger-ui-express": "^4.1.5",

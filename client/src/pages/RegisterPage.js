@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import Field from "../components/Field";
 import userActions from "../actions/user.actions";
 import "../scss/_form.scss";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function RegisterPage(props) {
 	const [user, setUser] = useState({
@@ -12,7 +14,7 @@ function RegisterPage(props) {
 		username: "",
 		password: "",
 		gender: 0,
-		birthday: "",
+		birthday: new Date(),
 		phone: "",
 		email: "",
 		repeat_password: "",
@@ -86,7 +88,7 @@ function RegisterPage(props) {
 					</div>
 					<div className="col-6">
 						<Field
-							label="Họ"
+							label="Tên"
 							submitted={submitted}
 							type="text"
 							name="lastName"
@@ -111,14 +113,30 @@ function RegisterPage(props) {
 						</select>
 					</div>
 					<div className="col-6">
-						<Field
+						{/* <Field
 							label="Ngày sinh"
 							submitted={submitted}
 							type="text"
 							name="birthday"
 							value={user.birthday}
 							onChange={handleChange}
-						/>
+						/> */}
+						<p className="label">
+							Ngày sinh
+							<sup> *</sup>
+						</p>
+						<div>
+							<DatePicker
+								selected={user.birthday}
+								dateFormat='dd/MM/yyyy'
+								onChange={(date) => {
+									setUser((user) => ({
+										...user,
+										birthday: date,
+									}));
+								}}
+							/>
+						</div>
 					</div>
 				</div>
 				<div className="row mb-3">

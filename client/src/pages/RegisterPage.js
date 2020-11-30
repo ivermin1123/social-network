@@ -97,7 +97,7 @@ function RegisterPage(props) {
 						/>
 					</div>
 				</div>
-
+				
 				<div className="row mb-3">
 					<div className="col-6">
 						<p className="label">
@@ -113,32 +113,23 @@ function RegisterPage(props) {
 						</select>
 					</div>
 					<div className="col-6">
-						{/* <Field
-							label="Ngày sinh"
-							submitted={submitted}
-							type="text"
-							name="birthday"
-							value={user.birthday}
-							onChange={handleChange}
-						/> */}
 						<p className="label">
 							Ngày sinh
 							<sup> *</sup>
 						</p>
-						<div>
-							<DatePicker
-								selected={user.birthday}
-								dateFormat='dd/MM/yyyy'
-								onChange={(date) => {
-									setUser((user) => ({
-										...user,
-										birthday: date,
-									}));
-								}}
-							/>
-						</div>
+						<DatePicker
+							selected={user.birthday}
+							dateFormat="dd/MM/yyyy"
+							onChange={(date) => {
+								setUser((user) => ({
+									...user,
+									birthday: date,
+								}));
+							}}
+						/>
 					</div>
 				</div>
+				
 				<div className="row mb-3">
 					<div className="col-6">
 						<Field
@@ -161,6 +152,7 @@ function RegisterPage(props) {
 						/>
 					</div>
 				</div>
+				
 				<Field
 					label="Mật khẩu"
 					submitted={submitted}
@@ -177,16 +169,20 @@ function RegisterPage(props) {
 					value={user.repeat}
 					onChange={handleChange}
 				/>
-				<div className="form-group">
-					<button className="btn-form" type="submit">
-						{registering && (
-							<span className="spinner-border spinner-border-sm mr-1"></span>
-						)}
-						ĐĂNG KÝ
-					</button>
-					<Link to="/login" className="btn btn-link">
-						Cancel
-					</Link>
+				<div className="row form__button">
+					<div className="col-6">
+						<button type="submit">
+							{registering && (
+								<span className="spinner-border spinner-border-sm mr-1"></span>
+							)}
+							ĐĂNG KÝ
+						</button>
+					</div>
+					<div className="col-6">
+						<Link to="/login" className="btn">
+							HỦY
+						</Link>
+					</div>
 				</div>
 			</form>
 		</div>

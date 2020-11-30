@@ -2,7 +2,54 @@
 	border: 1px solid lightgrey;
 	background-color: #fff;
     max-width: 1000px;
-    margin: auto;
+	margin: auto;
+	.side-right{
+		padding: 0;
+		min-height: 500px;
+		.side-right-top{
+			display: flex;
+			height: 90%;
+			a, a:hover{
+				color: inherit;
+				float: right;
+				opacity: 0.7;
+			}
+		}
+		a, a:hover{
+			cursor: pointer;
+			text-decoration: none;
+			font-size: 14px;
+		}
+		.side-right-bottom{
+			height: 10%;
+			.content{
+				display: flex;
+				width: 100%;
+				height: 100%;
+				background-color: #6c6c6c;
+				div{
+					font-size: 14px;
+					color: white;
+					text-align: center;
+					justify-content: center;
+					margin: auto;
+				}
+				a, a:hover {
+					color: white;
+				}
+				p{
+					display: inline;
+					margin: 0;
+				}
+			}
+		}
+	}
+	.side-left{
+		display: flex;
+		img{
+			margin: auto;
+		}
+	}
 };
 form{
     margin:auto;
@@ -49,47 +96,7 @@ form{
         margin-bottom: 5px;
     }
 }
-.side-right{
-    padding: 0;
-    min-height: 500px;
-    .side-right-top{
-        display: flex;
-        height: 90%;
-        a, a:hover{
-            color: inherit;
-            float: right;
-            opacity: 0.7;
-        }
-    }
-    a, a:hover{
-        cursor: pointer;
-        text-decoration: none;
-        font-size: 14px;
-    }
-    .side-right-bottom{
-        height: 10%;
-        .content{
-            display: flex;
-            width: 100%;
-            height: 100%;
-            background-color: #6c6c6c;
-            div{
-				font-size: 14px;
-                color: white;
-                text-align: center;
-                justify-content: center;
-                margin: auto;
-            }
-            a, a:hover {
-                color: white;
-            }
-            p{
-                display: inline;
-                margin: 0;
-            }
-        }
-    }
-}
+
 .register{
     max-width: 600px;
     min-height: 800px;
@@ -97,7 +104,28 @@ form{
     .content{
         margin: auto;
         .row{
-            justify-content: space-around;
+			justify-content: space-around;
+			.form__button {
+				button, a{
+				box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+				background-color: white;
+				color: black;
+				padding: .5rem 18px;
+				font-weight: 500;
+				width: 100%;
+				margin: 0;
+				min-height: 50px;
+				}
+				a{
+					padding: .7rem 18px;
+				}
+				button:hover, a:hover{
+					text-decoration: none;
+					color: #cc615b;
+					font-weight: 600;
+					background-color: white;
+				}
+			}
 		}
-    }
+	}
 }

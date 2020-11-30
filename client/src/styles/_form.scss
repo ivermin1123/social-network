@@ -52,6 +52,7 @@
 	.side-left {
 		display: flex;
 		img {
+			width: 100%;
 			margin: auto;
 		}
 	}
@@ -81,6 +82,7 @@ form {
 	input[type="text"],
 	input[type="password"],
 	select {
+		outline: none;
 		padding: 0 10px;
 		height: 35px;
 		width: 100%;

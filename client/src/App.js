@@ -30,7 +30,7 @@ function App() {
 	}, [dispatch]);
 
 	return (
-		<div>
+		<div style={{ overflow: "hidden" }}>
 			{message.message && (
 				<div className={`alert `}>{message.message}</div>
 			)}

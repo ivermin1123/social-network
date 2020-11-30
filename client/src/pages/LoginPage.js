@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Redirect, Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "../scss/_form.scss";
+// import imageLogin from "../assets/image/imageLogin.jpg";
+
 import userActions from "../actions/user.actions";
 import Field from "../components/Field";
 
-function LoginPage() {
+function LoginPage(props) {
 	const [inputs, setInputs] = useState({
 		email: "",
+		username: "",
 		password: "",
 		emailToVerify: "",
 		forgotPasswordEmail: "",
@@ -17,14 +20,9 @@ function LoginPage() {
 	});
 	const [submitted, setSubmitted] = useState(false);
 	const { username, password } = inputs;
-	const loggingIn = useSelector((state) => state.authentication.loggingIn);
+	const { isLoggedIn } = useSelector((state) => state.authentication);
 	const dispatch = useDispatch();
 	const location = useLocation();
-
-	// reset login status
-	useEffect(() => {
-		dispatch(userActions.logout());
-	}, [dispatch]);
 
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -39,15 +37,25 @@ function LoginPage() {
 		if (username && password) {
 			// get return url from location state or default to home page
 			const { from } = location.state || { from: { pathname: "/" } };
-			dispatch(userActions.login(username, password, from));
+			dispatch(userActions.login(username, password))
+				.then(() => {
+					props.history.push({ pathname: "/" });
+					window.location.reload();
+				})
+				.catch(() => {
+					setSubmitted(false);
+				});
 		}
 	}
-	
+
+	if (isLoggedIn) {
+		return <Redirect to="/" />;
+	}
 
 	return (
 		<div className="row login">
 			<div className="col-md-5 col-xs-12 side-left">
-				<img src="../assets/image/imageLogin.jpg" alt="cat" />
+				<img src="/" alt="cat" />
 			</div>
 			<div className="col-md-7 col-xs-12 side-right">
 				<div className="side-right-top">
@@ -81,7 +89,7 @@ function LoginPage() {
 							<a className="mt-0">Quên mật khẩu</a>
 						</div>
 						<button className="btn-form">
-							{loggingIn && (
+							{isLoggedIn && (
 								<span className="spinner-border spinner-border-sm mr-1" />
 							)}
 							ĐĂNG NHẬP

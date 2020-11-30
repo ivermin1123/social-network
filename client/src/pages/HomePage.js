@@ -1,17 +1,22 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import userActions from "../actions/user.actions";
 
 function HomePage(props) {
-	const user = useSelector((state) => state.authentication.user);
+	const { user } = useSelector((state) => state.authentication.user);
+	const dispatch = useDispatch();
+
+	function handleLogout() {
+		dispatch(userActions.logout());
+	}
 
 	return (
 		<div className="col-lg-8 offset-lg-2">
 			<h1>Hi {user.username}!</h1>
 			<p>You're logged in with React Hooks!!</p>
-			<p>
-				<Link to="/login">Logout</Link>
-			</p>
+			<button className="btn btn-primary" onClick={handleLogout}>
+				Logout
+			</button>
 		</div>
 	);
 }

@@ -1,30 +1,21 @@
-import React, { useEffect, Fragment, Suspense, lazy } from "react";
-import {
-	Redirect,
-	BrowserRouter as Router,
-	Route,
-	Switch,
-} from "react-router-dom";
+import React, { useEffect, Fragment, Suspense } from "react";
+import { Router, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector, connect } from "react-redux";
-import alertActions from "./actions/alert.actions";
-import { history } from "./helpers";
+import { clearMessage } from "./actions/message.actions";
+import { history } from "./helpers/history";
 import { PrivateRoute } from "./components";
-
-// const HomePage = lazy(() => import("./pages/HomePage"));
-// const LoginPage = lazy(() => import("./pages/LoginPage"));
-// const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
 function App() {
-	const alert = useSelector((state) => state.alert);
+	const message = useSelector((state) => state.message);
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		history.listen((location, action) => {
 			// clear alert on location change
-			dispatch(alertActions.clear());
+			dispatch(clearMessage());
 		});
 	}, [dispatch]);
 
@@ -32,18 +23,29 @@ function App() {
 		<div className="jumbotron">
 			<div className="container">
 				<div className="col-md-8 offset-md-2">
-					{alert.message && (
-						<div className={`alert ${alert.type}`}>
-							{alert.message}
-						</div>
+					{message.message && (
+						<div className={`alert `}>{message.message}</div>
 					)}
 					<Router history={history}>
-						<Switch>
-							<PrivateRoute exact path="/" component={HomePage} />
-							<Route path="/login" component={LoginPage} />
-							<Route path="/register" component={RegisterPage} />
-							<Redirect from="*" to="/" />
-						</Switch>
+						<Suspense fallback={<div>Loading...</div>}>
+							<Fragment>
+								<Switch>
+									<PrivateRoute
+										exact
+										path="/"
+										component={HomePage}
+									/>
+									<Route
+										path="/login"
+										component={LoginPage}
+									/>
+									<Route
+										path="/register"
+										component={RegisterPage}
+									/>
+								</Switch>
+							</Fragment>
+						</Suspense>
 					</Router>
 				</div>
 			</div>

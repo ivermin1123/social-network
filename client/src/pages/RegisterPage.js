@@ -1,30 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Field from "../components/Field";
 import userActions from "../actions/user.actions";
 import "../scss/_form.scss";
 
-function RegisterPage() {
+function RegisterPage(props) {
 	const [user, setUser] = useState({
 		firstName: "",
 		lastName: "",
 		username: "",
 		password: "",
-		gender: "",
+		gender: 0,
 		birthday: "",
 		phone: "",
 		email: "",
-		repeat: "",
+		repeat_password: "",
 	});
 	const [submitted, setSubmitted] = useState(false);
 	const registering = useSelector((state) => state.registration.registering);
+	const { isLoggedIn } = useSelector((state) => state.authentication);
 	const dispatch = useDispatch();
-
-	// reset login status
-	useEffect(() => {
-		dispatch(userActions.logout());
-	}, [dispatch]);
 
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -44,12 +40,25 @@ function RegisterPage() {
 			user.phone &&
 			user.birthday &&
 			user.email &&
-			user.repeat
+			user.repeat_password
 		)
-			if (user.password === user.repeat) {
-				dispatch(userActions.register(user));
+			if (user.password === user.repeat_password) {
+				console.log(true);
+				dispatch(userActions.register(user))
+					.then(() => {
+						props.history.push({ pathname: "/" });
+						window.location.reload();
+					})
+					.catch(() => {
+						setSubmitted(false);
+					});
 			}
 	}
+
+	if (isLoggedIn) {
+		return <Redirect to="/" />;
+	}
+
 	return (
 		<div className="register">
 			<form className="content" name="form" onSubmit={handleSubmit}>
@@ -92,9 +101,13 @@ function RegisterPage() {
 						<p className="label">
 							Giới tính <sup>*</sup>
 						</p>
-						<select className="field" name="gender">
-							<option value="male">Nam</option>
-							<option value="female">Nữ</option>
+						<select
+							className="field"
+							name="gender"
+							onChange={handleChange}
+						>
+							<option value="0">Nam</option>
+							<option value="1">Nữ</option>
 						</select>
 					</div>
 					<div className="col-6">
@@ -147,7 +160,7 @@ function RegisterPage() {
 					onChange={handleChange}
 				/>
 				<div className="form-group">
-					<button className="btn-form">
+					<button className="btn-form" type="submit">
 						{registering && (
 							<span className="spinner-border spinner-border-sm mr-1"></span>
 						)}

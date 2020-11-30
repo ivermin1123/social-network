@@ -1,8 +1,8 @@
 .login, .register{
 	border: 1px solid lightgrey;
 	background-color: #fff;
-    max-width: 900px;
-    margin: 30px auto;
+    max-width: 1000px;
+    margin: auto;
 };
 form{
     margin:auto;
@@ -38,8 +38,8 @@ form{
     }
     input[type=checkbox]{
         margin: 0 10px;
-        width: 18px;
-        height: 18px;
+        width: 16px;
+        height: 16px;
         font-size: 20px;
     }
     .label{
@@ -74,6 +74,7 @@ form{
             height: 100%;
             background-color: #6c6c6c;
             div{
+				font-size: 14px;
                 color: white;
                 text-align: center;
                 justify-content: center;
@@ -97,6 +98,6 @@ form{
         margin: auto;
         .row{
             justify-content: space-around;
-        }
+		}
     }
 }

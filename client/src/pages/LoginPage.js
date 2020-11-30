@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "../scss/_form.scss";
-
 import userActions from "../actions/user.actions";
-// import Field from "../components/Field";
+import Field from "../components/Field";
 
 function LoginPage() {
 	const [inputs, setInputs] = useState({
@@ -43,28 +42,7 @@ function LoginPage() {
 			dispatch(userActions.login(username, password, from));
 		}
 	}
-	const Field = (label, type, name, value, onChangge, submitted,) =>{
-		return (
-			<div className="field">
-				<p className="label">
-					{label}
-					<sup> *</sup>
-				</p>
-				<input
-					type={type}
-					name={name}
-					value={value}
-					onChange={onChangge}
-					className={`form-control${
-						submitted && !value ? " is-invalid" : ""
-					}`}
-				/>
-				{submitted && !value && (
-					<div className="invalid-feedback">Password is required</div>
-				)}
-			</div>
-		);
-	}
+	
 
 	return (
 		<div className="row login">
@@ -81,58 +59,32 @@ function LoginPage() {
 						<div className="logo field">
 							<h3>LOGO</h3>
 						</div>
-						<div className="field">
-							<p className="label">
-								Tên đăng nhập
-								<sup> *</sup>
-							</p>
-							<input
-								type="text"
-								name="username"
-								value={username}
-								onChange={handleChange}
-								className={`form-control${
-									submitted && !username ? " is-invalid" : ""
-								}`}
-							/>
-							{submitted && !username && (
-								<div className="invalid-feedback">
-									Username is required
-								</div>
-							)}
-						</div>
-						<div className="field">
-							<p className="label">
-								Mật khẩu
-								<sup> *</sup>
-							</p>
-							<input
-								type="password"
-								name="password"
-								value={password}
-								onChange={handleChange}
-								className={`form-control${
-									submitted && !password ? " is-invalid" : ""
-								}`}
-							/>
-							{submitted && !password && (
-								<div className="invalid-feedback">
-									Password is required
-								</div>
-							)}
-						</div>
-						{/* <Field
+						<Field
+							label="Tên đăng nhập"
+							submitted={submitted}
+							type="text"
+							name="username"
+							value={username}
+							onChange={handleChange}
+						/>
+						<Field
+							label="Mật khẩu"
 							submitted={submitted}
 							type="password"
 							name="password"
 							value={password}
 							onChange={handleChange}
-						/> */}
+						/>
+						<div className="field">
+							<input type="checkbox" name="save" />
+							Nhớ mật khẩu
+							<a className="mt-0">Quên mật khẩu</a>
+						</div>
 						<button className="btn-form">
 							{loggingIn && (
 								<span className="spinner-border spinner-border-sm mr-1" />
 							)}
-							Login
+							ĐĂNG NHẬP
 						</button>
 					</form>
 				</div>

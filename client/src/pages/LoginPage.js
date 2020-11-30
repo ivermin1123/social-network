@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "../styles/_form.scss";
-// import imageLogin from "../assets/image/imageLogin.jpg";
+import imageLogin from "../assets/image/showcase.4b31330b.jpg";
 
 import userActions from "../actions/user.actions";
 import Field from "../components/Field";
@@ -55,7 +55,7 @@ function LoginPage(props) {
 	return (
 		<div className="row login">
 			<div className="col-md-5 col-xs-12 side-left">
-				<img src="/" alt="cat" />
+				<img src={imageLogin} alt="cat" />
 			</div>
 			<div className="col-md-7 col-xs-12 side-right">
 				<div className="side-right-top">

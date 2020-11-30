@@ -55,6 +55,7 @@ function RegisterPage(props) {
 						setSubmitted(false);
 					});
 			}
+		console.log(user);
 	}
 
 	if (isLoggedIn) {
@@ -165,8 +166,8 @@ function RegisterPage(props) {
 					label="Nhập lại mật khẩu"
 					submitted={submitted}
 					type="password"
-					name="repeat"
-					value={user.repeat}
+					name="repeat_password"
+					value={user.repeat_password}
 					onChange={handleChange}
 				/>
 				<div className="row form__button">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-
+import { useDispatch } from "react-redux";
+import userActions from "../actions/user.actions";
 import { CSSTransition } from "react-transition-group";
 
 import CogIcon from "../Icons/Cog";
@@ -11,6 +12,11 @@ function DropdownMenu() {
 	const [activeMenu, setActiveMenu] = useState("main");
 	const [menuHeight, setMenuHeight] = useState(null);
 	const dropdownRef = useRef(null);
+	const dispatch = useDispatch();
+
+	function callback() {
+		dispatch(userActions.logout());
+	}
 
 	useEffect(() => {
 		console.log(dropdownRef.current?.firstChild.offsetHeight);
@@ -23,11 +29,16 @@ function DropdownMenu() {
 	}
 
 	function DropdownItem(props) {
+		const { callback } = props;
 		return (
 			<a
 				href="/#"
 				className="menu-item"
-				onClick={() => props.goToMenu && setActiveMenu(props.goToMenu)}
+				onClick={
+					callback
+						? callback
+						: () => props.goToMenu && setActiveMenu(props.goToMenu)
+				}
 			>
 				<span className="icon-button">{props.leftIcon}</span>
 				{props.children}
@@ -65,6 +76,7 @@ function DropdownMenu() {
 					>
 						Animals
 					</DropdownItem>
+					<DropdownItem callback={callback}>Log out</DropdownItem>
 				</div>
 			</CSSTransition>
 

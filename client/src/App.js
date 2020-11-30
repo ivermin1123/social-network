@@ -8,9 +8,19 @@ import { PrivateRoute } from "./components";
 import { HomePage } from "./pages/HomePage";
 import { LoginPage } from "./pages/LoginPage";
 import { RegisterPage } from "./pages/RegisterPage";
+import Navbar from "./components/Navbar";
+import NavItem from "./components/NavItem";
+import DropdownMenu from "./components/DropdownMenu";
+
+import BellIcon from "./Icons/Bell";
+import MessengerIcon from "./Icons/Messenger";
+import CaretIcon from "./Icons/Caret";
+import PlusIcon from "./Icons/Plus";
+
 function App() {
 	const message = useSelector((state) => state.message);
 	const dispatch = useDispatch();
+	const { isLoggedIn } = useSelector((state) => state.authentication);
 
 	useEffect(() => {
 		history.listen((location, action) => {
@@ -20,35 +30,35 @@ function App() {
 	}, [dispatch]);
 
 	return (
-		<div className="jumbotron">
-			<div className="container">
-				<div className="col-md-8 offset-md-2">
-					{message.message && (
-						<div className={`alert `}>{message.message}</div>
-					)}
-					<Router history={history}>
-						<Suspense fallback={<div>Loading...</div>}>
-							<Fragment>
-								<Switch>
-									<PrivateRoute
-										exact
-										path="/"
-										component={HomePage}
-									/>
-									<Route
-										path="/login"
-										component={LoginPage}
-									/>
-									<Route
-										path="/register"
-										component={RegisterPage}
-									/>
-								</Switch>
-							</Fragment>
-						</Suspense>
-					</Router>
-				</div>
-			</div>
+		<div>
+			{message.message && (
+				<div className={`alert `}>{message.message}</div>
+			)}
+			<Router history={history}>
+				<Suspense fallback={<div>Loading...</div>}>
+					<Fragment>
+						{isLoggedIn ? (
+							<>
+								{" "}
+								<Navbar>
+									<NavItem icon={<PlusIcon />} />
+									<NavItem icon={<BellIcon />} />
+									<NavItem icon={<MessengerIcon />} />
+
+									<NavItem icon={<CaretIcon />}>
+										<DropdownMenu></DropdownMenu>
+									</NavItem>
+								</Navbar>
+							</>
+						) : null}
+						<Switch>
+							<PrivateRoute exact path="/" component={HomePage} />
+							<Route path="/login" component={LoginPage} />
+							<Route path="/register" component={RegisterPage} />
+						</Switch>
+					</Fragment>
+				</Suspense>
+			</Router>
 		</div>
 	);
 }

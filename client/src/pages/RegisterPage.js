@@ -3,7 +3,7 @@ import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Field from "../components/Field";
 import userActions from "../actions/user.actions";
-import "../scss/_form.scss";
+import "../styles/_form.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -97,7 +97,7 @@ function RegisterPage(props) {
 						/>
 					</div>
 				</div>
-				
+
 				<div className="row mb-3">
 					<div className="col-6">
 						<p className="label">
@@ -129,7 +129,7 @@ function RegisterPage(props) {
 						/>
 					</div>
 				</div>
-				
+
 				<div className="row mb-3">
 					<div className="col-6">
 						<Field
@@ -152,7 +152,7 @@ function RegisterPage(props) {
 						/>
 					</div>
 				</div>
-				
+
 				<Field
 					label="Mật khẩu"
 					submitted={submitted}

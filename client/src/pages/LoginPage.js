@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Redirect, Link, useLocation } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import "../scss/_form.scss";
+import "../styles/_form.scss";
 // import imageLogin from "../assets/image/imageLogin.jpg";
 
 import userActions from "../actions/user.actions";
@@ -22,7 +22,7 @@ function LoginPage(props) {
 	const { username, password } = inputs;
 	const { isLoggedIn } = useSelector((state) => state.authentication);
 	const dispatch = useDispatch();
-	const location = useLocation();
+	//const location = useLocation();
 
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -36,7 +36,7 @@ function LoginPage(props) {
 		setSubmitted(true);
 		if (username && password) {
 			// get return url from location state or default to home page
-			const { from } = location.state || { from: { pathname: "/" } };
+			//const { from } = location.state || { from: { pathname: "/" } };
 			dispatch(userActions.login(username, password))
 				.then(() => {
 					props.history.push({ pathname: "/" });
@@ -86,7 +86,9 @@ function LoginPage(props) {
 						<div className="field">
 							<input type="checkbox" name="save" />
 							Nhớ mật khẩu
-							<a className="mt-0">Quên mật khẩu</a>
+							<a href="/#" className="mt-0">
+								Quên mật khẩu
+							</a>
 						</div>
 						<button className="btn-form">
 							{isLoggedIn && (

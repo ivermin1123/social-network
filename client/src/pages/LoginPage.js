@@ -5,7 +5,7 @@ import "../styles/_form.scss";
 import imageLogin from "../assets/image/showcase.4b31330b.jpg";
 
 import userActions from "../actions/user.actions";
-import Field from "../components/Field";
+import { FormField } from "../components/_components";
 
 function LoginPage(props) {
 	const [inputs, setInputs] = useState({
@@ -67,7 +67,7 @@ function LoginPage(props) {
 						<div className="logo field">
 							<h3>LOGO</h3>
 						</div>
-						<Field
+						<FormField
 							label="Tên đăng nhập"
 							submitted={submitted}
 							type="text"
@@ -75,7 +75,7 @@ function LoginPage(props) {
 							value={username}
 							onChange={handleChange}
 						/>
-						<Field
+						<FormField
 							label="Mật khẩu"
 							submitted={submitted}
 							type="password"

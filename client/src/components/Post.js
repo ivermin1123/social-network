@@ -1,9 +1,11 @@
 import React from "react";
-import LikeCount from "./LikeCount";
-import CommentCount from "./CommentCount";
-import LikeButton from "./LikeButton";
-import CommentButton from "./CommentButton";
 
+import {
+	CommentButton,
+	CommentCount,
+	LikeButton,
+	LikeCount,
+} from "./_components";
 const Post = () => {
 	return (
 		<div className="post">

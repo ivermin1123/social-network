@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import userActions from "../actions/user.actions";
-import NewsFeed from "../components/NewsFeed";
+import {NewsFeed} from "../components/_components";
 import { Row, Col } from "react-bootstrap";
 
 function HomePage(props) {

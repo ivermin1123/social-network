@@ -1,5 +1,5 @@
 import React from "react";
-import PostList from "./PostList";
+import { PostList } from "./_components";
 
 const NewsFeed = () => {
 	return (

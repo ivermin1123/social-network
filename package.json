@@ -8,7 +8,8 @@
     "server": "@powershell -Command $env:DEBUG='*';node ./bin/www",
     "client": "npm start --prefix client",
     "test": "mocha --recursive --exit --timeout 10000",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+	"dev": "concurrently \"npm run server\" \"npm run client\"",
+	"nor":"node ./bin/www"
   },
   "keywords": [],
   "author": "",

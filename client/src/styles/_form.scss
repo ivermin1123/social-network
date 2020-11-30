@@ -2,9 +2,8 @@
 .register {
 	border: 1px solid lightgrey;
 	background-color: #fff;
-	max-width: 800px;
-	margin: auto;
-	margin-bottom: 50px;
+	max-width: 750px;
+	margin: 30px auto;
 	.side-right {
 		padding: 0;
 		min-height: 500px;
@@ -22,7 +21,7 @@
 		a:hover {
 			cursor: pointer;
 			text-decoration: none;
-			font-size: 14px;
+			font-size: 12.5px;
 		}
 		.side-right-bottom {
 			height: 10%;
@@ -41,6 +40,8 @@
 				a,
 				a:hover {
 					color: white;
+					padding: 0;
+					margin-bottom: 2px;
 				}
 				p {
 					display: inline;
@@ -67,14 +68,16 @@ form {
 		margin-bottom: 5%;
 		width: 100%;
 	}
-	button {
-		padding: 0.5rem 18px;
-		font-weight: 500;
-		line-height: 2;
+	button, .form__button a {
+		font-weight: 600;
 		width: 100%;
 		background-color: black;
 		color: white;
 		border: 0;
+		height: 45px;
+		font-size: 15px;
+		text-decoration: none;
+
 	}
 	button:hover {
 		background-color: #6c6c6c;
@@ -116,28 +119,21 @@ form {
 		margin: auto;
 		.row {
 			justify-content: space-around;
-			.form__button {
-				button,
-				a {
-					box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
-					background-color: white;
-					color: black;
-					padding: 0.5rem 18px;
-					font-weight: 500;
-					width: 100%;
-					margin: 0;
-					min-height: 50px;
-				}
-				a {
-					padding: 0.7rem 18px;
-				}
-				button:hover,
-				a:hover {
-					text-decoration: none;
-					color: #cc615b;
-					font-weight: 600;
-					background-color: white;
-				}
+		}
+		.form__button{
+			button,
+			a {
+				box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+				background-color: white;
+				color: black;
+			}
+			a {
+				padding: 0.7rem 18px;
+			}
+			button:hover,
+			a:hover {
+				color: #cc615b;
+				background-color: white;
 			}
 		}
 	}

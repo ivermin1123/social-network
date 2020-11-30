@@ -197,6 +197,10 @@ a {
 	align-items: center;
 	border-bottom: 1px solid #d6d6d6;
 }
+.nav-bar a, .nav-bar a:hover{
+	text-decoration: none;
+	color: black;
+}
 .nav-bar__logo {
 	width: 40px;
 	height: 40px;

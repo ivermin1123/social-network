@@ -5,12 +5,8 @@ import { clearMessage } from "./actions/message.actions";
 import { history } from "./helpers/history";
 import { PrivateRoute } from "./components";
 
-import { HomePage } from "./pages/HomePage";
-import { LoginPage } from "./pages/LoginPage";
-import { RegisterPage } from "./pages/RegisterPage";
-import Navbar from "./components/Navbar";
-import NavItem from "./components/NavItem";
-import DropdownMenu from "./components/DropdownMenu";
+import { HomePage, AccountPage, LoginPage, RegisterPage } from "./pages/_pages";
+import { Navbar, NavItem, DropdownMenu } from "./components/_components";
 
 import BellIcon from "./Icons/Bell";
 import MessengerIcon from "./Icons/Messenger";
@@ -53,6 +49,7 @@ function App() {
 						) : null}
 						<Switch>
 							<PrivateRoute exact path="/" component={HomePage} />
+							<PrivateRoute exact path="/account" component={AccountPage} />
 							<Route path="/login" component={LoginPage} />
 							<Route path="/register" component={RegisterPage} />
 						</Switch>

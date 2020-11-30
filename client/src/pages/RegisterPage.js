@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Field from "../components/Field";
+import { FormField } from "../components/_components";
 import userActions from "../actions/user.actions";
 import "../styles/_form.scss";
 import DatePicker from "react-datepicker";
@@ -68,7 +68,7 @@ function RegisterPage(props) {
 				<div className="logo field">
 					<h3>LOGO</h3>
 				</div>
-				<Field
+				<FormField
 					label="Tên đăng nhập"
 					submitted={submitted}
 					type="text"
@@ -78,7 +78,7 @@ function RegisterPage(props) {
 				/>
 				<div className="row mb-3">
 					<div className="col-6">
-						<Field
+						<FormField
 							label="Họ"
 							submitted={submitted}
 							type="text"
@@ -88,7 +88,7 @@ function RegisterPage(props) {
 						/>
 					</div>
 					<div className="col-6">
-						<Field
+						<FormField
 							label="Tên"
 							submitted={submitted}
 							type="text"
@@ -133,7 +133,7 @@ function RegisterPage(props) {
 
 				<div className="row mb-3">
 					<div className="col-6">
-						<Field
+						<FormField
 							label="Số điện thoại"
 							submitted={submitted}
 							type="text"
@@ -143,7 +143,7 @@ function RegisterPage(props) {
 						/>
 					</div>
 					<div className="col-6">
-						<Field
+						<FormField
 							label="Email"
 							submitted={submitted}
 							type="text"
@@ -154,7 +154,7 @@ function RegisterPage(props) {
 					</div>
 				</div>
 
-				<Field
+				<FormField
 					label="Mật khẩu"
 					submitted={submitted}
 					type="password"
@@ -162,7 +162,7 @@ function RegisterPage(props) {
 					value={user.password}
 					onChange={handleChange}
 				/>
-				<Field
+				<FormField
 					label="Nhập lại mật khẩu"
 					submitted={submitted}
 					type="password"

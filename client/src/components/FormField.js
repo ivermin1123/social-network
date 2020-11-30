@@ -1,6 +1,6 @@
 import React from "react";
 
-const Field = ({...props}) => {
+const FormField = ({ ...props }) => {
 	const { label, type, name, value, onChange, submitted } = props;
 	return (
 		<div className="field">
@@ -13,9 +13,7 @@ const Field = ({...props}) => {
 				name={name}
 				value={value}
 				onChange={onChange}
-				className={`${
-					submitted && !value ? " is-invalid" : ""
-				}`}
+				className={`${submitted && !value ? " is-invalid" : ""}`}
 			/>
 			{submitted && !value && (
 				<div className="invalid-feedback">Bạn chưa nhập {label}</div>
@@ -24,4 +22,4 @@ const Field = ({...props}) => {
 	);
 };
 
-export default Field;
+export default FormField;

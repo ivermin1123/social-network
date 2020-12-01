@@ -63,6 +63,7 @@ const upload = multer({
   },
 }).single("photo");
 
+//ADD POST ID to User
 export const createPost = async (req, res) => {
   try {
     const { image, description, coordinates, locationName, tags } = req.body;

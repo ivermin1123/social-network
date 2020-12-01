@@ -5,7 +5,7 @@ import {
 	CommentCount,
 	LikeButton,
 	LikeCount,
-} from "./_components";
+} from "../_components";
 const Post = () => {
 	return (
 		<div className="post">

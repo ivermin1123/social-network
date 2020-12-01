@@ -1,5 +1,5 @@
 import React from "react";
-import { Post } from "./_components";
+import { Post } from "../_components";
 
 const PostList = () => {
 	return (

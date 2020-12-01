@@ -1,15 +1,15 @@
 // Component's HomePage
-import CommentButton from "./CommentButton";
-import CommentCount from "./CommentCount";
-// import CommentList from "./CommentList";
-import DropdownMenu from "./DropdownMenu";
-import LikeButton from "./LikeButton";
-import LikeCount from "./LikeCount";
-import NavItem from "./NavItem";
-import Navbar from "./Navbar";
+import CommentButton from "./Post/CommentButton";
+import CommentCount from "./Post/CommentCount";
+// import CommentList from "./Post/CommentList";
+import LikeButton from "./Post/LikeButton";
+import LikeCount from "./Post/LikeCount";
+import Post from "./Post/Post";
+import PostList from "./Post/PostList";
 import NewsFeed from "./NewsFeed";
-import Post from "./Post";
-import PostList from "./PostList";
+import DropdownMenu from "./Navbar/DropdownMenu";
+import NavItem from "./Navbar/NavItem";
+import Navbar from "./Navbar/Navbar";
 
 // Component AccountPage
 import Cover from "./AccountComponent/Cover";
@@ -25,15 +25,17 @@ export {
 	CommentButton,
 	CommentCount,
 	// CommentList,
-	DropdownMenu,
 	LikeButton,
 	LikeCount,
-	NavItem,
-	Navbar,
 	NewsFeed,
 	Post,
 	PostList,
 	FormField,
+
+	NavItem,
+	Navbar,
+	DropdownMenu,
+
 	// Component AccountPage
 	Introduction,
 	Friends,

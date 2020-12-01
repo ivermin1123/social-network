@@ -1,12 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import userActions from "../actions/user.actions";
+import userActions from "../../actions/user.actions";
 import { CSSTransition } from "react-transition-group";
-
-import CogIcon from "../Icons/Cog";
-import ChevronIcon from "../Icons/Chevron";
-import ArrowIcon from "../Icons/Arrow";
-import BoltIcon from "../Icons/Bolt";
+import { ArrowIcon, BoltIcon, ChevronIcon, CogIcon } from "../../Icons/_icon";
 
 function DropdownMenu() {
 	const [activeMenu, setActiveMenu] = useState("main");

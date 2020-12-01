@@ -7,11 +7,7 @@ import { PrivateRoute } from "./components";
 
 import { HomePage, AccountPage, LoginPage, RegisterPage } from "./pages/_pages";
 import { Navbar, NavItem, DropdownMenu } from "./components/_components";
-
-import BellIcon from "./Icons/Bell";
-import MessengerIcon from "./Icons/Messenger";
-import CaretIcon from "./Icons/Caret";
-import PlusIcon from "./Icons/Plus";
+import { BellIcon, MessengerIcon, CaretIcon, PlusIcon } from "./Icons/_icon";
 
 function App() {
 	const message = useSelector((state) => state.message);

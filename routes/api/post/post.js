@@ -18,4 +18,11 @@ router.post(
   postController.getPost
 );
 
+router.post(
+  "/likePost",
+  helpers.checkAuth,
+  validator.postValidator.likePost,
+  postController.likePost
+);
+
 export default router;

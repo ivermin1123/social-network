@@ -72,6 +72,9 @@ const userSchema = new Schema(
       type: Boolean,
       default: process.env.ENABLE_SEND_EMAIL === "true" ? false : true,
     },
+    deactivated: {
+      type: Boolean,
+    },
     lang: {
       type: String,
       default: "vi",

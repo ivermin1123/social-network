@@ -14,4 +14,11 @@ router.post(
   userController.sendUserData
 );
 
+router.post(
+  "/getUser",
+  helpers.checkAuth,
+  validator.userValidator.getUser,
+  userController.getUser
+);
+
 export default router;

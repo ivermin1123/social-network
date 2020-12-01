@@ -262,3 +262,40 @@ export const resetPassword = (req, res) => {
     }
   });
 };
+
+export const getUsers = async (req, res) => {
+  try {
+    const { email, userId, username } = req.userData;
+    const { time } = req.body;
+    const infoUser = await User.find({
+      createdAt: { $lte: new Date(time) },
+    })
+      .populate("posts")
+      .populate("friends")
+      .sort({ createdAt: -1 })
+      .limit(100);
+
+    if (!infoUser) res.status(500).json({ error: true, message: "cannot_get" });
+    res.status(200).json({ error: false, data: infoUser });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+};
+
+export const getUser = async (req, res) => {
+  try {
+    const { userId } = req.userData;
+    const { userId: userIdGet } = req.body;
+    const userIdToGet = userIdGet ? userIdGet : userId;
+    const infoUser = await User.findById(userIdToGet)
+      .populate("posts")
+      .populate("friends");
+
+    if (!infoUser) res.status(500).json({ error: true, message: "cannot_get" });
+    if (infoUser.deactivated)
+      res.status(500).json({ error: true, message: "user_deactivated" });
+    res.status(200).json({ error: false, data: infoUser });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+};

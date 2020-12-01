@@ -46,7 +46,7 @@ code {
 	--danger: #dc3545;
 	--light: #f8f9fa;
 	--dark: #343a40;
-	--icon:#66676B;
+	--icon: #66676b;
 }
 
 ul {
@@ -192,14 +192,17 @@ a {
 }
 
 .nav-bar {
-	position: fixed;
+	position: sticky;
+	top: 0;
 	z-index: 1;
 	width: 100%;
 	padding: 0;
 	margin: 0;
+
 	background-color: #ffffff;
 	border-bottom: 1px solid #d6d6d6;
-	a, a:hover{
+	a,
+	a:hover {
 		text-decoration: none;
 		color: black;
 	}
@@ -240,12 +243,12 @@ a {
 			padding-top: 10px;
 			border: 2px solid white;
 		}
-		.nav-bar__navigation-icon:hover{
+		.nav-bar__navigation-icon:hover {
 			background-color: #f2f3f5;
 		}
 		.nav-bar__navigation-icon--home-clicked,
 		.nav-bar__navigation-icon--groups-clicked,
-		.nav-bar__navigation-icon--watchs-clicked  {
+		.nav-bar__navigation-icon--watchs-clicked {
 			color: #1878f3;
 			border-bottom: 2px solid #1878f3;
 			border-radius: 0;
@@ -299,6 +302,7 @@ a {
 
 .Home {
 	background: #f2f3f5;
+	padding-top: 20px;
 }
 /* POST */
 .post {

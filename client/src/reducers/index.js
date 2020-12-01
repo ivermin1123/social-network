@@ -5,12 +5,14 @@ import { registration } from "./registration.reducer";
 import { users } from "./users.reducer";
 import { message } from "./message.reducer";
 import { userConstants } from "../constants/";
+import { posts } from "./posts.reducer";
 
 const appReducer = combineReducers({
 	authentication,
 	registration,
 	users,
 	message,
+	posts,
 });
 
 const rootReducer = (state, action) => {

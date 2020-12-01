@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
 import tabs from "../../constants/tabs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-regular-svg-icons";
 const Cover = ({ ...props }) => {
 	const { acc } = props;
-	const [sumFriend, setSumFriend] = useState(0)
+	const [sumFriend, setSumFriend] = useState(0);
 	const [value, setValue] = useState("");
 	const [status, setStatus] = useState(false);
 	const handleAddProfile = () => {
 		status ? setStatus(false) : setStatus(true);
 	};
-useEffect(()=>{
-	setSumFriend(469);
-},[])
+	useEffect(() => {
+		setSumFriend(469);
+	}, []);
 	return (
 		<div className="cover">
-			<div className="cover-image"></div>
+			<img
+				src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
+				alt=""
+				className="cover-image"
+			/>
 			<div className="cover-display">
 				<div className="cover-display-content">
 					<h1>{acc.displayName}</h1>
@@ -91,7 +97,7 @@ useEffect(()=>{
 				</div>
 				<div className="cover-menu-right">
 					<button>Chỉnh sửa trang</button>
-					<button>Chỉnh </button>
+					<FontAwesomeIcon icon={faEye} />
 					<button>Chỉnh </button>
 					<button>Chỉnh </button>
 				</div>

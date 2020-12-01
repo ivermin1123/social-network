@@ -84,7 +84,7 @@ a {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	margin-right: 4px;
+	margin-left: 4px;
 }
 
 /* Icon Button */
@@ -191,105 +191,110 @@ a {
 }
 
 .nav-bar {
-	padding-top: 8px;
-	padding-bottom: 8px;
-	background-color: #ffffff;
-	align-items: center;
-	border-bottom: 1px solid #d6d6d6;
-}
-.nav-bar a, .nav-bar a:hover{
-	text-decoration: none;
-	color: black;
-}
-.nav-bar__logo {
-	width: 40px;
-	height: 40px;
+	position: fixed;
+	z-index: 1;
+	width: 100%;
 	padding: 0;
-	border-radius: 50%;
+	margin: 0;
+	background-color: #ffffff;
+	border-bottom: 1px solid #d6d6d6;
+	a, a:hover{
+		text-decoration: none;
+		color: black;
+	}
+	.nav-bar__left-items {
+		padding-top: 8px;
+		padding-bottom: 8px;
+		.nav-bar__logo {
+			width: 40px;
+			height: 40px;
+			padding: 0;
+			border-radius: 50%;
+		}
+		.nav-bar__search-bar {
+			background: #f2f3f5;
+			width: 306px;
+			height: 39px;
+			margin-left: 8px;
+			padding-left: 10px;
+			border-radius: 19.5px;
+			justify-content: center;
+			font-family: inherit;
+			outline: none;
+			border: #eeeff1;
+		}
+	}
+	.nav-bar__navigation {
+		display: flex;
+		justify-content: space-around;
+		padding: 2px 0;
+		.nav-bar__navigation-icon {
+			cursor: pointer;
+			font-size: 20px;
+			color: #c7c1c1;
+			width: 100%;
+			height: 100%;
+			border-radius: 5px;
+			text-align: center;
+			padding-top: 10px;
+		}
+		a:hover{
+			background-color: #f2f3f5;
+		}
+		.nav-bar__navigation-icon--home-clicked,
+		.nav-bar__navigation-icon--groups-clicked,
+		.nav-bar__navigation-icon--watchs-clicked  {
+			cursor: pointer;
+			font-size: 25px;
+			color: #1878f3;
+		}
+	}
+	.nav-bar__right-items {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		.nav-bar__right-items-icons {
+			border-radius: 50%;
+			padding: 10px;
+			margin-left: 8px;
+			width: 39px !important;
+			height: 39px;
+			border-radius: 50%;
+			background-color: #eeeff1;
+			cursor: pointer;
+		}
+		.nav-bar__right-items-icons:hover {
+			background-color: #e8e9eb;
+		}
+		.nav-bar__info {
+			display: flex;
+			border-radius: 18px;
+			padding: 6px;
+			align-items: center;
+			margin: auto;
+			// margin-right: 5px;
+			justify-content: center;
+			cursor: pointer;
+		}
+		.nav-bar__info:hover {
+			background-color: #f2f3f5;
+		}
+		.nav-bar__avt {
+			border-radius: 50%;
+			margin-left: 0px;
+			width: 25px !important;
+			height: 25px;
+			border-radius: 50%;
+			background-color: #eeeff1;
+		}
+		.nav-bar__name {
+			margin-left: 8px;
+			font-style: inherit;
+			font-weight: 500;
+		}
+	}
 }
-.nav-bar__search-bar {
-	background: #f2f3f5;
-	width: 306px;
-	height: 39px;
-	margin-left: 8px;
-	padding-left: 10px;
-	border-radius: 19.5px;
-	justify-content: center;
-	font-family: inherit;
-	outline: none;
-	border: #eeeff1;
-}
-.nav-bar__navigation {
-	display: flex;
-	justify-content: space-between;
-}
-.nav-bar__navigation-icon {
-	cursor: pointer;
-	font-size: 25px;
-	color: #c7c1c1;
-}
-.nav-bar__navigation-icon--home-clicked {
-	cursor: pointer;
-	font-size: 25px;
-	color: #1878f3;
-}
-.nav-bar__navigation-icon--groups-clicked {
-	cursor: pointer;
-	font-size: 25px;
-	color: #1878f3;
-}
-.nav-bar__navigation-icon--watchs-clicked {
-	cursor: pointer;
-	font-size: 25px;
-	color: #1878f3;
-}
-.nav-bar__left-items {
-	margin-left: 20px;
-}
-.nav-bar__right-items {
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-}
-.nav-bar__right-items-icons {
-	border-radius: 50%;
-	padding: 10px;
-	margin-left: 8px;
-	width: 39px !important;
-	height: 39px;
-	border-radius: 50%;
-	background-color: #eeeff1;
-	cursor: pointer;
-}
-.nav-bar__right-items-icons:hover {
-	background-color: #e8e9eb;
-}
-.nav-bar__info {
-	display: flex;
-	border-radius: 18px;
-	padding: 6px;
-	align-items: center;
-	margin: auto;
-	margin-right: 5px;
-	justify-content: center;
-	cursor: pointer;
-}
-.nav-bar__info:hover {
-	background-color: #f2f3f5;
-}
-.nav-bar__avt {
-	border-radius: 50%;
-	margin-left: 0px;
-	width: 25px !important;
-	height: 25px;
-	border-radius: 50%;
-	background-color: #eeeff1;
-}
-.nav-bar__name {
-	margin-left: 8px;
-	font-style: inherit;
-	font-weight: 500;
-}
+
 .Home {
 	padding-top: 25px;
 	background: #f2f3f5;

@@ -47,12 +47,14 @@ function App() {
 								</Navbar>
 							</>
 						) : null}
-						<Switch>
-							<PrivateRoute exact path="/" component={HomePage} />
-							<PrivateRoute exact path="/account" component={AccountPage} />
-							<Route path="/login" component={LoginPage} />
-							<Route path="/register" component={RegisterPage} />
-						</Switch>
+						<div style={{paddingTop:'58px'}}>
+							<Switch>
+								<PrivateRoute exact path="/" component={HomePage} />
+								<PrivateRoute exact path="/account" component={AccountPage} />
+								<Route path="/login" component={LoginPage} />
+								<Route path="/register" component={RegisterPage} />
+							</Switch>
+						</div>
 					</Fragment>
 				</Suspense>
 			</Router>

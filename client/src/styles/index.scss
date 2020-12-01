@@ -46,6 +46,7 @@ code {
 	--danger: #dc3545;
 	--light: #f8f9fa;
 	--dark: #343a40;
+	--icon:#66676B;
 }
 
 ul {
@@ -227,26 +228,27 @@ a {
 	.nav-bar__navigation {
 		display: flex;
 		justify-content: space-around;
-		padding: 2px 0;
+		padding: 0;
 		.nav-bar__navigation-icon {
 			cursor: pointer;
 			font-size: 20px;
-			color: #c7c1c1;
+			color: var(--icon);
 			width: 100%;
 			height: 100%;
 			border-radius: 5px;
 			text-align: center;
 			padding-top: 10px;
+			border: 2px solid white;
 		}
-		a:hover{
+		.nav-bar__navigation-icon:hover{
 			background-color: #f2f3f5;
 		}
 		.nav-bar__navigation-icon--home-clicked,
 		.nav-bar__navigation-icon--groups-clicked,
 		.nav-bar__navigation-icon--watchs-clicked  {
-			cursor: pointer;
-			font-size: 25px;
 			color: #1878f3;
+			border-bottom: 2px solid #1878f3;
+			border-radius: 0;
 		}
 	}
 	.nav-bar__right-items {
@@ -296,7 +298,6 @@ a {
 }
 
 .Home {
-	padding-top: 25px;
 	background: #f2f3f5;
 }
 /* POST */

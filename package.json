@@ -8,8 +8,8 @@
     "server": "@powershell -Command $env:DEBUG='*';node ./bin/www",
     "client": "npm start --prefix client",
     "test": "mocha --recursive --exit --timeout 10000",
-	"dev": "concurrently \"npm run server\" \"npm run client\"",
-	"nor":"node ./bin/www"
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "nor": "node ./bin/www"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +17,7 @@
   "dependencies": {
     "@hapi/joi": "^17.1.1",
     "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.23.0",
     "colors": "^1.4.0",
     "concurrently": "^5.3.0",
     "cors": "^2.8.5",
@@ -32,6 +33,8 @@
     "jimp": "^0.16.1",
     "joi-objectid": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
+    "linkifyjs": "^2.1.9",
+    "lodash": "^4.17.20",
     "mongoose": "^5.10.15",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",

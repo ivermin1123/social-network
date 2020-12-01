@@ -3,5 +3,9 @@
     "editor.formatOnPaste": true,
     "files.eol": "\n",
     "editor.detectIndentation": false,
-    "editor.insertSpaces": false
+	"editor.insertSpaces": false,
+	"cSpell.words": [
+		"linkify",
+		"linkifyjs"
+	]
 }

@@ -85,6 +85,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 import usersRouter from "./routes/api/user/user";
+import postsRouter from "./routes/api/post/post";
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -110,6 +111,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use("/api/user/", usersRouter);
+app.use("/api/post/", postsRouter);
 
 // Swagger
 const options = {

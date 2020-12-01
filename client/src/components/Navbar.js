@@ -19,27 +19,18 @@ function Navbar(props) {
 				<input
 					className="nav-bar__search-bar"
 					type="text"
-					placeholder="Tìm kiếm trên Fakebook"
+					placeholder="Tìm 3 trên Fakebook"
 				/>
 			</Col>
 			<Col className="nav-bar__navigation">
 				<Link className="nav-bar__navigation-icon">
-					<FontAwesomeIcon
-						className={""}
-						icon={faHome}
-					/>
+					<FontAwesomeIcon className={""} icon={faHome} />
 				</Link>
 				<Link className="nav-bar__navigation-icon">
-					<FontAwesomeIcon
-						className={""}
-						icon={faUsers}
-					/>
+					<FontAwesomeIcon className={""} icon={faUsers} />
 				</Link>
 				<Link className="nav-bar__navigation-icon">
-					<FontAwesomeIcon
-						className={""}
-						icon={faTv}
-					/>
+					<FontAwesomeIcon className={""} icon={faTv} />
 				</Link>
 			</Col>
 			<Col

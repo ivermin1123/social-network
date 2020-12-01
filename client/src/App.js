@@ -49,10 +49,21 @@ function App() {
 						) : null}
 						<div>
 							<Switch>
-								<PrivateRoute exact path="/" component={HomePage} />
-								<PrivateRoute exact path="/account" component={AccountPage} />
+								<PrivateRoute
+									exact
+									path="/"
+									component={HomePage}
+								/>
+								<PrivateRoute
+									exact
+									path="/account"
+									component={AccountPage}
+								/>
 								<Route path="/login" component={LoginPage} />
-								<Route path="/register" component={RegisterPage} />
+								<Route
+									path="/register"
+									component={RegisterPage}
+								/>
 							</Switch>
 						</div>
 					</Fragment>

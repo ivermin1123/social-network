@@ -19,7 +19,7 @@ function Navbar(props) {
 				<input
 					className="nav-bar__search-bar"
 					type="text"
-					placeholder="Tìm 3 trên Fakebook"
+					placeholder="Tìm kiếm trên Fakebook"
 				/>
 			</Col>
 			<Col className="nav-bar__navigation">

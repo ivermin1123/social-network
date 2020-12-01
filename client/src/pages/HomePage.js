@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { NewsFeed } from "../components/_components";
 import { Row, Col } from "react-bootstrap";
 

@@ -1,0 +1,4 @@
+export const postConstants = {
+	GETPOST_SUCCESS: "USER_GETPOST_SUCCESS",
+	GETPOST_FAILURE: "USER_GETPOST_FAILURE",
+};

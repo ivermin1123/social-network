@@ -1,8 +1,9 @@
 import React from "react";
-import { Cover ,Introduction } from "../components/_components";
+import { Container } from "react-bootstrap";
+import { Cover, Introduction } from "../components/_components";
 import "../styles/_account.scss";
 
-const  AccountPage = () => {
+const AccountPage = () => {
 	const acc = {
 		cover:
 			"https://firebasestorage.googleapis.com/v0/b/my-project-a55fd.appspot.com/o/cover.jpg?alt=media&token=7fa54ce4-d846-4348-8c15-e8ae276dfa88",
@@ -12,11 +13,11 @@ const  AccountPage = () => {
 	};
 
 	return (
-		<div>
-			<Cover acc={acc}/>
-			<Introduction/>
-		</div>
+		<Container>
+			<Cover acc={acc} />
+			<Introduction />
+		</Container>
 	);
-}
+};
 
 export default AccountPage;

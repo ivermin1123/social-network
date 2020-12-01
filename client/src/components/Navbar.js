@@ -23,15 +23,15 @@ function Navbar(props) {
 				/>
 			</Col>
 			<Col className="nav-bar__navigation">
-				<Link className="nav-bar__navigation-icon">
-					<FontAwesomeIcon className={""} icon={faHome} />
-				</Link>
-				<Link className="nav-bar__navigation-icon">
-					<FontAwesomeIcon className={""} icon={faUsers} />
-				</Link>
-				<Link className="nav-bar__navigation-icon">
-					<FontAwesomeIcon className={""} icon={faTv} />
-				</Link>
+				<div className="nav-bar__navigation-icon">
+					<FontAwesomeIcon icon={faHome} />
+				</div>
+				<div className="nav-bar__navigation-icon">
+					<FontAwesomeIcon icon={faUsers} />
+				</div>
+				<div className="nav-bar__navigation-icon">
+					<FontAwesomeIcon icon={faTv} />
+				</div>
 			</Col>
 			<Col
 				// style={{

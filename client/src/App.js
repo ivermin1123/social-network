@@ -26,7 +26,7 @@ function App() {
 	}, [dispatch]);
 
 	return (
-		<div style={{ overflow: "hidden" }}>
+		<div>
 			{message.message && (
 				<div className={`alert `}>{message.message}</div>
 			)}
@@ -47,7 +47,7 @@ function App() {
 								</Navbar>
 							</>
 						) : null}
-						<div style={{paddingTop:'58px'}}>
+						<div>
 							<Switch>
 								<PrivateRoute exact path="/" component={HomePage} />
 								<PrivateRoute exact path="/account" component={AccountPage} />

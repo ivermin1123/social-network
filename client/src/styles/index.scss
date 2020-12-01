@@ -192,7 +192,8 @@ a {
 }
 
 .nav-bar {
-	position: fixed;
+	position: sticky;
+	top: 0;
 	z-index: 1;
 	width: 100%;
 	padding: 0;
@@ -299,6 +300,7 @@ a {
 
 .Home {
 	background: #f2f3f5;
+	padding-top: 10px;
 }
 /* POST */
 .post {

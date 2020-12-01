@@ -47,7 +47,7 @@ function App() {
 								</Navbar>
 							</>
 						) : null}
-						<div style={{paddingTop:'59px'}}>
+						<div style={{paddingTop:'58px'}}>
 							<Switch>
 								<PrivateRoute exact path="/" component={HomePage} />
 								<PrivateRoute exact path="/account" component={AccountPage} />

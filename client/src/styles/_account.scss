@@ -1,22 +1,100 @@
-.header-cover{
-	width: 100%;
-		
-	.header-cover-image{
+:root{
+		--accent: hsl(214, 89%, 52%);
+		--font-family-apple: system-ui, -apple-system, BlinkMacSystemFont, ".SFNSText-Regular", sans-serif;
+}
+.cover-display{
+	display: flex;
+	.cover-display-content{
+		justify-content: center;
+		font-family: var(--font-family-apple);
+		padding: 16px 0;
+		border-bottom: 1px solid #d6d6d6;
+		max-width: 888px;
 		margin: auto;
-		max-width: 940px;
-		overflow: hidden;
-		height: 350px;
-		img{
-			width: 100%;
-			height: 100%;
-			object-fit: cover;
-			z-index: 0;
+		text-align: center;
+		h1{
+			line-height: 1.1875;
+			font-size: 2rem;
+			font-weight: 700;
 		}
-		button{
-			z-index: 1;
+		.button__add-profile {
+			font-weight: 600;
+			color: var(--accent);
+			font-size: .875rem;
 		}
-	}
-	.header-profile{
-
+		.button__add-profile:hover{
+			cursor: pointer;
+			text-decoration: underline;
+		}
+		.cover-display-add{
+			min-width: 300px;
+			textarea{
+				border-radius: 6px;
+				padding: 8px 12px;
+				text-align: center;
+				resize: none;
+				font-size: 16px;
+  				font-weight: 500;
+			}
+		}
 	}
 }
+// :root{
+// 	--width: 940px;
+// 	--height:345px
+// }
+// .account-header{
+// 	.header-cover{
+// 		width: 100%;
+// 		background-image: linear-gradient(rgb(200, 225, 245), white);
+// 		height: var(--height);
+// 		.header-cover-image{
+// 			height: 100%;
+// 			margin: auto;
+// 			max-width: var(--width);
+// 			overflow: hidden;
+// 			border-radius: 0 0 7px 7px;
+// 			.cover-image{
+// 				height: 430px;
+// 				img{
+// 					width: 100%;
+// 					height: 100%;
+// 					object-fit: cover;
+// 				}
+// 			}
+// 		}
+// 	}
+// 	.header-button__change-cover{
+// 		margin: auto;
+// 		max-width: var(--width);
+// 		background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6));
+// 		padding: 0 12px;
+// 		display: flex;
+// 		border-radius: 0 0 7px 7px;
+// 		min-height: 80px;
+// 		justify-content: flex-end;
+// 		div{
+// 			justify-content: flex-end;
+// 			button{
+// 				background-color: white;
+// 				border-radius: 5px;
+// 				outline: none;
+// 				height: 36px;
+// 				padding: 0 12px;
+// 				font-size: 16px;
+// 				font-weight: 500;
+// 				border: 0;
+// 			}
+// 		}
+// 	}
+// 	.header-profile{
+// 		width: 100%;
+// 		background-color: white;
+// 		div{
+// 			margin: auto;
+// 			max-width: var(--width);
+			
+// 		}
+// 	}
+
+// }

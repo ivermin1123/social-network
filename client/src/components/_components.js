@@ -12,6 +12,7 @@ import Post from "./Post";
 import PostList from "./PostList";
 
 // Component AccountPage
+import Cover from "./AccountComponent/Cover";
 import Introduction from "./AccountComponent/Introduction";
 import Friends from "./AccountComponent/Friends";
 import Images from "./AccountComponent/Images";
@@ -32,11 +33,11 @@ export {
 	NewsFeed,
 	Post,
 	PostList,
-
 	FormField,
 	// Component AccountPage
 	Introduction,
 	Friends,
+	Cover,
 	Images,
 	Wall,
 };

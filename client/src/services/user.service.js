@@ -5,6 +5,7 @@ const API_URL = config.apiUrl;
 
 function logout() {
 	localStorage.removeItem("user");
+	localStorage.setItem("logout", Date.now());
 }
 
 function login(email, password) {

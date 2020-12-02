@@ -11,6 +11,7 @@ import {
 	faPen,
 	faEllipsisH,
 	faGlobeAsia,
+	faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
@@ -26,6 +27,7 @@ const ICONS = {
 	ellipsisH: faEllipsisH,
 	globeAsia: faGlobeAsia,
 	instagram: faInstagram,
+	arrowLeft: faArrowLeft,
 };
 
 const COLORS = {

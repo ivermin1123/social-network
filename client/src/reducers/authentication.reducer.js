@@ -1,9 +1,22 @@
 import { userConstants } from "../constants";
+import jwtDecode from "jwt-decode";
+
+const initialState = {
+	isLoggedIn: false,
+	user: null,
+};
 
 let user = JSON.parse(localStorage.getItem("user"));
-const initialState = user
-	? { isLoggedIn: true, user }
-	: { isLoggedIn: false, user: null };
+
+if (user) {
+	const decodedToken = jwtDecode(user.user.token);
+	if (decodedToken.exp * 1000 < Date.now()) {
+		localStorage.removeItem("user");
+	} else {
+		initialState.user = user;
+		initialState.isLoggedIn = true;
+	}
+}
 
 export function authentication(state = initialState, action) {
 	const { type, payload } = action;

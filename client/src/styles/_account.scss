@@ -34,14 +34,21 @@
 		background-color: lightgrey;
 	}
 	.cover {
+<<<<<<< HEAD
 		background-color: white;
 		border-bottom: 1px solid #d6d6d6;
+=======
+>>>>>>> 80d38c3d6a7ddeca4b56cf67b747793513340f8b
 		display: initial;
 		.cover-image {
 			width: var(--width-cover);
 			margin: auto;
+			height: 350px;
+			border-bottom-left-radius: 10px;
+			border-bottom-right-radius: 10px;
 		}
 		.cover-display {
+			background-color: white;
 			display: flex;
 			.cover-display-content {
 				justify-content: center;
@@ -101,6 +108,10 @@
 		}
 		.cover-menu {
 			z-index: 1;
+<<<<<<< HEAD
+=======
+			box-shadow: 0 3px 3px var(--shadow-1),inset 0 0 0 0 var(--shadow-inset);
+>>>>>>> 80d38c3d6a7ddeca4b56cf67b747793513340f8b
 			position: sticky;
 			top: 58px;
 			height: var(--height-menu);
@@ -167,7 +178,7 @@
 			background-color: white;
 			margin: 16px 8px 0;
 			border-radius: 10px;
-			box-shadow: 0 1px 0 var(--shadow-2);
+			box-shadow: 0 0px 0 var(--shadow-2);
 		}
 		.main-content-left {
 			.content-item {
@@ -218,4 +229,8 @@
 			}
 		}
 	}
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 80d38c3d6a7ddeca4b56cf67b747793513340f8b

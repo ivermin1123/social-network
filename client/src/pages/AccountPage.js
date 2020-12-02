@@ -18,9 +18,6 @@ const AccountPage = () => {
 				<div className="col-lg-5 col-md-12 main-content-left">
 					<div className="main-content-item">
 						<Introduction />
-						<Introduction />
-						<Introduction />
-						<Introduction />
 						<Images />
 					</div>
 				</div>

@@ -7,6 +7,8 @@ import LikeCount from "./Post/LikeCount";
 import Post from "./Post/Post";
 import PostList from "./Post/PostList";
 import NewsFeed from "./NewsFeed";
+
+// Component's Navbar
 import DropdownMenu from "./Navbar/DropdownMenu";
 import NavItem from "./Navbar/NavItem";
 import Navbar from "./Navbar/Navbar";
@@ -31,12 +33,11 @@ export {
 	Post,
 	PostList,
 	FormField,
-
+	// Navbar
 	NavItem,
 	Navbar,
 	DropdownMenu,
-
-	// Component AccountPage
+	// AccountPage
 	Introduction,
 	Friends,
 	Cover,

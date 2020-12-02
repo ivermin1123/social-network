@@ -1,11 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCommentAlt } from "@fortawesome/free-regular-svg-icons";
+import Theme from "../../constants/Theme";
 
 const CommentButton = () => {
 	return (
 		<div>
-			<FontAwesomeIcon icon={faCommentAlt} /> Comment
+			<FontAwesomeIcon icon={Theme.ICONS.commentAlt} /> Comment
 		</div>
 	);
 };

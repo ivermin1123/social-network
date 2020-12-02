@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 import { Row, Col } from "react-bootstrap";
-import { faHome, faUsers, faTv } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Theme from "../../constants/Theme";
 
-function Navbar(props) {
+const Navbar = ({ ...props }) => {
 	return (
 		<Row className="nav-bar">
 			<Col className="nav-bar__left-items">
@@ -24,13 +23,13 @@ function Navbar(props) {
 			</Col>
 			<Col className="nav-bar__navigation">
 				<div className="nav-bar__navigation-icon">
-					<FontAwesomeIcon icon={faHome} />
+					<FontAwesomeIcon icon={Theme.ICONS.home} />
 				</div>
 				<div className="nav-bar__navigation-icon">
-					<FontAwesomeIcon icon={faUsers} />
+					<FontAwesomeIcon icon={Theme.ICONS.users} />
 				</div>
 				<div className="nav-bar__navigation-icon">
-					<FontAwesomeIcon icon={faTv} />
+					<FontAwesomeIcon icon={Theme.ICONS.tv} />
 				</div>
 			</Col>
 			<Col
@@ -55,6 +54,6 @@ function Navbar(props) {
 			</Col>
 		</Row>
 	);
-}
+};
 
 export default Navbar;

@@ -1,25 +1,31 @@
 import React, { useEffect, useState } from "react";
 import tabs from "../../constants/tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-regular-svg-icons";
+import Theme from "../../constants/Theme";
 const Cover = ({ ...props }) => {
 	const { acc } = props;
 	const [sumFriend, setSumFriend] = useState(0);
 	const [value, setValue] = useState("");
 	const [status, setStatus] = useState(false);
+	const [state, setState] = useState();
 	const handleAddProfile = () => {
 		status ? setStatus(false) : setStatus(true);
+	};
+	const handleClickMenu = (value) => {
+		setState(value);
 	};
 	useEffect(() => {
 		setSumFriend(469);
 	}, []);
 	return (
 		<div className="cover">
-			<img
-				src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
-				alt=""
-				className="cover-image"
-			/>
+			<div className="cover-image">
+				<img
+					src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
+					alt=""
+					className="cover-image"
+				/>
+			</div>
 			<div className="cover-display">
 				<div className="cover-display-content">
 					<h1>{acc.displayName}</h1>
@@ -82,25 +88,61 @@ const Cover = ({ ...props }) => {
 					</div>
 				</div>
 			</div>
-			<div className="cover-menu row">
-				<div className="cover-menu-left">
-					{tabs.map((item, index) => {
-						return (
-							<div className="menu-left-item">
-								<span>{item.displayName}</span>
-								{item.name == "friends" ? (
-									<small>{sumFriend}</small>
-								) : null}
-							</div>
-						);
-					})}
+			<div className="cover-menu">
+				<div className="menu-content row">
+					<div className="menu-content-left">
+						{tabs.map((item, index) => {
+							return (
+								<div
+									className={`menu-left-item ${
+										state === index ? "active" : ""
+									}`}
+									onClick={(index) => {
+										handleClickMenu(index);
+									}}
+								>
+									<span className="item-displayName">
+										{item.displayName}
+									</span>
+									{item.name === "friends" ? (
+										<span className="item-sumfriend">
+											{sumFriend}
+										</span>
+									) : null}
+								</div>
+							);
+						})}
+					</div>
+					<div className="menu-content-right">
+						<button>
+							<FontAwesomeIcon icon={Theme.ICONS.pen} />
+							<span>Chỉnh sửa trang ...</span>
+						</button>
+						<button>
+							<FontAwesomeIcon icon={Theme.ICONS.eye} />
+						</button>
+						<button>
+							<FontAwesomeIcon icon={Theme.ICONS.search} />
+						</button>
+						<button>
+							<FontAwesomeIcon icon={Theme.ICONS.ellipsisH} />
+						</button>
+					</div>
 				</div>
-				<div className="cover-menu-right">
-					<button>Chỉnh sửa trang</button>
-					<FontAwesomeIcon icon={faEye} />
-					<button>Chỉnh </button>
-					<button>Chỉnh </button>
-				</div>
+			</div>
+			<div className="cover-image">
+				<img
+					src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
+					alt=""
+					className="cover-image"
+				/>
+			</div>
+			<div className="cover-image">
+				<img
+					src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
+					alt=""
+					className="cover-image"
+				/>
 			</div>
 		</div>
 	);

@@ -13,6 +13,10 @@
 	background-color: white;
 	font-family: var(--font-family-apple);
 	border-bottom: 1px solid #d6d6d6;
+	.cover-image {
+		width: 940px;
+		margin: auto;
+	}
 	.cover-display {
 		display: flex;
 		.cover-display-content {
@@ -68,53 +72,57 @@
 			}
 		}
 	}
-	.cover-image {
-		width: 940px;
-		margin: auto;
-	}
 	.cover-menu {
-		display: sticky;
-		width: var(--width-content);
-		margin: auto;
-		justify-content: space-between;
+		position: sticky;
+		top: 58px;
 		height: var(--height-menu);
-		.cover-menu-left {
-			justify-content: flex-start;
-			height: 100%;
-			.menu-left-item {
-				cursor: pointer;
-				display: inline-flex;
-				padding: 0 16px;
-				height: 100%;
-				border-radius: 6px;
-				border-bottom: 3px solid white;
-				border-top: 3px solid white;
-				font-size: 16px;
-				font-weight: 600;
-				color: var(--secondary-text);
-				span,
-				small {
-					justify-content: center;
-					margin: auto;
-					opacity: 0.7;
-				}
-				small {
-					margin-left: 5px;
-				}
-			}
-			.menu-left-item:hover {
-				background-color: var(--HOVER);
-			}
-			.menu-left-item .active {
-				opacity: 1;
-				color: var(--accent);
-				border-bottom-color: var(--accent);
-				border-radius: 0;
-			}
-		}
-		.cover-menu-right {
-			justify-content: flex-end;
+		background-color: white;
+		display: flex;
+		.menu-content{
+			width: var(--width-content);
+			justify-content: space-between;
 			margin: auto;
+			.menu-content-left {
+				justify-content: flex-start;
+				height: 100%;
+				.menu-left-item {
+					cursor: pointer;
+					display: inline-flex;
+					padding: 0 16px;
+					height: 100%;
+					border-radius: 6px;
+					border-bottom: 3px solid white;
+					border-top: 3px solid white;
+					.item-displayName,
+					.item-sumfriend {
+						font-size: 16px;
+						font-weight: 600;
+						color: var(--secondary-text);
+						justify-content: center;
+						margin: auto;
+						opacity: 0.7;
+					}
+					.item-sumfriend {
+						font-weight: normal;
+						font-size: 14px;
+						margin-left: 5px;
+						opacity: 0.7;
+					}
+				}
+				.menu-left-item:hover {
+					background-color: var(--HOVER);
+				}
+				.active {
+					opacity: 1;
+					color: var(--accent);
+					border-bottom-color: var(--accent);
+					border-radius: 0;
+				}
+			}
+			.menu-content-right {
+				justify-content: flex-end;
+				margin: auto;
+			}
 		}
 	}
 	button {
@@ -125,9 +133,13 @@
 		margin-left: 4px;
 		padding: 0 12px;
 		font-weight: 600;
-		font-size: 16px;
+		font-size: .875rem;
 		outline: none;
 		background-color: var(--secondary-button-background);
+		opacity: 0.8;
+		span{
+			margin-left: 3px;
+		}
 	}
 	button:hover {
 		background-color: lightgrey;

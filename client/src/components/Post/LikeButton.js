@@ -1,11 +1,11 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+import Theme from "../../constants/Theme";
 
 const LikeButton = () => {
 	return (
 		<div>
-			<FontAwesomeIcon icon={faThumbsUp} /> Like
+			<FontAwesomeIcon icon={Theme.ICONS.thumbsUp} /> Like
 		</div>
 	);
 };

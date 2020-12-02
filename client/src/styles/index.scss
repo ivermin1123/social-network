@@ -51,6 +51,7 @@ code {
 	--dark: #343a40;
 	--icon: #66676b;
 	--HOVER: #f2f3f5;
+	--accent: hsl(214, 89%, 52%);
 }
 
 ul {
@@ -216,7 +217,7 @@ a {
 				.nav-bar__search-bar {
 					button{
 						display: flex;
-						width: 250px;
+						width: 290px;
 						padding: 0 10px;
 					}
 					.icon, p{
@@ -224,6 +225,14 @@ a {
 					}
 					.icon{
 						width: 14px;
+					}
+					@media(max-width:1260px) {
+						p{
+							display: none;
+						}
+						button{
+							width: 40px;
+						}
 					}
 				}
 			}
@@ -302,7 +311,7 @@ a {
 	.nav-bar__search-field{
 		box-shadow: 0 12px 12px var(--shadow-2),inset 0 0 0 0 var(--shadow-inset);
 		background-color: white;
-		width: 320px;
+		width: 360px;
 		position: fixed;
 		z-index: 2;
 		top: 0;
@@ -325,11 +334,74 @@ a {
 			}
 			input{
 				padding: 0 20px;
-				width: 255px;
+				width: 295px;
 			}
 		}
 		.search-field-icon:hover{
 			background-color: var(--HOVER);
+		}
+		.search-history{
+			.search-history-header{
+				display: flex;
+				justify-content: space-between;
+				padding: 20px 0 8px;
+			}
+			span{
+				font-size: 1rem;
+				font-weight: 600;
+			}
+			a{
+				font-size: .875rem;
+				color: var(--accent);
+			}
+			.search-history-content{
+				.item-search{
+					height: 52px;
+					padding: 8px;
+					border-radius: 5px;
+					width: 100%;
+					outline: none;
+					border: none;
+					background-color: white;
+					img, .icon-clock{
+						width: 36px;
+						height: 36px;
+						border-radius: 50px;
+						margin-right: 12px;
+						background-color: #f1f2f5;
+						display: inline-flex;
+						float: left;
+					}
+					.icon{
+						width: 20px;
+						margin: auto;
+					}
+					span{
+						font-size: .875rem;
+						font-weight: 500;
+					}
+					button{
+						border: none;
+						background-color: transparent;
+						float: right;
+						border-radius: 50px;
+						width: 28px;
+						height: 28px;
+						margin: 4px 0;
+						outline: none;
+					}
+					button:hover{
+						background-color:lightgrey;
+					}
+				}
+				.item-search:hover{
+					background-color: var(--HOVER);
+					.icon-clock{
+						background-color: white;
+					}
+				}
+			}
+
 		}
 	}
 	.input-search-field{

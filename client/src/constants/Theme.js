@@ -9,8 +9,12 @@ import {
 	faThumbsUp,
 	faSearch,
 	faPen,
-	faEllipsisH
+	faEllipsisH,
+	faGlobeAsia,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+	faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
 
 const ICONS = {
 	eye: faEye,
@@ -22,6 +26,8 @@ const ICONS = {
 	pen: faPen,
 	search: faSearch,
 	ellipsisH: faEllipsisH,
+	globeAsia: faGlobeAsia,
+	instagram: faInstagram,
 };
 
 const COLORS = {

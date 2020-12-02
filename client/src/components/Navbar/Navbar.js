@@ -23,13 +23,16 @@ const Navbar = ({ ...props }) => {
 			</Col>
 			<Col className="nav-bar__navigation">
 				<div className="nav-bar__navigation-icon">
-					<FontAwesomeIcon icon={Theme.ICONS.home} />
+					<FontAwesomeIcon className="icon" icon={Theme.ICONS.home} />
 				</div>
 				<div className="nav-bar__navigation-icon">
-					<FontAwesomeIcon icon={Theme.ICONS.users} />
+					<FontAwesomeIcon
+						className="icon"
+						icon={Theme.ICONS.users}
+					/>
 				</div>
 				<div className="nav-bar__navigation-icon">
-					<FontAwesomeIcon icon={Theme.ICONS.tv} />
+					<FontAwesomeIcon className="icon" icon={Theme.ICONS.tv} />
 				</div>
 			</Col>
 			<Col

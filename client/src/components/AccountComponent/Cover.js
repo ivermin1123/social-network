@@ -53,8 +53,11 @@ const Cover = ({ ...props }) => {
 							<span>Còn {101 - value.length} ký tự</span>
 						</div>
 						<div className="cover-bottom row">
-							<div className="cover-bottom-left ">
-								<span>icon</span>
+							<div className="cover-bottom-left">
+								<FontAwesomeIcon
+									className="icon"
+									icon={Theme.ICONS.globeAsia}
+								/>
 								<span>Công khai</span>
 							</div>
 							<div className="cover-bottom-right ">
@@ -101,9 +104,7 @@ const Cover = ({ ...props }) => {
 										handleClickMenu(index);
 									}}
 								>
-									<span className="item-displayName">
-										{item.displayName}
-									</span>
+									<span>{item.displayName}</span>
 									{item.name === "friends" ? (
 										<span className="item-sumfriend">
 											{sumFriend}
@@ -115,34 +116,32 @@ const Cover = ({ ...props }) => {
 					</div>
 					<div className="menu-content-right">
 						<button>
-							<FontAwesomeIcon icon={Theme.ICONS.pen} />
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.pen}
+							/>
 							<span>Chỉnh sửa trang ...</span>
 						</button>
 						<button>
-							<FontAwesomeIcon icon={Theme.ICONS.eye} />
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.eye}
+							/>
 						</button>
 						<button>
-							<FontAwesomeIcon icon={Theme.ICONS.search} />
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.search}
+							/>
 						</button>
 						<button>
-							<FontAwesomeIcon icon={Theme.ICONS.ellipsisH} />
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.ellipsisH}
+							/>
 						</button>
 					</div>
 				</div>
-			</div>
-			<div className="cover-image">
-				<img
-					src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
-					alt=""
-					className="cover-image"
-				/>
-			</div>
-			<div className="cover-image">
-				<img
-					src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
-					alt=""
-					className="cover-image"
-				/>
 			</div>
 		</div>
 	);

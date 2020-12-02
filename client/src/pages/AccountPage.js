@@ -1,6 +1,5 @@
 import React from "react";
-import { Container } from "react-bootstrap";
-import { Cover, Introduction } from "../components/_components";
+import { Cover, Introduction,Wall, Images } from "../components/_components";
 import "../styles/_account.scss";
 
 const AccountPage = () => {
@@ -13,10 +12,22 @@ const AccountPage = () => {
 	};
 
 	return (
-		<Container>
+		<div className="account-page">
 			<Cover acc={acc} />
-			<Introduction />
-		</Container>
+			<div className="main-content row">
+				<div className="col-lg-5 col-md-12 main-content-left">
+					<div className="main-content-item">
+						<Introduction />
+						<Images/>
+					</div>
+				</div>
+				<div className="col-lg-7 col-md-12 main-content-right">
+					<div className="main-content-item">
+						<Wall />
+					</div>
+				</div>
+			</div>
+		</div>
 	);
 };
 

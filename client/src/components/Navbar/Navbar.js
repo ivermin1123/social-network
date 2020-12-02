@@ -27,7 +27,6 @@ const listSearchHistory = [
 ];
 const Navbar = ({ ...props }) => {
 	const [display, setDisplay] = useState(false);
-	console.log(window.screen.availWidth);
 	return (
 		<div className="nav-bar">
 			<div className="nav-bar-fixed row">
@@ -120,26 +119,37 @@ const Navbar = ({ ...props }) => {
 						<Link to="/">Chỉnh sửa</Link>
 					</div>
 					<div className="search-history-content">
-						{listSearchHistory ?
-						listSearchHistory.map((item, index)=>{
-							return (
-								<button onClick={()=>{}}className="item-search">
-									{item.avt ? (
-										<img src={item.avt} alt="avata" />
-									) : (
-										<div className="icon-clock">
-											<FontAwesomeIcon
-												className="icon"
-												icon={Theme.ICONS.clock}
-											/>
-										</div>
-									)}
-									<span>{item.name}</span>
-									<button className="" onClick={()=>{}}>x</button>
-								</button>
-							);
-						})
-						 : null}
+						{listSearchHistory
+							? listSearchHistory.map((item, index) => {
+									return (
+										<button
+											onClick={() => {}}
+											className="item-search"
+										>
+											{item.avt ? (
+												<img
+													src={item.avt}
+													alt="avata"
+												/>
+											) : (
+												<div className="icon-clock">
+													<FontAwesomeIcon
+														className="icon"
+														icon={Theme.ICONS.clock}
+													/>
+												</div>
+											)}
+											<span>{item.name}</span>
+											<button
+												className=""
+												onClick={() => {}}
+											>
+												x
+											</button>
+										</button>
+									);
+							  })
+							: null}
 					</div>
 				</div>
 			</div>

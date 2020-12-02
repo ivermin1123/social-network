@@ -13,7 +13,7 @@ const Introduction = () => {
 					icon={Theme.ICONS.instagram}
 				/>
 
-				<Link to="https://www.instagram.com/trhgyen/?hl=vi">
+				<Link to="http://www.instagram.com/trhgyen/?hl=vi">
 					trhgyen
 				</Link>
 			</div>

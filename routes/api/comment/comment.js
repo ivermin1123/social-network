@@ -5,17 +5,10 @@ import { helpers, validator } from "../../../middleware/main-middleware";
 const router = express.Router();
 
 router.post(
-  "/addPost",
+  "/commentOnPost",
   helpers.checkAuth,
-  validator.postValidator.createPost,
-  postController.createPost
-);
-
-router.post(
-  "/getPost",
-  helpers.checkAuth,
-  validator.postValidator.getPost,
-  postController.getPost
+  validator.postValidator.commentOnPost,
+  postController.commentOnPost
 );
 
 export default router;

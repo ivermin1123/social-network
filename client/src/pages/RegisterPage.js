@@ -45,7 +45,6 @@ function RegisterPage(props) {
 			user.repeat_password
 		)
 			if (user.password === user.repeat_password) {
-				console.log(true);
 				dispatch(userActions.register(user))
 					.then(() => {
 						props.history.push({ pathname: "/" });
@@ -55,7 +54,6 @@ function RegisterPage(props) {
 						setSubmitted(false);
 					});
 			}
-		console.log(user);
 	}
 
 	if (isLoggedIn) {

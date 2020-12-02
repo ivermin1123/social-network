@@ -12,9 +12,7 @@ import {
 	faEllipsisH,
 	faGlobeAsia,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-	faInstagram,
-} from "@fortawesome/free-brands-svg-icons";
+import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
 const ICONS = {
 	eye: faEye,

@@ -8,14 +8,11 @@
 	--accent: hsl(214, 89%, 52%);
 	--secondary-button-background: #e4e6eb;
 	--secondary-text: ##65676b;
-	--font-family-apple: system-ui, -apple-system, BlinkMacSystemFont,
-		".SFNSText-Regular", sans-serif;
 	--border: 1px solid #d6d6d6;
 	--icon: #66676b;
 }
 .account-page {
 	background-color: var(--web-wash);
-	font-family: var(--font-family-apple);
 	.icon {
 		opacity: 0.8;
 	}

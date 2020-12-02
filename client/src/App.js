@@ -31,7 +31,6 @@ function App() {
 					<Fragment>
 						{isLoggedIn ? (
 							<>
-								{" "}
 								<Navbar>
 									<NavItem icon={<PlusIcon />} />
 									<NavItem icon={<BellIcon />} />

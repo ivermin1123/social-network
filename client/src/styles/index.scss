@@ -138,53 +138,53 @@ a {
 
 .menu {
 	width: 100%;
-	.menu-item {
-		height: 50px;
-		display: flex;
-		align-items: center;
-		border-radius: var(--border-radius);
-		transition: background var(--speed);
-		padding: 0.5rem;
-	}
-	.menu-item .icon-button {
-		margin-right: 0.5rem;
-	}
-	.menu-item .icon-button:hover {
-		filter: none;
-	}
-	.menu-item:hover {
-		background-color: #f2f2f2;
-	}
-	.icon-right {
-		margin-left: auto;
-	}
-	/* CSSTransition classes  */
-	.menu-primary-enter {
-		position: absolute;
-		transform: translateX(-110%);
-	}
-	.menu-primary-enter-active {
-		transform: translateX(0%);
-		transition: all var(--speed) ease;
-	}
-	.menu-primary-exit {
-		position: absolute;
-	}
-	.menu-primary-exit-active {
-		transform: translateX(-110%);
-		transition: all var(--speed) ease;
-	}
-	.menu-secondary-enter {
-		transform: translateX(110%);
-	}
-	.menu-secondary-enter-active {
-		transform: translateX(0%);
-		transition: all var(--speed) ease;
-	}
-	.menu-secondary-exit-active {
-		transform: translateX(110%);
-		transition: all var(--speed) ease;
-	}
+}
+.menu-item {
+	height: 50px;
+	display: flex;
+	align-items: center;
+	border-radius: var(--border-radius);
+	transition: background var(--speed);
+	padding: 0.5rem;
+}
+.menu-item .icon-button {
+	margin-right: 0.5rem;
+}
+.menu-item .icon-button:hover {
+	filter: none;
+}
+.menu-item:hover {
+	background-color: #f2f2f2;
+}
+.icon-right {
+	margin-left: auto;
+}
+/* CSSTransition classes  */
+.menu-primary-enter {
+	position: absolute;
+	transform: translateX(-110%);
+}
+.menu-primary-enter-active {
+	transform: translateX(0%);
+	transition: all var(--speed) ease;
+}
+.menu-primary-exit {
+	position: absolute;
+}
+.menu-primary-exit-active {
+	transform: translateX(-110%);
+	transition: all var(--speed) ease;
+}
+.menu-secondary-enter {
+	transform: translateX(110%);
+}
+.menu-secondary-enter-active {
+	transform: translateX(0%);
+	transition: all var(--speed) ease;
+}
+.menu-secondary-exit-active {
+	transform: translateX(110%);
+	transition: all var(--speed) ease;
 }
 
 .nav-bar{
@@ -344,15 +344,22 @@ a {
 			.search-history-header{
 				display: flex;
 				justify-content: space-between;
-				padding: 20px 0 8px;
+				padding: 14px 0 8px;
 			}
 			span{
 				font-size: 1rem;
 				font-weight: 600;
+				padding: 8px 0 0;
 			}
 			a{
 				font-size: .875rem;
+				padding: 8px 10px 0;
 				color: var(--accent);
+				border-radius: 5px;
+			}
+			a:hover{
+				background-color: var(--HOVER);
+				text-decoration: none;
 			}
 			.search-history-content{
 				.item-search{
@@ -363,27 +370,37 @@ a {
 					outline: none;
 					border: none;
 					background-color: white;
-					img, .icon-clock{
-						width: 36px;
-						height: 36px;
-						border-radius: 50px;
-						margin-right: 12px;
-						background-color: #f1f2f5;
-						display: inline-flex;
-						float: left;
-					}
-					.icon{
-						width: 20px;
-						margin: auto;
-					}
-					span{
-						font-size: .875rem;
-						font-weight: 500;
+					justify-content: space-between;
+					display: flex;
+					div{
+						display: flex;
+						img, .icon-clock{
+							width: 36px;
+							height: 36px;
+							border-radius: 50px;
+							margin-right: 12px;
+							background-color: #f1f2f5;
+							display: inline-flex;
+						}
+						.icon{
+							width: 20px;
+							margin: auto;
+						}
+						span{
+							margin: auto;
+							text-align: left;
+							font-size: .875rem;
+							font-weight: 500;
+							width: 200px;
+							display: inline-block;
+							overflow: hidden;
+							white-space: nowrap;
+							text-overflow: ellipsis;
+						}
 					}
 					button{
 						border: none;
 						background-color: transparent;
-						float: right;
 						border-radius: 50px;
 						width: 28px;
 						height: 28px;

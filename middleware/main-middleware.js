@@ -9,7 +9,8 @@ import verificationCheck from "./helpers/verificationCheck";
 // Validator
 import * as userValidator from "./schemaValidators/userValidator";
 import * as postValidator from "./schemaValidators/postValidator";
-// import * as commentValidator from "./schemaValidators/commentValidator";
+import * as reactionValidator from "./schemaValidators/reactionValidator";
+import * as commentValidator from "./schemaValidators/commentValidator";
 // import * as chatValidator from "./schemaValidators/chatValidator";
 // import * as notificationValidator from "./schemaValidators/userValidator";
 
@@ -24,8 +25,9 @@ export const helpers = {
 
 export const validator = {
   // chatValidator,
-  // commentValidator,
+  commentValidator,
   // notificationValidator,
+  reactionValidator,
   postValidator,
   userValidator,
 };

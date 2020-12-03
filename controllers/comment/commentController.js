@@ -12,7 +12,7 @@ import "../../models/Comment";
 const Post = mongoose.model("Post");
 const Comment = mongoose.model("Comment");
 
-export const commentPost = async (req, res) => {
+export const commentOnPost = async (req, res) => {
   try {
     const { postId, parent, content } = req.body;
     const { userId } = req.userData;

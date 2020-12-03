@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import Modal from "react-bootstrap/Modal";
 
 const PostForm = ({ ...props }) => {
-	const [setState] = useState();
 	const [show, setShow] = useState(false);
-	const [file] = useState(null);
+	const [file, setFile] = useState(null);
 
 	const handleFile = (e) => {
-		let file = e.target.files[0];
-		setState(file);
+		let files = e.target.files;
+		setFile(URL.createObjectURL(files[0]));
 	};
+
+	const handleClick = () => {
+		// setFile(null);
+	};
+
 	return (
 		<>
 			<div className="post-form">
 				<div className="post-form-top">
 					<img
-						src="https://kenh14cdn.com/thumb_w/660/2020/1/19/280014414259784478324811019039941n-15794066996821910883374.jpg"
+						src="https://i.pinimg.com/736x/ae/c4/53/aec453161b2f33ffc6219d8a758307a9.jpg"
 						alt=""
 						className="post-form-top__avt"
 					/>
@@ -40,6 +44,7 @@ const PostForm = ({ ...props }) => {
 				animation={false}
 				show={show}
 				onHide={() => setShow(false)}
+				onClick={handleClick}
 			>
 				<Modal.Header bsPrefix="post-form-modal__header" closeButton>
 					<Modal.Title bsPrefix="post-form-modal__header-title">
@@ -62,6 +67,7 @@ const PostForm = ({ ...props }) => {
 						className="post-form-modal__body--content"
 						placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
 					/>
+
 					<div className="post-form-modal__footer">
 						<input
 							type="file"
@@ -69,6 +75,7 @@ const PostForm = ({ ...props }) => {
 							onChange={(e) => handleFile(e)}
 						/>
 					</div>
+					<img src={file} alt="" className="post-form-top__avt" />
 					{/* <button type="submit">Đăng</button> */}
 				</Modal.Body>
 			</Modal>

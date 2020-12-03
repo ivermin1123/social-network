@@ -18,4 +18,6 @@ router.post(
   postController.getPost
 );
 
+router.get("/getPosts", helpers.checkAuth, postController.getPosts);
+
 export default router;

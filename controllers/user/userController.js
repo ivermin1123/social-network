@@ -219,7 +219,7 @@ export function loginUser(req, res, next) {
               },
               process.env.JWT_KEY,
               {
-                expiresIn: "30m",
+                expiresIn: "24h",
               }
             );
 

@@ -34,11 +34,6 @@
 		background-color: lightgrey;
 	}
 	.cover {
-<<<<<<< HEAD
-		background-color: white;
-		border-bottom: 1px solid #d6d6d6;
-=======
->>>>>>> 80d38c3d6a7ddeca4b56cf67b747793513340f8b
 		display: initial;
 		.cover-image {
 			width: var(--width-cover);
@@ -108,10 +103,8 @@
 		}
 		.cover-menu {
 			z-index: 1;
-<<<<<<< HEAD
-=======
-			box-shadow: 0 3px 3px var(--shadow-1),inset 0 0 0 0 var(--shadow-inset);
->>>>>>> 80d38c3d6a7ddeca4b56cf67b747793513340f8b
+			box-shadow: 0 3px 3px var(--shadow-1),
+				inset 0 0 0 0 var(--shadow-inset);
 			position: sticky;
 			top: 58px;
 			height: var(--height-menu);
@@ -229,8 +222,4 @@
 			}
 		}
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 80d38c3d6a7ddeca4b56cf67b747793513340f8b

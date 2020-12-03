@@ -62,7 +62,7 @@ const upload = multer({
 export const createPost = async (req, res) => {
   try {
     const { image, description, coordinates, locationName, tags } = req.body;
-
+    const { userId } = req.userData;
     const hashtags = linkify // find hashtags
       .find(description)
       .filter((link) => {
@@ -119,7 +119,7 @@ export const createPost = async (req, res) => {
       });
     } else {
       newPost = new Post({
-        author: req.userData.userId,
+        author: userId,
         description: description,
         hashtags: [...new Set(hashtags)], // remove duplicates
         image: imageUrl,
@@ -167,6 +167,22 @@ export const getPost = async (req, res) => {
 
     if (!infoPost) res.status(500).json({ error: true, message: "cannot_get" });
     res.status(200).json({ error: false, data: infoPost });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+};
+
+export const getPosts = async (req, res) => {
+  try {
+    const { userId } = req.userData;
+
+    await Post.find()
+      .then((post) => {
+        res.status(200).json({ error: false, data: post });
+      })
+      .catch((err) =>
+        res.status(500).json({ error: true, message: err.message })
+      );
   } catch (error) {
     res.status(500).json({ error: true, message: error.message });
   }

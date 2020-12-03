@@ -8,6 +8,13 @@ import "../../models/Reaction";
 const Post = mongoose.model("Post");
 const Reaction = mongoose.model("Reaction");
 
+/**
+ * Type:
+ * 1: Like
+ * 2: Haha
+ * 3:
+ * 4:
+ */
 export const likePost = async (req, res) => {
   try {
     const { postId, type } = req.body;

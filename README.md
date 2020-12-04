@@ -15,15 +15,28 @@ npm i
 
 _Create a new .env file from .env.example - Just ctrl A => ctrl C => ctrl V._
 
+## Run
+
+```bash
+npm run nor
+```
+
+Split terminal
+
+```bash
+cd client
+npm start
+```
+
 ## Extension
 
--   **ESlint**
--   **Git History**
--   **GitLens — Git supercharged**
--   **Material Icon Theme**
--   **Prettier - Code formatter**
--   **Git History**
--   **Import Cost**
+- **ESlint**
+- **Git History**
+- **GitLens — Git supercharged**
+- **Material Icon Theme**
+- **Prettier - Code formatter**
+- **Git History**
+- **Import Cost**
 
 ---
 

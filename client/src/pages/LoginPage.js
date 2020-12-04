@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import "../styles/_form.scss";
+import "../assets/styles/_form.scss";
 import imageLogin from "../assets/image/showcase.4b31330b.jpg";
 
 import userActions from "../actions/user.actions";

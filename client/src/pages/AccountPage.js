@@ -1,6 +1,6 @@
 import React from "react";
 import { Cover, Introduction, Wall, Images } from "../components/_components";
-import "../styles/_account.scss";
+import "../assets/styles/_account.scss";
 
 const AccountPage = () => {
 	const acc = {

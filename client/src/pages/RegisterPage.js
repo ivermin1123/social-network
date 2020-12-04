@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import { FormField } from "../components/_components";
 import userActions from "../actions/user.actions";
-import "../styles/_form.scss";
+import "../assets/styles/_form.scss";
 import "react-datepicker/dist/react-datepicker.css";
 
 function RegisterPage(props) {

@@ -2,7 +2,7 @@ import { Row, Col } from "react-bootstrap";
 import React from "react";
 import { NewsFeed } from "../components/_components";
 import PostForm from "../components/Post/PostForm";
-import "../styles/_postForm.scss";
+import "../assets/styles/_postForm.scss";
 
 function HomePage() {
 	return (

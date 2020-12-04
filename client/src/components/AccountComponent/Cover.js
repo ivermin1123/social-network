@@ -9,7 +9,7 @@ const Cover = ({ ...props }) => {
 	const [status, setStatus] = useState(false);
 	const [state, setState] = useState();
 	const handleAddProfile = () => {
-		status ? setStatus(false) : setStatus(true);
+		setStatus(!status)
 	};
 	const handleClickMenu = (value) => {
 		setState(value);

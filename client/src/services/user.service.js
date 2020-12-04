@@ -29,6 +29,20 @@ function register(user) {
 	});
 }
 
+function getUserDate(userId) {
+	return axios
+		.post(`${API_URL}/api/user/getUser`, {
+			userId,
+		})
+		.then((response) => {
+			if (response.data.user) {
+				localStorage.setItem("user", JSON.stringify(response.data));
+			}
+
+			return response.data;
+		});
+}
+
 const userService = {
 	login,
 	logout,

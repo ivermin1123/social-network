@@ -531,6 +531,9 @@
 		border: 0px;
 		font-size: 17px;
 		padding-right: 80px;
+		&:focus {
+			outline: none;
+		}
 	}
 	.compose-dock .dock {
 		position: absolute;

@@ -1,5 +1,5 @@
 /* eslint-disable operator-linebreak */
-import { postConstants, messageConstants } from "../constants";
+import { postConstants, alertConstants } from "../constants";
 import { postService } from "../services";
 
 const getPost = (postId) => (dispatch) => {
@@ -25,7 +25,7 @@ const getPost = (postId) => (dispatch) => {
 			});
 
 			dispatch({
-				type: messageConstants.SET_MESSAGE,
+				type: alertConstants.SET_ALERT,
 				payload: message,
 			});
 

@@ -5,11 +5,7 @@ export function addUser(req, res, next) {
   const schema = Joi.object({
     firstName: Joi.string().min(2).max(30).required(),
     lastName: Joi.string().min(2).max(30).required(),
-    birthday: Joi.string()
-      .min(10)
-      .max(10)
-      .pattern(new RegExp(/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/))
-      .required(),
+    birthday: Joi.date().required(),
     username: Joi.string()
       .min(3)
       .max(30)

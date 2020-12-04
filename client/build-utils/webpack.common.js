@@ -20,7 +20,7 @@ module.exports = {
 	plugins: [
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin({
-			title: "Advanced React with Webpack Setup",
+			title: "Social Network ?",
 			template: path.resolve(__dirname, "..", "./src/index.html"),
 		}),
 		new ESLintPlugin(),

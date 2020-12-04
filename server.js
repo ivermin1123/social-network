@@ -106,9 +106,9 @@ if (process.env.NODE_ENV === "production") {
   app.use(logger("dev"));
 }
 app.use(express.static("public"));
-// app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "public", "index.html"));
-// });
+app.get("/404", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public", "NotFound.html"));
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -141,7 +141,7 @@ app.use((err, req, res, next) => {
   // set locals, only providing error in development
   // res.locals.message = err.message;
   // res.locals.error = process.env.NODE_ENV === "development" ? err : {};
-  console.log(err);
+  //   console.log(err);
 
   // render the error page
   res.status(err.status || 500);

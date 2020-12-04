@@ -1,6 +1,4 @@
-import {
-	faCommentAlt,faClock,
-} from "@fortawesome/free-regular-svg-icons";
+import { faCommentAlt, faClock } from "@fortawesome/free-regular-svg-icons";
 import {
 	faHome,
 	faEye,
@@ -36,5 +34,6 @@ const COLORS = {
 };
 
 export default {
-	COLORS,ICONS
+	COLORS,
+	ICONS,
 };

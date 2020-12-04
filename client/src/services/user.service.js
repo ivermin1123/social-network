@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-unresolved
 import config from "config";
 import axios from "axios";
 

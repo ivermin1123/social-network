@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import userActions from "../../actions/user.actions";
 import { CSSTransition } from "react-transition-group";
+import userActions from "../../actions/user.actions";
 import { ArrowIcon, BoltIcon, ChevronIcon, CogIcon } from "../../Icons/_icon";
 
 function DropdownMenu() {
@@ -25,20 +25,26 @@ function DropdownMenu() {
 	}
 
 	function DropdownItem(props) {
-		const { callback } = props;
+		const {
+			callback: _callback,
+			goToMenu,
+			leftIcon,
+			children,
+			rightIcon,
+		} = props;
 		return (
 			<a
 				href="/#"
 				className="menu-item"
 				onClick={
-					callback
+					_callback
 						? callback
-						: () => props.goToMenu && setActiveMenu(props.goToMenu)
+						: () => goToMenu && setActiveMenu(goToMenu)
 				}
 			>
-				<span className="icon-button">{props.leftIcon}</span>
-				{props.children}
-				<span className="icon-right">{props.rightIcon}</span>
+				<span className="icon-button">{leftIcon}</span>
+				{children}
+				<span className="icon-right">{rightIcon}</span>
 			</a>
 		);
 	}

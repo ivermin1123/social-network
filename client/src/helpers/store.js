@@ -8,8 +8,10 @@ const loggerMiddleware = createLogger();
 
 const middleware = [thunk];
 
-export const store = createStore(
-    rootReducer,
-    initialState,
-    applyMiddleware(...middleware, loggerMiddleware)
+const store = createStore(
+	rootReducer,
+	initialState,
+	applyMiddleware(...middleware, loggerMiddleware)
 );
+
+export default store;

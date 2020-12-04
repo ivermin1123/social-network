@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Theme from "../../constants/Theme";
-import { useState } from "react";
 import { SearchBox } from "../_components";
 
 const Navbar = ({ ...props }) => {
@@ -24,6 +23,7 @@ const Navbar = ({ ...props }) => {
 						</Link>
 						<div className="nav-bar__search-bar">
 							<button
+								type="button"
 								className="input-search-field"
 								onClick={() => {
 									setDisplay(true);

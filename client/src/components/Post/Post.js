@@ -6,6 +6,7 @@ import {
 	LikeButton,
 	LikeCount,
 } from "../_components";
+
 const Post = () => {
 	return (
 		<div className="post">

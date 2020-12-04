@@ -48,6 +48,7 @@ const userService = {
 	login,
 	logout,
 	register,
+	getUserDate,
 };
 
 export default userService;

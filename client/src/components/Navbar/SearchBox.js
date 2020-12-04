@@ -1,7 +1,8 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Theme from "../../constants/Theme";
 import { Link } from "react-router-dom";
+import Theme from "../../constants/Theme";
 
 const listSearchHistory = [
 	{
@@ -30,6 +31,7 @@ const SearchBox = ({ ...props }) => {
 		<div className="nav-bar__search-field">
 			<div className="search-field">
 				<button
+					type="button"
 					className="search-field-icon"
 					onClick={() => {
 						showSearch(false);
@@ -53,9 +55,12 @@ const SearchBox = ({ ...props }) => {
 				</div>
 				<div className="search-history-content">
 					{listSearchHistory
-						? listSearchHistory.map((item, index) => {
+						? listSearchHistory.map((item) => {
 								return (
-									<button className="item-search">
+									<button
+										className="item-search"
+										type="button"
+									>
 										<div className="">
 											{item.avt ? (
 												<img
@@ -72,7 +77,7 @@ const SearchBox = ({ ...props }) => {
 											)}
 											<span>{item.name}</span>
 										</div>
-										<button>x</button>
+										<button type="button">x</button>
 									</button>
 								);
 						  })

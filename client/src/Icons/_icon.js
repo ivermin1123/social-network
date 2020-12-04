@@ -6,6 +6,7 @@ import ChevronIcon from "./Chevron";
 import CogIcon from "./Cog";
 import MessengerIcon from "./Messenger";
 import PlusIcon from "./Plus";
+
 export {
 	ArrowIcon,
 	BellIcon,

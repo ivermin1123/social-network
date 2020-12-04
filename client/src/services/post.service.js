@@ -1,15 +1,14 @@
 // eslint-disable-next-line import/no-unresolved
 import config from "config";
 import axios from "axios";
+import authHeader from "../helpers/auth-header";
 
 const API_URL = config.apiUrl;
 
-const { user } = JSON.parse(localStorage.getItem("user"));
+const author = authHeader();
 
 const configAxios = {
-	headers: {
-		Authorization: user.token,
-	},
+	headers: author,
 };
 
 function getPost(postId) {

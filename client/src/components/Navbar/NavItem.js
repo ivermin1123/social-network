@@ -1,13 +1,19 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function NavItem(props) {
 	const [open, setOpen] = useState(false);
-	const { icon, children } = props;
+	const { icon, children, href } = props;
+
 	return (
 		<li className="nav-item">
-			<a href="/#" className="icon-button" onClick={() => setOpen(!open)}>
-				{icon}
-			</a>
+			<Link
+				to={href || "/#"}
+				className="icon-button"
+				onClick={() => setOpen(!open)}
+			>
+				{icon}{" "}
+			</Link>
 
 			{open && children}
 		</li>

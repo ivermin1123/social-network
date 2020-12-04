@@ -60,12 +60,13 @@ const SearchBox = ({ ...props }) => {
 									<button
 										className="item-search"
 										type="button"
+										key={item.name}
 									>
 										<div className="">
 											{item.avt ? (
 												<img
 													src={item.avt}
-													alt="avata"
+													alt="avatar"
 												/>
 											) : (
 												<div className="icon-clock">
@@ -77,7 +78,7 @@ const SearchBox = ({ ...props }) => {
 											)}
 											<span>{item.name}</span>
 										</div>
-										<button type="button">x</button>
+										<span type="button">x</span>
 									</button>
 								);
 						  })

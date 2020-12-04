@@ -5,7 +5,13 @@ import { clearAlert } from "./actions/alert.actions";
 import history from "./helpers/history";
 import PrivateRoute from "./components";
 
-import { HomePage, AccountPage, LoginPage, RegisterPage } from "./pages/_pages";
+import {
+	HomePage,
+	AccountPage,
+	LoginPage,
+	RegisterPage,
+	MessagePage,
+} from "./pages/_pages";
 import { Navbar, NavItem, DropdownMenu } from "./components/_components";
 import { BellIcon, MessengerIcon, CaretIcon, PlusIcon } from "./Icons/_icon";
 
@@ -33,7 +39,10 @@ function App() {
 								<Navbar>
 									<NavItem icon={<PlusIcon />} />
 									<NavItem icon={<BellIcon />} />
-									<NavItem icon={<MessengerIcon />} />
+									<NavItem
+										href="/message"
+										icon={<MessengerIcon />}
+									/>
 									<NavItem icon={<CaretIcon />}>
 										<DropdownMenu />
 									</NavItem>
@@ -51,6 +60,11 @@ function App() {
 									exact
 									path="/account"
 									component={AccountPage}
+								/>
+								<PrivateRoute
+									exact
+									path="/message"
+									component={MessagePage}
 								/>
 								<Route path="/login" component={LoginPage} />
 								<Route

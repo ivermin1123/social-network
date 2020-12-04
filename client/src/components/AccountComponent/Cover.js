@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import tabs from "../../constants/tabs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import tabs from "../../constants/tabs";
 import Theme from "../../constants/Theme";
+
 const Cover = ({ ...props }) => {
 	const { acc } = props;
 	const [sumFriend, setSumFriend] = useState(0);
@@ -9,7 +10,7 @@ const Cover = ({ ...props }) => {
 	const [status, setStatus] = useState(false);
 	const [state, setState] = useState();
 	const handleAddProfile = () => {
-		setStatus(!status)
+		setStatus(!status);
 	};
 	const handleClickMenu = (value) => {
 		setState(value);
@@ -29,13 +30,14 @@ const Cover = ({ ...props }) => {
 			<div className="cover-display">
 				<div className="cover-display-content">
 					<h1>{acc.displayName}</h1>
-					<div
+					<button
+						type="button"
 						className="button__add-profile"
 						style={{ display: status ? "none" : "block" }}
 						onClick={handleAddProfile}
 					>
 						Thêm tiểu sử
-					</div>
+					</button>
 					<div
 						className="cover-display-add"
 						style={{ display: !status ? "none" : "block" }}
@@ -48,7 +50,7 @@ const Cover = ({ ...props }) => {
 							onChange={(e) => {
 								setValue(e.target.value);
 							}}
-						></textarea>
+						/>
 						<div className="count-char">
 							<span>Còn {101 - value.length} ký tự</span>
 						</div>
@@ -62,6 +64,7 @@ const Cover = ({ ...props }) => {
 							</div>
 							<div className="cover-bottom-right ">
 								<button
+									type="button"
 									onClick={() => {
 										handleAddProfile();
 										setValue("");
@@ -70,6 +73,7 @@ const Cover = ({ ...props }) => {
 									Hủy
 								</button>
 								<button
+									type="button"
 									disabled={
 										!(
 											value.length > 0 &&
@@ -96,7 +100,8 @@ const Cover = ({ ...props }) => {
 					<div className="menu-content-left">
 						{tabs.map((item, index) => {
 							return (
-								<div
+								<button
+									type="button"
 									className={`menu-left-item ${
 										state === index ? "active" : ""
 									}`}
@@ -110,31 +115,31 @@ const Cover = ({ ...props }) => {
 											{sumFriend}
 										</span>
 									) : null}
-								</div>
+								</button>
 							);
 						})}
 					</div>
 					<div className="menu-content-right">
-						<button>
+						<button type="button">
 							<FontAwesomeIcon
 								className="icon"
 								icon={Theme.ICONS.pen}
 							/>
 							<span>Chỉnh sửa trang ...</span>
 						</button>
-						<button>
+						<button type="button">
 							<FontAwesomeIcon
 								className="icon"
 								icon={Theme.ICONS.eye}
 							/>
 						</button>
-						<button>
+						<button type="button">
 							<FontAwesomeIcon
 								className="icon"
 								icon={Theme.ICONS.search}
 							/>
 						</button>
-						<button>
+						<button type="button">
 							<FontAwesomeIcon
 								className="icon"
 								icon={Theme.ICONS.ellipsisH}

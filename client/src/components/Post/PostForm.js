@@ -70,7 +70,6 @@ const PostForm = ({ ...props }) => {
 					<br />
 					<textarea
 						type="text"
-						autoFocus
 						className="post-form-modal__body--content"
 						placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
 					/>

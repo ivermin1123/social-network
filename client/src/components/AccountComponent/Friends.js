@@ -1,5 +1,5 @@
 import React from "react";
 
-const Friends = () => {};
-
-export default Friends;
+export default function Friends() {
+	return <div> </div>;
+}

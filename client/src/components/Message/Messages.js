@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Message from "./Message/Message";
 import Header from "./Message/Header";
+import Footer from "./Message/Footer";
 // import Input from "./Message/Input";
 
 const Messages = () => {
@@ -22,6 +23,34 @@ const Messages = () => {
 			author: "other",
 			text: "?",
 		},
+		{
+			author: "me",
+			text: "Ơ này",
+		},
+		{
+			author: "me",
+			text: "Từ từ đã chứ",
+		},
+		{
+			author: "other",
+			text: "Từ từ?",
+		},
+		{
+			author: "other",
+			text: "Có cút không",
+		},
+		{
+			author: "other",
+			text: "Hay đợi block",
+		},
+		{
+			author: "me",
+			text: "Ok",
+		},
+		{
+			author: "me",
+			text: "You win",
+		},
 	]);
 
 	const sendMsg = (e) => {
@@ -36,22 +65,21 @@ const Messages = () => {
 
 	return (
 		<div className="col">
-			<div className="col-header">
+			<div className="col">
 				<Header />
-			</div>
-			<div className="col-content">
-				<section className="messages">
-					<div className="grid-message">
-						{messages.map((message) => (
-							<Message
-								author={message.author}
-								text={message.text}
-								key={Math.floor(Math.random() * 99999) + 1}
-							/>
-						))}
-					</div>
-				</section>
-				<div className="input__form">
+				<div className="col-content">
+					<section className="messages">
+						<div className="grid-message">
+							{messages.map((message) => (
+								<Message
+									author={message.author}
+									text={message.text}
+									key={Math.floor(Math.random() * 99999) + 1}
+								/>
+							))}
+						</div>
+					</section>
+					{/* <div className="input__form">
 					<form onSubmit={sendMsg}>
 						<input
 							type="text"
@@ -63,6 +91,9 @@ const Messages = () => {
 							required
 						/>
 					</form>
+				</div> */}
+					<Footer callback={(sendMsg, setMsg, msg)} />
+					<div className="cover-bar" />
 				</div>
 			</div>
 		</div>

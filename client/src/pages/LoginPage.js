@@ -22,7 +22,6 @@ function LoginPage(props) {
 	const { username, password } = inputs;
 	const { isLoggedIn } = useSelector((state) => state.authentication);
 	const dispatch = useDispatch();
-	//const location = useLocation();
 
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -36,7 +35,6 @@ function LoginPage(props) {
 		setSubmitted(true);
 		if (username && password) {
 			// get return url from location state or default to home page
-			//const { from } = location.state || { from: { pathname: "/" } };
 			dispatch(userActions.login(username, password))
 				.then(() => {
 					props.history.push({ pathname: "/" });
@@ -90,7 +88,7 @@ function LoginPage(props) {
 								Quên mật khẩu
 							</a>
 						</div>
-						<button className="btn-form">
+						<button className="btn-form" type="submit">
 							{isLoggedIn && (
 								<span className="spinner-border spinner-border-sm mr-1" />
 							)}
@@ -113,4 +111,4 @@ function LoginPage(props) {
 	);
 }
 
-export { LoginPage };
+export default LoginPage;

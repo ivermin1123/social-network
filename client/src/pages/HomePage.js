@@ -1,7 +1,7 @@
+import { Row, Col } from "react-bootstrap";
 import React from "react";
 import { NewsFeed } from "../components/_components";
-import { Row, Col } from "react-bootstrap";
-import PostForm from "./../components/Post/PostForm";
+import PostForm from "../components/Post/PostForm";
 import "../styles/_postForm.scss";
 
 function HomePage() {
@@ -17,4 +17,4 @@ function HomePage() {
 	);
 }
 
-export { HomePage };
+export default HomePage;

@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Theme from "../../constants/Theme";
-import { useState } from "react";
 
 const listSearchHistory = [
 	{
@@ -28,6 +27,7 @@ const listSearchHistory = [
 const Navbar = ({ ...props }) => {
 	const [display, setDisplay] = useState(false);
 	console.log(window.screen.availWidth);
+	const { children } = props;
 	return (
 		<div className="nav-bar">
 			<div className="nav-bar-fixed row">
@@ -42,6 +42,7 @@ const Navbar = ({ ...props }) => {
 						</Link>
 						<div className="nav-bar__search-bar">
 							<button
+								type="button"
 								className="input-search-field"
 								onClick={() => {
 									setDisplay(true);
@@ -88,7 +89,7 @@ const Navbar = ({ ...props }) => {
 								<div className="nav-bar__name">Tú Vip</div>
 							</div>
 						</Link>
-						{props.children}
+						{children}
 					</ul>
 				</div>
 			</div>
@@ -98,6 +99,7 @@ const Navbar = ({ ...props }) => {
 			>
 				<div className="search-field">
 					<button
+						type="button"
 						className="search-field-icon"
 						onClick={() => {
 							setDisplay(false);
@@ -120,28 +122,38 @@ const Navbar = ({ ...props }) => {
 						<Link to="/">Chỉnh sửa</Link>
 					</div>
 					<div className="search-history-content">
-						{listSearchHistory ?
-						listSearchHistory.map((item, index)=>{
-							return (
-								<button className="item-search">
-									<div className="">
-										{item.avt ? (
-											<img src={item.avt} alt="avata" />
-										) : (
-											<div className="icon-clock">
-												<FontAwesomeIcon
-													className="icon"
-													icon={Theme.ICONS.clock}
-												/>
+						{listSearchHistory
+							? listSearchHistory.map((item) => {
+									return (
+										<button
+											className="item-search"
+											type="button"
+										>
+											<div className="">
+												{item.avt ? (
+													<img
+														src={item.avt}
+														alt="avata"
+													/>
+												) : (
+													<div className="icon-clock">
+														<FontAwesomeIcon
+															className="icon"
+															icon={
+																Theme.ICONS
+																	.clock
+															}
+														/>
+													</div>
+												)}
+												<span>{item.name}</span>
 											</div>
-										)}
-										<span>{item.name}</span>
-									</div>
-									<button>x</button>
-								</button>
-							);
-						})
-						 : null}
+											<button type="button">x</button>
+										</button>
+									);
+									// eslint-disable-next-line no-mixed-spaces-and-tabs
+							  })
+							: null}
 					</div>
 				</div>
 			</div>

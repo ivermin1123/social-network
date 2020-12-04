@@ -1,6 +1,6 @@
-import { userConstants } from "../constants";
+import userConstants from "../constants/user.constants";
 
-export function users(
+function users(
 	state = {
 		loadingUser: true,
 		updatingUser: false,
@@ -49,9 +49,11 @@ export function users(
 			// add 'deleting:true' property to user being deleted
 			return {
 				...state,
-				items: state.items.map((user) =>
-					user.id === action.id ? { ...user, deleting: true } : user
-				),
+				items: state.items.map((user) => {
+					return user.id === action.id
+						? { ...user, deleting: true }
+						: user;
+				}),
 			};
 		case userConstants.DELETE_SUCCESS:
 			// remove deleted user from state
@@ -77,3 +79,5 @@ export function users(
 			return state;
 	}
 }
+
+export default users;

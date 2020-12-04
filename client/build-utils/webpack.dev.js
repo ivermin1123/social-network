@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const Dotenv = require("dotenv-webpack");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
 	mode: "development",
@@ -16,6 +17,7 @@ module.exports = {
 			},
 			{
 				test: /\.scss$/,
+				exclude: /node_modules/,
 				use: [
 					{
 						loader: "style-loader",
@@ -29,20 +31,86 @@ module.exports = {
 				],
 			},
 			{
-				test: /\.css$/,
-				use: ["style-loader", "css-loader"],
+				test: /\.css$/i,
+				use: [MiniCssExtractPlugin.loader, "css-loader"],
 			},
 			{
-				test: /\.(png|svg|jpg|jpeg|gif)$/i,
-				type: "asset/resource",
+				test: /\.(png|jpg|gif)$/,
+				use: [
+					{
+						loader: "url-loader",
+						options: {
+							limit: 8192,
+							mimetype: "image/png",
+							name: "images/[name].[ext]",
+						},
+					},
+				],
 			},
 			{
-				test: /\.svg$/,
-				use: ["@svgr/webpack"],
+				test: /\.eot(\?v=\d+.\d+.\d+)?$/,
+				use: [
+					{
+						loader: "file-loader",
+						options: {
+							name: "fonts/[name].[ext]",
+						},
+					},
+				],
+			},
+			{
+				test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				use: [
+					{
+						loader: "url-loader",
+						options: {
+							limit: 8192,
+							mimetype: "application/font-woff",
+							name: "fonts/[name].[ext]",
+						},
+					},
+				],
+			},
+			{
+				test: /\.[ot]tf(\?v=\d+.\d+.\d+)?$/,
+				use: [
+					{
+						loader: "url-loader",
+						options: {
+							limit: 8192,
+							mimetype: "application/octet-stream",
+							name: "fonts/[name].[ext]",
+						},
+					},
+				],
+			},
+			{
+				test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+				use: [
+					{
+						loader: "url-loader",
+						options: {
+							limit: 8192,
+							mimetype: "image/svg+xml",
+							name: "images/[name].[ext]",
+						},
+					},
+				],
 			},
 		],
 	},
 	plugins: [
+		new webpack.LoaderOptionsPlugin({
+			test: /\.jsx?$/,
+			options: {
+				eslint: {
+					configFile: path.resolve(__dirname, ".eslintrc"),
+					cache: false,
+				},
+			},
+		}),
+		new webpack.optimize.ModuleConcatenationPlugin(),
+		new MiniCssExtractPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 		new Dotenv({
 			path: path.resolve(__dirname, "..", "./.env.development"),
@@ -54,6 +122,12 @@ module.exports = {
 		port: 3000,
 	},
 	devtool: "eval-source-map",
+	entry: [
+		"react-hot-loader/patch",
+		"webpack-dev-server/client?http://localhost:3000",
+		"webpack/hot/only-dev-server",
+		"./src/index.js",
+	],
 	externals: {
 		// global app config object
 		config: JSON.stringify({

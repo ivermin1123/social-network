@@ -1,5 +1,5 @@
 import React from "react";
-import { Cover, Introduction,Wall, Images } from "../components/_components";
+import { Cover, Introduction, Wall, Images } from "../components/_components";
 import "../styles/_account.scss";
 
 const AccountPage = () => {

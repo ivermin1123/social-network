@@ -1,6 +1,6 @@
-import { postConstants } from "../constants";
+import postConstants from "../constants/post.constants";
 
-export function posts(state = {}, action) {
+export default function posts(state = {}, action) {
 	const { type, payload } = action;
 	switch (type) {
 		case postConstants.GETPOST_SUCCESS:

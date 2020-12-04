@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import DatePicker from "react-datepicker";
 import { FormField } from "../components/_components";
 import userActions from "../actions/user.actions";
 import "../styles/_form.scss";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 function RegisterPage(props) {
@@ -43,7 +43,7 @@ function RegisterPage(props) {
 			user.birthday &&
 			user.email &&
 			user.repeat_password
-		)
+		) {
 			if (user.password === user.repeat_password) {
 				dispatch(userActions.register(user))
 					.then(() => {
@@ -54,6 +54,7 @@ function RegisterPage(props) {
 						setSubmitted(false);
 					});
 			}
+		}
 	}
 
 	if (isLoggedIn) {
@@ -172,7 +173,7 @@ function RegisterPage(props) {
 					<div className="col-6">
 						<button type="submit">
 							{registering && (
-								<span className="spinner-border spinner-border-sm mr-1"></span>
+								<span className="spinner-border spinner-border-sm mr-1" />
 							)}
 							ĐĂNG KÝ
 						</button>
@@ -188,4 +189,4 @@ function RegisterPage(props) {
 	);
 }
 
-export { RegisterPage };
+export default RegisterPage;

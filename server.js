@@ -36,46 +36,46 @@ mongoose.set("useCreateIndex", true);
 mongoose.set("autoIndex", false);
 
 const app = express();
-const io = socket_io();
+// const io = socket_io();
 
-import { userController } from "./controllers/main-controllers";
+// import { userController } from "./controllers/main-controllers";
 
-app.io = io;
+// app.io = io;
 
-app.set("socketio", io);
+// app.set("socketio", io);
 
-io.use((socket, next) => {
-  if (socket.handshake.query && socket.handshake.query.token) {
-    const token = socket.handshake.query.token.split(" ")[1];
-    jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
-      if (err) return next(new Error("Authentication error"));
-      socket.userData = decoded;
-      next();
-    });
-  } else {
-    next(new Error("Authentication error"));
-  }
-}).on("connection", (socket) => {
-  // Connection now authenticated to receive further events
-  socket.join(socket.userData.userId);
-  io.in(socket.userData.userId).clients((err, clients) => {
-    userController.changeStatus(socket.userData.userId, clients, io);
-    //console.log(clients);
-  });
-  socket.on("typing", (data) => {
-    socket.to(data.userId).emit("typing", { roomId: data.roomId });
-  });
-  socket.on("stoppedTyping", (data) => {
-    socket.to(data.userId).emit("stoppedTyping", { roomId: data.roomId });
-  });
-  socket.on("disconnect", () => {
-    socket.leave(socket.userData.userId);
-    io.in(socket.userData.userId).clients((err, clients) => {
-      userController.changeStatus(socket.userData.userId, clients, io);
-      //console.log(clients);
-    });
-  });
-});
+// io.use((socket, next) => {
+//   if (socket.handshake.query && socket.handshake.query.token) {
+//     const token = socket.handshake.query.token.split(" ")[1];
+//     jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
+//       if (err) return next(new Error("Authentication error"));
+//       socket.userData = decoded;
+//       next();
+//     });
+//   } else {
+//     next(new Error("Authentication error"));
+//   }
+// }).on("connection", (socket) => {
+//   // Connection now authenticated to receive further events
+//   socket.join(socket.userData.userId);
+//   io.in(socket.userData.userId).clients((err, clients) => {
+//     userController.changeStatus(socket.userData.userId, clients, io);
+//     //console.log(clients);
+//   });
+//   socket.on("typing", (data) => {
+//     socket.to(data.userId).emit("typing", { roomId: data.roomId });
+//   });
+//   socket.on("stoppedTyping", (data) => {
+//     socket.to(data.userId).emit("stoppedTyping", { roomId: data.roomId });
+//   });
+//   socket.on("disconnect", () => {
+//     socket.leave(socket.userData.userId);
+//     io.in(socket.userData.userId).clients((err, clients) => {
+//       userController.changeStatus(socket.userData.userId, clients, io);
+//       //console.log(clients);
+//     });
+//   });
+// });
 
 // Enable cors
 const corsOptions = {
@@ -106,9 +106,9 @@ if (process.env.NODE_ENV === "production") {
   app.use(logger("dev"));
 }
 app.use(express.static("public"));
-// app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "public", "index.html"));
-// });
+app.get("/404", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "public", "NotFound.html"));
+});
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -141,7 +141,7 @@ app.use((err, req, res, next) => {
   // set locals, only providing error in development
   // res.locals.message = err.message;
   // res.locals.error = process.env.NODE_ENV === "development" ? err : {};
-  console.log(err);
+  //   console.log(err);
 
   // render the error page
   res.status(err.status || 500);

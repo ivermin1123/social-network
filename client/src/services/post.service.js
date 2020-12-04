@@ -1,9 +1,10 @@
+// eslint-disable-next-line import/no-unresolved
 import config from "config";
 import axios from "axios";
 
 const API_URL = config.apiUrl;
 
-let { user } = JSON.parse(localStorage.getItem("user"));
+const { user } = JSON.parse(localStorage.getItem("user"));
 
 const configAxios = {
 	headers: {

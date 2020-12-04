@@ -1,4 +1,5 @@
-import { userConstants, messageConstants } from "../constants";
+/* eslint-disable operator-linebreak */
+import { userConstants, alertConstants } from "../constants";
 import userService from "../services/user.service";
 
 const login = (username, password) => (dispatch) => {
@@ -24,7 +25,7 @@ const login = (username, password) => (dispatch) => {
 			});
 
 			dispatch({
-				type: messageConstants.SET_MESSAGE,
+				type: alertConstants.SET_MESSAGE,
 				payload: message,
 			});
 
@@ -46,7 +47,7 @@ const register = (username, email, password) => (dispatch) => {
 			});
 
 			dispatch({
-				type: messageConstants.SET_MESSAGE,
+				type: alertConstants.SET_MESSAGE,
 				payload: response.data,
 			});
 
@@ -65,7 +66,7 @@ const register = (username, email, password) => (dispatch) => {
 			});
 
 			dispatch({
-				type: messageConstants.SET_MESSAGE,
+				type: alertConstants.SET_MESSAGE,
 				payload: message,
 			});
 

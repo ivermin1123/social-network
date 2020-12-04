@@ -1,12 +1,12 @@
-import { userConstants } from "../constants";
 import jwtDecode from "jwt-decode";
+import { userConstants } from "../constants";
 
 const initialState = {
 	isLoggedIn: false,
 	user: null,
 };
 
-let user = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(localStorage.getItem("user"));
 
 if (user) {
 	const decodedToken = jwtDecode(user.user.token);
@@ -18,7 +18,7 @@ if (user) {
 	}
 }
 
-export function authentication(state = initialState, action) {
+export default function authentication(state = initialState, action) {
 	const { type, payload } = action;
 
 	switch (type) {

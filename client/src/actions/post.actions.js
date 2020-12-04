@@ -1,5 +1,6 @@
+/* eslint-disable operator-linebreak */
 import { postConstants, messageConstants } from "../constants";
-import postService from "./../services/post.service";
+import { postService } from "../services";
 
 const getPost = (postId) => (dispatch) => {
 	return postService.getPost(postId).then(

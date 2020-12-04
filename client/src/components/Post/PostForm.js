@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import ModalHeader from "react-bootstrap/esm/ModalHeader";
+import React, { useState } from "react";
+// import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import Modal from "react-bootstrap/Modal";
 
 const PostForm = ({ ...props }) => {
@@ -7,7 +7,7 @@ const PostForm = ({ ...props }) => {
 	const [file, setFile] = useState(null);
 
 	const handleFile = (e) => {
-		let files = e.target.files;
+		const { files } = e.target;
 		setFile(URL.createObjectURL(files[0]));
 	};
 
@@ -25,16 +25,23 @@ const PostForm = ({ ...props }) => {
 						className="post-form-top__avt"
 					/>
 					<button
+						type="button"
 						className="post-form-top__btn"
 						onClick={() => setShow(true)}
 					>
-						Bạn mình ơi, bạn đang nghĩ gì vậy nè?
+						Bạn mình ơi, bạn hang nghĩ gì vậy nè?
 					</button>
 				</div>
 				<div className="post-form-bot">
-					<button className="post-form-bot__btn">Anh</button>
-					<button className="post-form-bot__btn">Tú</button>
-					<button className="post-form-bot__btn">Nguyễn</button>
+					<button type="button" className="post-form-bot__btn">
+						Anh
+					</button>
+					<button type="button" className="post-form-bot__btn">
+						Tú
+					</button>
+					<button type="button" className="post-form-bot__btn">
+						Nguyễn
+					</button>
 				</div>
 			</div>
 			<Modal

@@ -1,34 +1,33 @@
-import React, { useEffect, Fragment, Suspense } from "react";
+import React, { useEffect, Suspense } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { useDispatch, useSelector, connect } from "react-redux";
-import { clearMessage } from "./actions/message.actions";
-import { history } from "./helpers/history";
-import { PrivateRoute } from "./components";
+import { clearAlert } from "./actions/alert.actions";
+import history from "./helpers/history";
+import PrivateRoute from "./components";
 
 import { HomePage, AccountPage, LoginPage, RegisterPage } from "./pages/_pages";
 import { Navbar, NavItem, DropdownMenu } from "./components/_components";
 import { BellIcon, MessengerIcon, CaretIcon, PlusIcon } from "./Icons/_icon";
 
 function App() {
-	const message = useSelector((state) => state.message);
+	const alert = useSelector((state) => state.alert);
+
 	const dispatch = useDispatch();
 	const { isLoggedIn } = useSelector((state) => state.authentication);
 
 	useEffect(() => {
-		history.listen((location, action) => {
+		history.listen(() => {
 			// clear alert on location change
-			dispatch(clearMessage());
+			dispatch(clearAlert());
 		});
 	}, [dispatch]);
 
 	return (
 		<div>
-			{message.message && (
-				<div className={`alert `}>{message.message}</div>
-			)}
+			{alert.message && <div className={`alert `}>{alert.message}</div>}
 			<Router history={history}>
 				<Suspense fallback={<div>Loading...</div>}>
-					<Fragment>
+					<>
 						{isLoggedIn ? (
 							<>
 								<Navbar>
@@ -37,7 +36,7 @@ function App() {
 									<NavItem icon={<MessengerIcon />} />
 
 									<NavItem icon={<CaretIcon />}>
-										<DropdownMenu></DropdownMenu>
+										<DropdownMenu />
 									</NavItem>
 								</Navbar>
 							</>
@@ -61,7 +60,7 @@ function App() {
 								/>
 							</Switch>
 						</div>
-					</Fragment>
+					</>
 				</Suspense>
 			</Router>
 		</div>

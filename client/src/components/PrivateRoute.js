@@ -1,17 +1,24 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-export const PrivateRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({ component: Component, ...rest }) => (
 	<Route
 		{...rest}
-		render={(props) =>
-			localStorage.getItem("user") ? (
-				<Component {...props} />
-			) : (
-				<Redirect
-					to={{ pathname: "/login", state: { from: props.location } }}
-				/>
-			)
+		render={
+			(props) =>
+				localStorage.getItem("user") ? (
+					<Component {...props} />
+				) : (
+					<Redirect
+						to={{
+							pathname: "/login",
+							state: { from: props.location },
+						}}
+					/>
+				)
+			// eslint-disable-next-line react/jsx-curly-newline
 		}
 	/>
 );
+
+export default PrivateRoute;

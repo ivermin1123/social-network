@@ -3,20 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
 import Theme from "../../constants/Theme";
 import { CommentButton, LikeButton } from "../_components";
+import ListLikes from "./ListLikes";
 
 const Post = (props) => {
 	const [show, setShow] = useState(false);
 	const { post } = props;
-	const {
-		avt,
-		name,
-		created,
-		content,
-		img,
-		likes,
-		comments,
-		listLikes,
-	} = post;
+	const { avt, name, created, content, img, likes, comments } = post;
 
 	const handleClick = () => {};
 	return (
@@ -67,7 +59,8 @@ const Post = (props) => {
 						List Likes
 					</Modal.Title>
 				</Modal.Header>
-				<ul className="list-likes">{listLikes}</ul>
+
+				<ListLikes post={post} />
 			</Modal>
 		</>
 	);

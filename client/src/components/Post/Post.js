@@ -1,46 +1,75 @@
-import React from "react";
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Modal from "react-bootstrap/Modal";
+import Theme from "../../constants/Theme";
+import { CommentButton, LikeButton } from "../_components";
 
-import {
-	CommentButton,
-	CommentCount,
-	LikeButton,
-	LikeCount,
-} from "../_components";
+const Post = (props) => {
+	const [show, setShow] = useState(false);
+	const { post } = props;
+	const {
+		avt,
+		name,
+		created,
+		content,
+		img,
+		likes,
+		comments,
+		listLikes,
+	} = post;
 
-const Post = () => {
+	const handleClick = () => {};
 	return (
-		<div className="post">
-			<div className="post-header">
-				<img
-					src="https://i.pinimg.com/736x/d1/32/64/d132644360376beb74abb10578952888.jpg"
-					alt=""
-					className="post-header__avt"
-				/>
-				<div className="post-header__name">Anh Tu Nguyen</div>
-				<div className="post-header__created">3 days ago</div>
+		<>
+			<div className="post">
+				<div className="post-header">
+					<img src={avt} alt="" className="post-header__avt" />
+					<div className="post-header__name">{name}</div>
+					<div className="post-header__created">{created}</div>
+				</div>
+				<div className="post-body">
+					<div className="post-body__content">{content}</div>
+					<img src={img} alt="" className="post-body__image" />
+					<div className="post-body__react">
+						<button
+							type="button"
+							className="post-body__react--likes"
+							onClick={() => setShow(true)}
+						>
+							<FontAwesomeIcon
+								icon={Theme.ICONS.thumbsUp}
+								color="blue"
+							/>
+							{likes}
+						</button>
+						<div className="post-body__react--comments">
+							{comments} comments
+						</div>
+					</div>
+
+					<div className="post-body__interact">
+						<LikeButton className="post-body__interact--likes" />
+						<CommentButton className="post-body__interact--comments" />
+					</div>
+				</div>
 			</div>
-			<div className="post-body">
-				<div className="post-body__content">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-					Alias doloremque accusamus assumenda, velit est voluptatibus
-					dolores reprehenderit ipsa quis, fuga aliquam id temporibus
-					tempora inventore autem magnam, laudantium placeat illum?c
-				</div>
-				<img
-					src="https://i.ytimg.com/vi/jNy6RW-2lrI/maxresdefault.jpg"
-					alt=""
-					className="post-body__image"
-				/>
-				<div className="post-body__react">
-					<LikeCount className="post-body__react--likes" />
-					<CommentCount className="post-body__react--comments" />
-				</div>
-				<div className="post-body__interact">
-					<LikeButton className="post-body__interact--likes" />
-					<CommentButton className="post-body__interact--comments" />
-				</div>
-			</div>
-		</div>
+			<Modal
+				{...props}
+				dialogClassName="list-likes-modal"
+				centered
+				animation={false}
+				show={show}
+				onHide={() => setShow(false)}
+				onClick={handleClick}
+			>
+				<Modal.Header bsPrefix="list-likes__header">
+					<Modal.Title bsPrefix="list-likes-modal__header-title">
+						List Likes
+					</Modal.Title>
+				</Modal.Header>
+				<ul className="list-likes">{listLikes}</ul>
+			</Modal>
+		</>
 	);
 };
 

@@ -11,10 +11,6 @@ const PostForm = ({ ...props }) => {
 		setFile(URL.createObjectURL(files[0]));
 	};
 
-	const handleClick = () => {
-		// setFile(null);
-	};
-
 	return (
 		<>
 			<div className="post-form">
@@ -51,7 +47,6 @@ const PostForm = ({ ...props }) => {
 				animation={false}
 				show={show}
 				onHide={() => setShow(false)}
-				onClick={handleClick}
 			>
 				<Modal.Header bsPrefix="post-form-modal__header" closeButton>
 					<Modal.Title bsPrefix="post-form-modal__header-title">

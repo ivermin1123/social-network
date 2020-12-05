@@ -1,9 +1,9 @@
 // Component's HomePage
 import CommentButton from "./Post/CommentButton";
-import CommentCount from "./Post/CommentCount";
+
 // import CommentList from "./Post/CommentList";
+
 import LikeButton from "./Post/LikeButton";
-import LikeCount from "./Post/LikeCount";
 import Post from "./Post/Post";
 import PostList from "./Post/PostList";
 import NewsFeed from "./NewsFeed";
@@ -27,10 +27,9 @@ import FormField from "./FormField";
 export {
 	// Component's HomePage
 	CommentButton,
-	CommentCount,
 	// CommentList,
+
 	LikeButton,
-	LikeCount,
 	NewsFeed,
 	Post,
 	PostList,

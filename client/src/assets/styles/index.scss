@@ -444,7 +444,7 @@ a {
 /* POST */
 .post {
 	width: 590px;
-	max-height: 800 px;
+	height: auto;
 	background-color: #ffffff;
 	overflow: hidden;
 	border-radius: 10px;
@@ -491,16 +491,30 @@ a {
 .post-body__content {
 	padding-left: 10px;
 	padding-right: 10px;
+	padding-bottom: 10px;
 }
 .post-body__image {
 	width: 590px;
 	height: auto;
-	max-height: 500px;
+	max-height: 1000px;
 }
 .post-body__react {
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
 	padding: 5px 10px 5px 10px;
+	position: relative;
+	&--likes {
+		left: 10px;
+		cursor: pointer;
+	}
+	// &--likes:hover {
+	// 	border-bottom: 0.5px solid black;
+	// }
+	&--comments {
+		right: 10px;
+		cursor: pointer;
+	}
 }
 .post-body__interact {
 	display: flex;

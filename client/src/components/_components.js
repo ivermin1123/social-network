@@ -5,7 +5,6 @@ import CommentButton from "./Post/CommentButton";
 
 import LikeButton from "./Post/LikeButton";
 import Post from "./Post/Post";
-import PostList from "./Post/PostList";
 import NewsFeed from "./NewsFeed";
 
 // Component's Navbar
@@ -32,7 +31,6 @@ export {
 	LikeButton,
 	NewsFeed,
 	Post,
-	PostList,
 	FormField,
 	// Navbar
 	NavItem,

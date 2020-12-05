@@ -1,27 +1,41 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
+import moment from "moment";
 import Theme from "../../constants/Theme";
 import { CommentButton, LikeButton } from "../_components";
 import ListLikes from "./ListLikes";
+import img5 from "../../assets/image/avatar-5.png";
+
+const LINK_S3 = "https://socialawsbucket.s3-ap-southeast-1.amazonaws.com/";
 
 const Post = (props) => {
 	const [show, setShow] = useState(false);
 	const { post } = props;
-	const { avt, name, created, content, img, likes, comments } = post;
+	const { author, comments, createdAt, description, files, reactions } = post;
 
 	const handleClick = () => {};
 	return (
 		<>
 			<div className="post">
 				<div className="post-header">
-					<img src={avt} alt="" className="post-header__avt" />
-					<div className="post-header__name">{name}</div>
-					<div className="post-header__created">{created}</div>
+					<img
+						src={author.avatar || img5}
+						alt=""
+						className="post-header__avt"
+					/>
+					<div className="post-header__name">{author.username}</div>
+					<div className="post-header__created">
+						{moment(createdAt).fromNow()}
+					</div>
 				</div>
 				<div className="post-body">
-					<div className="post-body__content">{content}</div>
-					<img src={img} alt="" className="post-body__image" />
+					<div className="post-body__content">{description}</div>
+					<img
+						src={files.length ? `${LINK_S3}${files[0].path}` : null}
+						alt=""
+						className="post-body__image"
+					/>
 					<div className="post-body__react">
 						<button
 							type="button"
@@ -32,7 +46,7 @@ const Post = (props) => {
 								icon={Theme.ICONS.thumbsUp}
 								color="blue"
 							/>
-							{likes}
+							{reactions.length}
 						</button>
 						<div className="post-body__react--comments">
 							{comments} comments
@@ -60,7 +74,7 @@ const Post = (props) => {
 					</Modal.Title>
 				</Modal.Header>
 
-				<ListLikes post={post} />
+				<ListLikes reactions={reactions} />
 			</Modal>
 		</>
 	);

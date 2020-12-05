@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 const configToast = {
 	position: "top-right",
-	autoClose: 5000,
+	autoClose: 1000,
 	hideProgressBar: false,
 	closeOnClick: true,
 	pauseOnHover: true,
@@ -57,12 +57,12 @@ const PostForm = ({ ...props }) => {
 		e.preventDefault();
 		try {
 			// Prepare data
-			const fd = new FormData();
+			// const fd = new FormData();
 			const arrFile = Array.from(files);
-			arrFile.forEach((file) => {
-				fd.append("images", file);
-			});
-			fd.append("data", JSON.stringify({ description }));
+			// arrFile.forEach((file) => {
+			// 	fd.append("images", file);
+			// });
+			// fd.append("data", JSON.stringify({ description }));
 			const data = { description, path: "post" };
 			const dataSaveServer = {
 				url: "POST",
@@ -70,12 +70,12 @@ const PostForm = ({ ...props }) => {
 				data: { description },
 			};
 			// Redux call
-			console.log(arrFile, data, dataSaveServer);
 			dispatch(postActions.createPost(arrFile, data, dataSaveServer))
 				.then((data) => {
 					toast(`🦄 Upload Success`);
 					console.log(data);
 					handleReset();
+					setShow(false);
 				})
 				.catch((err) => {
 					toast(`🦄 Upload Fail`);

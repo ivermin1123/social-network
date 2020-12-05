@@ -116,7 +116,7 @@ function ProgressUploadFile(e) {
  * 	- ...
  */
 function handleImageUpload(file, maxWidthOrHeight) {
-	const { type } = file;
+	const { type, name } = file;
 	return new Promise((resolve) => {
 		if (type.includes("image")) {
 			try {
@@ -147,11 +147,19 @@ function handleImageUpload(file, maxWidthOrHeight) {
 								compressedFile.size / 1024 / 1024
 							} MB`
 						); // smaller than maxSizeMB
-						// return uploadToServer(compressedFile); // write your own logic
+						compressedFile.lastModifiedDate = new Date();
+
+						// Conver the blob to file
+						const convertedBlobFile = new File(
+							[compressedFile],
+							name,
+							{ type, lastModified: Date.now() }
+						);
+
 						return resolve({
 							error: false,
 							message: "compress_Success",
-							data: compressedFile,
+							data: convertedBlobFile,
 						});
 					})
 					.catch((error) => {
@@ -192,6 +200,7 @@ function UploadFileS3(files, data, dataSaveServer) {
 				let height = 5000;
 				let width = 5000;
 				const newListFile = [];
+				const promises = [];
 				files.forEach(async (file) => {
 					// doc chieu cao va chieu rong cua anh
 					const img = new Image();
@@ -212,30 +221,34 @@ function UploadFileS3(files, data, dataSaveServer) {
 						}
 
 						// tien hanh upload
-						const data = await handleImageUpload(
-							file,
-							maxWidthOrHeight
+						promises.push(
+							handleImageUpload(file, maxWidthOrHeight).then(
+								(res) => {
+									if (!res.error) {
+										newListFile.push(res.data);
+									} else {
+										newListFile.push(file);
+									}
+								}
+							)
 						);
-						if (!data.error) {
-							newListFile.push(data.data);
-						} else {
-							newListFile.push(file);
-						}
 					} else {
 						newListFile.push(file);
 					}
 				});
 
-				// dua anh len S3
-				const processingUploadS3 = ClientSendMutilFileToS3({
-					listLinkupLoadS3,
-					files: newListFile,
+				await Promise.all(promises).catch((error) => {
+					console.log(error.message);
 				});
 
+				// console.log({ newListFile });
+				// console.log(newListFile);
+				// console.log(JSON.stringify(newListFile));
+				// console.log(newListFile[1]);
+				// console.log(typeof newListFile);
 				const arrayFile = [];
 				for (let i = 0; i < listLinkupLoadS3.length; i++) {
 					const infoFile = {};
-
 					if (listLinkupLoadS3[i].file.name === newListFile[i].name) {
 						infoFile.name = newListFile[i].name;
 						infoFile.type = newListFile[i].type;
@@ -249,6 +262,13 @@ function UploadFileS3(files, data, dataSaveServer) {
 					}
 				}
 				dataSaveServer.data.files = arrayFile;
+
+				// dua anh len S3
+				const processingUploadS3 = ClientSendMutilFileToS3({
+					listLinkupLoadS3,
+					files: newListFile,
+				});
+
 				if (!processingUploadS3.error && processingUploadS3.data) {
 					// Promise.all sẽ đợi cho đến khi tất cả các promises được giải quyết
 					const listPromise = processingUploadS3.data;

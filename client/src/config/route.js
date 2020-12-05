@@ -11,6 +11,7 @@ const CF_ROUTE_USER = {
 
 const CF_ROUTE_POST = {
 	GET_POST: `${API_URL}/api/post/getPost`,
+	GET_POSTS: `${API_URL}/api/post/getPosts`,
 	CREATE_POST: `${API_URL}/api/post/addPost`,
 };
 

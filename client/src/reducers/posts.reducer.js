@@ -2,6 +2,7 @@ import postConstants from "../constants/post.constants";
 
 const initialState = {
 	post: null,
+	posts: null,
 };
 
 export default function posts(state = initialState, action) {
@@ -10,12 +11,24 @@ export default function posts(state = initialState, action) {
 		case postConstants.CREATE_POST_SUCCESS:
 			return {
 				...state,
-				post: payload.post,
+				posts: {
+					...state.posts,
+					data: [payload.post, ...state.posts.data],
+				},
 			};
 		case postConstants.CREATE_POST_FAILURE:
 			return {
 				...state,
-				post: null,
+			};
+		case postConstants.GET_LIST_POST_SUCCESS:
+			return {
+				...state,
+				posts: payload.posts,
+			};
+		case postConstants.GET_LIST_POST_FAILURE:
+			return {
+				...state,
+				posts: null,
 			};
 		case postConstants.GETPOST_SUCCESS:
 			return {

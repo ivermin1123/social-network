@@ -12,24 +12,13 @@ function getPost(postId) {
 			configAxios
 		)
 		.then((response) => {
-			console.log(response);
+			return response.data;
 		});
 }
 
-function createPost(description, image) {
-	const formData = new FormData();
-
-	formData.append("image", image);
-	console.log(formData, image);
+function getPosts() {
 	return axios
-		.post(
-			CF_ROUTE_POST.CREATE_POST,
-			{
-				description,
-				image: formData,
-			},
-			{ ...configAxios, "Content-Type": "multipart/form-data" }
-		)
+		.get(CF_ROUTE_POST.GET_POSTS, { headers: configAxios.headers })
 		.then((response) => {
 			return response.data;
 		});
@@ -37,7 +26,7 @@ function createPost(description, image) {
 
 const postService = {
 	getPost,
-	createPost,
+	getPosts,
 };
 
 export default postService;

@@ -11,6 +11,11 @@ const CF_ROUTE_USER = {
 
 const CF_ROUTE_POST = {
 	GET_POST: `${API_URL}/api/post/getPost`,
+	CREATE_POST: `${API_URL}/api/post/addPost`,
 };
 
-export { CF_ROUTE_USER, CF_ROUTE_POST };
+const CF_ROUTE_PUBLIC = {
+	GENERATE_LINK_S3: `${API_URL}/api/generate-link-upload-s3`,
+};
+
+export { CF_ROUTE_USER, CF_ROUTE_POST, CF_ROUTE_PUBLIC };

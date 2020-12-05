@@ -121,7 +121,7 @@ module.exports = {
 		hot: true,
 		port: 3000,
 	},
-	devtool: "eval-source-map",
+	devtool: "cheap-module-source-map",
 	entry: [
 		"react-hot-loader/patch",
 		"webpack-dev-server/client?http://localhost:3000",

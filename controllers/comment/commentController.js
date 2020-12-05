@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 import { checkObjectIDs } from "../../utils/db-check";
 
-import {
-  uploadToCloudinary,
-  deleteFromCloudinary,
-} from "../../utils/cloudinary";
-
 import "../../models/Post";
 import "../../models/Comment";
 

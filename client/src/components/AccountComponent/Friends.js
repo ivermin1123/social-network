@@ -1,5 +1,11 @@
 import React from "react";
 
-const Friends = () => {};
+const Friends = () => {
+	return (
+		<div>
+			<div>friends</div>
+		</div>
+	);
+};
 
 export default Friends;

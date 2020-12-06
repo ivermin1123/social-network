@@ -74,7 +74,6 @@ const PostForm = ({ ...props }) => {
 						className="post-form-modal__body--content"
 						placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
 					/>
-
 					<div className="post-form-modal__footer">
 						<input
 							type="file"

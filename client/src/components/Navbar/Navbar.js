@@ -39,24 +39,24 @@ const Navbar = ({ ...props }) => {
 					</div>
 				</div>
 				<div className="nav-bar__navigation col">
-					<div className="nav-bar__navigation-icon">
+					<Link to="/" className="nav-bar__navigation-icon">
 						<FontAwesomeIcon
 							className="icon"
 							icon={Theme.ICONS.home}
 						/>
-					</div>
-					<div className="nav-bar__navigation-icon">
+					</Link>
+					<Link to="/" className="nav-bar__navigation-icon">
 						<FontAwesomeIcon
 							className="icon"
 							icon={Theme.ICONS.users}
 						/>
-					</div>
-					<div className="nav-bar__navigation-icon">
+					</Link>
+					<Link to="/" className="nav-bar__navigation-icon">
 						<FontAwesomeIcon
 							className="icon"
 							icon={Theme.ICONS.tv}
 						/>
-					</div>
+					</Link>
 				</div>
 				<div className="nav-bar__right-items col">
 					<div className="navbar-nav">

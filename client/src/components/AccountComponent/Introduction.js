@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Theme from "../../constants/Theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Theme from "../../constants/Theme";
 
 const Introduction = () => {
 	return (
@@ -13,13 +13,13 @@ const Introduction = () => {
 					icon={Theme.ICONS.instagram}
 				/>
 
-				<Link to="http://www.instagram.com/trhgyen/?hl=vi">
+				<Link to="/">
 					trhgyen
 				</Link>
 			</div>
-			<button>Chỉnh sửa chi tiết</button>
-			<button>Thêm sở thích</button>
-			<button>Chỉnh sửa phần Đáng chú ý</button>
+			<button type="button">Chỉnh sửa chi tiết</button>
+			<button type="button">Thêm sở thích</button>
+			<button type="button">Chỉnh sửa phần Đáng chú ý</button>
 		</div>
 	);
 };

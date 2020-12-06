@@ -5,9 +5,13 @@ export default function NavItem(props) {
 	const { icon, children } = props;
 	return (
 		<li className="nav-item">
-			<a href="/#" className="icon-button" onClick={() => setOpen(!open)}>
+			<button
+				type="button"
+				className="icon-button"
+				onClick={() => setOpen(!open)}
+			>
 				{icon}
-			</a>
+			</button>
 
 			{open && children}
 		</li>

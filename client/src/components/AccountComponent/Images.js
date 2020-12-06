@@ -6,7 +6,7 @@ const Images = () => {
 		<div className="content-item image">
 			<div>
 				<h2>Ảnh</h2>
-				<Link>Xem tất cả ảnh</Link>
+				<Link to="/#">Xem tất cả ảnh</Link>
 			</div>
 		</div>
 	);

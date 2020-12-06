@@ -23,11 +23,12 @@ export function createPost(req, res, next) {
     tags: Joi.array(),
     coordinates: Joi.string().allow(""),
     locationName: Joi.string().allow(""),
-    image: Joi.string(),
+    files: Joi.array(),
   });
 
   const { error, value } = schema.validate(validateObject);
   if (error) {
+    console.log(error);
     return res.status(400).json({ message: error.message });
   }
   next();

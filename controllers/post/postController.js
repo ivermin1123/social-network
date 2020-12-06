@@ -1,18 +1,17 @@
 import mongoose from "mongoose";
+import { v4 as uuidv4 } from "uuid";
+import multer from "multer";
 import { checkObjectIDs } from "../../utils/db-check";
 
-import multer from "multer";
-
 import "../../models/Post";
-import "../../models/Reaction";
-import "../../models/Comment";
-import "../../models/User";
+import "../../models/File";
 
 const linkify = require("linkifyjs");
 require("linkifyjs/plugins/hashtag")(linkify);
 require("linkifyjs/plugins/mention")(linkify);
 
 const Post = mongoose.model("Post");
+const File = mongoose.model("File");
 
 // Check File Type
 function checkFileType(file, cb) {
@@ -61,7 +60,7 @@ const upload = multer({
 
 export const createPost = async (req, res) => {
   try {
-    const { image, description, coordinates, locationName, tags } = req.body;
+    const { files, description, coordinates, locationName, tags } = req.body;
     const { userId } = req.userData;
     const hashtags = linkify // find hashtags
       .find(description)
@@ -85,20 +84,28 @@ export const createPost = async (req, res) => {
 
     //   const uniqueUsernames = [...new Set([...mentions, ...tags])];
 
-    let imageUrl, imagePublicId;
-    if (image) {
-      const { createReadStream } = await image;
-      const stream = createReadStream();
-      const uploadImage = await uploadToCloudinary(stream, "post");
-
-      if (!uploadImage.secure_url) {
-        throw new Error(
-          "Something went wrong while uploading image to Cloudinary"
-        );
+    let listFiles = [];
+    if (files) {
+      if (!Array.isArray(files)) {
+        files = Array.from(files);
       }
+      const promises = [];
+      files.forEach((file) => {
+        const { type, url, name, size, path } = file;
+        const newFile = new File({
+          type,
+          sender: userId,
+          url,
+          name,
+          size,
+          path,
+        });
+        promises.push(newFile.save().then((res) => listFiles.push(res._id)));
+      });
 
-      imageUrl = uploadImage.secure_url;
-      imagePublicId = uploadImage.public_id;
+      await Promise.all(promises).catch((error) => {
+        res.status(500).json({ error: true, message: error.message });
+      });
     }
 
     let newPost;
@@ -113,8 +120,7 @@ export const createPost = async (req, res) => {
           coordinates: coordinates,
           address: locationName,
         },
-        image: imageUrl,
-        imagePublicId,
+        files: listFiles,
         //: JSON.parse(tags),
       });
     } else {
@@ -122,33 +128,21 @@ export const createPost = async (req, res) => {
         author: userId,
         description: description,
         hashtags: [...new Set(hashtags)], // remove duplicates
-        image: imageUrl,
-        imagePublicId,
+        files: listFiles,
         // tags: JSON.parse(tags),
       });
     }
 
-    await newPost
-      .save()
-      .then((post) => {
-        res.status(200).json({ error: false, data: post });
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(500).json({ error: true, message: error.message });
-      });
-  } catch (error) {
-    res.status(500).json({ error: true, message: error.message });
-  }
-};
+    const infoAfterInsert = await newPost.save().catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: true, message: error.message });
+    });
 
-export const getPost = async (req, res) => {
-  try {
-    const { postId } = req.body;
-    if (!checkObjectIDs(postId))
-      res.status(500).json({ error: true, message: "param_invalid" });
-    const infoPost = await Post.findById(postId)
-      .populate({ path: "author" })
+    await Post.findById(infoAfterInsert._id)
+      .populate({
+        path: "author",
+        select: "_id firstName lastName createdAt username",
+      })
       .populate({
         path: "reactions",
         populate: [{ path: "author" }, { path: "post" }],
@@ -163,10 +157,53 @@ export const getPost = async (req, res) => {
           },
         ],
         options: { sort: { createdAt: -1 } },
+      })
+      .populate({
+        path: "files",
+      })
+      .then((post) => {
+        res.status(200).json({ error: false, data: post });
       });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: true, message: error.message });
+  }
+};
 
-    if (!infoPost) res.status(500).json({ error: true, message: "cannot_get" });
-    res.status(200).json({ error: false, data: infoPost });
+export const getPost = async (req, res) => {
+  try {
+    const { postId } = req.body;
+    if (!checkObjectIDs(postId))
+      res.status(500).json({ error: true, message: "param_invalid" });
+    await Post.findById(postId)
+      .populate({
+        path: "author",
+        select: "_id firstName lastName createdAt username",
+      })
+      .populate({
+        path: "reactions",
+        populate: [{ path: "author" }, { path: "post" }],
+      })
+      .populate({
+        path: "comments",
+        populate: [
+          { path: "author" },
+          {
+            path: "reactions",
+            populate: [{ path: "author" }, { path: "comment" }],
+          },
+        ],
+        options: { sort: { createdAt: -1 } },
+      })
+      .populate({
+        path: "files",
+      })
+      .then((post) => {
+        res.status(200).json({ error: false, data: post });
+      })
+      .catch((err) =>
+        res.status(500).json({ error: true, message: err.message })
+      );
   } catch (error) {
     res.status(500).json({ error: true, message: error.message });
   }
@@ -177,6 +214,29 @@ export const getPosts = async (req, res) => {
     const { userId } = req.userData;
 
     await Post.find()
+      .populate({
+        path: "author",
+        select: "_id firstName lastName createdAt username",
+      })
+      .populate({
+        path: "reactions",
+        populate: [{ path: "author" }, { path: "post" }],
+      })
+      .populate({
+        path: "comments",
+        populate: [
+          { path: "author" },
+          {
+            path: "reactions",
+            populate: [{ path: "author" }, { path: "comment" }],
+          },
+        ],
+        options: { sort: { createdAt: -1 } },
+      })
+      .populate({
+        path: "files",
+      })
+      .sort({ createdAt: -1 })
       .then((post) => {
         res.status(200).json({ error: false, data: post });
       })

@@ -25,7 +25,7 @@ const login = (username, password) => (dispatch) => {
 			});
 
 			dispatch({
-				type: alertConstants.SET_MESSAGE,
+				type: alertConstants.SET_ALERT,
 				payload: message,
 			});
 
@@ -47,7 +47,7 @@ const register = (username, email, password) => (dispatch) => {
 			});
 
 			dispatch({
-				type: alertConstants.SET_MESSAGE,
+				type: alertConstants.SET_ALERT,
 				payload: response.data,
 			});
 
@@ -66,7 +66,7 @@ const register = (username, email, password) => (dispatch) => {
 			});
 
 			dispatch({
-				type: alertConstants.SET_MESSAGE,
+				type: alertConstants.SET_ALERT,
 				payload: message,
 			});
 

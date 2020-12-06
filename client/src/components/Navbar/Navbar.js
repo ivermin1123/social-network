@@ -9,6 +9,8 @@ const Navbar = ({ ...props }) => {
 	const showSearch = (value) => {
 		setDisplay(value);
 	};
+	const { children } = props;
+
 	return (
 		<div className="nav-bar">
 			<div className="nav-bar-fixed row">
@@ -70,7 +72,7 @@ const Navbar = ({ ...props }) => {
 								<div className="nav-bar__name">Tú Vip</div>
 							</div>
 						</Link>
-						{props.children}
+						{children}
 					</div>
 				</div>
 			</div>

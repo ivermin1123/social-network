@@ -10,7 +10,7 @@ const Cover = ({ ...props }) => {
 	const [status, setStatus] = useState(false);
 	const [state, setState] = useState();
 	const handleAddProfile = () => {
-		setStatus(!status)
+		setStatus(!status);
 	};
 	const handleClickMenu = (value) => {
 		setState(value);
@@ -30,13 +30,14 @@ const Cover = ({ ...props }) => {
 			<div className="cover-display">
 				<div className="cover-display-content">
 					<h1>{acc.displayName}</h1>
-					<div
+					<button
+						type="button"
 						className="button__add-profile"
 						style={{ display: status ? "none" : "block" }}
 						onClick={handleAddProfile}
 					>
 						Thêm tiểu sử
-					</div>
+					</button>
 					<div
 						className="cover-display-add"
 						style={{ display: !status ? "none" : "block" }}
@@ -49,7 +50,7 @@ const Cover = ({ ...props }) => {
 							onChange={(e) => {
 								setValue(e.target.value);
 							}}
-						></textarea>
+						/>
 						<div className="count-char">
 							<span>Còn {101 - value.length} ký tự</span>
 						</div>
@@ -99,7 +100,8 @@ const Cover = ({ ...props }) => {
 					<div className="menu-content-left">
 						{tabs.map((item, index) => {
 							return (
-								<div
+								<button
+									type="button"
 									className={`menu-left-item ${
 										state === index ? "active" : ""
 									}`}
@@ -113,7 +115,7 @@ const Cover = ({ ...props }) => {
 											{sumFriend}
 										</span>
 									) : null}
-								</div>
+								</button>
 							);
 						})}
 					</div>

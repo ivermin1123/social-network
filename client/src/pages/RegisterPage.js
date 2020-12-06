@@ -20,6 +20,7 @@ function RegisterPage(props) {
 		repeat_password: "",
 	});
 	const [submitted, setSubmitted] = useState(false);
+	const [reTypePassError, setReTypePassError] = useState(false);
 	const registering = useSelector((state) => state.registration.registering);
 	const { isLoggedIn } = useSelector((state) => state.authentication);
 	const dispatch = useDispatch();
@@ -29,22 +30,22 @@ function RegisterPage(props) {
 		setUser((user) => ({ ...user, [name]: value }));
 	}
 
-	function handleSubmit(e) {
-		e.preventDefault();
+	function handleRetypePassword(event) {
+		const { name, value } = event.target;
+		if (value !== user.password) {
+			setReTypePassError(true);
+		} else {
+			setReTypePassError(false);
+		}
+		setUser((user) => ({ ...user, [name]: value }));
+	}
 
-		setSubmitted(true);
-		if (
-			user.firstName &&
-			user.lastName &&
-			user.username &&
-			user.password &&
-			user.gender &&
-			user.phone &&
-			user.birthday &&
-			user.email &&
-			user.repeat_password
-		) {
-			if (user.password === user.repeat_password) {
+	function handleSubmit(e) {
+		try {
+			e.preventDefault();
+
+			setSubmitted(true);
+			if (!reTypePassError) {
 				dispatch(userActions.register(user))
 					.then(() => {
 						props.history.push({ pathname: "/" });
@@ -54,6 +55,8 @@ function RegisterPage(props) {
 						setSubmitted(false);
 					});
 			}
+		} catch (error) {
+			console.log(error);
 		}
 	}
 
@@ -167,7 +170,7 @@ function RegisterPage(props) {
 					type="password"
 					name="repeat_password"
 					value={user.repeat_password}
-					onChange={handleChange}
+					onChange={handleRetypePassword}
 				/>
 				<div className="row form__button">
 					<div className="col-6">

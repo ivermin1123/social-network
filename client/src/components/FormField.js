@@ -9,11 +9,13 @@ const FormField = ({ ...props }) => {
 				<sup> *</sup>
 			</p>
 			<input
+				required
+				autoComplete="true"
 				type={type}
 				name={name}
 				value={value}
 				onChange={onChange}
-				className={`${submitted && !value ? " is-invalid" : ""}`}
+				className={`${submitted && !value ? "" : " is-invalid"}`}
 			/>
 			{submitted && !value && (
 				<div className="invalid-feedback">Bạn chưa nhập {label}</div>

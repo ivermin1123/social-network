@@ -1,9 +1,10 @@
-export default function authHeader() {
-	// return authorization header with jwt token
-	const user = JSON.parse(localStorage.getItem("user"));
+const user = JSON.parse(localStorage.getItem("user"));
 
-	if (user && user.token) {
-		return { Authorization: `Bearer ${user.token}` };
-	}
-	return {};
-}
+const token = user ? user.user.token : null;
+const configAxios = {
+	headers: {
+		Authorization: token,
+	},
+};
+
+export default configAxios;

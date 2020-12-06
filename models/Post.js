@@ -6,8 +6,12 @@ const postSchema = new Schema(
     filter: String,
     type: String,
     location: String,
-    image: String,
-    imagePublicId: String,
+    files: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "File",
+      },
+    ],
     comments: [
       {
         type: Schema.Types.ObjectId,

@@ -29,7 +29,7 @@ function App() {
 	}, [dispatch]);
 
 	return (
-		<div>
+		<>
 			{alert.message && <div className={`alert `}>{alert.message}</div>}
 			<Router history={history}>
 				<Suspense fallback={<div>Loading...</div>}>
@@ -49,7 +49,7 @@ function App() {
 								</Navbar>
 							</>
 						) : null}
-						<div>
+						<>
 							<Switch>
 								<PrivateRoute
 									exact
@@ -72,11 +72,11 @@ function App() {
 									component={RegisterPage}
 								/>
 							</Switch>
-						</div>
+						</>
 					</>
 				</Suspense>
 			</Router>
-		</div>
+		</>
 	);
 }
 

@@ -133,14 +133,36 @@ export const createPost = async (req, res) => {
       });
     }
 
-    await newPost
-      .save()
+    const infoAfterInsert = await newPost.save().catch((error) => {
+      console.log(error);
+      res.status(500).json({ error: true, message: error.message });
+    });
+
+    await Post.findById(infoAfterInsert._id)
+      .populate({
+        path: "author",
+        select: "_id firstName lastName createdAt username",
+      })
+      .populate({
+        path: "reactions",
+        populate: [{ path: "author" }, { path: "post" }],
+      })
+      .populate({
+        path: "comments",
+        populate: [
+          { path: "author" },
+          {
+            path: "reactions",
+            populate: [{ path: "author" }, { path: "comment" }],
+          },
+        ],
+        options: { sort: { createdAt: -1 } },
+      })
+      .populate({
+        path: "files",
+      })
       .then((post) => {
         res.status(200).json({ error: false, data: post });
-      })
-      .catch((error) => {
-        console.log(error);
-        res.status(500).json({ error: true, message: error.message });
       });
   } catch (error) {
     console.log(error);
@@ -214,6 +236,7 @@ export const getPosts = async (req, res) => {
       .populate({
         path: "files",
       })
+      .sort({ createdAt: -1 })
       .then((post) => {
         res.status(200).json({ error: false, data: post });
       })

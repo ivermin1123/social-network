@@ -1,21 +1,73 @@
-export const messageSendAction = (messages) => ({
-	type: "MESSAGE_SEND",
-	payload: messages,
-});
-export const messageEditAction = (roomId, text) => ({
-	type: "MESSAGE_EDIT",
-	payload: {
-		roomId,
-		text,
-	},
-});
-export const messageTextFlushAction = () => ({
-	type: "MESSAGE_TEXT_FLUSH",
-});
-export const messageCollectionLoadSuccessAction = (roomId, messages) => ({
-	type: "MESSAGE_COLLECTION_LOAD_SUCCESS",
-	payload: {
-		roomId,
-		messages,
-	},
-});
+import { messageConstants, alertConstants } from "../constants";
+import { messageService } from "../services";
+
+const getMessages = (conversationId) => (dispatch) => {
+	return messageService.getMessages(conversationId).then(
+		(data) => {
+			dispatch({
+				type: messageConstants.GET_LIST_MESSAGE_SUCCESS,
+				payload: { data: data.data },
+			});
+
+			return Promise.resolve();
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: messageConstants.GET_LIST_MESSAGE_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
+const sendMessage = (conversationId, message, type) => (dispatch) => {
+	return messageService.sendMessage(conversationId, message, type).then(
+		(data) => {
+			dispatch({
+				type: messageConstants.SEND_MESSAGE_SUCCESS,
+				payload: { data: data.data },
+			});
+
+			return Promise.resolve();
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: messageConstants.SEND_MESSAGE_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
+const messageActions = {
+	getMessages,
+	sendMessage,
+};
+
+export default messageActions;

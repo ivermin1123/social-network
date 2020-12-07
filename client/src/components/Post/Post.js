@@ -26,7 +26,7 @@ const Post = (props) => {
 					/>
 					<div className="post-header__name">{author.username}</div>
 					<div className="post-header__created">
-						{moment(createdAt).fromNow()}
+						{moment(createdAt).locale("vi").fromNow()}
 					</div>
 				</div>
 				<div className="post-body">

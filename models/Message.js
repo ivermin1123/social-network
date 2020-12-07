@@ -18,6 +18,12 @@ const messageSchema = new Schema(
       ref: "Conversation",
     },
     status: Number,
+    /**
+     * 0: Message
+     * 1: Image
+     * 2: Like
+     * 3: Sticker
+     */
     type: Number,
     listSeen: [
       {
@@ -31,7 +37,10 @@ const messageSchema = new Schema(
         ref: "Reaction",
       },
     ],
-    isRemoved: Boolean,
+    isRemoved: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

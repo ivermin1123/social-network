@@ -1,33 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, connect } from "react-redux";
+import conversationActions from "../../actions/conversation.actions";
 import Conversation from "./Conversation/Conversation";
 
-import img3 from "../../assets/image/avatar-3.png";
-import img4 from "../../assets/image/avatar-4.png";
-import img2 from "../../assets/image/avatar-2.png";
+function SideBar(props) {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(conversationActions.getListConversations());
+	}, [dispatch]);
 
-function SideBar() {
-	const conversations = [
-		{
-			name: "Vy",
-			avatar: img3,
-			text: "Vy: ?",
-			status: true,
-			active: true,
-		},
-		{
-			name: "Anh Tú",
-			avatar: img4,
-			text: "Nhi: Haha",
-			status: true,
-		},
-		{
-			name: "Hoàng Yến",
-			avatar: img2,
-			text: "Nyc: OK nhé.",
-			status: false,
-		},
-	];
-
+	const { conversations } = props;
+	console.log(conversations);
 	return (
 		<div className="col-left">
 			<div className="col-content">
@@ -49,16 +32,22 @@ function SideBar() {
 							/>
 						</label>
 					</li>
-					{conversations.map((conversation) => (
-						<Conversation
-							conversation={conversation}
-							key={Math.floor(Math.random() * 99999) + 1}
-						/>
-					))}
+					{conversations
+						? conversations.data.map((conversation) => (
+								<Conversation
+									conversation={conversation}
+									key={conversation._id}
+								/>
+						  ))
+						: null}
 				</div>
 			</div>
 		</div>
 	);
 }
 
-export default SideBar;
+const mapStateToProps = (state) => ({
+	conversations: state.conversations.conversations,
+});
+
+export default connect(mapStateToProps)(SideBar);

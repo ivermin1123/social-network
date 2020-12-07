@@ -150,7 +150,6 @@ const PostForm = ({ ...props }) => {
 						placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
 						onChange={(e) => setDescription(e.target.value)}
 					/>
-
 					<div className="post-form-modal__footer">
 						<input
 							id="post-image"

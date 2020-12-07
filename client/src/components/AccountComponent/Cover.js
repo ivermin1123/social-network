@@ -16,7 +16,7 @@ const Cover = ({ ...props }) => {
 		setState(value);
 	};
 	useEffect(() => {
-		setSumFriend(469);
+		setSumFriend(acc.totalFriend);
 	}, []);
 	return (
 		<div className="cover">

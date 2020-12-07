@@ -9,6 +9,7 @@
 	--secondary-text: ##65676b;
 	--border: 1px solid #d6d6d6;
 	--icon: #66676b;
+	--always-dark-gradient: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6));
 }
 .account-page {
 	background-color: var(--web-wash);
@@ -41,6 +42,56 @@
 			height: 350px;
 			border-bottom-left-radius: 10px;
 			border-bottom-right-radius: 10px;
+			display: flex;
+			justify-content: center;
+			.avatar{
+				position: absolute;
+				z-index: 1;
+				width: 170px;
+				top: 250px;
+				.show-avatar {
+					position: absolute;
+					height: 170px;
+					margin: auto;
+					display: flex;
+					img{
+						height: 100%;
+						border: 2px solid white;
+						border-radius: 100px;
+						width: 100%;
+					}
+					button{
+						position: absolute;
+						border-radius: 50px;
+						bottom: 25px;
+						right: 25px;
+						transform: translate(50%, 50%);
+						padding: 5px 10px;
+						z-index: 2;
+						font-size: 20px;
+						height: 38px;
+						height: 38px;
+					}
+				}
+			}
+		
+			.button__change-cover{
+				z-index: 0;
+				border-radius: 10px;
+				width: var(--width-cover);
+				position: absolute;
+				bottom: 40px;
+				text-align: right;
+				padding: 16px 32px 16px 0;
+				background-image: var(--always-dark-gradient);
+				button{
+					height: 36px;
+					padding: 0 12px;
+					.icon{
+						margin-right: 5px;
+					}
+				}
+			}
 		}
 		.cover-display {
 			background-color: white;
@@ -206,22 +257,22 @@
 					grid-row: 1;
 					padding: 10px;
 				}
-				
-				.content-item-main{
+
+				.content-item-main {
 					padding: 16px;
-					.item__margin-bottom{
+					.item__margin-bottom {
 						margin-bottom: 4px;
 						padding: 0;
 					}
-					.item__margin-right{
+					.item__margin-right {
 						padding: 0;
 						margin-right: 4px;
 					}
 				}
 			}
 			.introduction {
-				.content-item-header{
-					.item-header-title:hover{
+				.content-item-header {
+					.item-header-title:hover {
 						text-decoration: none;
 					}
 				}

@@ -2,7 +2,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
-import Theme from "../../constants/Theme";
+import { Theme } from "../../constants/index";
 
 const listSearchHistory = [
 	{

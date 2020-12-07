@@ -16,7 +16,7 @@ const Images = ({ ...props }) => {
 							return (
 								<div className="item__margin-bottom grid-item">
 									<div className="item__margin-right">
-										<a className="">
+										<a href="/#" className="">
 											<img
 												src={item}
 												alt="images"

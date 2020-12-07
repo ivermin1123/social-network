@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Theme from "../../constants/Theme";
+import { Theme } from "../../constants/index";
 import { SearchBox } from "../_components";
 
 const Navbar = ({ ...props }) => {

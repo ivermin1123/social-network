@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import tabs from "../../constants/tabs";
-import Theme from "../../constants/Theme";
+import { Tabs, Theme } from "../../constants/index";
 
 const Cover = ({ ...props }) => {
 	const { acc } = props;
@@ -26,6 +25,32 @@ const Cover = ({ ...props }) => {
 					alt=""
 					className="cover-image"
 				/>
+				<div className="avatar">
+					<div className="show-avatar">
+						<img
+							src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
+							alt=""
+						/>
+						<button className="button__change-avatar">
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.camera}
+							/>
+						</button>
+					</div>
+					<div className="option-avatar">
+						{/* xem lịch sử */}
+					</div>
+				</div>
+				<div className="button__change-cover">
+					<button>
+						<FontAwesomeIcon
+							className="icon"
+							icon={Theme.ICONS.camera}
+						/>
+						Chỉnh sửa ảnh bìa
+					</button>
+				</div>
 			</div>
 			<div className="cover-display">
 				<div className="cover-display-content">
@@ -98,7 +123,7 @@ const Cover = ({ ...props }) => {
 			<div className="cover-menu">
 				<div className="menu-content row">
 					<div className="menu-content-left">
-						{tabs.map((item, index) => {
+						{Tabs.map((item, index) => {
 							return (
 								<button
 									type="button"

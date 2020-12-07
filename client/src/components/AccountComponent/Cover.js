@@ -41,7 +41,28 @@ const Cover = (props) => {
 							/>
 						</button>
 					</div>
-					<div className="option-avatar">{/* xem lịch sử */}</div>
+				</div>
+				<div className="option-avatar">
+					<div className="option-item">
+						<div className="item">
+							<button type="button" className="item-value">
+								<FontAwesomeIcon
+									className="icon"
+									icon={Theme.ICONS.portrait}
+								/>
+								Xem ảnh đại diện
+							</button>
+						</div>
+						<div className="item">
+							<button type="button" className="item-value">
+								<FontAwesomeIcon
+									className="icon"
+									icon={Theme.ICONS.images}
+								/>
+								Cập nhật ảnh đại diện
+							</button>
+						</div>
+					</div>
 				</div>
 				<div className="button__change-cover">
 					<button type="button">

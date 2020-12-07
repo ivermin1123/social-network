@@ -35,14 +35,14 @@ const AccountPage = () => {
 			<div className="main-content row">
 				<div className="col-lg-5 col-md-12 main-content-left">
 					<div className="main-content-item">
-						<Introduction acc={acc} />
-						<Images acc={acc} />
-						<Friends acc={acc} />
+						<Introduction user={user} acc={acc} />
+						<Images user={user} acc={acc} />
+						<Friends user={user} acc={acc} />
 					</div>
 				</div>
 				<div className="col-lg-7 col-md-12 main-content-right">
 					<div className="main-content-item">
-						<Wall acc={acc} />
+						<Wall user={user} acc={acc} />
 					</div>
 				</div>
 			</div>

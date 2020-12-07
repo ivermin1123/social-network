@@ -1,6 +1,8 @@
 import React from "react";
 
-const Wall = () => {
+const Wall = ({ ...props }) => {
+	const { user } = props;
+
 	return <div className="content-item wall">walls</div>;
 };
 

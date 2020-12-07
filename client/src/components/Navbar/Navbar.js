@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Theme } from "../../constants/index";
 import { SearchBox } from "../_components";
 
 const Navbar = ({ ...props }) => {
 	const [display, setDisplay] = useState(false);
+	const { user } = useSelector((state) => state.authentication.user);
+	const fullName = `${user.firstName} ${user.lastName}`;
 	const showSearch = (value) => {
 		setDisplay(value);
 	};
@@ -42,25 +45,24 @@ const Navbar = ({ ...props }) => {
 				</div>
 				<div className="nav-bar__navigation col">
 					<div className="row">
-					<Link to="/" className="nav-bar__navigation-icon">
-						<FontAwesomeIcon
-							className="icon"
-							icon={Theme.ICONS.home}
-						/>
-					</Link>
-					<Link to="/" className="nav-bar__navigation-icon">
-						<FontAwesomeIcon
-							className="icon"
-							icon={Theme.ICONS.users}
-						/>
-					</Link>
-					<Link to="/" className="nav-bar__navigation-icon">
-						<FontAwesomeIcon
-							className="icon"
-							icon={Theme.ICONS.tv}
-						/>
-					</Link>
-
+						<Link to="/" className="nav-bar__navigation-icon">
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.home}
+							/>
+						</Link>
+						<Link to="/" className="nav-bar__navigation-icon">
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.users}
+							/>
+						</Link>
+						<Link to="/" className="nav-bar__navigation-icon">
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.tv}
+							/>
+						</Link>
 					</div>
 				</div>
 				<div className="nav-bar__right-items col">
@@ -72,7 +74,7 @@ const Navbar = ({ ...props }) => {
 									src="https://znews-photo.zadn.vn/w660/Uploaded/bpmoqwq1/2014_10_16/con_meo.jpg"
 									alt="avt"
 								/>
-								<div className="nav-bar__name">Tú Vip</div>
+								<div className="nav-bar__name">{fullName}</div>
 							</div>
 						</Link>
 						{children}

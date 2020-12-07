@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import {
 	Cover,
 	Introduction,
@@ -26,9 +27,11 @@ const AccountPage = () => {
 		totalFriend: 469,
 	};
 
+	const { user } = useSelector((state) => state.authentication.user);
+
 	return (
 		<div className="account-page">
-			<Cover acc={acc} />
+			<Cover user={user} />
 			<div className="main-content row">
 				<div className="col-lg-5 col-md-12 main-content-left">
 					<div className="main-content-item">

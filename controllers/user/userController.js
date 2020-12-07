@@ -164,7 +164,15 @@ export function loginUser(req, res, next) {
       $project: {
         _id: 1,
         username: 1,
+        firstName: 1,
+        lastName: 1,
         email: 1,
+        gender: 1,
+        coverImage: 1,
+        lang: 1,
+        avatar: 1,
+        phone: 1,
+        birthday: 1,
         password: 1,
       },
     },
@@ -194,9 +202,31 @@ export function loginUser(req, res, next) {
               }
             );
 
+            const {
+              _id,
+              username,
+              firstName,
+              lastName,
+              email,
+              gender,
+              coverImage,
+              lang,
+              avatar,
+              phone,
+              birthday,
+            } = users[0];
             const user = {
-              _id: users[0]._id,
-              username: users[0].username,
+              _id,
+              username,
+              firstName,
+              lastName,
+              email,
+              gender,
+              coverImage,
+              lang,
+              avatar,
+              phone,
+              birthday,
               token: "Bearer " + token,
             };
             req.body.user = user;

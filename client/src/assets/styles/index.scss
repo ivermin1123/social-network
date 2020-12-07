@@ -238,11 +238,13 @@ a {
 		}
 		.nav-bar__navigation {
 			padding: 0;
+			height: 100%;
 			.row{
-				width: 100%;
 				height: 100%;
+				width: 100%;
 				display: flex;
 				flex-wrap: nowrap;
+				margin: 0;
 				.nav-bar__navigation-icon {
 					cursor: pointer;
 					font-size: 20px;

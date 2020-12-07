@@ -2,12 +2,18 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Tabs, Theme } from "../../constants/index";
 
-const Cover = ({ ...props }) => {
-	const { acc } = props;
+const Cover = (props) => {
+	const { user } = props;
 	const [sumFriend, setSumFriend] = useState(0);
 	const [value, setValue] = useState("");
 	const [status, setStatus] = useState(false);
 	const [state, setState] = useState();
+
+	const { firstName, lastName, avatar } = user;
+	const name = `${firstName} ${lastName}`;
+	const avatarSrc =
+		avatar ||
+		`https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8`;
 	const handleAddProfile = () => {
 		setStatus(!status);
 	};
@@ -15,22 +21,19 @@ const Cover = ({ ...props }) => {
 		setState(value);
 	};
 	useEffect(() => {
-		setSumFriend(acc.totalFriend);
+		setSumFriend(999);
 	}, []);
 	return (
 		<div className="cover">
 			<div className="cover-image">
 				<img
-					src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
+					src="https://socialawsbucket.s3-ap-southeast-1.amazonaws.com/post/7740dd7c-dca0-4277-8303-0142e716c0e7.jpg"
 					alt=""
 					className="cover-image"
 				/>
 				<div className="avatar">
 					<div className="show-avatar">
-						<img
-							src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
-							alt=""
-						/>
+						<img src={avatarSrc} alt="" />
 						<button type="button" className="button__change-avatar">
 							<FontAwesomeIcon
 								className="icon"
@@ -38,9 +41,7 @@ const Cover = ({ ...props }) => {
 							/>
 						</button>
 					</div>
-					<div className="option-avatar">
-						xem lịch sử
-					</div>
+					<div className="option-avatar">{/* xem lịch sử */}</div>
 				</div>
 				<div className="button__change-cover">
 					<button type="button">
@@ -54,7 +55,7 @@ const Cover = ({ ...props }) => {
 			</div>
 			<div className="cover-display">
 				<div className="cover-display-content">
-					<h1>{acc.displayName}</h1>
+					<h1>{name}</h1>
 					<button
 						type="button"
 						className="button__add-profile"

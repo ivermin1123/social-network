@@ -31,7 +31,7 @@ const Cover = ({ ...props }) => {
 							src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
 							alt=""
 						/>
-						<button className="button__change-avatar">
+						<button type="button" className="button__change-avatar">
 							<FontAwesomeIcon
 								className="icon"
 								icon={Theme.ICONS.camera}
@@ -39,11 +39,11 @@ const Cover = ({ ...props }) => {
 						</button>
 					</div>
 					<div className="option-avatar">
-						{/* xem lịch sử */}
+						xem lịch sử
 					</div>
 				</div>
 				<div className="button__change-cover">
-					<button>
+					<button type="button">
 						<FontAwesomeIcon
 							className="icon"
 							icon={Theme.ICONS.camera}

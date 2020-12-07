@@ -1,18 +1,98 @@
 import React, { useState } from "react";
-// import ModalHeader from "react-bootstrap/esm/ModalHeader";
+import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
+import postActions from "../../actions/post.actions";
+import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
+import "react-toastify/dist/ReactToastify.css";
+
+const configToast = {
+	position: "top-right",
+	autoClose: 1000,
+	hideProgressBar: false,
+	closeOnClick: true,
+	pauseOnHover: true,
+	draggable: true,
+	progress: undefined,
+};
 
 const PostForm = ({ ...props }) => {
 	const [show, setShow] = useState(false);
-	const [file, setFile] = useState(null);
+	const [files, setFiles] = useState(null);
+	const [description, setDescription] = useState("");
+	const dispatch = useDispatch();
+
+	const handleReset = () => {
+		setDescription("");
+		setFiles(null);
+	};
 
 	const handleFile = (e) => {
 		const { files } = e.target;
-		setFile(URL.createObjectURL(files[0]));
+
+		const error = [];
+		if (files && files.length) {
+			const arrFile = Array.from(files);
+			arrFile.forEach((file) => {
+				if (file.size >= MAX_POST_IMAGE_SIZE) {
+					error.push({
+						message: `🦄 File size should be less then ${
+							MAX_POST_IMAGE_SIZE / 1000000
+						}MB`,
+					});
+				}
+			});
+			if (error.length) {
+				toast(error[0].message, configToast);
+			}
+			setFiles(arrFile);
+		}
+
+		// e.target.value = null;
+	};
+
+	const handleClick = (e) => {
+		e.preventDefault();
+		try {
+			// Prepare data
+			const arrFile = Array.from(files);
+			const data = { path: "post" };
+			const dataSaveServer = {
+				url: "POST",
+				method: "POST",
+				data: { description },
+			};
+			// Redux call
+			dispatch(postActions.createPost(arrFile, data, dataSaveServer))
+				.then((data) => {
+					toast(`🦄 Upload Success`);
+					console.log(data);
+					handleReset();
+					setShow(false);
+				})
+				.catch((err) => {
+					toast(`🦄 Upload Fail`);
+					handleReset();
+					console.log(err);
+				});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 
 	return (
 		<>
+			<ToastContainer
+				position="top-right"
+				autoClose={5000}
+				hideProgressBar={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				pauseOnFocusLoss
+				draggable
+				pauseOnHover
+			/>
 			<div className="post-form">
 				<div className="post-form-top">
 					<img
@@ -64,21 +144,36 @@ const PostForm = ({ ...props }) => {
 					</span>
 					<br />
 					<textarea
+						value={description}
 						type="text"
 						className="post-form-modal__body--content"
 						placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
+						onChange={(e) => setDescription(e.target.value)}
 					/>
-
 					<div className="post-form-modal__footer">
 						<input
+							id="post-image"
 							type="file"
 							name="file"
 							onChange={(e) => handleFile(e)}
 						/>
 					</div>
-					<img src={file} alt="" className="post-form-top__avt" />
+					{/* <img
+						src={image ? URL.createObjectURL(image) : ""}
+						alt=""
+						className="post-form-top__avt"
+					/> */}
 					{/* <button type="submit">Đăng</button> */}
 				</Modal.Body>
+				<Modal.Footer>
+					<button
+						type="button"
+						className="post-form-bot__btn"
+						onClick={handleClick}
+					>
+						Đăng
+					</button>
+				</Modal.Footer>
 			</Modal>
 		</>
 	);

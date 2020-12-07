@@ -1,15 +1,19 @@
-import { faCommentAlt, faClock } from "@fortawesome/free-regular-svg-icons";
+import {
+	faCommentAlt,
+	faClock,
+	faThumbsUp,
+} from "@fortawesome/free-regular-svg-icons";
 import {
 	faHome,
 	faEye,
 	faUsers,
 	faTv,
-	faThumbsUp,
 	faSearch,
 	faPen,
 	faEllipsisH,
 	faGlobeAsia,
 	faArrowLeft,
+	faCamera,
 } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
@@ -27,6 +31,7 @@ const ICONS = {
 	instagram: faInstagram,
 	arrowLeft: faArrowLeft,
 	clock: faClock,
+	camera: faCamera,
 };
 
 const COLORS = {

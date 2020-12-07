@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
+import "../../assets/styles/_reactionBox.scss";
+import { Like, Love, Haha, Wow, Sad, Angry } from "../../Icons/_icon";
 
 const Reaction = () => {
-	const [reaction] = useState([1, 2, 3]);
 	return (
 		<>
-			(
-			<div className="reaction-list" IsShownReaction setIsShownReaction>
-				{reaction}
+			<div className="reaction-box">
+				<Like className="reaction-icon like" />
+				<Love className="reaction-icon love" />
+				<Haha className="reaction-icon haha" />
+				<Wow className="reaction-icon wow" />
+				<Sad className="reaction-icon sad" />
+				<Angry className="reaction-icon angry" />
 			</div>
-			)
 		</>
 	);
 };

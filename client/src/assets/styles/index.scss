@@ -17,7 +17,7 @@ code {
 	--bg: #white;
 	--bg-accent: #484a4d;
 	--text-color: #050505;
-	--nav-size: 56px;
+	--nav-size: 58px;
 	--border: 1px solid #474a4d;
 	--border-radius: 8px;
 	--speed: 500ms;
@@ -122,7 +122,7 @@ a {
 .dropdown {
 	position: fixed;
 	z-index: 15;
-	top: 47px;
+	top: calc(var(--nav-size) - 5px);
 	width: 360px;
 	right: 15px;
 	background-color: white;
@@ -189,11 +189,11 @@ a {
 	.nav-bar-fixed {
 		position: sticky;
 		top: 0;
-		z-index: 1;
+		z-index: 2;
 		width: 100%;
 		padding: 0;
 		margin: 0;
-		height: 58px;
+		height: var(--nav-size);
 		background-color: #ffffff;
 		box-shadow: 0 3px 3px var(--shadow-1), inset 0 0 0 0 var(--shadow-inset);
 		a,
@@ -216,6 +216,7 @@ a {
 						display: flex;
 						width: 290px;
 						padding: 0 10px;
+						cursor: pointer;
 					}
 					.icon,
 					p {
@@ -518,10 +519,15 @@ a {
 .post-body__interact {
 	display: flex;
 	justify-content: space-around;
-
+	position: relative;
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	align-items: center;
 	height: 42px;
 	background-color: #e7e4e4;
 	cursor: pointer;
 }
+// .reaction-box {
+// 	position: absolute;
+// 	left: 50px;
+// 	bottom: 50px;
+// }

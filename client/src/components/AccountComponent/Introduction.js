@@ -1,21 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Theme from "../../constants/Theme";
+import { Theme } from "../../constants/index";
 
 const Introduction = () => {
 	return (
 		<div className="content-item introduction">
-			<h2>Giới thiệu</h2>
+			<div className="content-item-header">
+				<h2 className="item-header-title">Giới thiệu</h2>
+			</div>
 			<div className="account-instagram">
 				<FontAwesomeIcon
 					className="icon"
 					icon={Theme.ICONS.instagram}
 				/>
 
-				<Link to="http://www.instagram.com/trhgyen/?hl=vi">
-					trhgyen
-				</Link>
+				<Link to="/">trhgyen</Link>
 			</div>
 			<button type="button">Chỉnh sửa chi tiết</button>
 			<button type="button">Thêm sở thích</button>

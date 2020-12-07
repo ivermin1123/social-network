@@ -1,0 +1,24 @@
+$reaction-list: angry, flower, haha, like, love, sad, wow;
+$reaction-size: 60;
+.reaction-box {
+	position: absolute;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	background: #fff;
+	width: 312px;
+	height: 55px;
+	box-shadow: 0 1px 2px #00000080;
+	border-radius: 28px;
+	left: 25px;
+	bottom: 40px;
+	z-index: 90;
+}
+.reaction-icon {
+	display: inline-block;
+	transform: scale(2.5);
+	// Animation
+	// 	transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	// 	opacity: 0;
+	// 	transform: translate(0, 100px) scale(0);
+}

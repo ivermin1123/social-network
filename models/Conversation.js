@@ -4,6 +4,10 @@ const conversationSchema = new Schema(
   {
     name: String,
     description: String,
+    isGroup: {
+      type: Boolean,
+      default: false,
+    },
     members: [
       {
         type: Schema.Types.ObjectId,
@@ -28,7 +32,6 @@ const conversationSchema = new Schema(
         ref: "File",
       },
     ],
-    createdAt: Date,
   },
   {
     timestamps: true,

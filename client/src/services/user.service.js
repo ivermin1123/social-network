@@ -1,15 +1,6 @@
-// eslint-disable-next-line import/no-unresolved
-import config from "config";
 import axios from "axios";
-import authHeader from "../helpers/auth-header";
-
-const API_URL = config.apiUrl;
-
-const author = authHeader();
-
-const configAxios = {
-	headers: author,
-};
+import { CF_ROUTE_USER } from "../config/route";
+import configAxios from "../helpers/auth-header";
 
 function logout() {
 	localStorage.removeItem("user");
@@ -18,7 +9,7 @@ function logout() {
 
 function login(email, password) {
 	return axios
-		.post(`${API_URL}/api/user/login`, {
+		.post(CF_ROUTE_USER.LOGIN, {
 			email,
 			password,
 		})
@@ -26,13 +17,13 @@ function login(email, password) {
 			if (response.data.user) {
 				localStorage.setItem("user", JSON.stringify(response.data));
 			}
-
+			console.log(response.data);
 			return response.data;
 		});
 }
 
 function register(user) {
-	return axios.post(`${API_URL}/api/user/signup`, user).then((response) => {
+	return axios.post(CF_ROUTE_USER.REGISTER, user).then((response) => {
 		return response.data;
 	});
 }
@@ -40,7 +31,7 @@ function register(user) {
 function getUserDate(userId) {
 	return axios
 		.post(
-			`${API_URL}/api/user/getUser`,
+			CF_ROUTE_USER.GET_USER,
 			{
 				userId,
 			},

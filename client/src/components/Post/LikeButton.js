@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Theme from "../../constants/Theme";
+import { Theme } from "../../constants/index";
+import Reaction from "./Reaction";
 
 const LikeButton = () => {
+	const [showReaction, setShowReaction] = useState(false);
 	return (
-		<div>
-			<FontAwesomeIcon icon={Theme.ICONS.thumbsUp} /> Like
-		</div>
+		<>
+			<div
+				onMouseEnter={() => setShowReaction(true)}
+				onMouseLeave={() => setShowReaction(false)}
+			>
+				<FontAwesomeIcon icon={Theme.ICONS.thumbsUp} /> Like
+			</div>
+
+			{showReaction && <Reaction />}
+		</>
 	);
 };
 

@@ -1,11 +1,11 @@
 import express from "express";
 import mongoose from "mongoose";
-import cors from "cors";
 import dotenv from "dotenv";
 import socket_io from "socket.io";
 import jwt from "jsonwebtoken";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
+import cors from "cors";
 import fs from "fs";
 import path from "path";
 import colors from "colors";
@@ -88,6 +88,9 @@ import usersRouter from "./routes/api/user/user";
 import postsRouter from "./routes/api/post/post";
 import reactionsRouter from "./routes/api/reaction/reaction";
 import commentsRouter from "./routes/api/comment/comment";
+import conversationsRouter from "./routes/api/conversation/conversation";
+import messagesRouter from "./routes/api/message/message";
+import publicRouter from "./routes/public";
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -116,6 +119,9 @@ app.use("/api/user/", usersRouter);
 app.use("/api/post/", postsRouter);
 app.use("/api/reaction/", reactionsRouter);
 app.use("/api/comment/", commentsRouter);
+app.use("/api/conversation/", conversationsRouter);
+app.use("/api/message/", messagesRouter);
+app.use("/api/", publicRouter);
 
 // Swagger
 const options = {

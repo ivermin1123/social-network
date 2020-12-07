@@ -1,32 +1,32 @@
-// eslint-disable-next-line import/no-unresolved
-import config from "config";
 import axios from "axios";
-import authHeader from "../helpers/auth-header";
-
-const API_URL = config.apiUrl;
-
-const author = authHeader();
-
-const configAxios = {
-	headers: author,
-};
+import { CF_ROUTE_POST } from "../config/route";
+import configAxios from "../helpers/auth-header";
 
 function getPost(postId) {
 	return axios
 		.post(
-			`${API_URL}/api/post/getPost`,
+			CF_ROUTE_POST.GET_POST,
 			{
 				postId,
 			},
 			configAxios
 		)
 		.then((response) => {
-			console.log(response);
+			return response.data;
+		});
+}
+
+function getPosts() {
+	return axios
+		.get(CF_ROUTE_POST.GET_POSTS, { headers: configAxios.headers })
+		.then((response) => {
+			return response.data;
 		});
 }
 
 const postService = {
 	getPost,
+	getPosts,
 };
 
 export default postService;

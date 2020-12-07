@@ -1,12 +1,30 @@
-import React from "react";
-import { PostList } from "./_components";
+import React, { useEffect } from "react";
+import { useDispatch, connect } from "react-redux";
+import { Post } from "./_components";
+import postActions from "../actions/post.actions";
 
-const NewsFeed = () => {
+const NewsFeed = (props) => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(postActions.getListPosts());
+	}, [dispatch]);
+
+	const { posts } = props;
+
 	return (
-		<div>
-			<PostList />
+		<div id="post-list">
+			{posts
+				? posts.data.map((post) => {
+						const { _id: id } = post;
+						return <Post post={post} key={id} />;
+				  })
+				: null}
 		</div>
 	);
 };
 
-export default NewsFeed;
+const mapStateToProps = (state) => ({
+	posts: state.posts.posts,
+});
+
+export default connect(mapStateToProps)(NewsFeed);

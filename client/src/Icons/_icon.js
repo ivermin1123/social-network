@@ -7,6 +7,14 @@ import CogIcon from "./Cog";
 import MessengerIcon from "./Messenger";
 import PlusIcon from "./Plus";
 
+import Like from "./Like";
+import Love from "./Love";
+import Care from "./Care";
+import Angry from "./Angry";
+import Wow from "./Wow";
+import Sad from "./Sad";
+import Haha from "./Haha";
+
 export {
 	ArrowIcon,
 	BellIcon,
@@ -16,4 +24,11 @@ export {
 	CogIcon,
 	MessengerIcon,
 	PlusIcon,
+	Like,
+	Love,
+	Care,
+	Haha,
+	Wow,
+	Sad,
+	Angry,
 };

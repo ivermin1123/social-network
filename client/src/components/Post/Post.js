@@ -4,9 +4,11 @@ import Modal from "react-bootstrap/Modal";
 import Theme from "../../constants/Theme";
 import { CommentButton, LikeButton } from "../_components";
 import ListLikes from "./ListLikes";
+import Reaction from "./Reaction";
 
 const Post = (props) => {
 	const [show, setShow] = useState(false);
+	const [isShownReaction, setIsShownReaction] = useState(false);
 	const { post } = props;
 	const { avt, name, created, content, img, likes, comments } = post;
 
@@ -27,6 +29,9 @@ const Post = (props) => {
 							type="button"
 							className="post-body__react--likes"
 							onClick={() => setShow(true)}
+							isShownReaction={isShownReaction}
+							onMouseEnter={() => setIsShownReaction(true)}
+							onMouseLeave={() => setIsShownReaction(false)}
 						>
 							<FontAwesomeIcon
 								icon={Theme.ICONS.thumbsUp}
@@ -34,6 +39,10 @@ const Post = (props) => {
 							/>
 							{likes}
 						</button>
+						<Reaction
+							isShownReaction={isShownReaction}
+							setIsShownReaction={setIsShownReaction}
+						/>
 						<div className="post-body__react--comments">
 							{comments} comments
 						</div>

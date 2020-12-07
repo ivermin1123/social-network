@@ -41,6 +41,7 @@ const Navbar = ({ ...props }) => {
 					</div>
 				</div>
 				<div className="nav-bar__navigation col">
+					<div className="row">
 					<Link to="/" className="nav-bar__navigation-icon">
 						<FontAwesomeIcon
 							className="icon"
@@ -59,6 +60,8 @@ const Navbar = ({ ...props }) => {
 							icon={Theme.ICONS.tv}
 						/>
 					</Link>
+
+					</div>
 				</div>
 				<div className="nav-bar__right-items col">
 					<div className="navbar-nav">

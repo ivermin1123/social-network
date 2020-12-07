@@ -7,6 +7,7 @@ const CF_ROUTE_USER = {
 	LOGIN: `${API_URL}/api/user/login`,
 	REGISTER: `${API_URL}/api/user/signup`,
 	GET_USER: `${API_URL}/api/user/getUser`,
+	UPDATE_USER_IMAGE: `${API_URL}/api/user/updateUserImage`,
 };
 
 const CF_ROUTE_POST = {

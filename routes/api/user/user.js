@@ -27,4 +27,11 @@ router.post(
   userController.updateUserImage
 );
 
+router.post(
+  "/changePassword",
+  helpers.checkAuth,
+  validator.userValidator.changePassword,
+  userController.changePassword
+);
+
 export default router;

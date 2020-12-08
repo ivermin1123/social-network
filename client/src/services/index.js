@@ -3,10 +3,12 @@ import userService from "./user.service";
 import conversationService from "./conversation.service";
 import messageService from "./message.service";
 import uploadService from "./upload-s3.service";
+import socketService from "./socket.service";
 
 export {
 	postService,
 	userService,
+	socketService,
 	uploadService,
 	conversationService,
 	messageService,

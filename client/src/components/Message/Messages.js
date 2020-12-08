@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, connect } from "react-redux";
+import ScrollToBottom from "react-scroll-to-bottom";
+
 import Message from "./Message/Message";
 import Header from "./Message/Header";
 import Footer from "./Message/Footer";
@@ -17,18 +19,20 @@ function Messages(props) {
 			<div className="col">
 				<Header />
 				<div className="col-content">
-					<section className="messages">
-						<div className="grid-message">
-							{messages && messages.data.length
-								? messages.data.map((message) => (
-										<Message
-											message={message}
-											key={message._id}
-										/>
-								  ))
-								: null}
-						</div>
-					</section>
+					<ScrollToBottom>
+						<section className="messages">
+							<div className="grid-message">
+								{messages && messages.data.length
+									? messages.data.map((message) => (
+											<Message
+												message={message}
+												key={message._id}
+											/>
+									  ))
+									: null}
+							</div>
+						</section>
+					</ScrollToBottom>
 					<Footer />
 					<div className="cover-bar" />
 				</div>

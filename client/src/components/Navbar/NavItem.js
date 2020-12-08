@@ -7,13 +7,23 @@ export default function NavItem(props) {
 
 	return (
 		<li className="nav-item">
-			<Link
-				to={href || "/#"}
-				className="icon-button"
-				onClick={() => setOpen(!open)}
-			>
-				{icon}{" "}
-			</Link>
+			{href ? (
+				<Link
+					to={href}
+					className="icon-button"
+					onClick={() => setOpen(!open)}
+				>
+					{icon}
+				</Link>
+			) : (
+				<button
+					type="button"
+					className="icon-button"
+					onClick={() => setOpen(!open)}
+				>
+					{icon}
+				</button>
+			)}
 
 			{open && children}
 		</li>

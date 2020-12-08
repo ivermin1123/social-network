@@ -52,6 +52,19 @@ export function loginUser(req, res, next) {
   next();
 }
 
+export function changePassword(req, res, next) {
+  const schema = Joi.object({
+    password: Joi.string().required(),
+    newPassword: Joi.string().min(3).required(),
+  });
+
+  const { error, value } = schema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.message });
+  }
+  next();
+}
+
 export function getUser(req, res, next) {
   const schema = Joi.object({
     userId: Joi.objectId().required(),

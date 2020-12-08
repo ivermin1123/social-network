@@ -44,6 +44,7 @@
 			border-bottom-right-radius: 10px;
 			display: flex;
 			justify-content: center;
+			background-image: url("https://socialawsbucket.s3-ap-southeast-1.amazonaws.com/post/7740dd7c-dca0-4277-8303-0142e716c0e7.jpg");
 			.avatar{
 				position: absolute;
 				z-index: 1;
@@ -74,13 +75,12 @@
 					}
 				}
 			}
-		
 			.button__change-cover{
 				z-index: 0;
 				border-radius: 10px;
 				width: var(--width-cover);
 				position: absolute;
-				bottom: 40px;
+				top: 340px;
 				text-align: right;
 				padding: 16px 32px 16px 0;
 				background-image: var(--always-dark-gradient);
@@ -92,6 +92,40 @@
 					}
 				}
 			}
+			.option-avatar{
+				z-index: 3;
+				position: absolute;
+				top: 420px;
+				width: 330px;
+				height: 103px;
+				padding-top: 15px;
+				.option-item{
+					padding: 8px 0;
+					background-color: white;
+					border-radius: 10px;
+					height: 100%;
+					box-shadow: 0 5px 5px var(--shadow-1), inset 0 0 0 0 var(--shadow-inset);
+					border: 1px solid lightgrey;
+					.item{
+						padding: 8px 16px;
+						height: 36px;
+						width: 100%;
+						.item-value{
+							cursor: pointer;
+							background-color: white;
+							text-align: left;
+							margin: 0;
+							padding: 0;
+							height: 100%;
+							.icon{
+								margin-right: 5px;
+								width: 20px;
+							}
+						}
+					}
+				}
+			}
+
 		}
 		.cover-display {
 			background-color: white;
@@ -101,7 +135,7 @@
 				padding: 16px 6px;
 				border-bottom: 1px solid #d6d6d6;
 				width: var(--width-content);
-				margin: auto;
+				margin: 16px auto 0;
 				text-align: center;
 				h1 {
 					line-height: 1.1875;

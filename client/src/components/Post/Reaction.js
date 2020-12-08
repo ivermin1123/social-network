@@ -1,19 +1,52 @@
 import React from "react";
-import "../../assets/styles/_reactionBox.scss";
-import { Like, Love, Haha, Wow, Sad, Angry } from "../../Icons/_icon";
+import styled from "styled-components";
+import { motion } from "framer-motion";
 
-const Reaction = () => {
+import { list } from "./Post";
+
+const ReactionWrapper = styled.div`
+	position: relative;
+	width: 45px;
+	height: 45px;
+	border-radius: 50%;
+	background-color: white;
+	transition: 0.2s;
+	transform-origin: center bottom;
+	cursor: pointer;
+
+	&:hover {
+		transform: scale(1.4);
+		transition: 0.2s;
+	}
+
+	&:after {
+		content: attr(data-reaction-name);
+		position: absolute;
+		top: 0px;
+		left: 0;
+		transform: translateX(-50%);
+
+		// padding: 5px;
+		// font-size: 12px;
+		// background-color: white;
+		color: #606770;
+		border-radius: 5px;
+		text-transform: capitalize;
+		font-weight: 400;
+	}
+`;
+const ReactionImage = styled.img`
+	width: 100%;
+	height: 100%;
+`;
+
+const Reaction = ({ icon }) => {
 	return (
-		<>
-			<div className="reaction-box">
-				<Like className="reaction-icon like" />
-				<Love className="reaction-icon love" />
-				<Haha className="reaction-icon haha" />
-				<Wow className="reaction-icon wow" />
-				<Sad className="reaction-icon sad" />
-				<Angry className="reaction-icon angry" />
-			</div>
-		</>
+		<motion.div variants={list}>
+			<ReactionWrapper>
+				<ReactionImage src={icon} />
+			</ReactionWrapper>
+		</motion.div>
 	);
 };
 

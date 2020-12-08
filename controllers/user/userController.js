@@ -264,6 +264,37 @@ export const resetPassword = (req, res) => {
   });
 };
 
+export const changePassword = async (req, res) => {
+  try {
+    const { password, newPassword } = req.body;
+    const { userId } = req.userData;
+
+    const infoUser = await User.findById(userId);
+
+    const result = await bcrypt.compare(password, infoUser.password);
+    if (!result) {
+      res.status(400).json({ error: true, message: "password_incorrect" });
+    } else {
+      bcrypt.hash(newPassword, 10, (err, hash) => {
+        if (err) {
+          return res.status(500).json({ message: err });
+        } else {
+          User.findOneAndUpdate({ _id: userId }, { password: hash })
+            .then(() => {
+              return res.status(200).json({ message: "password_update" });
+            })
+            .catch((err) => {
+              console.log(err.message);
+              return res.status(500).json({ message: err.message });
+            });
+        }
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+};
+
 export const getUsers = async (req, res) => {
   try {
     const { email, userId, username } = req.userData;

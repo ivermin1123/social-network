@@ -237,29 +237,35 @@ a {
 			}
 		}
 		.nav-bar__navigation {
-			display: flex;
-			justify-content: space-around;
 			padding: 0;
-			.nav-bar__navigation-icon {
-				cursor: pointer;
-				font-size: 20px;
-				color: var(--icon);
-				width: 100%;
+			height: 100%;
+			.row{
 				height: 100%;
-				border-radius: 5px;
-				text-align: center;
-				padding-top: 10px;
-				border: 2px solid white;
-			}
-			.nav-bar__navigation-icon:hover {
-				background-color: var(--HOVER);
-			}
-			.nav-bar__navigation-icon--home-clicked,
-			.nav-bar__navigation-icon--groups-clicked,
-			.nav-bar__navigation-icon--watchs-clicked {
-				color: #1878f3;
-				border-bottom: 2px solid #1878f3;
-				border-radius: 0;
+				width: 100%;
+				display: flex;
+				flex-wrap: nowrap;
+				margin: 0;
+				.nav-bar__navigation-icon {
+					cursor: pointer;
+					font-size: 20px;
+					color: var(--icon);
+					width: 100%;
+					height: 100%;
+					border-radius: 5px;
+					text-align: center;
+					padding-top: 10px;
+					border: 2px solid white;
+				}
+				.nav-bar__navigation-icon:hover {
+					background-color: var(--HOVER);
+				}
+				.nav-bar__navigation-icon--home-clicked,
+				.nav-bar__navigation-icon--groups-clicked,
+				.nav-bar__navigation-icon--watchs-clicked {
+					color: #1878f3;
+					border-bottom: 2px solid #1878f3;
+					border-radius: 0;
+				}
 			}
 		}
 		.nav-bar__right-items {

@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import socketActions from "../../actions/socket.actions";
 import { Theme } from "../../constants/index";
 import { SearchBox } from "../_components";
 
 const Navbar = ({ ...props }) => {
+	const dispatch = useDispatch();
 	const [display, setDisplay] = useState(false);
 	const { user } = useSelector((state) => state.authentication.user);
 	const fullName = `${user.firstName} ${user.lastName}`;
 	const showSearch = (value) => {
 		setDisplay(value);
 	};
+
+	useEffect(() => {
+		dispatch(socketActions.connect());
+	}, []);
 	const { children } = props;
 
 	return (
@@ -44,24 +51,26 @@ const Navbar = ({ ...props }) => {
 					</div>
 				</div>
 				<div className="nav-bar__navigation col">
-					<Link to="/" className="nav-bar__navigation-icon">
-						<FontAwesomeIcon
-							className="icon"
-							icon={Theme.ICONS.home}
-						/>
-					</Link>
-					<Link to="/" className="nav-bar__navigation-icon">
-						<FontAwesomeIcon
-							className="icon"
-							icon={Theme.ICONS.users}
-						/>
-					</Link>
-					<Link to="/" className="nav-bar__navigation-icon">
-						<FontAwesomeIcon
-							className="icon"
-							icon={Theme.ICONS.tv}
-						/>
-					</Link>
+					<div className="row">
+						<Link to="/" className="nav-bar__navigation-icon">
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.home}
+							/>
+						</Link>
+						<Link to="/" className="nav-bar__navigation-icon">
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.users}
+							/>
+						</Link>
+						<Link to="/" className="nav-bar__navigation-icon">
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.tv}
+							/>
+						</Link>
+					</div>
 				</div>
 				<div className="nav-bar__right-items col">
 					<div className="navbar-nav">

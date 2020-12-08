@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import userActions from "../actions/user.actions";
 import "../assets/styles/_form.scss";
 
 import { FormField } from "../components/_components";
@@ -10,6 +11,7 @@ const ChangePassword = () => {
 		newPassword: "",
 		repeat_password: "",
 	});
+	const dispatch = useDispatch();
 	const [submitted, setSubmitted] = useState(false);
 	const [reTypePassError, setReTypePassError] = useState(false);
 
@@ -28,24 +30,31 @@ const ChangePassword = () => {
 	}
 
 	function handleSubmit(e) {
-		e.preventDefault();
+			e.preventDefault();
 
-		setSubmitted(true);
-		if (password) {
-			// get return url from location state or default to home page
-			// dispatch(userActions.login(username, password))
-			// 	.then(() => {
-			// 		props.history.push({ pathname: "/" });
-			// 		window.location.reload();
-			// 	})
-			// 	.catch(() => {
-			// 		setSubmitted(false);
-			// 	});
-		}
+			setSubmitted(true);
+			if (pass.password && pass.newPassword) {
+				if (!reTypePassError) {
+					dispatch(
+						userActions.changePassword(
+							pass.password && pass.newPassword
+						)
+					)
+						.then((data) => {
+							console.log(data);
+						})
+						.catch(() => {
+							setSubmitted(false);
+						});
+				}
+			}
 	}
 
 	return (
-		<div className="row login">
+		<div className="row changepass">
+			<div>
+				<p>Đổi mật khẩu</p>
+			</div>
 			<form name="form" className="content" onSubmit={handleSubmit}>
 				<FormField
 					label="Mật khẩu"

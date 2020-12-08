@@ -49,7 +49,9 @@ const Post = (props) => {
 							{reactions.length}
 						</button>
 						<div className="post-body__react--comments">
-							{comments} comments
+							{comments.length
+								? `${comments.lenght} bình luận`
+								: null}
 						</div>
 					</div>
 

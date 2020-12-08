@@ -1,5 +1,6 @@
 .login,
-.register {
+.register,
+.changepass{
 	border: 1px solid lightgrey;
 	background-color: #fff;
 	max-width: 750px;
@@ -144,4 +145,8 @@ form {
 			}
 		}
 	}
+}
+
+.changepass{
+
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import io from "socket.io-client";
 
 import messageActions from "../../../actions/message.actions";
 import Smile from "../../../Icons/Smile";
@@ -9,29 +10,20 @@ export default function Footer() {
 	const [message, setMessage] = useState("");
 	const dispatch = useDispatch();
 	const { conversationOpen } = useSelector((state) => state.conversations);
-
+	const socket = io(`http://localhost:5000`, {
+		transports: ["websocket"],
+		upgrade: false,
+	});
 	function handleSubmit(e) {
 		e.preventDefault();
 		dispatch(messageActions.sendMessage(conversationOpen, message, 0));
+		socket.emit("CSS_SEND_MESSAGE", message);
 		setMessage("");
 	}
 
 	return (
 		<div className="col-foot">
 			<div className="compose">
-				{/* <div className="input__form">
-					<form onSubmit={sendMsg}>
-						<input
-							type="text"
-							name=""
-							className="input__control"
-							placeholder="Write a message..."
-							onChange={(e) => setMsg(e.target.value)}
-							value={msg}
-							required
-						/>
-					</form>
-				</div> */}
 				<form onSubmit={handleSubmit}>
 					<input
 						type="text"

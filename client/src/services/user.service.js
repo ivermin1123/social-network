@@ -22,6 +22,17 @@ function login(email, password) {
 		});
 }
 
+function changePassword(password, newPassword) {
+	return axios
+		.post(CF_ROUTE_USER.CHANGE_PASSWORD, {
+			password,
+			newPassword,
+		})
+		.then((response) => {
+			return response.data;
+		});
+}
+
 function register(user) {
 	return axios.post(CF_ROUTE_USER.REGISTER, user).then((response) => {
 		return response.data;
@@ -51,6 +62,7 @@ const userService = {
 	logout,
 	register,
 	getUserDate,
+	changePassword,
 };
 
 export default userService;

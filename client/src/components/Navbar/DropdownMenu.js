@@ -31,10 +31,11 @@ function DropdownMenu() {
 			leftIcon,
 			children,
 			rightIcon,
+			href,
 		} = props;
 		return (
 			<a
-				href="/#"
+				href={href ? href : "/#"}
 				className="menu-item"
 				onClick={
 					_callback
@@ -78,7 +79,10 @@ function DropdownMenu() {
 					>
 						Animals
 					</DropdownItem>
-					<DropdownItem callback={callback}>Log out</DropdownItem>
+					<DropdownItem href="/changepassword">
+						Đổi mật khẩu
+					</DropdownItem>
+					<DropdownItem callback={callback}>Đăng xuất</DropdownItem>
 				</div>
 			</CSSTransition>
 

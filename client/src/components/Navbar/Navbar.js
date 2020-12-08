@@ -22,7 +22,7 @@ const Navbar = ({ ...props }) => {
 						<Link to="/">
 							<img
 								className="nav-bar__logo"
-								src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-facebook-2019-square2-512.png"
+								src="https://scontent.fvca1-2.fna.fbcdn.net/v/t1.0-9/119006919_2630686663849214_7588642771909915890_o.jpg?_nc_cat=104&ccb=2&_nc_sid=730e14&_nc_ohc=oYe86sMlZaUAX8luzCb&_nc_ht=scontent.fvca1-2.fna&oh=8b21dc4e660658cf1e0cb6463352f220&oe=5FF3FE38"
 								alt="logo"
 							/>
 						</Link>

@@ -63,6 +63,11 @@ form {
 	width: 80%;
 	.logo {
 		text-align: center;
+		img{
+			width: 120px;
+			height: 120px;
+			border-radius: 100px;
+		}
 	}
 	div.field {
 		margin-bottom: 5%;
@@ -84,6 +89,8 @@ form {
 	}
 	input[type="text"],
 	input[type="password"],
+	.ant-picker,
+	.ant-picker:hover,
 	select {
 		outline: none;
 		padding: 0 10px;

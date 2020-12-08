@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Friends = ({ ...props }) => {
 	const { acc } = props;
-	const { user } = props;
+	// const { user } = props;
 
 	return (
 		<div className="content-item friend">

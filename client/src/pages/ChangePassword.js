@@ -30,24 +30,23 @@ const ChangePassword = () => {
 	}
 
 	function handleSubmit(e) {
-			e.preventDefault();
-
-			setSubmitted(true);
-			if (pass.password && pass.newPassword) {
-				if (!reTypePassError) {
-					dispatch(
-						userActions.changePassword(
-							pass.password && pass.newPassword
-						)
+		e.preventDefault();
+		setSubmitted(true);
+		if (pass.currPassword && pass.newPassword) {
+			if (!reTypePassError) {
+				dispatch(
+					userActions.changePassword(
+						pass.currPassword, pass.newPassword
 					)
-						.then((data) => {
-							console.log(data);
-						})
-						.catch(() => {
-							setSubmitted(false);
-						});
-				}
+				)
+					.then((data) => {
+						console.log(data);
+					})
+					.catch(() => {
+						setSubmitted(false);
+					});
 			}
+		}
 	}
 
 	return (

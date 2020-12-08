@@ -24,10 +24,14 @@ function login(email, password) {
 
 function changePassword(password, newPassword) {
 	return axios
-		.post(CF_ROUTE_USER.CHANGE_PASSWORD, {
-			password,
-			newPassword,
-		})
+		.post(
+			CF_ROUTE_USER.CHANGE_PASSWORD,
+			{
+				password,
+				newPassword,
+			},
+			configAxios
+		)
 		.then((response) => {
 			return response.data;
 		});

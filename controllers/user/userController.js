@@ -20,84 +20,55 @@ const User = mongoose.model("User");
 // const ChatRoom = mongoose.model("ChatRoom");
 // const Message = mongoose.model("Message");
 
-// Check File Type
-function checkFileType(file, cb) {
-  // Allowed ext
-  const filetypes = /jpeg|jpg|png|gif/;
-  // Check ext
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  // Check mime
-  const mimetype = filetypes.test(file.mimetype);
+export async function updateUserImage(req, res) {
+  try {
+    const { userId } = req.data;
+    const { files } = req.body;
 
-  if (mimetype && extname) {
-    return cb(null, true);
-  } else {
-    cb(new Error("Only images are allowed"));
-  }
-}
-
-const storage = multer.diskStorage({
-  //multer disk storage settings
-  destination: (req, file, cb) => {
-    cb(null, "./public/images/profile-picture/");
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split("/")[1];
-
-    cb(null, uuidv4() + "." + ext);
-  },
-});
-
-const uploadFile = multer({
-  //multer settings
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
-  },
-  limits: {
-    fileSize: 1024 * 1024,
-  },
-}).single("photo");
-
-export function upload(req, res, next) {
-  uploadFile(req, res, (err) => {
-    if (err) return res.json({ message: err.message });
-
-    if (!req.file) return res.json({ message: "Please upload a file" });
-
-    req.body.photo = req.file.filename;
-
-    Jimp.read(req.file.path, function (err, test) {
-      if (err) throw err;
-      test
-        .resize(100, 100)
-        .quality(50)
-        .write("./public/images/profile-picture/100x100/" + req.body.photo);
-      next();
+    const infoUser = await User.findById(userId).catch((error) => {
+      res.status(500).json({ error: true, message: error.message });
     });
-  });
-}
 
-function deleteProfilePicture({ photo }) {
-  fs.unlink("./public/images/profile-picture/" + photo, (err) => {
-    if (err) {
-      console.error(err);
-      return;
+    if (files) {
+      if (!Array.isArray(files)) {
+        files = Array.from(files);
+      }
+      const promises = [];
+      let listFiles = [];
+      files.forEach((file) => {
+        const { type, url, name, size, path } = file;
+        const newFile = new File({
+          type,
+          sender: userId,
+          url,
+          name,
+          size,
+          path,
+        });
+        promises.push(newFile.save().then((res) => listFiles.push(res._id)));
+      });
+
+      await Promise.all(promises).catch((error) => {
+        res.status(500).json({ error: true, message: error.message });
+        return;
+      });
     }
-    console.log("removed");
-  });
 
-  fs.unlink("./public/images/profile-picture/100x100/" + photo, (err) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log("removed");
-  });
-}
-
-export function changeProfilePicture(req, res) {
-  User.findById(req.userData.userId)
+    await User.findOneAndUpdate(
+      { _id: userId },
+      { avatar: listFiles[0] },
+      { new: true }
+    )
+      .then((user) => {
+        res.status(200).json({ error: false, data: user });
+      })
+      .catch((error) => {
+        res.status(500).json({ error: true, message: error.message });
+      });
+  } catch (error) {
+    return res.status(500).json({ error: true, message: error.message });
+  }
+  User.findOneAndUpdate(req.userData.userId)
     .select("profilePicture")
     .then((data) => {
       if (data.profilePicture !== "person.png") {
@@ -193,7 +164,15 @@ export function loginUser(req, res, next) {
       $project: {
         _id: 1,
         username: 1,
+        firstName: 1,
+        lastName: 1,
         email: 1,
+        gender: 1,
+        coverImage: 1,
+        lang: 1,
+        avatar: 1,
+        phone: 1,
+        birthday: 1,
         password: 1,
       },
     },
@@ -223,9 +202,31 @@ export function loginUser(req, res, next) {
               }
             );
 
+            const {
+              _id,
+              username,
+              firstName,
+              lastName,
+              email,
+              gender,
+              coverImage,
+              lang,
+              avatar,
+              phone,
+              birthday,
+            } = users[0];
             const user = {
-              _id: users[0]._id,
-              username: users[0].username,
+              _id,
+              username,
+              firstName,
+              lastName,
+              email,
+              gender,
+              coverImage,
+              lang,
+              avatar,
+              phone,
+              birthday,
               token: "Bearer " + token,
             };
             req.body.user = user;

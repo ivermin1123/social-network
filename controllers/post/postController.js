@@ -13,51 +13,6 @@ require("linkifyjs/plugins/mention")(linkify);
 const Post = mongoose.model("Post");
 const File = mongoose.model("File");
 
-// Check File Type
-function checkFileType(file, cb) {
-  // Allowed ext
-  const filetypes = /jpeg|jpg|png|gif/;
-  // Check ext
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  // Check mime
-  const mimetype = filetypes.test(file.mimetype);
-
-  if (mimetype && extname) {
-    return cb(null, true);
-  } else {
-    cb(new Error("Only images are allowed"));
-  }
-}
-
-function arrayRemove(array, value) {
-  return array.filter((item) => {
-    return item._id.toString() !== value.toString();
-  });
-}
-
-const storage = multer.diskStorage({
-  //multers disk storage settings
-  destination: (req, file, cb) => {
-    cb(null, "./public/images/post-images/");
-  },
-  filename: (req, file, cb) => {
-    const ext = file.mimetype.split("/")[1];
-
-    cb(null, uuidv4() + "." + ext);
-  },
-});
-
-const upload = multer({
-  //multer settings
-  storage: storage,
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
-  },
-  limits: {
-    fileSize: 10485760, //10 MB
-  },
-}).single("photo");
-
 export const createPost = async (req, res) => {
   try {
     const { files, description, coordinates, locationName, tags } = req.body;

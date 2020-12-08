@@ -1,7 +1,7 @@
 import axios from "axios";
 import imageCompression from "browser-image-compression";
 import "regenerator-runtime/runtime";
-import { CF_ROUTE_PUBLIC, CF_ROUTE_POST } from "../config/route";
+import { CF_ROUTE_PUBLIC, CF_ROUTE_POST, CF_ROUTE_USER } from "../config/route";
 import configAxios from "../helpers/auth-header";
 
 /**
@@ -182,7 +182,6 @@ function handleImageUpload(file, maxWidthOrHeight) {
 // author: HuynhVinh
 // update  : not compress file with size than 400MB
 function UploadFileS3(files, data, dataSaveServer) {
-	console.log({ files });
 	return new Promise((resolve) => {
 		if (files) {
 			(async () => {
@@ -288,6 +287,9 @@ function UploadFileS3(files, data, dataSaveServer) {
 							switch (url) {
 								case "POST":
 									urlCall = CF_ROUTE_POST.CREATE_POST;
+									break;
+								case "USER_IMAGE":
+									urlCall = CF_ROUTE_USER.UPDATE_USER_IMAGE;
 									break;
 								default:
 									urlCall = null;

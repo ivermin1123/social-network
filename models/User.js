@@ -50,10 +50,14 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    image: String,
-    imagePublicId: String,
-    coverImage: String,
-    coverImagePublicId: String,
+    avatar: {
+      type: Schema.Types.ObjectId,
+      ref: "File",
+    },
+    coverImage: {
+      type: Schema.Types.ObjectId,
+      ref: "File",
+    },
     isOnline: {
       type: Boolean,
       default: false,
@@ -97,10 +101,10 @@ const userSchema = new Schema(
         ref: "SendRequest",
       },
     ],
-    messages: [
+    conversations: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Message",
+        ref: "Conversation",
       },
     ],
   },

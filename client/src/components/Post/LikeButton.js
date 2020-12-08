@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Theme from "../../constants/Theme";
+import { Theme } from "../../constants/index";
 
 const LikeButton = () => {
 	return (

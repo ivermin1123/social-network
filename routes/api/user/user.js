@@ -21,4 +21,10 @@ router.post(
   userController.getUser
 );
 
+router.post(
+  "/updateUserImage",
+  helpers.checkAuth,
+  userController.updateUserImage
+);
+
 export default router;

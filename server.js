@@ -52,25 +52,13 @@ const corsOptions = {
   credentials: true,
 };
 app.use(cors(corsOptions));
-app.use(async (req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type"
-  );
-
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
 
 import usersRouter from "./routes/api/user/user";
 import postsRouter from "./routes/api/post/post";
 import reactionsRouter from "./routes/api/reaction/reaction";
 import commentsRouter from "./routes/api/comment/comment";
+import conversationsRouter from "./routes/api/conversation/conversation";
+import messagesRouter from "./routes/api/message/message";
 import publicRouter from "./routes/public";
 
 const limiter = rateLimit({
@@ -100,6 +88,8 @@ app.use("/api/user/", usersRouter);
 app.use("/api/post/", postsRouter);
 app.use("/api/reaction/", reactionsRouter);
 app.use("/api/comment/", commentsRouter);
+app.use("/api/conversation/", conversationsRouter);
+app.use("/api/message/", messagesRouter);
 app.use("/api/", publicRouter);
 
 // Swagger

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
 import moment from "moment";
-import Theme from "../../constants/Theme";
+import { Theme } from "../../constants/index";
 import { CommentButton, LikeButton } from "../_components";
 import ListLikes from "./ListLikes";
 import img5 from "../../assets/image/avatar-5.png";
@@ -26,7 +26,7 @@ const Post = (props) => {
 					/>
 					<div className="post-header__name">{author.username}</div>
 					<div className="post-header__created">
-						{moment(createdAt).fromNow()}
+						{moment(createdAt).locale("vi").fromNow()}
 					</div>
 				</div>
 				<div className="post-body">

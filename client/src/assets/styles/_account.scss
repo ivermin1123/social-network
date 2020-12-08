@@ -9,6 +9,7 @@
 	--secondary-text: ##65676b;
 	--border: 1px solid #d6d6d6;
 	--icon: #66676b;
+	--always-dark-gradient: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6));
 }
 .account-page {
 	background-color: var(--web-wash);
@@ -41,6 +42,56 @@
 			height: 350px;
 			border-bottom-left-radius: 10px;
 			border-bottom-right-radius: 10px;
+			display: flex;
+			justify-content: center;
+			.avatar{
+				position: absolute;
+				z-index: 1;
+				width: 170px;
+				top: 250px;
+				.show-avatar {
+					position: absolute;
+					height: 170px;
+					margin: auto;
+					display: flex;
+					img{
+						height: 100%;
+						border: 2px solid white;
+						border-radius: 100px;
+						width: 100%;
+					}
+					button{
+						position: absolute;
+						border-radius: 50px;
+						bottom: 25px;
+						right: 25px;
+						transform: translate(50%, 50%);
+						padding: 5px 10px;
+						z-index: 2;
+						font-size: 20px;
+						height: 38px;
+						height: 38px;
+					}
+				}
+			}
+		
+			.button__change-cover{
+				z-index: 0;
+				border-radius: 10px;
+				width: var(--width-cover);
+				position: absolute;
+				bottom: 40px;
+				text-align: right;
+				padding: 16px 32px 16px 0;
+				background-image: var(--always-dark-gradient);
+				button{
+					height: 36px;
+					padding: 0 12px;
+					.icon{
+						margin-right: 5px;
+					}
+				}
+			}
 		}
 		.cover-display {
 			background-color: white;
@@ -58,9 +109,11 @@
 					font-weight: 700;
 				}
 				.button__add-profile {
+					margin: auto;
 					font-weight: 600;
 					color: var(--accent);
 					font-size: 0.875rem;
+					background-color: white;
 				}
 				.button__add-profile:hover {
 					cursor: pointer;
@@ -106,7 +159,7 @@
 			box-shadow: 0 3px 3px var(--shadow-1),
 				inset 0 0 0 0 var(--shadow-inset);
 			position: sticky;
-			top: 58px;
+			top: 57.5px;
 			height: var(--height-menu);
 			background-color: white;
 			.menu-content {
@@ -123,10 +176,11 @@
 						padding: 0 16px;
 						height: 100%;
 						border-radius: 6px;
-						border-bottom: 3px solid white;
-						border-top: 3px solid white;
+						border-bottom: 4px solid white;
+						border-top: 4px solid white;
+						background-color: #fff;
 						span {
-							font-size: 16px;
+							font-size: 15px;
 							font-weight: 600;
 							color: var(--secondary-text);
 							justify-content: center;
@@ -176,20 +230,58 @@
 		.main-content-left {
 			.content-item {
 				padding: 20px 15px 10px;
-			}
-			h2 {
-				font-size: 1.25rem;
-				font-weight: 700;
-			}
-			a {
-				color: var(--accent);
+				.content-item-header {
+					display: flex;
+					justify-content: space-between;
+					.item-header-title {
+						font-size: 1.25rem;
+						font-weight: 700;
+						margin: 0;
+					}
+					.item-header-title:hover {
+						text-decoration: underline;
+					}
+					a {
+						font-size: 1rem;
+						color: var(--accent);
+						border-radius: 5px;
+					}
+					a:hover {
+						background-color: var(--HOVER);
+						text-decoration: none;
+					}
+				}
+				.grid-container {
+					display: grid;
+					grid-template-columns: auto auto auto;
+					grid-row: 1;
+					padding: 10px;
+				}
+
+				.content-item-main {
+					padding: 16px;
+					.item__margin-bottom {
+						margin-bottom: 4px;
+						padding: 0;
+					}
+					.item__margin-right {
+						padding: 0;
+						margin-right: 4px;
+					}
+				}
 			}
 			.introduction {
+				.content-item-header {
+					.item-header-title:hover {
+						text-decoration: none;
+					}
+				}
 				.account-instagram {
 					display: flex;
-					padding-top: 6px;
+					padding-top: 16px;
 					a {
 						font-size: 0.875rem;
+						color: var(--accent);
 						margin-left: 10px;
 					}
 					.icon {
@@ -200,24 +292,6 @@
 				button {
 					width: 100%;
 					margin: 10px 0;
-				}
-			}
-			.image {
-				div {
-					display: flex;
-					justify-content: space-between;
-					h2:hover {
-						text-decoration: underline;
-					}
-					a {
-						font-size: 1rem;
-						padding: 4px 10px;
-						border-radius: 5px;
-					}
-					a:hover {
-						background-color: var(--HOVER);
-						text-decoration: none;
-					}
 				}
 			}
 		}

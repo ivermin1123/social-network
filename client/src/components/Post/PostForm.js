@@ -29,8 +29,6 @@ const PostForm = ({ ...props }) => {
 
 	const handleFile = (e) => {
 		const { files } = e.target;
-		console.log("e.target:", e.target);
-		console.log("FILE LIST:", files);
 
 		const error = [];
 		if (files && files.length) {
@@ -57,13 +55,8 @@ const PostForm = ({ ...props }) => {
 		e.preventDefault();
 		try {
 			// Prepare data
-			// const fd = new FormData();
 			const arrFile = Array.from(files);
-			// arrFile.forEach((file) => {
-			// 	fd.append("images", file);
-			// });
-			// fd.append("data", JSON.stringify({ description }));
-			const data = { description, path: "post" };
+			const data = { path: "post" };
 			const dataSaveServer = {
 				url: "POST",
 				method: "POST",
@@ -157,7 +150,6 @@ const PostForm = ({ ...props }) => {
 						placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
 						onChange={(e) => setDescription(e.target.value)}
 					/>
-
 					<div className="post-form-modal__footer">
 						<input
 							id="post-image"

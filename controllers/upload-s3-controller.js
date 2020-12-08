@@ -5,9 +5,8 @@ export const uploadFile_S3 = async (req, res) => {
   try {
     if (!req.userData)
       return res.json({ error: true, message: "Access denied." });
-    let { userID } = req.userData;
 
-    let { name, size, type, path } = req.body;
+    let { name, type, path } = req.body;
     let extName = name && name.split(".").pop().toLowerCase();
 
     if (type.includes("image") && !type.includes(".dwg")) {

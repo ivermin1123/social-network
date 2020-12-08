@@ -340,38 +340,10 @@
 	padding: 0px;
 	-ms-flex: 1;
 	flex: 1;
-	overflow: hidden;
-	.cover-bar {
-		position: absolute;
-		background: #fff;
-		height: 100%;
-		top: 0;
-		right: 0;
-		width: 0.4em;
-		-webkit-transition: all 0.5s;
-		opacity: 1;
-	}
-	&:hover {
-		.cover-bar {
-			opacity: 0;
-			transition: all 0.5s;
-		}
-	}
-	section {
+	overflow: auto;
+	.messages-container {
 		height: calc(100% - 69px);
-		overflow: hidden;
-		overflow-y: scroll;
-		&::-webkit-scrollbar {
-			width: 0.4em;
-		}
-		&::-webkit-scrollbar,
-		&::-webkit-scrollbar-thumb {
-			overflow: visible;
-			border-radius: 4px;
-		}
-		&::-webkit-scrollbar-thumb {
-			background: rgba(0, 0, 0, 0.2);
-		}
+		overflow: auto;
 	}
 }
 

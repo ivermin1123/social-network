@@ -14,6 +14,7 @@ const appReducer = combineReducers({
 	authentication,
 	conversations,
 	registration,
+	socket,
 	messages,
 	users,
 	alert,

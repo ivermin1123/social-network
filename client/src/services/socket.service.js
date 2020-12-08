@@ -6,7 +6,11 @@ const API_URL = config.apiUrl;
 function connect() {
 	return new Promise((resolve) => {
 		const socket = io(API_URL, {
-			query: { token: JSON.parse(localStorage.getItem("user")).token },
+			query: {
+				token: JSON.parse(localStorage.getItem("user")).user.token,
+			},
+			transports: ["websocket"],
+			upgrade: false,
 		});
 		socket.on("connect", () => {
 			resolve(socket);

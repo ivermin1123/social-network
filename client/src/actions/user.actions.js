@@ -34,6 +34,38 @@ const login = (username, password) => (dispatch) => {
 	);
 };
 
+const changePassword = (password, newPassword) => (dispatch) => {
+	return userService.changePassword(password, newPassword).then(
+		(data) => {
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: data,
+			});
+
+			return Promise.resolve();
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: userConstants.CHANGE_PASSWORD_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
 const logout = () => (dispatch) => {
 	userService.logout();
 	dispatch({ type: userConstants.LOGOUT });
@@ -79,6 +111,7 @@ const userActions = {
 	login,
 	logout,
 	register,
+	changePassword,
 };
 
 export default userActions;

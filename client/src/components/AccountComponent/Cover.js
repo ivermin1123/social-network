@@ -8,6 +8,7 @@ const Cover = (props) => {
 	const [value, setValue] = useState("");
 	const [status, setStatus] = useState(false);
 	const [state, setState] = useState();
+	const [popoverAvt, setPopoverAvt] = useState(false);
 
 	const { firstName, lastName, avatar } = user;
 	const name = `${firstName} ${lastName}`;
@@ -32,7 +33,11 @@ const Cover = (props) => {
 					className="cover-image"
 				/>
 				<div className="avatar">
-					<div className="show-avatar">
+					<button
+						type="button"
+						className="show-avatar"
+						onClick={() => setPopoverAvt(!popoverAvt)}
+					>
 						<img src={avatarSrc} alt="" />
 						<button type="button" className="button__change-avatar">
 							<FontAwesomeIcon
@@ -40,9 +45,12 @@ const Cover = (props) => {
 								icon={Theme.ICONS.camera}
 							/>
 						</button>
-					</div>
+					</button>
 				</div>
-				<div className="option-avatar">
+				<div
+					className="option-avatar"
+					display={popoverAvt ? "block" : "none"}
+				>
 					<div className="option-item">
 						<div className="item">
 							<button type="button" className="item-value">

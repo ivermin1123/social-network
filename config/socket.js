@@ -1,10 +1,21 @@
-import socket_io from "socket.io";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import redisAdapter from "socket.io-redis";
+import MESSAGE from "../database/MESSAGE";
+import { REDIS_SEPARATOR } from "./redis";
+import mongoose from "mongoose";
+import "../models/User";
 
-const io = socket_io();
+const User = mongoose.model("User");
+
+const bluebird = require("bluebird");
+const redis = require("redis");
+
+const usersConnectedInstance = require("./global_scope").GlobalStore;
+let usersConnected = usersConnectedInstance.usersOnline;
+
 dotenv.config({ path: ".env" });
-let arraySocketConnect = [];
+const arraySocketConnect = [];
 
 const users = [];
 
@@ -36,16 +47,80 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
-function ApplySocketIO(app) {
-  app.io = io;
+const replaceExist = (arr, userId, socketID, username) => {
+  let newArr;
+  let isExist = arr.find((item) => Object.is(item.username, username)); // kiểm tra tồn tại
 
-  app.set("socketio", io);
-  let interval;
-  io.use((socket, next) => {
+  if (isExist) {
+    let arrWithoutExist = arr.filter(
+      (item) => !Object.is(item.username, username)
+    );
+    newArr = [
+      ...arrWithoutExist,
+      {
+        userId,
+        socketID: [...isExist.socketID, socketID],
+        username,
+      },
+    ];
+  } else {
+    newArr = [
+      ...arr,
+      {
+        userId,
+        socketID: [socketID],
+        username,
+      },
+    ];
+  }
+  return newArr;
+};
+
+const anAsyncFunction = async (item) => {
+  let infoUser = await User.findById(item.userId);
+  delete infoUser.password;
+  return { ...item, infoUser };
+};
+
+const mapInfoUser = async (arrs, username) => {
+  let arrsWithOutOwner = arrs.filter(
+    (item) => !Object.is(item.username, username)
+  );
+  return await Promise.all(
+    arrsWithOutOwner.map((item) => anAsyncFunction(item))
+  );
+};
+
+function ApplySocketIO(io) {
+  bluebird.promisifyAll(redis);
+
+  let pub = redis.createClient({
+    host: REDIS_SEPARATOR.HOST,
+    port: REDIS_SEPARATOR.PORT,
+    auth_pass: REDIS_SEPARATOR.PWD,
+  });
+
+  let sub = redis.createClient({
+    host: REDIS_SEPARATOR.HOST,
+    port: REDIS_SEPARATOR.PORT,
+    auth_pass: REDIS_SEPARATOR.PWD,
+  });
+
+  io.adapter(
+    redisAdapter({
+      pubClient: pub,
+      subClient: sub,
+    })
+  );
+  //   io.configure(function () {
+  //     io.set("transports", ["websocket"]);
+  //     io.set("log level", 2);
+  //   });
+
+  io.use(async (socket, next) => {
     const { id: socketID } = socket;
     arraySocketConnect.push(socketID);
     if (socket.handshake.query && socket.handshake.query.token) {
-      console.log("true");
       const token = socket.handshake.query.token.split(" ")[1];
       jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
         if (err) return next(new Error("Authentication error"));
@@ -53,6 +128,25 @@ function ApplySocketIO(app) {
         console.log("next---------------------");
         next();
       });
+
+      /**
+       * ADD USER INTO usersConnected
+       * usersConnected
+       */
+      const { id: socketID } = socket;
+      const { _id: userId, username } = socket.userData;
+      let usersConnectedGlobal = usersConnectedInstance.usersOnline;
+      usersConnected = replaceExist(
+        usersConnectedGlobal,
+        userId,
+        socketID,
+        username
+      );
+      usersConnectedInstance.setUsersOnline(usersConnected);
+      let listUserConnectedWithInfo = await mapInfoUser(
+        usersConnected,
+        username
+      );
     } else {
       const token = socket.handshake.query.token.split(" ")[1];
       jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
@@ -73,28 +167,13 @@ function ApplySocketIO(app) {
     // });
 
     console.log("New client connected");
-    if (interval) {
-      clearInterval(interval);
-    }
-    interval = setInterval(() => getApiAndEmit(socket), 1000);
     const { id: socketID } = socket;
 
-    socket.on("typing", (data) => {
-      console.log("hhhhh-=----");
-      console.log({ arraySocketConnect });
-      arraySocketConnect.forEach((socket_) => {
-        console.log(socket_);
-        io.to(socket_).emit("typing_c", { data: 1 });
-      });
-    });
-
-    socket.on("join", ({ name, room }, callback) => {
+    socket.on("JOIN", ({ name, room }, callback) => {
+      console.log({ name, room });
       const { error, user } = addUser({ id: socket.id, name, room });
-
-      if (error) return callback(error);
-
+      console.log({ error, user });
       socket.join(user.room);
-
       socket.emit("message", {
         user: "admin",
         text: `${user.name}, welcome to room ${user.room}.`,
@@ -108,20 +187,33 @@ function ApplySocketIO(app) {
         users: getUsersInRoom(user.room),
       });
 
-      callback();
+      //   callback();
     });
 
-    socket.on("sendMessage", (message, callback) => {
-      const user = getUser(socket.id);
+	socket.on("TEST_VL", (data, callback) => {
+		console.log(data);
+	});
+	
+    socket.on(
+      "CSS_SEND_MESSAGE",
+      async ({ message, conversationOpen }, callback) => {
+        console.log("CSS_SEND_MESSAGE", { data });
+        const user = getUser(socket.id);
+        const infoMessage = await MESSAGE.getMessage(conversationOpen);
+        let dataSendClient;
+        if (infoMessage.error) {
+          dataSendClient = infoMessage.message;
+        } else {
+          dataSendClient = infoMessage.data;
+        }
+        io.to(user.room).emit("SSC_SEND_MESSAGE", {
+          data: dataSendClient,
+        });
 
-      io.to(user.room).emit("message", { user: user.name, text: message });
+        //   callback();
+      }
+    );
 
-      callback();
-    });
-
-    socket.on("CSS_SEND_MESSAGE", (msg) => {
-      console.log("message: " + msg);
-    });
     socket.on("stoppedTyping", (data) => {
       //   arraySocketConnect.forEach(socket_=>{
       // 	 socket.to(data.userId).emit("stoppedTyping", { roomId: data.roomId });
@@ -129,7 +221,6 @@ function ApplySocketIO(app) {
     });
     socket.on("disconnect", () => {
       console.log(`bye ${socketID}`);
-      clearInterval(interval);
       const user = removeUser(socket.id);
 
       if (user) {
@@ -144,12 +235,6 @@ function ApplySocketIO(app) {
       }
     });
   });
-
-  const getApiAndEmit = (socket) => {
-    const response = new Date();
-    // Emitting a new message. Will be consumed by the client
-    socket.emit("FromAPI", response);
-  };
 }
 
 export default ApplySocketIO;

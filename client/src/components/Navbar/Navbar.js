@@ -1,25 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import io from "socket.io-client";
+// eslint-disable-next-line import/no-unresolved
+import config from "config";
 import socketActions from "../../actions/socket.actions";
 import { Theme } from "../../constants/index";
-import { SearchBox } from "../_components";
+import Profile from "./Profile";
+import { NavItem, DropdownMenu, SearchBox } from "../_components";
+import {
+	BellIcon,
+	MessengerIcon,
+	CaretIcon,
+	PlusIcon,
+} from "../../Icons/_icon";
 
-const Navbar = ({ ...props }) => {
+const API_URL = config.apiUrl;
+
+const Navbar = (props) => {
 	const dispatch = useDispatch();
 	const [display, setDisplay] = useState(false);
-	const { user } = useSelector((state) => state.authentication.user);
-	const fullName = `${user.firstName} ${user.lastName}`;
+
 	const showSearch = (value) => {
 		setDisplay(value);
 	};
-
+	const { loadingConversation, conversationOpen } = props;
+	if (loadingConversation) {
+		return null;
+	}
 	useEffect(() => {
-		dispatch(socketActions.connect());
+		const socket = io(API_URL, {
+			query: {
+				token: JSON.parse(localStorage.getItem("user")).user.token,
+			},
+			transports: ["websocket"],
+		});
+		socket.once("connect", () => {
+			dispatch(socketActions.connect(socket));
+			socket.emit("TEST_VL", { hoang: 123 });
+		});
+
+		// CLEAN UP THE EFFECT
+		return () => socket.close();
+		//
 	}, []);
-	const { children } = props;
 
 	return (
 		<div className="nav-bar">
@@ -74,17 +99,16 @@ const Navbar = ({ ...props }) => {
 				</div>
 				<div className="nav-bar__right-items col">
 					<div className="navbar-nav">
-						<Link to="/account">
-							<div className="nav-bar__info">
-								<img
-									className="nav-bar__avt"
-									src="https://znews-photo.zadn.vn/w660/Uploaded/bpmoqwq1/2014_10_16/con_meo.jpg"
-									alt="avt"
-								/>
-								<div className="nav-bar__name">{fullName}</div>
-							</div>
-						</Link>
-						{children}
+						<Profile />
+						<NavItem icon={<PlusIcon />} />
+						<NavItem icon={<BellIcon />} />
+						<NavItem
+							href={`/message/${conversationOpen}`}
+							icon={<MessengerIcon />}
+						/>
+						<NavItem icon={<CaretIcon />}>
+							<DropdownMenu />
+						</NavItem>
 					</div>
 				</div>
 			</div>
@@ -95,4 +119,10 @@ const Navbar = ({ ...props }) => {
 	);
 };
 
-export default Navbar;
+const mapStateToProps = (state) => ({
+	conversationOpen: state.conversations.conversationOpen,
+	loadingConversation: state.conversations.loadingConversation,
+});
+
+const connectedNavbar = connect(mapStateToProps)(Navbar);
+export { connectedNavbar as default };

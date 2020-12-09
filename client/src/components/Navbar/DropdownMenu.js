@@ -15,7 +15,6 @@ function DropdownMenu() {
 	}
 
 	useEffect(() => {
-		console.log(dropdownRef.current?.firstChild.offsetHeight);
 		setMenuHeight(dropdownRef.current?.firstChild.offsetHeight + 32);
 	}, []);
 

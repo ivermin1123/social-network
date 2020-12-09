@@ -7,7 +7,7 @@ const NewsFeed = (props) => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(postActions.getListPosts());
-	}, [dispatch]);
+	}, []);
 
 	const { posts } = props;
 

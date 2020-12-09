@@ -35,6 +35,10 @@ const getConversation = (conversationId) => (dispatch) => {
 };
 
 const getListConversations = () => (dispatch) => {
+	function request() {
+		return { type: conversationConstants.GET_LIST_CONVERSATION_REQUEST };
+	}
+	dispatch(request());
 	return conversationService.getConversations().then(
 		(data) => {
 			dispatch({

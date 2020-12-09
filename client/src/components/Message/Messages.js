@@ -1,11 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, connect } from "react-redux";
 import ScrollToBottom from "react-scroll-to-bottom";
+import PerfectScrollbar from "react-perfect-scrollbar";
 
 import Message from "./Message/Message";
 import Header from "./Message/Header";
 import Footer from "./Message/Footer";
 import messageActions from "../../actions/message.actions";
+import "react-perfect-scrollbar/dist/css/styles.css";
 
 function Messages(props) {
 	const { messages, conversationOpen } = props;
@@ -19,8 +21,8 @@ function Messages(props) {
 			<div className="col">
 				<Header />
 				<div className="col-content">
-					<ScrollToBottom>
-						<section className="messages">
+					<PerfectScrollbar>
+						<ScrollToBottom className="messages-container">
 							<div className="grid-message">
 								{messages && messages.data.length
 									? messages.data.map((message) => (
@@ -31,8 +33,8 @@ function Messages(props) {
 									  ))
 									: null}
 							</div>
-						</section>
-					</ScrollToBottom>
+						</ScrollToBottom>
+					</PerfectScrollbar>
 					<Footer />
 					<div className="cover-bar" />
 				</div>

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const LikeThumb = styled.span`
+const LikeButton = styled.span`
 	position: relative;
 	display: inline-flex;
 	align-items: center;
@@ -13,8 +13,8 @@ const LikeThumb = styled.span`
 	fill: #606770;
 
 	padding: 15px 20px;
-	border-radius: 100px;
-	box-shadow: 0 0px 20px -2px rgba(0, 0, 0, 0.2);
+	// border-radius: 100px;
+	// box-shadow: 0 0px 20px -2px rgba(0, 0, 0, 0.2);
 
 	cursor: pointer;
 	&:after {
@@ -24,4 +24,4 @@ const LikeThumb = styled.span`
 	}
 `;
 
-export default LikeThumb;
+export default LikeButton;

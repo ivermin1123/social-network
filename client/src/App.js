@@ -9,6 +9,7 @@ import {
 	HomePage,
 	AccountPage,
 	LoginPage,
+	ChangePassword,
 	RegisterPage,
 	MessagePage,
 } from "./pages/_pages";
@@ -65,6 +66,11 @@ function App() {
 									exact
 									path="/message"
 									component={MessagePage}
+								/>
+								<PrivateRoute
+									exact
+									path="/changepassword"
+									component={ChangePassword}
 								/>
 								<Route path="/login" component={LoginPage} />
 								<Route

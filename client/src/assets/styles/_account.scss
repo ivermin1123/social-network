@@ -53,11 +53,13 @@
 				.show-avatar {
 					position: absolute;
 					height: 170px;
+					border: 2px solid white;
+					border-radius: 100px;
 					margin: auto;
 					display: flex;
+					padding: 0;
 					img{
 						height: 100%;
-						border: 2px solid white;
 						border-radius: 100px;
 						width: 100%;
 					}
@@ -93,6 +95,7 @@
 				}
 			}
 			.option-avatar{
+				display: none;
 				z-index: 3;
 				position: absolute;
 				top: 420px;

@@ -239,7 +239,7 @@ a {
 		.nav-bar__navigation {
 			padding: 0;
 			height: 100%;
-			.row{
+			.row {
 				height: 100%;
 				width: 100%;
 				display: flex;
@@ -529,8 +529,10 @@ a {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
 	align-items: center;
 	height: 42px;
-	background-color: #e7e4e4;
 	cursor: pointer;
+	margin: 0 10px 10px 10px;
+	border-top: 0.5px solid #cfd0d4;
+	border-bottom: 0.5px solid #cfd0d4;
 }
 // .reaction-box {
 // 	position: absolute;

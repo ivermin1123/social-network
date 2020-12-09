@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import DatePicker from "react-datepicker";
+import { DatePicker } from "antd";
+import "antd/dist/antd.css";
 import { FormField } from "../components/_components";
 import userActions from "../actions/user.actions";
 import "../assets/styles/_form.scss";
-import "react-datepicker/dist/react-datepicker.css";
 
 function RegisterPage(props) {
 	const [user, setUser] = useState({
@@ -68,7 +68,10 @@ function RegisterPage(props) {
 		<div className="register">
 			<form className="content" name="form" onSubmit={handleSubmit}>
 				<div className="logo field">
-					<h3>LOGO</h3>
+					<img
+						src="https://scontent.fvca1-2.fna.fbcdn.net/v/t1.0-9/119006919_2630686663849214_7588642771909915890_o.jpg?_nc_cat=104&ccb=2&_nc_sid=730e14&_nc_ohc=oYe86sMlZaUAX8luzCb&_nc_ht=scontent.fvca1-2.fna&oh=8b21dc4e660658cf1e0cb6463352f220&oe=5FF3FE38"
+						alt=""
+					/>
 				</div>
 				<FormField
 					label="Tên đăng nhập"
@@ -121,8 +124,8 @@ function RegisterPage(props) {
 							<sup> *</sup>
 						</p>
 						<DatePicker
-							selected={user.birthday}
-							dateFormat="dd/MM/yyyy"
+							placeholder="Chọn ngày"
+							format="DD/MM/yyyy"
 							onChange={(date) => {
 								setUser((user) => ({
 									...user,

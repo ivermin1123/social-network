@@ -8,7 +8,7 @@ import ListLikes from "./ListLikes";
 import img5 from "../../assets/image/avatar-5.png";
 import Reaction from "./Reaction";
 
-import { Like } from "../../Icons/_icon";
+import { ThumbUp } from "../../Icons/_icon";
 import like from "../../assets/icons/like.svg";
 import love from "../../assets/icons/love.svg";
 import haha from "../../assets/icons/haha.svg";
@@ -45,6 +45,11 @@ const Post = (props) => {
 	const { author, comments, createdAt, description, files, reactions } = post;
 	// hover for reaction
 	const [isHover, setIsHover] = useState(false);
+
+	const handleLike = () => {
+		console.log("liked");
+		setIsHover(false);
+	};
 	return (
 		<>
 			<div className="post">
@@ -92,19 +97,21 @@ const Post = (props) => {
 							className="post-body__interact--reactions"
 							onMouseOver={() => setIsHover(true)}
 							onMouseLeave={() => setIsHover(false)}
+							onClick={() => handleLike()}
 						>
-							<Like />
+							<ThumbUp />
+							&nbsp;Like
 							<ReactionsWrapper
 								initial="hidden"
 								animate={isHover ? "visible" : "hidden"}
 								variants={list}
 							>
-								<Reaction icon={like} />
-								<Reaction icon={love} />
-								<Reaction icon={haha} />
-								<Reaction icon={wow} />
-								<Reaction icon={sad} />
-								<Reaction icon={angry} />
+								<Reaction name="like" icon={like} />
+								<Reaction name="love" icon={love} />
+								<Reaction name="haha" icon={haha} />
+								<Reaction name="wow" icon={wow} />
+								<Reaction name="sad" icon={sad} />
+								<Reaction name="angry" icon={angry} />
 							</ReactionsWrapper>
 						</LikeButton>
 

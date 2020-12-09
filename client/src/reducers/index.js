@@ -6,7 +6,7 @@ import users from "./users.reducer";
 import conversations from "./conversation.reducer";
 import messages from "./messages.reducer";
 import alert from "./alert.reducer";
-// import socket from "./socket.reducer";
+import socket from "./socket.reducer";
 import { userConstants } from "../constants";
 import posts from "./posts.reducer";
 
@@ -14,6 +14,7 @@ const appReducer = combineReducers({
 	authentication,
 	conversations,
 	registration,
+	socket,
 	messages,
 	users,
 	alert,

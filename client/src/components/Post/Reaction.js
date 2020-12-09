@@ -15,7 +15,7 @@ const ReactionWrapper = styled.div`
 	cursor: pointer;
 
 	&:hover {
-		transform: scale(1.4);
+		transform: scale(1.3);
 		transition: 0.2s;
 	}
 
@@ -40,11 +40,11 @@ const ReactionImage = styled.img`
 	height: 100%;
 `;
 
-const Reaction = ({ icon }) => {
+const Reaction = ({ name, icon }) => {
 	return (
 		<motion.div variants={list}>
 			<ReactionWrapper>
-				<ReactionImage src={icon} />
+				<ReactionImage name={name} src={icon} />
 			</ReactionWrapper>
 		</motion.div>
 	);

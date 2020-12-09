@@ -7,6 +7,7 @@ import CogIcon from "./Cog";
 import MessengerIcon from "./Messenger";
 import PlusIcon from "./Plus";
 
+import ThumbUp from "./ThumbUp";
 import Like from "./Like";
 import Love from "./Love";
 import Care from "./Care";
@@ -24,6 +25,7 @@ export {
 	CogIcon,
 	MessengerIcon,
 	PlusIcon,
+	ThumbUp,
 	Like,
 	Love,
 	Care,

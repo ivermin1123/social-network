@@ -40,7 +40,7 @@ const ChangePassword = () => {
 					)
 				)
 					.then((data) => {
-						console.log(data);
+						// console.log(data);
 					})
 					.catch(() => {
 						setSubmitted(false);

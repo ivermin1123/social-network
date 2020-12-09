@@ -8,8 +8,9 @@ import ListLikes from "./ListLikes";
 import img5 from "../../assets/image/avatar-5.png";
 import Reaction from "./Reaction";
 
-import { ThumbUp } from "../../Icons/_icon";
+// import { ThumbUp } from "../../Icons/_icon";
 import like from "../../assets/icons/like.svg";
+import thumUp from "../../assets/icons/thumb-up.svg";
 import love from "../../assets/icons/love.svg";
 import haha from "../../assets/icons/haha.svg";
 import wow from "../../assets/icons/wow.svg";
@@ -40,15 +41,18 @@ export const list = {
 
 const Post = (props) => {
 	const [show, setShow] = useState(false);
-
+	const [reactName, setReactName] = useState("Like");
+	const [reactIcon, setReactIcon] = useState(thumUp);
 	const { post } = props;
 	const { author, comments, createdAt, description, files, reactions } = post;
 	// hover for reaction
 	const [isHover, setIsHover] = useState(false);
 
 	const handleLike = () => {
-		console.log("liked");
+		console.log(post._id);
 		setIsHover(false);
+		setReactName("VL");
+		setReactIcon(angry);
 	};
 	return (
 		<>
@@ -99,8 +103,9 @@ const Post = (props) => {
 							onMouseLeave={() => setIsHover(false)}
 							onClick={() => handleLike()}
 						>
-							<ThumbUp />
-							&nbsp;Like
+							<Reaction name={reactName} icon={reactIcon} />
+							{/* <ThumbUp />
+							&nbsp;Like */}
 							<ReactionsWrapper
 								initial="hidden"
 								animate={isHover ? "visible" : "hidden"}

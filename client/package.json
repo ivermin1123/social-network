@@ -15,6 +15,7 @@
     "axios": "^0.21.0",
     "browser-image-compression": "^1.0.13",
     "emotion": "^11.0.0",
+    "framer-motion": "^2.9.5",
     "history": "^4.10.1",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.1",
@@ -33,6 +34,7 @@
     "redux-thunk": "^2.3.0",
     "regenerator-runtime": "^0.13.7",
     "socket.io-client": "^3.0.3",
+    "styled-components": "^5.2.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {

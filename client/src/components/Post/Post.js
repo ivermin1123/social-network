@@ -6,15 +6,50 @@ import { Theme } from "../../constants/index";
 import { CommentButton, LikeButton } from "../_components";
 import ListLikes from "./ListLikes";
 import img5 from "../../assets/image/avatar-5.png";
+import Reaction from "./Reaction";
+
+import { ThumbUp } from "../../Icons/_icon";
+import like from "../../assets/icons/like.svg";
+import love from "../../assets/icons/love.svg";
+import haha from "../../assets/icons/haha.svg";
+import wow from "../../assets/icons/wow.svg";
+import sad from "../../assets/icons/sad.svg";
+import angry from "../../assets/icons/angry.svg";
+import ReactionsWrapper from "./ReactionWrapper";
 
 const LINK_S3 = "https://socialawsbucket.s3-ap-southeast-1.amazonaws.com/";
 
+export const list = {
+	visible: {
+		opacity: 1,
+		y: 0,
+		transformOrigin: "50%",
+		scale: 1,
+		transition: {
+			when: "beforeChildren",
+			staggerChildren: 0.04,
+		},
+	},
+	hidden: {
+		opacity: 0,
+		y: 50,
+		transformOrigin: "50%",
+		scale: 0,
+	},
+};
+
 const Post = (props) => {
 	const [show, setShow] = useState(false);
+
 	const { post } = props;
 	const { author, comments, createdAt, description, files, reactions } = post;
+	// hover for reaction
+	const [isHover, setIsHover] = useState(false);
 
-	const handleClick = () => {};
+	const handleLike = () => {
+		console.log("liked");
+		setIsHover(false);
+	};
 	return (
 		<>
 			<div className="post">
@@ -48,6 +83,7 @@ const Post = (props) => {
 							/>
 							{reactions.length}
 						</button>
+
 						<div className="post-body__react--comments">
 							{comments.length
 								? `${comments.lenght} bình luận`
@@ -56,7 +92,29 @@ const Post = (props) => {
 					</div>
 
 					<div className="post-body__interact">
-						<LikeButton className="post-body__interact--likes" />
+						<LikeButton
+							type="button"
+							className="post-body__interact--reactions"
+							onMouseOver={() => setIsHover(true)}
+							onMouseLeave={() => setIsHover(false)}
+							onClick={() => handleLike()}
+						>
+							<ThumbUp />
+							&nbsp;Like
+							<ReactionsWrapper
+								initial="hidden"
+								animate={isHover ? "visible" : "hidden"}
+								variants={list}
+							>
+								<Reaction name="like" icon={like} />
+								<Reaction name="love" icon={love} />
+								<Reaction name="haha" icon={haha} />
+								<Reaction name="wow" icon={wow} />
+								<Reaction name="sad" icon={sad} />
+								<Reaction name="angry" icon={angry} />
+							</ReactionsWrapper>
+						</LikeButton>
+
 						<CommentButton className="post-body__interact--comments" />
 					</div>
 				</div>
@@ -68,15 +126,13 @@ const Post = (props) => {
 				animation={false}
 				show={show}
 				onHide={() => setShow(false)}
-				onClick={handleClick}
 			>
 				<Modal.Header bsPrefix="list-likes__header">
 					<Modal.Title bsPrefix="list-likes-modal__header-title">
 						List Likes
 					</Modal.Title>
 				</Modal.Header>
-
-				<ListLikes reactions={reactions} />
+				<ListLikes reactions={reactions} /> <Reaction />
 			</Modal>
 		</>
 	);

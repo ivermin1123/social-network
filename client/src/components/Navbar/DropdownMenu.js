@@ -35,7 +35,7 @@ function DropdownMenu() {
 		} = props;
 		return (
 			<a
-				href={href ? href : "/#"}
+				href={href || "/#"}
 				className="menu-item"
 				onClick={
 					_callback

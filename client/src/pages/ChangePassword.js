@@ -36,15 +36,12 @@ const ChangePassword = () => {
 			if (!reTypePassError) {
 				dispatch(
 					userActions.changePassword(
-						pass.currPassword, pass.newPassword
+						pass.currPassword,
+						pass.newPassword
 					)
-				)
-					.then((data) => {
-						// console.log(data);
-					})
-					.catch(() => {
-						setSubmitted(false);
-					});
+				).catch(() => {
+					setSubmitted(false);
+				});
 			}
 		}
 	}

@@ -54,6 +54,10 @@ const Post = (props) => {
 		setReactName("VL");
 		setReactIcon(angry);
 	};
+
+	const callback = (name) => {
+		console.log(name);
+	};
 	return (
 		<>
 			<div className="post">
@@ -111,12 +115,36 @@ const Post = (props) => {
 								animate={isHover ? "visible" : "hidden"}
 								variants={list}
 							>
-								<Reaction name="like" icon={like} />
-								<Reaction name="love" icon={love} />
-								<Reaction name="haha" icon={haha} />
-								<Reaction name="wow" icon={wow} />
-								<Reaction name="sad" icon={sad} />
-								<Reaction name="angry" icon={angry} />
+								<Reaction
+									name="like"
+									icon={like}
+									callback={callback}
+								/>
+								<Reaction
+									name="love"
+									icon={love}
+									callback={callback}
+								/>
+								<Reaction
+									name="haha"
+									icon={haha}
+									callback={callback}
+								/>
+								<Reaction
+									name="wow"
+									icon={wow}
+									callback={callback}
+								/>
+								<Reaction
+									name="sad"
+									icon={sad}
+									callback={callback}
+								/>
+								<Reaction
+									name="angry"
+									icon={angry}
+									callback={callback}
+								/>
 							</ReactionsWrapper>
 						</LikeButton>
 

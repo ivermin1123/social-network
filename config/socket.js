@@ -112,14 +112,11 @@ function ApplySocketIO(io) {
       subClient: sub,
     })
   );
-  //   io.configure(function () {
-  //     io.set("transports", ["websocket"]);
-  //     io.set("log level", 2);
-  //   });
 
   io.use(async (socket, next) => {
     const { id: socketID } = socket;
     arraySocketConnect.push(socketID);
+    // console.log(socket);
     if (socket.handshake.query && socket.handshake.query.token) {
       const token = socket.handshake.query.token.split(" ")[1];
       jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
@@ -128,25 +125,6 @@ function ApplySocketIO(io) {
         console.log("next---------------------");
         next();
       });
-
-      /**
-       * ADD USER INTO usersConnected
-       * usersConnected
-       */
-      const { id: socketID } = socket;
-      const { _id: userId, username } = socket.userData;
-      let usersConnectedGlobal = usersConnectedInstance.usersOnline;
-      usersConnected = replaceExist(
-        usersConnectedGlobal,
-        userId,
-        socketID,
-        username
-      );
-      usersConnectedInstance.setUsersOnline(usersConnected);
-      let listUserConnectedWithInfo = await mapInfoUser(
-        usersConnected,
-        username
-      );
     } else {
       const token = socket.handshake.query.token.split(" ")[1];
       jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
@@ -166,49 +144,52 @@ function ApplySocketIO(io) {
     //   console.log(clients);
     // });
 
-    console.log("New client connected");
     const { id: socketID } = socket;
+    console.log(`New client connected ${socketID}`.rainbow);
+    // console.log({ socket });
 
-    socket.on("JOIN", ({ name, room }, callback) => {
-      console.log({ name, room });
+    socket.on("CSS_JOIN", ({ name, room }, callback) => {
+      console.log("JOIN", { name, room });
       const { error, user } = addUser({ id: socket.id, name, room });
-      console.log({ error, user });
-      socket.join(user.room);
-      socket.emit("message", {
-        user: "admin",
-        text: `${user.name}, welcome to room ${user.room}.`,
-      });
-      socket.broadcast
-        .to(user.room)
-        .emit("message", { user: "admin", text: `${user.name} has joined!` });
+      if (user) {
+        socket.join(user.room);
+        socket.emit("message", {
+          user: "admin",
+          text: `${user.name}, welcome to room ${user.room}.`,
+        });
+        socket.broadcast
+          .to(user.room)
+          .emit("message", { user: "admin", text: `${user.name} has joined!` });
 
-      io.to(user.room).emit("roomData", {
-        room: user.room,
-        users: getUsersInRoom(user.room),
-      });
+        io.to(user.room).emit("roomData", {
+          room: user.room,
+          users: getUsersInRoom(user.room),
+        });
+      }
 
       //   callback();
     });
 
-	socket.on("TEST_VL", (data, callback) => {
-		console.log(data);
-	});
-	
+    socket.on("TEST_VL", (data, callback) => {
+      console.log(data);
+    });
+
     socket.on(
       "CSS_SEND_MESSAGE",
       async ({ message, conversationOpen }, callback) => {
-        console.log("CSS_SEND_MESSAGE", { data });
-        const user = getUser(socket.id);
-        const infoMessage = await MESSAGE.getMessage(conversationOpen);
-        let dataSendClient;
-        if (infoMessage.error) {
-          dataSendClient = infoMessage.message;
-        } else {
-          dataSendClient = infoMessage.data;
-        }
-        io.to(user.room).emit("SSC_SEND_MESSAGE", {
-          data: dataSendClient,
-        });
+        console.log("CSS_SEND_MESSAGE", { message, conversationOpen });
+        // const user = getUser(socket.id);
+        // console.log("CSS_SEND_MESSAGE", { user });
+        // const infoMessage = await MESSAGE.getMessage(conversationOpen);
+        // let dataSendClient;
+        // if (infoMessage.error) {
+        //   dataSendClient = infoMessage.message;
+        // } else {
+        //   dataSendClient = infoMessage.data;
+        // }
+        // io.to(user.room).emit("SSC_SEND_MESSAGE", {
+        //   data: dataSendClient,
+        // });
 
         //   callback();
       }

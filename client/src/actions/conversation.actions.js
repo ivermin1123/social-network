@@ -71,7 +71,6 @@ const getListConversations = () => (dispatch) => {
 };
 
 const createConversation = (files, data, dataSaveServer) => (dispatch) => {
-	console.log(files, data, dataSaveServer);
 	return conversationService.UploadFileS3(files, data, dataSaveServer).then(
 		(data) => {
 			dispatch({

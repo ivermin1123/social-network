@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from "redux";
 import thunkMiddleware from "redux-thunk";
-import createLogger from "redux-logger";
+import { createLogger } from "redux-logger";
 
 import socketMiddleware from "../middleware/socketMiddleware";
 import reducer from "../reducers";
@@ -24,7 +24,7 @@ export default function configureStore(initialState, socketClient) {
 
 	if (module.hot) {
 		// Enable Webpack hot module replacement for reducers
-		module.hot.accept("./modules/reducer", () => {
+		module.hot.accept("../reducers", () => {
 			store.replaceReducer(nextRootReducer);
 		});
 	}

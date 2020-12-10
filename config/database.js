@@ -8,7 +8,7 @@ export default function connectMongoDB() {
       useUnifiedTopology: true,
     })
     .then(() => console.log("MongoDB connected."))
-    .catch((err) => console.error(err));
+    .catch((err) => console.error(err.trap));
 
   mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
   mongoose.connection.on("error", (err) => {

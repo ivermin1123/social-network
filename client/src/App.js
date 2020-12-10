@@ -12,10 +12,7 @@ const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const MessagePage = lazy(() => import("./pages/MessagePage"));
 const Navbar = lazy(() => import("./components/Navbar/Navbar"));
 
-const Loading = () => <div className="loading">Loading...</div>;
-
 function App() {
-	const alert = useSelector((state) => state.alert);
 	const dispatch = useDispatch();
 	const { isLoggedIn } = useSelector((state) => state.authentication);
 
@@ -28,7 +25,6 @@ function App() {
 
 	return (
 		<>
-			{alert.message && <div className={`alert `}>{alert.message}</div>}
 			<Router history={history}>
 				<Suspense fallback={<div>Loading...</div>}>
 					{isLoggedIn ? <Navbar /> : null}

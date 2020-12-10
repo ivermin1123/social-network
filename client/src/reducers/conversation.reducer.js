@@ -21,7 +21,7 @@ export default function conversation(state = initialState, action) {
 		case conversationConstants.CREATE_CONVERSATION_FAILURE:
 			return {
 				...state,
-				loadingConversation: true,
+				loadingConversation: false,
 			};
 		case conversationConstants.GET_LIST_CONVERSATION_REQUEST:
 			return {
@@ -32,7 +32,7 @@ export default function conversation(state = initialState, action) {
 			return {
 				...state,
 				conversations: payload.conversations,
-				loadingConversation: true,
+				loadingConversation: false,
 			};
 		case conversationConstants.GET_LIST_CONVERSATION_FAILURE:
 			return {

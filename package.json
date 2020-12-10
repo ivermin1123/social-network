@@ -24,6 +24,7 @@
     "colors": "^1.4.0",
     "concurrently": "^5.3.0",
     "connect-redis": "^5.0.0",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "crossdomain": "0.0.1",
     "debug": "^4.3.1",

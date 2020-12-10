@@ -1,13 +1,13 @@
 import React from "react";
 import { render, unmountComponentAtNode } from "react-dom";
 import { Provider } from "react-redux";
-import { browserHistory, Router } from "react-router-dom";
+import { Router } from "react-router-dom";
 import { syncHistoryWithStore } from "react-router-redux";
 
+import App from "./App";
 import SocketClient from "./helpers/SocketClient";
 import configureStore from "./helpers/store";
-
-import App from "./App";
+import browserHistory from "./helpers/history";
 import "./assets/styles/index.scss";
 import "antd/dist/antd.css";
 
@@ -17,14 +17,14 @@ const initialState = {};
 const store = configureStore(initialState, socketClient);
 const history = syncHistoryWithStore(browserHistory, store);
 
-const routes = require("./routes").default;
-
 const mountPoint = document.getElementById("root");
 
 const renderApp = () => {
 	render(
 		<Provider store={store}>
-			<Router history={history}>{routes}</Router>
+			<Router history={history}>
+				<App />
+			</Router>
 		</Provider>,
 		mountPoint
 	);
@@ -41,7 +41,7 @@ if (module.hot) {
 		}
 	};
 
-	module.hot.accept("./routes", () => {
+	module.hot.accept("./App", () => {
 		setImmediate(() => {
 			// Preventing the hot reloading error from react-router
 			unmountComponentAtNode(mountPoint);

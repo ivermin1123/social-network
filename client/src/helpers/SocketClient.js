@@ -1,18 +1,28 @@
+/* eslint-disable consistent-return */
 // eslint-disable-next-line import/no-unresolved
 import config from "config";
 import io from "socket.io-client";
 
 // TODO Move me elsewhere!
 const host = config.apiUrl;
-const socketPath = "/api/socket.io";
+// const socketPath = "/api/socket.io";
 
 export default class socketAPI {
 	socket;
 
 	connect() {
-		this.socket = io.connect(host, { path: socketPath });
+		this.socket = io.connect(host, {
+			query: {
+				token: JSON.parse(localStorage.getItem("user")).user.token,
+			},
+			transports: ["websocket"],
+			// upgrade: false,
+		});
 		return new Promise((resolve, reject) => {
-			this.socket.on("connect", () => resolve());
+			this.socket.on("connect", () => {
+				console.log("CONNECT SOCKET");
+				resolve();
+			});
 			this.socket.on("connect_error", (error) => reject(error));
 		});
 	}
@@ -21,6 +31,7 @@ export default class socketAPI {
 		return new Promise((resolve) => {
 			this.socket.disconnect(() => {
 				this.socket = null;
+				console.log("DISCONNECT SOCKET");
 				resolve();
 			});
 		});

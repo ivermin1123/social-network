@@ -1,12 +1,12 @@
 import express from "express";
-import path from "path";
 import colors from "colors";
-import { Server } from "socket.io";
 import ApplySocketIO from "./config/socket";
 import AppRouter from "./config/route";
 import ApplyMiddleware from "./config/middleware";
+import cookieParser from "cookie-parser";
 import connectMongoDB from "./config/database";
 import { REDIS_SEPARATOR } from "./config/redis";
+import sessionConfig from "./config/session";
 const sio_redis = require("socket.io-redis");
 require("dotenv").config();
 const debug = require("debug")("http");
@@ -14,11 +14,30 @@ const http = require("http");
 
 colors.enable();
 
-//DB
-connectMongoDB();
+/**
+ * Create Server
+ */
 const app = express();
-// socket_io
 const server = http.createServer(app);
+
+/**
+ * Connect database
+ */
+connectMongoDB();
+
+/**
+ * Session
+ */
+sessionConfig(app);
+
+/**
+ * Cookie
+ */
+app.use(cookieParser());
+
+/**
+ * Socket IO
+ */
 const options = {
   transports: ["websocket"],
   cors: {
@@ -27,7 +46,7 @@ const options = {
   },
 };
 const io = require("socket.io")(server, options);
-
+// io.path("/api/socket.io");
 io.adapter(
   sio_redis({
     host: REDIS_SEPARATOR.HOST,
@@ -35,11 +54,15 @@ io.adapter(
     auth_pass: REDIS_SEPARATOR.PWD,
   })
 );
-
 ApplySocketIO(io);
-//Middleware
+/**
+ * Middleware
+ */
 ApplyMiddleware(app, express);
-// Route
+
+/**
+ * Router
+ */
 AppRouter(app);
 
 /**
@@ -109,7 +132,9 @@ function onError(error) {
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  console.log("Listening on " + bind);
+  console.log("-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-");
+  console.log(`API + Socket listening on port ${port}`.rainbow);
+  console.log("-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-·-");
 }
 
 module.exports = app;

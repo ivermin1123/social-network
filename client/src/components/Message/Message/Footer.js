@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import messageActions from "../../../actions/message.actions";
+import { socketTestMessage } from "../../../actions/socket.actions";
 import Smile from "../../../Icons/Smile";
 import Picture from "../../../Icons/Picture";
 
@@ -9,13 +10,12 @@ export default function Footer() {
 	const [message, setMessage] = useState("");
 	const dispatch = useDispatch();
 	const { conversationOpen } = useSelector((state) => state.conversations);
-	const { socket } = useSelector((state) => state.socket);
 
 	function handleSubmit(e) {
 		e.preventDefault();
 		dispatch(messageActions.sendMessage(conversationOpen, message, 0)).then(
 			() => {
-				socket.emit("CSS_SEND_MESSAGE", { message, conversationOpen });
+				dispatch(socketTestMessage({ message, conversationOpen }));
 			}
 		);
 		setMessage("");

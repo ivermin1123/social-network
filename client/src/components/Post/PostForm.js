@@ -159,11 +159,10 @@ const PostForm = ({ ...props }) => {
 						/>
 					</div>
 					{/* <img
-						src={image ? URL.createObjectURL(image) : ""}
+						src={files ? URL.createObjectURL(files) : ""}
 						alt=""
 						className="post-form-top__avt"
 					/> */}
-					{/* <button type="submit">Đăng</button> */}
 				</Modal.Body>
 				<Modal.Footer bsPrefix="post-form-modal__post-footer">
 					<button

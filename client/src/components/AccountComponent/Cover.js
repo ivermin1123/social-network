@@ -45,6 +45,9 @@ const Cover = (props) => {
 			setFile(URL.createObjectURL(img));
 		}
 	};
+	const handleSave = () => {
+		setShow(false)
+	}
 
 	return (
 		<>
@@ -311,6 +314,15 @@ const Cover = (props) => {
 										alt="avatar"
 									/>
 								</div>
+								<div className="">
+									<FontAwesomeIcon
+										className="icon"
+										icon={Theme.ICONS.globeAsia}
+									/>
+									<span>
+										Ảnh của bạn sẽ được hiển thị công khai
+									</span>
+								</div>
 							</div>
 							<div className="post-form-modal__body-main-bottom">
 								<button
@@ -320,7 +332,11 @@ const Cover = (props) => {
 								>
 									Hủy
 								</button>
-								<button type="button" className="save">
+								<button
+									type="button"
+									className="save"
+									onClick={() => handleSave()}
+								>
 									Lưu
 								</button>
 							</div>

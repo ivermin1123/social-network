@@ -420,8 +420,15 @@
 					border: 1px solid lightgrey;
 					padding: 12px;
 				}
+				textarea:hover{
+					border-color: black;
+				}
 				.image-area{
+					padding: 16px 0;
 					text-align: center;
+				}
+				span{
+					margin-left: 10px;
 				}
 			}
 			&-bottom{

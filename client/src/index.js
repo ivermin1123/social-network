@@ -1,29 +1,44 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { render, unmountComponentAtNode } from "react-dom";
 import { Provider } from "react-redux";
-
 import { BrowserRouter } from "react-router-dom";
-import App from "./App";
+
 import store from "./helpers/store";
+import App from "./App";
 import "./assets/styles/index.scss";
 import "antd/dist/antd.css";
 
-const render = () => {
-	ReactDOM.render(
+const mountPoint = document.getElementById("root");
+
+const renderApp = () => {
+	render(
 		<Provider store={store}>
 			<BrowserRouter>
 				<App />
 			</BrowserRouter>
 		</Provider>,
-		document.getElementById("root")
+		mountPoint
 	);
 };
 
-render(App);
-
 if (module.hot) {
+	const reRenderApp = () => {
+		try {
+			renderApp();
+		} catch (error) {
+			const RedBox = require("redbox-react").default;
+
+			render(<RedBox error={error} />, mountPoint);
+		}
+	};
+
 	module.hot.accept("./App", () => {
-		const newApp = require("./App").default;
-		render(newApp);
+		setImmediate(() => {
+			// Preventing the hot reloading error from react-router
+			unmountComponentAtNode(mountPoint);
+			reRenderApp();
+		});
 	});
 }
+
+renderApp();

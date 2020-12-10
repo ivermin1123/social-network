@@ -4,13 +4,7 @@ import configAxios from "../helpers/auth-header";
 
 function getMessages(conversationId) {
 	return axios
-		.post(
-			CF_ROUTE_MESSAGE.GET_MESSAGES,
-			{
-				conversationId,
-			},
-			configAxios
-		)
+		.get(`${CF_ROUTE_MESSAGE.GET_MESSAGES}/${conversationId}`, configAxios)
 		.then((response) => {
 			return response.data;
 		});

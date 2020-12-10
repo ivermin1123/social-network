@@ -8,7 +8,7 @@ function SideBar(props) {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(conversationActions.getListConversations());
-	}, [dispatch]);
+	}, []);
 
 	const { conversations } = props;
 	return (

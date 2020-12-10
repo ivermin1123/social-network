@@ -2,7 +2,7 @@ import userConstants from "../constants/user.constants";
 
 function users(
 	state = {
-		loadingUser: true,
+		loadingUser: false,
 		updatingUser: false,
 		deleting: false,
 		hasError: false,

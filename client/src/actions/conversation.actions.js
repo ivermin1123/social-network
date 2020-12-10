@@ -35,6 +35,10 @@ const getConversation = (conversationId) => (dispatch) => {
 };
 
 const getListConversations = () => (dispatch) => {
+	function request() {
+		return { type: conversationConstants.GET_LIST_CONVERSATION_REQUEST };
+	}
+	dispatch(request());
 	return conversationService.getConversations().then(
 		(data) => {
 			dispatch({
@@ -67,7 +71,6 @@ const getListConversations = () => (dispatch) => {
 };
 
 const createConversation = (files, data, dataSaveServer) => (dispatch) => {
-	console.log(files, data, dataSaveServer);
 	return conversationService.UploadFileS3(files, data, dataSaveServer).then(
 		(data) => {
 			dispatch({

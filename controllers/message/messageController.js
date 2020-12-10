@@ -126,7 +126,7 @@ export const sendMessage = async (req, res) => {
 
 export const getMessages = async (req, res) => {
   try {
-    const { conversationId } = req.body;
+    const { conversationId } = req.params;
     // console.log({req});
     const { userId } = req.userData;
     await Message.find({ conversation: conversationId })

@@ -4,13 +4,15 @@ import NotFound from "./NotFound";
 import SideBar from "./SideBar";
 import RightBar from "./Message/RightBar";
 
-const Home = () => {
+const Home = (props) => {
 	const messages = true;
+	const { conversationId } = props;
 	return (
 		<div id="main-chat">
 			{messages ? (
 				<>
-					<SideBar /> <Messages /> <RightBar />
+					<SideBar /> <Messages conversationId={conversationId} />
+					<RightBar />
 				</>
 			) : (
 				<NotFound />

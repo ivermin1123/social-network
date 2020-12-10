@@ -1,6 +1,7 @@
 import conversationConstants from "../constants/conversation.constants";
 
 const initialState = {
+	loadingConversation: false,
 	conversation: null,
 	conversationOpen: "5fcca9d95cad3811bc177bef",
 	conversations: null,
@@ -20,11 +21,18 @@ export default function conversation(state = initialState, action) {
 		case conversationConstants.CREATE_CONVERSATION_FAILURE:
 			return {
 				...state,
+				loadingConversation: false,
+			};
+		case conversationConstants.GET_LIST_CONVERSATION_REQUEST:
+			return {
+				...state,
+				loadingConversation: true,
 			};
 		case conversationConstants.GET_LIST_CONVERSATION_SUCCESS:
 			return {
 				...state,
 				conversations: payload.conversations,
+				loadingConversation: false,
 			};
 		case conversationConstants.GET_LIST_CONVERSATION_FAILURE:
 			return {

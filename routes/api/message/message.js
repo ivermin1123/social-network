@@ -4,7 +4,11 @@ import { helpers, validator } from "../../../middleware/main-middleware";
 
 const router = express.Router();
 
-router.post("/getMessages", helpers.checkAuth, messageController.getMessages);
+router.get(
+  "/getMessages/:conversationId",
+  helpers.checkAuth,
+  messageController.getMessages
+);
 
 router.post(
   "/sendMessage",

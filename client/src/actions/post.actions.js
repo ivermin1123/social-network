@@ -35,6 +35,10 @@ const getPost = (postId) => (dispatch) => {
 };
 
 const getListPosts = () => (dispatch) => {
+	function request() {
+		return { type: postConstants.GET_LIST_POST_REQUEST };
+	}
+	dispatch(request());
 	return postService.getPosts().then(
 		(data) => {
 			dispatch({
@@ -67,7 +71,6 @@ const getListPosts = () => (dispatch) => {
 };
 
 const createPost = (files, data, dataSaveServer) => (dispatch) => {
-	console.log(files, data, dataSaveServer);
 	return uploadService.UploadFileS3(files, data, dataSaveServer).then(
 		(data) => {
 			dispatch({

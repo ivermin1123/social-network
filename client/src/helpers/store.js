@@ -1,33 +1,17 @@
 import { createStore, applyMiddleware } from "redux";
-import thunkMiddleware from "redux-thunk";
+import thunk from "redux-thunk";
 import { createLogger } from "redux-logger";
+import rootReducer from "../reducers";
 
-import socketMiddleware from "../middleware/socketMiddleware";
-import reducer from "../reducers";
+const initialState = {};
+const loggerMiddleware = createLogger();
 
-const nextRootReducer = require("../reducers").default;
+const middleware = [thunk];
 
-export default function configureStore(initialState, socketClient) {
-	// Create middleware
-	const loggerMiddleware = createLogger();
-	const middleware = [
-		thunkMiddleware,
-		socketMiddleware(socketClient),
-		loggerMiddleware,
-	];
+const store = createStore(
+	rootReducer,
+	initialState,
+	applyMiddleware(...middleware, loggerMiddleware)
+);
 
-	const store = createStore(
-		reducer,
-		initialState,
-		applyMiddleware(...middleware)
-	);
-
-	if (module.hot) {
-		// Enable Webpack hot module replacement for reducers
-		module.hot.accept("../reducers", () => {
-			store.replaceReducer(nextRootReducer);
-		});
-	}
-
-	return store;
-}
+export default store;

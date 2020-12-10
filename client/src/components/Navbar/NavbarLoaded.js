@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { connect, useDispatch, useSelector } from "react-redux";
@@ -6,7 +6,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 
 import { Theme } from "../../constants/index";
 import Profile from "./Profile";
-import { NavItem, DropdownMenu } from "../_components";
+import { SearchBox, NavItem, DropdownMenu } from "../_components";
 import {
 	connect as connectSocket,
 	disconnect as disconnectSocket,
@@ -19,12 +19,12 @@ import {
 } from "../../Icons/_icon";
 
 function NavbarLoaded(props) {
-	// const [display, setDisplay] = useState(false);
+	const [display, setDisplay] = useState(false);
 	const dispatch = useDispatch();
 	const { conversationOpen } = useSelector((state) => state.conversations);
-	// const showSearch = (value) => {
-	// 	setDisplay(value);
-	// };
+	const showSearch = (value) => {
+		setDisplay(value);
+	};
 	const { isConnecting } = props;
 	console.log("RENDER 😎");
 	useEffect(() => {
@@ -51,7 +51,7 @@ function NavbarLoaded(props) {
 							/>
 						</Link>
 						<div className="nav-bar__search-bar">
-							{/* <button
+							<button
 								type="button"
 								className="input-search-field"
 								onClick={() => {
@@ -63,7 +63,7 @@ function NavbarLoaded(props) {
 									icon={Theme.ICONS.search}
 								/>
 								<p>Tìm kiếm trên Fakebook</p>
-							</button> */}
+							</button>
 						</div>
 					</div>
 				</div>
@@ -104,9 +104,9 @@ function NavbarLoaded(props) {
 					</div>
 				</div>
 			</div>
-			{/* <div style={{ display: display ? "block" : "none" }}>
+			<div style={{ display: display ? "block" : "none" }}>
 				<SearchBox showSearch={showSearch} />
-			</div> */}
+			</div>
 		</div>
 	);
 }

@@ -12,16 +12,17 @@ export default class socketAPI {
 
 	connect() {
 		this.socket = io.connect(host, {
+			// path: socketPath,
 			query: {
 				token: JSON.parse(localStorage.getItem("user")).user.token,
 			},
 			transports: ["websocket"],
-			// upgrade: false,
+			upgrade: false,
 		});
 		return new Promise((resolve, reject) => {
 			this.socket.on("connect", () => {
 				console.log("CONNECT SOCKET");
-				resolve();
+				resolve(this.socket);
 			});
 			this.socket.on("connect_error", (error) => reject(error));
 		});

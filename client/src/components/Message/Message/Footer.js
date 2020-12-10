@@ -1,23 +1,23 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-import messageActions from "../../../actions/message.actions";
-import { socketTestMessage } from "../../../actions/socket.actions";
 import Smile from "../../../Icons/Smile";
 import Picture from "../../../Icons/Picture";
 
 export default function Footer() {
 	const [message, setMessage] = useState("");
-	const dispatch = useDispatch();
 	const { conversationOpen } = useSelector((state) => state.conversations);
+	const { socket } = useSelector((state) => state.socket);
+	const { user } = useSelector((state) => state.authentication.user);
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		dispatch(messageActions.sendMessage(conversationOpen, message, 0)).then(
-			() => {
-				dispatch(socketTestMessage({ message, conversationOpen }));
-			}
-		);
+		socket.emit("CSS_SEND_MESSAGE", {
+			message,
+			conversationOpen,
+			type: 0,
+			userId: user._id,
+		});
 		setMessage("");
 	}
 

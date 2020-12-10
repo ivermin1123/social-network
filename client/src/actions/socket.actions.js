@@ -1,66 +1,31 @@
 import socketConstants from "../constants/socket.constants";
-// import messageConstants from "../constants/message.constants";
+import SocketClient from "../helpers/SocketClient";
+import messageConstants from "../constants/message.constants";
 
-// export function connect(socket) {
-// 	function connectSocket(socket) {
-// 		return { type: socketConstants.CONNECT, socket };
-// 	}
-// 	return (dispatch) => {
-// 		dispatch(connectSocket(socket));
-// 		socket.on("SSC_SEND_MESSAGE", (data) => {
-// 			console.log("SSC_SEND_MESSAGE", data);
-// 			dispatch({
-// 				type: messageConstants.SEND_MESSAGE_SUCCESS,
-// 				payload: data,
-// 			});
-// 		});
-// 	};
-// }
+const socketClient = new SocketClient();
 
-export function connect() {
-	return {
-		type: "socket",
-		types: [
-			socketConstants.CONNECT,
-			socketConstants.CONNECT_SUCCESS,
-			socketConstants.CONNECT_FAIL,
-		],
-		promise: (socket) => socket.connect(),
+function connect() {
+	function connectSocket(socket) {
+		return { type: socketConstants.CONNECT_SUCCESS, socket };
+	}
+	return (dispatch) => {
+		socketClient.connect().then((socket) => {
+			dispatch(connectSocket(socket));
+			socket.on("SSC_SEND_MESSAGE", ({ infoMessage }) => {
+				console.log("SSC_SEND_MESSAGE", infoMessage);
+				dispatch({
+					type: messageConstants.SEND_MESSAGE_SUCCESS,
+					payload: infoMessage,
+				});
+			});
+		});
 	};
 }
 
-export function disconnect() {
-	return {
-		type: "socket",
-		types: [
-			socketConstants.DISCONNECT,
-			socketConstants.DISCONNECT_SUCCESS,
-			socketConstants.DISCONNECT_FAIL,
-		],
-		promise: (socket) => socket.disconnect(),
+function disconnect() {
+	return () => {
+		socketClient.disconnect();
 	};
 }
 
-export function socketTest({ name, room }) {
-	const values = {
-		name,
-		room,
-	};
-	return {
-		type: "socket",
-		types: [null, null, null],
-		promise: (socket) => socket.emit("CSS_JOIN", values),
-	};
-}
-
-export function socketTestMessage({ message, conversationOpen }) {
-	const values = {
-		message,
-		conversationOpen,
-	};
-	return {
-		type: "socket",
-		types: [null, null, null],
-		promise: (socket) => socket.emit("CSS_SEND_MESSAGE", values),
-	};
-}
+export { connect, disconnect };

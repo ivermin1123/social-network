@@ -6,7 +6,6 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import Message from "./Message/Message";
 import Header from "./Message/Header";
 import Footer from "./Message/Footer";
-import { socketTest } from "../../actions/socket.actions";
 import messageActions from "../../actions/message.actions";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
@@ -14,20 +13,13 @@ function Messages(props) {
 	const { messages, conversationOpen } = props;
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.authentication.user);
-
+	const { socket } = useSelector((state) => state.socket);
 	useEffect(() => {
 		dispatch(messageActions.getMessages(conversationOpen));
-		dispatch(
-			socketTest({
-				name: `${user.username}`,
-				room: conversationOpen,
-			})
-		);
-
-		// console.log({
-		// 	name: `${user.username}`,
-		// 	room: conversationOpen,
-		// });
+		socket.emit("CSS_JOIN", {
+			name: `${user.username}`,
+			room: conversationOpen,
+		});
 	}, []);
 
 	return (

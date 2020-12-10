@@ -112,7 +112,7 @@ function ApplySocketIO(io) {
       subClient: sub,
     })
   );
-
+  const sockets = {};
   io.use(async (socket, next) => {
     const { id: socketID } = socket;
     arraySocketConnect.push(socketID);
@@ -123,7 +123,6 @@ function ApplySocketIO(io) {
         if (err) return next(new Error("Authentication error"));
         socket.userData = decoded;
         console.log("next---------------------");
-        next();
       });
     } else {
       const token = socket.handshake.query.token.split(" ")[1];
@@ -131,91 +130,97 @@ function ApplySocketIO(io) {
         if (err) return next(new Error("Authentication error"));
         socket.userData = decoded;
         console.log("next---------------------");
-        next();
       });
       // next(new Error("Authentication error"));
     }
     next();
-  }).on("connection", (socket) => {
-    // Connection now authenticated to receive further events
-    // socket.join(socket.userData.userId);
-    // io.in(socket.userData.userId).clients((err, clients) => {
-    //   //userController.changeStatus(socket.userData.userId, clients, io);
-    //   console.log(clients);
-    // });
+  })
+    //.of("/api/socket.io")
+    .on("connection", (socket) => {
+      // Connection now authenticated to receive further events
+      // socket.join(socket.userData.userId);
+      // io.in(socket.userData.userId).clients((err, clients) => {
+      //   //userController.changeStatus(socket.userData.userId, clients, io);
+      //   console.log(clients);
+      // });
+      sockets[socket.io] = socket;
+      const { id: socketID } = socket;
+      console.log(`New client connected ${socketID}`.rainbow);
+      //   console.log({ socket });
 
-    const { id: socketID } = socket;
-    console.log(`New client connected ${socketID}`.rainbow);
-    // console.log({ socket });
+      socket.on("CSS_JOIN", ({ name, room }, callback) => {
+        console.log("JOIN", { name, room });
+        const { error, user } = addUser({ id: socket.id, name, room });
+        if (user) {
+          socket.join(user.room);
+          socket.emit("message", {
+            user: "admin",
+            text: `${user.name}, welcome to room ${user.room}.`,
+          });
+          socket.broadcast.to(user.room).emit("message", {
+            user: "admin",
+            text: `${user.name} has joined!`,
+          });
 
-    socket.on("CSS_JOIN", ({ name, room }, callback) => {
-      console.log("JOIN", { name, room });
-      const { error, user } = addUser({ id: socket.id, name, room });
-      if (user) {
-        socket.join(user.room);
-        socket.emit("message", {
-          user: "admin",
-          text: `${user.name}, welcome to room ${user.room}.`,
-        });
-        socket.broadcast
-          .to(user.room)
-          .emit("message", { user: "admin", text: `${user.name} has joined!` });
-
-        io.to(user.room).emit("roomData", {
-          room: user.room,
-          users: getUsersInRoom(user.room),
-        });
-      }
-
-      //   callback();
-    });
-
-    socket.on("TEST_VL", (data, callback) => {
-      console.log(data);
-    });
-
-    socket.on(
-      "CSS_SEND_MESSAGE",
-      async ({ message, conversationOpen }, callback) => {
-        console.log("CSS_SEND_MESSAGE", { message, conversationOpen });
-        // const user = getUser(socket.id);
-        // console.log("CSS_SEND_MESSAGE", { user });
-        // const infoMessage = await MESSAGE.getMessage(conversationOpen);
-        // let dataSendClient;
-        // if (infoMessage.error) {
-        //   dataSendClient = infoMessage.message;
-        // } else {
-        //   dataSendClient = infoMessage.data;
-        // }
-        // io.to(user.room).emit("SSC_SEND_MESSAGE", {
-        //   data: dataSendClient,
-        // });
+          io.to(user.room).emit("roomData", {
+            room: user.room,
+            users: getUsersInRoom(user.room),
+          });
+        }
 
         //   callback();
-      }
-    );
+      });
 
-    socket.on("stoppedTyping", (data) => {
-      //   arraySocketConnect.forEach(socket_=>{
-      // 	 socket.to(data.userId).emit("stoppedTyping", { roomId: data.roomId });
-      //   }})
-    });
-    socket.on("disconnect", () => {
-      console.log(`bye ${socketID}`);
-      const user = removeUser(socket.id);
+      socket.on("TEST_VL", (data, callback) => {
+        console.log(data);
+      });
 
-      if (user) {
-        io.to(user.room).emit("message", {
-          user: "Admin",
-          text: `${user.name} has left.`,
-        });
-        io.to(user.room).emit("roomData", {
-          room: user.room,
-          users: getUsersInRoom(user.room),
-        });
-      }
+      socket.on(
+        "CSS_SEND_MESSAGE",
+        async ({ message, conversationOpen, type, userId }, callback) => {
+          const user = getUser(socket.id);
+          const infoMessage = await MESSAGE.sendMessage({
+            conversationId: conversationOpen,
+            message,
+            type,
+            userId,
+          });
+          let dataSendClient;
+          if (infoMessage.error) {
+            dataSendClient = infoMessage.message;
+          } else {
+            dataSendClient = infoMessage.data;
+          }
+          io.to(user.room).emit("SSC_SEND_MESSAGE", {
+            infoMessage,
+          });
+
+          //   callback();
+        }
+      );
+
+      socket.on("stoppedTyping", (data) => {
+        //   arraySocketConnect.forEach(socket_=>{
+        // 	 socket.to(data.userId).emit("stoppedTyping", { roomId: data.roomId });
+        //   }})
+      });
+      socket.on("disconnect", () => {
+        console.log(`bye ${socketID}`);
+        delete sockets[socket.id];
+        const user = removeUser(socket.id);
+
+        if (user) {
+          io.to(user.room).emit("message", {
+            user: "Admin",
+            text: `${user.name} has left.`,
+          });
+          io.to(user.room).emit("roomData", {
+            room: user.room,
+            users: getUsersInRoom(user.room),
+          });
+        }
+      });
     });
-  });
 }
 
 export default ApplySocketIO;

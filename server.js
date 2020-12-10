@@ -39,6 +39,7 @@ app.use(cookieParser());
  * Socket IO
  */
 const options = {
+  //path: "/api/socket.io",
   transports: ["websocket"],
   cors: {
     origin: process.env.FRONTEND_URL,

@@ -105,7 +105,7 @@ const PostForm = ({ ...props }) => {
 						className="post-form-top__btn"
 						onClick={() => setShow(true)}
 					>
-						Bạn mình ơi, bạn hang nghĩ gì vậy nè?
+						Bạn mình ơi, bạn đang nghĩ gì vậy nè?
 					</button>
 				</div>
 				<div className="post-form-bot">
@@ -159,14 +159,22 @@ const PostForm = ({ ...props }) => {
 						/>
 					</div>
 					{/* <img
-						src={image ? URL.createObjectURL(image) : ""}
+						src={files ? URL.createObjectURL(files) : ""}
 						alt=""
 						className="post-form-top__avt"
 					/> */}
-					{/* <button type="submit">Đăng</button> */}
 				</Modal.Body>
-				<Modal.Footer>
+				<Modal.Footer bsPrefix="post-form-modal__post-footer">
 					<button
+						style={
+							description.length
+								? {
+										backgroundColor: "#1877F2",
+										color: "white",
+										cursor: "pointer",
+								  }
+								: null
+						}
 						type="button"
 						className="post-form-bot__btn"
 						onClick={handleClick}

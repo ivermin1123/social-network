@@ -9,6 +9,7 @@
 	--secondary-text: ##65676b;
 	--border: 1px solid #d6d6d6;
 	--icon: #66676b;
+	    --primary-deemphasized-button-background: #E7F3FF;
 	--always-dark-gradient: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.6));
 }
 .account-page {
@@ -37,7 +38,7 @@
 	.cover {
 		display: initial;
 		.cover-image {
-			width: var(--width-cover);
+			max-width: var(--width-cover);
 			margin: auto;
 			height: 350px;
 			border-bottom-left-radius: 10px;
@@ -45,6 +46,9 @@
 			display: flex;
 			justify-content: center;
 			background-image: url("https://socialawsbucket.s3-ap-southeast-1.amazonaws.com/post/7740dd7c-dca0-4277-8303-0142e716c0e7.jpg");
+			img{
+				width: 100%;
+			}
 			.avatar{
 				position: absolute;
 				z-index: 1;
@@ -128,7 +132,6 @@
 					}
 				}
 			}
-
 		}
 		.cover-display {
 			background-color: white;
@@ -200,7 +203,7 @@
 			height: var(--height-menu);
 			background-color: white;
 			.menu-content {
-				width: var(--width-content);
+				max-width: var(--width-content);
 				justify-content: space-between;
 				height: 100%;
 				margin: auto;
@@ -329,6 +332,74 @@
 				button {
 					width: 100%;
 					margin: 10px 0;
+				}
+			}
+		}
+	}
+}
+
+.post-form-modal{
+	background-color: #ffffff;
+	max-height: 700px;
+	min-height: 100px;
+    max-width: 678px;
+	width: 678px;
+    border-radius: 10px;
+	// display: flex;
+	&__header{
+		border-bottom: 1px solid lightgrey;
+		button{
+			width: 36px;
+			height: 36px;
+			border-radius: 50px;
+			background-color: var(--secondary-button-background);
+		}
+		button:hover {
+			background-color: lightgrey;
+		}
+	}
+	&__body{
+		&-top{
+			height: 76px;
+			padding: 16px;
+			button {
+				border: 0;
+				height: 100%;
+				justify-content: center;
+				border-radius: 5px;
+				padding: 0 12px;
+				font-weight: 600;
+				font-size: 0.875rem;
+				outline: none;
+				background-color: var(--secondary-button-background);
+			}
+			button:hover {
+				background-color: lightgrey;
+			}
+			&-field{
+				padding: 4px;
+				height: 100%;
+				.custom-file-upload {
+					height: 100%;
+					width: 100%;
+					text-align: center;
+					color: var(--accent);
+					background-color: var(--primary-deemphasized-button-background);
+					display: inline-block;
+					padding: 0 12px;
+					margin: 0;
+    				align-content: center;
+					display: grid;    
+					font-size: 16px;
+					font-weight: 500;
+					cursor: pointer;
+					border-radius: 5px;
+				}
+				.custom-file-upload:hover{
+					background-color: #dbe7f2;
+				}
+				input[type="file"] {
+					display: none;
 				}
 			}
 		}

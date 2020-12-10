@@ -342,10 +342,13 @@
 	background-color: #ffffff;
 	max-height: 700px;
 	min-height: 100px;
-    max-width: 678px;
+	max-width: 678px;
 	width: 678px;
-    border-radius: 10px;
-	// display: flex;
+	border-radius: 10px;
+	margin-top: 72px;
+	@media (max-width: 1260px) {
+		width: 100%;
+	}
 	&__header{
 		border-bottom: 1px solid lightgrey;
 		button{
@@ -417,8 +420,11 @@
 					border: 1px solid lightgrey;
 					padding: 12px;
 				}
+				.image-area{
+					text-align: center;
+				}
 			}
-			&-mid{
+			&-bottom{
 				border-top: 1px solid lightgrey;
 				padding: 16px;
 				text-align: end;

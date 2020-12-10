@@ -1,29 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
 
 import { Tabs, Theme } from "../../constants/index";
-import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
 import "react-toastify/dist/ReactToastify.css";
 
-// function getBase64(file) {
-// 	return new Promise((resolve, reject) => {
-// 		const reader = new FileReader();
-// 		reader.readAsDataURL(file);
-// 		reader.onload = () => resolve(reader.result);
-// 		reader.onerror = (error) => reject(error);
-// 	});
-// }
-const configToast = {
-	position: "top-right",
-	autoClose: 1000,
-	hideProgressBar: false,
-	closeOnClick: true,
-	pauseOnHover: true,
-	draggable: true,
-	progress: undefined,
-};
 const Cover = (props) => {
 	const { user } = props;
 	const [sumFriend, setSumFriend] = useState(0);
@@ -38,7 +20,7 @@ const Cover = (props) => {
 		avatar ||
 		`https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8`;
 
-	const [show, setShow] = useState(true);
+	const [show, setShow] = useState(false);
 	const [file, setFile] = useState(null);
 	const [description, setDescription] = useState(null);
 
@@ -58,19 +40,9 @@ const Cover = (props) => {
 	};
 
 	const handleFile = (e) => {
-		const { files } = e.target;
-
-		let error = "";
-		if (files) {
-			if (files.size >= MAX_POST_IMAGE_SIZE) {
-				error = `🦄 File size should be less then ${
-					MAX_POST_IMAGE_SIZE / 1000000
-				}`;
-			}
-			if (error) {
-				toast(error, configToast);
-			}
-			setFile(files);
+		if (e.target.files && e.target.files[0]) {
+			const img = e.target.files[0];
+			setFile(URL.createObjectURL(img));
 		}
 	};
 
@@ -325,19 +297,22 @@ const Cover = (props) => {
 								<textarea
 									placeholder="Mô tả"
 									value={description}
-									onChange={(e) => setDescription(e.target.value)}
+									onChange={(e) => {
+										setDescription(e.target.value);
+									}}
 								/>
-								<img
-									className="post-form-body-image-show"
-									style={{ width: "100%", height: "100%" }}
-									src={file}
-									alt="avatar"
-									// onLoad={() => {
-									// 	URL.revokeObjectURL(file);
-									// }}
-								/>
+								<div className="image-area">
+									<img
+										className="image-show"
+										style={{
+											width: "50%",
+										}}
+										src={file}
+										alt="avatar"
+									/>
+								</div>
 							</div>
-							<div className="post-form-modal__body-main-mid">
+							<div className="post-form-modal__body-main-bottom">
 								<button
 									type="button"
 									className="cancel"

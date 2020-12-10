@@ -359,9 +359,12 @@
 		}
 	}
 	&__body{
+		padding: 0;
 		&-top{
 			height: 76px;
 			padding: 16px;
+			width: 100%;
+			margin: 0;
 			button {
 				border: 0;
 				height: 100%;
@@ -400,6 +403,46 @@
 				}
 				input[type="file"] {
 					display: none;
+				}
+			}
+		}
+		&-main{
+			&-top{
+				padding: 16px;
+				textarea{
+					width: 100%;
+					resize: none;
+					border-radius: 5px;
+					outline: none;
+					border: 1px solid lightgrey;
+					padding: 12px;
+				}
+			}
+			&-mid{
+				border-top: 1px solid lightgrey;
+				padding: 16px;
+				text-align: end;
+				button{
+					margin-right: 5px;
+					border: 0;
+					outline: none;
+					height: 36px;
+					font-weight: 600;
+					border-radius: 5px;
+					cursor: pointer;
+				}
+				.save{
+					background-color: var(--accent);
+					color: white;
+					padding: 0 40px;
+				}
+				.cancel{
+					color: var(--accent);
+					background-color: white;
+					padding: 0 12px;
+				}
+				.cancel:hover{
+					background-color: var(--HOVER);
 				}
 			}
 		}

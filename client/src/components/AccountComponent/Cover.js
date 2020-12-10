@@ -289,46 +289,58 @@ const Cover = (props) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body bsPrefix="post-form-modal__body">
-					<div className="row post-form-modal__body-top">
-						<div className="col-5 post-form-modal__body-top-field">
-							<label
-								className="custom-file-upload"
-								htmlFor="file-upload"
-							>
-								<input
-									id="file-upload"
-									onChange={(e) => handleFile(e)}
-									type="file"
-									name="file"
+					{!file ? (
+						<div className="row post-form-modal__body-top">
+							<div className="col-5 post-form-modal__body-top-field">
+								<label
+									className="custom-file-upload"
+									htmlFor="file-upload"
+								>
+									<input
+										id="file-upload"
+										onChange={(e) => handleFile(e)}
+										type="file"
+										name="file"
+									/>
+									+ Tải ảnh lên
+								</label>
+							</div>
+							<div className="col-5 post-form-modal__body-top-field">
+								<button type="button">Thêm khung</button>
+							</div>
+							<div className="col-2 post-form-modal__body-top-field">
+								<button type="button">
+									<FontAwesomeIcon
+										className="icon"
+										icon={Theme.ICONS.pen}
+									/>
+								</button>
+							</div>
+						</div>
+					) : (
+						<div className="post-form-modal__body-main">
+							<div className="post-form-modal__body-main-top">
+								<textarea placeholder="Mô tả" />
+								<img
+									className="post-form-body-image-show"
+									style={{ width: "100%", height: "100%" }}
+									src={file}
+									alt="avatar"
+									// onLoad={() => {
+									// 	URL.revokeObjectURL(file);
+									// }}
 								/>
-								+ Tải ảnh lên
-							</label>
+							</div>
+							<div className="post-form-modal__body-main-mid">
+								<button type="button" className="cancel">
+									Hủy
+								</button>
+								<button type="button" className="save">
+									Lưu
+								</button>
+							</div>
 						</div>
-						<div className="col-5 post-form-modal__body-top-field">
-							<button type="button">Thêm khung</button>
-						</div>
-						<div className="col-2 post-form-modal__body-top-field">
-							<button type="button">
-								<FontAwesomeIcon
-									className="icon"
-									icon={Theme.ICONS.pen}
-								/>
-							</button>
-						</div>
-					</div>
-					{file ? (
-						<div className="post-form-modal__body-image">
-							<img
-								className="post-form-body-image-show"
-								style={{ width: "100%", height: "100%" }}
-								src={file}
-								alt=""
-								// onLoad={() => {
-								// 	URL.revokeObjectURL(file);
-								// }}
-							/>
-						</div>
-					) : null}
+					)}
 				</Modal.Body>
 			</Modal>
 		</>

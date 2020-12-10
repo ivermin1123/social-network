@@ -65,6 +65,37 @@ const changePassword = (password, newPassword) => (dispatch) => {
 		}
 	);
 };
+const updateUserImage = (avatar) => (dispatch) => {
+	return userService.updateUserImage(avatar).then(
+		(data) => {
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: data,
+			});
+
+			return Promise.resolve();
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: userConstants.CHANGE_PASSWORD_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
 
 const logout = () => (dispatch) => {
 	userService.logout();
@@ -112,6 +143,7 @@ const userActions = {
 	logout,
 	register,
 	changePassword,
+	updateUserImage,
 };
 
 export default userActions;

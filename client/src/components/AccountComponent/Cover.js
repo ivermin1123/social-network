@@ -40,6 +40,7 @@ const Cover = (props) => {
 
 	const [show, setShow] = useState(true);
 	const [file, setFile] = useState(null);
+	const [description, setDescription] = useState(null);
 
 	const handleAddProfile = () => {
 		setStatus(!status);
@@ -53,6 +54,7 @@ const Cover = (props) => {
 
 	const handleReset = () => {
 		setFile(null);
+		setDescription(null);
 	};
 
 	const handleFile = (e) => {
@@ -320,7 +322,11 @@ const Cover = (props) => {
 					) : (
 						<div className="post-form-modal__body-main">
 							<div className="post-form-modal__body-main-top">
-								<textarea placeholder="Mô tả" />
+								<textarea
+									placeholder="Mô tả"
+									value={description}
+									onChange={(e) => setDescription(e.target.value)}
+								/>
 								<img
 									className="post-form-body-image-show"
 									style={{ width: "100%", height: "100%" }}
@@ -332,7 +338,11 @@ const Cover = (props) => {
 								/>
 							</div>
 							<div className="post-form-modal__body-main-mid">
-								<button type="button" className="cancel">
+								<button
+									type="button"
+									className="cancel"
+									onClick={() => handleReset()}
+								>
 									Hủy
 								</button>
 								<button type="button" className="save">

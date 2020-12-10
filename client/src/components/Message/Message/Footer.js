@@ -1,23 +1,23 @@
 import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import io from "socket.io-client";
+import { useSelector } from "react-redux";
 
-import messageActions from "../../../actions/message.actions";
 import Smile from "../../../Icons/Smile";
 import Picture from "../../../Icons/Picture";
 
 export default function Footer() {
 	const [message, setMessage] = useState("");
-	const dispatch = useDispatch();
 	const { conversationOpen } = useSelector((state) => state.conversations);
-	const socket = io(`http://localhost:5000`, {
-		transports: ["websocket"],
-		upgrade: false,
-	});
+	const { socket } = useSelector((state) => state.socket);
+	const { user } = useSelector((state) => state.authentication.user);
+
 	function handleSubmit(e) {
 		e.preventDefault();
-		dispatch(messageActions.sendMessage(conversationOpen, message, 0));
-		socket.emit("CSS_SEND_MESSAGE", message);
+		socket.emit("CSS_SEND_MESSAGE", {
+			message,
+			conversationOpen,
+			type: 0,
+			userId: user._id,
+		});
 		setMessage("");
 	}
 

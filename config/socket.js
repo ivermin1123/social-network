@@ -1,10 +1,21 @@
-import socket_io from "socket.io";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import redisAdapter from "socket.io-redis";
+import MESSAGE from "../database/MESSAGE";
+import { REDIS_SEPARATOR } from "./redis";
+import mongoose from "mongoose";
+import "../models/User";
 
-const io = socket_io();
+const User = mongoose.model("User");
+
+const bluebird = require("bluebird");
+const redis = require("redis");
+
+const usersConnectedInstance = require("./global_scope").GlobalStore;
+let usersConnected = usersConnectedInstance.usersOnline;
+
 dotenv.config({ path: ".env" });
-let arraySocketConnect = [];
+const arraySocketConnect = [];
 
 const users = [];
 
@@ -36,22 +47,82 @@ const getUser = (id) => users.find((user) => user.id === id);
 
 const getUsersInRoom = (room) => users.filter((user) => user.room === room);
 
-function ApplySocketIO(app) {
-  app.io = io;
+const replaceExist = (arr, userId, socketID, username) => {
+  let newArr;
+  let isExist = arr.find((item) => Object.is(item.username, username)); // kiểm tra tồn tại
 
-  app.set("socketio", io);
-  let interval;
-  io.use((socket, next) => {
+  if (isExist) {
+    let arrWithoutExist = arr.filter(
+      (item) => !Object.is(item.username, username)
+    );
+    newArr = [
+      ...arrWithoutExist,
+      {
+        userId,
+        socketID: [...isExist.socketID, socketID],
+        username,
+      },
+    ];
+  } else {
+    newArr = [
+      ...arr,
+      {
+        userId,
+        socketID: [socketID],
+        username,
+      },
+    ];
+  }
+  return newArr;
+};
+
+const anAsyncFunction = async (item) => {
+  let infoUser = await User.findById(item.userId);
+  delete infoUser.password;
+  return { ...item, infoUser };
+};
+
+const mapInfoUser = async (arrs, username) => {
+  let arrsWithOutOwner = arrs.filter(
+    (item) => !Object.is(item.username, username)
+  );
+  return await Promise.all(
+    arrsWithOutOwner.map((item) => anAsyncFunction(item))
+  );
+};
+
+function ApplySocketIO(io) {
+  bluebird.promisifyAll(redis);
+
+  let pub = redis.createClient({
+    host: REDIS_SEPARATOR.HOST,
+    port: REDIS_SEPARATOR.PORT,
+    auth_pass: REDIS_SEPARATOR.PWD,
+  });
+
+  let sub = redis.createClient({
+    host: REDIS_SEPARATOR.HOST,
+    port: REDIS_SEPARATOR.PORT,
+    auth_pass: REDIS_SEPARATOR.PWD,
+  });
+
+  io.adapter(
+    redisAdapter({
+      pubClient: pub,
+      subClient: sub,
+    })
+  );
+  const sockets = {};
+  io.use(async (socket, next) => {
     const { id: socketID } = socket;
     arraySocketConnect.push(socketID);
+    // console.log(socket);
     if (socket.handshake.query && socket.handshake.query.token) {
-      console.log("true");
       const token = socket.handshake.query.token.split(" ")[1];
       jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
         if (err) return next(new Error("Authentication error"));
         socket.userData = decoded;
         console.log("next---------------------");
-        next();
       });
     } else {
       const token = socket.handshake.query.token.split(" ")[1];
@@ -59,97 +130,97 @@ function ApplySocketIO(app) {
         if (err) return next(new Error("Authentication error"));
         socket.userData = decoded;
         console.log("next---------------------");
-        next();
       });
       // next(new Error("Authentication error"));
     }
     next();
-  }).on("connection", (socket) => {
-    // Connection now authenticated to receive further events
-    // socket.join(socket.userData.userId);
-    // io.in(socket.userData.userId).clients((err, clients) => {
-    //   //userController.changeStatus(socket.userData.userId, clients, io);
-    //   console.log(clients);
-    // });
+  })
+    //.of("/api/socket.io")
+    .on("connection", (socket) => {
+      // Connection now authenticated to receive further events
+      // socket.join(socket.userData.userId);
+      // io.in(socket.userData.userId).clients((err, clients) => {
+      //   //userController.changeStatus(socket.userData.userId, clients, io);
+      //   console.log(clients);
+      // });
+      sockets[socket.io] = socket;
+      const { id: socketID } = socket;
+      console.log(`New client connected ${socketID}`.rainbow);
+      //   console.log({ socket });
 
-    console.log("New client connected");
-    if (interval) {
-      clearInterval(interval);
-    }
-    interval = setInterval(() => getApiAndEmit(socket), 1000);
-    const { id: socketID } = socket;
+      socket.on("CSS_JOIN", ({ name, room }, callback) => {
+        console.log("JOIN", { name, room });
+        const { error, user } = addUser({ id: socket.id, name, room });
+        if (user) {
+          socket.join(user.room);
+          socket.emit("message", {
+            user: "admin",
+            text: `${user.name}, welcome to room ${user.room}.`,
+          });
+          socket.broadcast.to(user.room).emit("message", {
+            user: "admin",
+            text: `${user.name} has joined!`,
+          });
 
-    socket.on("typing", (data) => {
-      console.log("hhhhh-=----");
-      console.log({ arraySocketConnect });
-      arraySocketConnect.forEach((socket_) => {
-        console.log(socket_);
-        io.to(socket_).emit("typing_c", { data: 1 });
-      });
-    });
+          io.to(user.room).emit("roomData", {
+            room: user.room,
+            users: getUsersInRoom(user.room),
+          });
+        }
 
-    socket.on("join", ({ name, room }, callback) => {
-      const { error, user } = addUser({ id: socket.id, name, room });
-
-      if (error) return callback(error);
-
-      socket.join(user.room);
-
-      socket.emit("message", {
-        user: "admin",
-        text: `${user.name}, welcome to room ${user.room}.`,
-      });
-      socket.broadcast
-        .to(user.room)
-        .emit("message", { user: "admin", text: `${user.name} has joined!` });
-
-      io.to(user.room).emit("roomData", {
-        room: user.room,
-        users: getUsersInRoom(user.room),
+        //   callback();
       });
 
-      callback();
+      socket.on("TEST_VL", (data, callback) => {
+        console.log(data);
+      });
+
+      socket.on(
+        "CSS_SEND_MESSAGE",
+        async ({ message, conversationOpen, type, userId }, callback) => {
+          const user = getUser(socket.id);
+          const infoMessage = await MESSAGE.sendMessage({
+            conversationId: conversationOpen,
+            message,
+            type,
+            userId,
+          });
+          let dataSendClient;
+          if (infoMessage.error) {
+            dataSendClient = infoMessage.message;
+          } else {
+            dataSendClient = infoMessage.data;
+          }
+          io.to(user.room).emit("SSC_SEND_MESSAGE", {
+            infoMessage,
+          });
+
+          //   callback();
+        }
+      );
+
+      socket.on("stoppedTyping", (data) => {
+        //   arraySocketConnect.forEach(socket_=>{
+        // 	 socket.to(data.userId).emit("stoppedTyping", { roomId: data.roomId });
+        //   }})
+      });
+      socket.on("disconnect", () => {
+        console.log(`bye ${socketID}`);
+        delete sockets[socket.id];
+        const user = removeUser(socket.id);
+
+        if (user) {
+          io.to(user.room).emit("message", {
+            user: "Admin",
+            text: `${user.name} has left.`,
+          });
+          io.to(user.room).emit("roomData", {
+            room: user.room,
+            users: getUsersInRoom(user.room),
+          });
+        }
+      });
     });
-
-    socket.on("sendMessage", (message, callback) => {
-      const user = getUser(socket.id);
-
-      io.to(user.room).emit("message", { user: user.name, text: message });
-
-      callback();
-    });
-
-    socket.on("CSS_SEND_MESSAGE", (msg) => {
-      console.log("message: " + msg);
-    });
-    socket.on("stoppedTyping", (data) => {
-      //   arraySocketConnect.forEach(socket_=>{
-      // 	 socket.to(data.userId).emit("stoppedTyping", { roomId: data.roomId });
-      //   }})
-    });
-    socket.on("disconnect", () => {
-      console.log(`bye ${socketID}`);
-      clearInterval(interval);
-      const user = removeUser(socket.id);
-
-      if (user) {
-        io.to(user.room).emit("message", {
-          user: "Admin",
-          text: `${user.name} has left.`,
-        });
-        io.to(user.room).emit("roomData", {
-          room: user.room,
-          users: getUsersInRoom(user.room),
-        });
-      }
-    });
-  });
-
-  const getApiAndEmit = (socket) => {
-    const response = new Date();
-    // Emitting a new message. Will be consumed by the client
-    socket.emit("FromAPI", response);
-  };
 }
 
 export default ApplySocketIO;

@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect, Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, connect } from "react-redux";
 import "../assets/styles/_form.scss";
 import imageLogin from "../assets/image/showcase.4b31330b.jpg";
 
@@ -22,6 +22,10 @@ function LoginPage(props) {
 	const { username, password } = inputs;
 	const { isLoggedIn } = useSelector((state) => state.authentication);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		document.title = "Login | social-network";
+	}, []);
 
 	function handleChange(e) {
 		const { name, value } = e.target;
@@ -114,4 +118,9 @@ function LoginPage(props) {
 	);
 }
 
-export default LoginPage;
+const mapStateToProps = (state) => ({
+	isLoggedIn: state.authentication.loggingIn,
+});
+
+const connectedLoginPage = connect(mapStateToProps)(LoginPage);
+export { connectedLoginPage as default };

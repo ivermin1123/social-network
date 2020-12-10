@@ -50,7 +50,7 @@ const Cover = (props) => {
 				<div
 					className="option-avatar"
 					// display={popoverAvt ? "block" : "none"}
-					style={{display: popoverAvt ? "block": "none"}}
+					style={{ display: popoverAvt ? "block" : "none" }}
 				>
 					<div className="option-item">
 						<div className="item">

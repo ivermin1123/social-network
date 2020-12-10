@@ -1,6 +1,7 @@
 import {
 	faCommentAlt,
 	faClock,
+	faThumbsUp,
 	faImages,
 } from "@fortawesome/free-regular-svg-icons";
 import {
@@ -8,7 +9,6 @@ import {
 	faEye,
 	faUsers,
 	faTv,
-	faThumbsUp,
 	faSearch,
 	faPen,
 	faEllipsisH,

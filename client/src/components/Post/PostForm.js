@@ -2,51 +2,62 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Theme } from "../../constants/index";
 import postActions from "../../actions/post.actions";
-import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
+// import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
 import "react-toastify/dist/ReactToastify.css";
 
-const configToast = {
-	position: "top-right",
-	autoClose: 1000,
-	hideProgressBar: false,
-	closeOnClick: true,
-	pauseOnHover: true,
-	draggable: true,
-	progress: undefined,
-};
+// const configToast = {
+// 	position: "top-right",
+// 	autoClose: 1000,
+// 	hideProgressBar: false,
+// 	closeOnClick: true,
+// 	pauseOnHover: true,
+// 	draggable: true,
+// 	progress: undefined,
+// };
 
 const PostForm = ({ ...props }) => {
 	const [show, setShow] = useState(false);
-	const [files, setFiles] = useState(null);
+	const [files, setFiles] = useState([]);
 	const [description, setDescription] = useState("");
 	const dispatch = useDispatch();
 
 	const handleReset = () => {
 		setDescription("");
-		setFiles(null);
+		setFiles([]);
 	};
 
 	const handleFile = (e) => {
-		const { files } = e.target;
+		let list = [];
+		list = files;
 
-		const error = [];
-		if (files && files.length) {
-			const arrFile = Array.from(files);
-			arrFile.forEach((file) => {
-				if (file.size >= MAX_POST_IMAGE_SIZE) {
-					error.push({
-						message: `🦄 File size should be less then ${
-							MAX_POST_IMAGE_SIZE / 1000000
-						}MB`,
-					});
-				}
-			});
-			if (error.length) {
-				toast(error[0].message, configToast);
-			}
-			setFiles(arrFile);
+		if (e.target.files && e.target.files[0]) {
+			const img = e.target.files[0];
+			list.push(URL.createObjectURL(img));
 		}
+
+		setFiles(list);
+		// const { files } = e.target;
+
+		// const error = [];
+		// if (files && files.length) {
+		// 	const arrFile = Array.from(files);
+		// 	arrFile.forEach((file) => {
+		// 		if (file.size >= MAX_POST_IMAGE_SIZE) {
+		// 			error.push({
+		// 				message: `🦄 File size should be less then ${
+		// 					MAX_POST_IMAGE_SIZE / 1000000
+		// 				}MB`,
+		// 			});
+		// 		}
+		// 	});
+		// 	if (error.length) {
+		// 		toast(error[0].message, configToast);
+		// 	}
+		// 	setFiles(arrFile);
+		// }
 
 		// e.target.value = null;
 	};
@@ -78,6 +89,24 @@ const PostForm = ({ ...props }) => {
 		} catch (error) {
 			console.log(error);
 		}
+	};
+	const renderImage = () => {
+		return (
+			<div className="image-area">
+				{files.map((item) => {
+					console.log(item);
+					return (
+						<img
+							style={{
+								width: "50%",
+							}}
+							src={item}
+							alt="avatar"
+						/>
+					);
+				})}
+			</div>
+		);
 	};
 
 	return (
@@ -134,35 +163,47 @@ const PostForm = ({ ...props }) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body bsPrefix="post-form-modal__body">
-					<img
-						src="https://i.pinimg.com/736x/d3/63/54/d363546caad6e492a4921549f174ae5d.jpg"
-						alt=""
-						className="post-form-modal__body--avt"
-					/>
-					<span className="post-form-modal__body--author">
-						Tu Nguyen
-					</span>
-					<br />
-					<textarea
-						value={description}
-						type="text"
-						className="post-form-modal__body--content"
-						placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
-						onChange={(e) => setDescription(e.target.value)}
-					/>
-					<div className="post-form-modal__footer">
-						<input
-							id="post-image"
-							type="file"
-							name="file"
-							onChange={(e) => handleFile(e)}
+					<div className="post-form-modal__body-account">
+						<img
+							src="https://i.pinimg.com/736x/d3/63/54/d363546caad6e492a4921549f174ae5d.jpg"
+							alt=""
+							className="post-form-modal__body-account-avt"
+						/>
+						<span className="post-form-modal__body-account-author">
+							Tu Nguyen
+						</span>
+					</div>
+					<div className="post-form-modal__body--content">
+						<textarea
+							value={description}
+							type="text"
+							placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
+							onChange={(e) => setDescription(e.target.value)}
 						/>
 					</div>
-					{/* <img
-						src={files ? URL.createObjectURL(files) : ""}
-						alt=""
-						className="post-form-top__avt"
-					/> */}
+					{files && files.length > 0 ? renderImage() : null}
+					<div className="post-form-modal__footer row">
+						<div className="post-form-modal__footer-left col">
+							Thêm ảnh vào bài viết
+						</div>
+						<div className="post-form-modal__footer-right col">
+							<label
+								className="custom-file-upload"
+								htmlFor="file-upload"
+							>
+								<input
+									id="file-upload"
+									onChange={(e) => handleFile(e)}
+									type="file"
+									name="file"
+								/>
+								<FontAwesomeIcon
+									className="icon"
+									icon={Theme.ICONS.images}
+								/>
+							</label>
+						</div>
+					</div>
 				</Modal.Body>
 				<Modal.Footer bsPrefix="post-form-modal__post-footer">
 					<button

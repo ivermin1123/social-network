@@ -22,7 +22,7 @@ const Cover = (props) => {
 
 	const [show, setShow] = useState(false);
 	const [file, setFile] = useState(null);
-	const [description, setDescription] = useState(null);
+	const [description, setDescription] = useState("");
 
 	const handleAddProfile = () => {
 		setStatus(!status);
@@ -36,7 +36,7 @@ const Cover = (props) => {
 
 	const handleReset = () => {
 		setFile(null);
-		setDescription(null);
+		setDescription("");
 	};
 
 	const handleFile = (e) => {
@@ -46,9 +46,8 @@ const Cover = (props) => {
 		}
 	};
 	const handleSave = () => {
-		setShow(false)
-	}
-
+		setShow(false);
+	};
 	return (
 		<>
 			<ToastContainer

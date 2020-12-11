@@ -75,7 +75,7 @@ const Cover = (props) => {
 				data: { description },
 			};
 			// Redux call
-			dispatch(userAction.updateUserImage([...file], data, dataSaveServer))
+			dispatch(userAction.updateUserImage(file, data, dataSaveServer))
 				.then((data) => {
 					toast(`🦄 Upload Image Success`);
 					console.log(data);

@@ -68,8 +68,8 @@ const updateUserImage = (file, data, dataSaveServer) => (dispatch) => {
 	return uploadService.UploadFileS3(file, data, dataSaveServer).then(
 		(data) => {
 			dispatch({
-				type: alertConstants.SET_ALERT,
-				payload: data,
+				type: userConstants.UPDATE_IMAGE_SUCCESS,
+				payload: { post: data.data },
 			});
 			return Promise.resolve();
 		},
@@ -136,12 +136,51 @@ const register = (username, email, password) => (dispatch) => {
 	);
 };
 
+const getUser = (userId) => (dispatch) => {
+	function request() {
+		return { type: userConstants.GET_USER_REQUEST };
+	}
+	dispatch(request());
+	return userService.getUserData(userId).then(
+		(data) => {
+			dispatch({
+				type: userConstants.GET_USER_SUCCESS,
+				payload: { data },
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: data.data,
+			});
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: userConstants.GET_USER_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
 const userActions = {
 	login,
 	logout,
 	register,
 	changePassword,
 	updateUserImage,
+	getUser,
 };
 
 export default userActions;

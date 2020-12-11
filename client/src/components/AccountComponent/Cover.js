@@ -49,7 +49,8 @@ const Cover = (props) => {
 	};
 	const handleSave = (e) => {
 		e.preventDefault();
-		const list = [file];
+		let list = [];
+		list.push(file);
 		try {
 			const data = { path: "post" };
 			const dataSaveServer = {

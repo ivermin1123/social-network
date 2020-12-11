@@ -1,7 +1,7 @@
 import conversationConstants from "../constants/conversation.constants";
 
 const initialState = {
-	loadingConversation: false,
+	loadingConversation: true,
 	conversation: null,
 	conversationOpen: "5fcca9d95cad3811bc177bef",
 	conversations: null,

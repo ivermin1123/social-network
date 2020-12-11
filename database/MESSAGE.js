@@ -3,6 +3,7 @@ import "../models/Message";
 import "../models/Conversation";
 import { checkObjectIDs } from "../utils/db-check";
 
+const ObjectId = mongoose.Types.ObjectId;
 const Message = mongoose.model("Message");
 const Conversation = mongoose.model("Conversation");
 
@@ -11,18 +12,6 @@ const sendMessage = async ({ conversationId, message, type, userId }) => {
     try {
       if (!checkObjectIDs(conversationId)) {
         resolve({ error: true, message: "param_invalid" });
-      }
-
-      const infoConversation = await Conversation.findById(
-        conversationId
-      ).catch((error) => {
-        resolve({ error: true, message: error.message });
-      });
-
-      if (!infoConversation) {
-        res
-          .status(400)
-          .json({ error: true, message: "conversation_not_found" });
       }
 
       const newMessage = new Message({
@@ -104,8 +93,8 @@ const sendMessage = async ({ conversationId, message, type, userId }) => {
         .populate({
           path: "files",
         })
-        .then((message) => {
-          resolve({ error: false, data: message });
+        .then((infoMessage) => {
+          resolve({ error: false, data: infoMessage });
         })
         .catch((error) => {
           resolve({ error: true, message: error.message });
@@ -116,10 +105,18 @@ const sendMessage = async ({ conversationId, message, type, userId }) => {
   });
 };
 
-const getMessage = async ({ conversationId }) => {
+const getMessages = async ({ conversationId, currentPage }) => {
   return new Promise(async (resolve) => {
     try {
-      await Message.findById(conversationId)
+      const page = Number(currentPage) || 1;
+      const perPage = 20;
+      const infoConversation = await Conversation.findById(
+        conversationId
+      ).select("_id");
+      await Message.find({
+        conversation: infoConversation._id,
+      })
+        .populate("conversation")
         .populate({
           path: "sender",
           select: "_id firstName lastName username isOnline avatar",
@@ -179,13 +176,13 @@ const getMessage = async ({ conversationId }) => {
         .populate({
           path: "files",
         })
-        .then((message) => {
-          console.log(message);
-          return resolve({ error: false, data: message });
+        .skip(page * perPage - perPage)
+        .limit(perPage)
+        .sort({ createdAt: -1 })
+        .then((messages) => {
+          resolve({ error: false, data: messages });
         })
-        .catch((err) => {
-          return resolve({ error: true, message: err.message });
-        });
+        .catch((err) => resolve({ error: true, message: err.message }));
     } catch (error) {
       return resolve({ error: true, message: error.message });
     }
@@ -193,7 +190,7 @@ const getMessage = async ({ conversationId }) => {
 };
 
 const MESSAGE = {
-  getMessage,
+  getMessages,
   sendMessage,
 };
 

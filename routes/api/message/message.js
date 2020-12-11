@@ -10,11 +10,4 @@ router.get(
   messageController.getMessages
 );
 
-router.post(
-  "/sendMessage",
-  helpers.checkAuth,
-  validator.messageValidator.sendMessage,
-  messageController.sendMessage
-);
-
 export default router;

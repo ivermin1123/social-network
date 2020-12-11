@@ -5,7 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Theme } from "../../constants/index";
 import postActions from "../../actions/post.actions";
-// import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
+import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
 import "react-toastify/dist/ReactToastify.css";
 
 // const configToast = {
@@ -31,35 +31,19 @@ const PostForm = ({ ...props }) => {
 
 	const handleFile = (e) => {
 		let list = [];
-		list = files;
-
-		if (e.target.files && e.target.files[0]) {
-			const img = e.target.files[0];
-			list.push(URL.createObjectURL(img));
+		list = [...files];
+		const listFile = e.target.files;
+		if (listFile && listFile.length) {
+			let i = listFile.length;
+			while (i >= 0) {
+				if (listFile[i] && listFile[i].size < MAX_POST_IMAGE_SIZE) {
+					const img = listFile[i];
+					list.push(URL.createObjectURL(img));
+				}
+				i--;
+			}
 		}
-
 		setFiles(list);
-		// const { files } = e.target;
-
-		// const error = [];
-		// if (files && files.length) {
-		// 	const arrFile = Array.from(files);
-		// 	arrFile.forEach((file) => {
-		// 		if (file.size >= MAX_POST_IMAGE_SIZE) {
-		// 			error.push({
-		// 				message: `🦄 File size should be less then ${
-		// 					MAX_POST_IMAGE_SIZE / 1000000
-		// 				}MB`,
-		// 			});
-		// 		}
-		// 	});
-		// 	if (error.length) {
-		// 		toast(error[0].message, configToast);
-		// 	}
-		// 	setFiles(arrFile);
-		// }
-
-		// e.target.value = null;
 	};
 
 	const handleClick = (e) => {
@@ -89,24 +73,6 @@ const PostForm = ({ ...props }) => {
 		} catch (error) {
 			console.log(error);
 		}
-	};
-	const renderImage = () => {
-		return (
-			<div className="image-area">
-				{files.map((item) => {
-					console.log(item);
-					return (
-						<img
-							style={{
-								width: "50%",
-							}}
-							src={item}
-							alt="avatar"
-						/>
-					);
-				})}
-			</div>
-		);
 	};
 
 	return (
@@ -180,8 +146,23 @@ const PostForm = ({ ...props }) => {
 							placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
 							onChange={(e) => setDescription(e.target.value)}
 						/>
+						{files && files.length > 0 ? (
+							<div className="image-area">
+								{files.map((item) => {
+									console.log(item);
+									return (
+										<img
+											style={{
+												width: "50%",
+											}}
+											src={item}
+											alt="avatar"
+										/>
+									);
+								})}
+							</div>
+						) : null}
 					</div>
-					{files && files.length > 0 ? renderImage() : null}
 					<div className="post-form-modal__footer row">
 						<div className="post-form-modal__footer-left col">
 							Thêm ảnh vào bài viết
@@ -196,6 +177,7 @@ const PostForm = ({ ...props }) => {
 									onChange={(e) => handleFile(e)}
 									type="file"
 									name="file"
+									multiple
 								/>
 								<FontAwesomeIcon
 									className="icon"
@@ -208,7 +190,7 @@ const PostForm = ({ ...props }) => {
 				<Modal.Footer bsPrefix="post-form-modal__post-footer">
 					<button
 						style={
-							description.length
+							description.length || files
 								? {
 										backgroundColor: "#1877F2",
 										color: "white",

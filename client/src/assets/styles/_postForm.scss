@@ -76,7 +76,7 @@
 		}
 	}
 	&__body {
-		&-account{
+		&-account {
 			padding: 16px 16px 5px;
 			width: 100%;
 			&-avt {
@@ -93,21 +93,24 @@
 		}
 		&-content {
 			padding: 0 16px;
-			textarea{
+			textarea {
 				height: 150px;
 				width: 100%;
 				border: none;
 				resize: none;
 				outline: none;
 			}
-			.image-area{
-				padding: 16px 0;
+			.image-area {
 				display: flow-root;
 				overflow-y: scroll;
 				max-height: 200px;
-				button{
+				border: 1px solid lightgrey;
+				margin: 15px 0;
+				padding: 0 5px;
+				border-radius: 5px;
+				button {
 					position: absolute;
-					right: 5px;
+					right: 17px;
 					z-index: 1;
 					border: 1px solid lightgrey;
 					width: 30px;
@@ -116,52 +119,52 @@
 					outline: none;
 					background-color: white;
 				}
-				button:hover{
+				button:hover {
 					background-color: lightgrey;
 				}
-				img{
+				img {
 					object-fit: contain;
 					max-height: 200px;
 				}
 			}
 		}
 	}
-	&__footer{
+	&__footer {
 		width: 96%;
-  		margin: 0 2%;
+		margin: 0 2%;
 		justify-content: space-around;
 		padding: 10px;
 		border-radius: 5px;
 		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 		border: 1px solid lightgrey;
 		align-items: center;
-		&-left{
+		&-left {
 			text-align: left;
 			font-weight: 600;
 		}
-		&-right{
+		&-right {
 			text-align: right;
-			label{
-				margin:0;
+			label {
+				margin: 0;
 			}
-			.icon{
+			.icon {
 				font-size: 20px;
 			}
 		}
-		
-		input[type="file"]{
+
+		input[type="file"] {
 			display: none;
 		}
 	}
 	&__post-footer {
 		padding: 16px;
-		button{
+		button {
 			width: 100%;
 			border-radius: 5px;
 			height: 36px;
 			font-weight: 600;
 			border: 0;
-			font-size: .9375rem;
+			font-size: 0.9375rem;
 			color: lightgrey;
 			cursor: inherit;
 			outline: none;

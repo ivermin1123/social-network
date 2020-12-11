@@ -8,15 +8,15 @@ import postActions from "../../actions/post.actions";
 import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
 import "react-toastify/dist/ReactToastify.css";
 
-// const configToast = {
-// 	position: "top-right",
-// 	autoClose: 1000,
-// 	hideProgressBar: false,
-// 	closeOnClick: true,
-// 	pauseOnHover: true,
-// 	draggable: true,
-// 	progress: undefined,
-// };
+const configToast = {
+	position: "top-right",
+	autoClose: 1000,
+	hideProgressBar: false,
+	closeOnClick: true,
+	pauseOnHover: true,
+	draggable: true,
+	progress: undefined,
+};
 
 const PostForm = ({ ...props }) => {
 	const [show, setShow] = useState(false);
@@ -36,9 +36,17 @@ const PostForm = ({ ...props }) => {
 		if (listFile && listFile.length) {
 			let i = listFile.length;
 			while (i >= 0) {
-				if (listFile[i] && listFile[i].size < MAX_POST_IMAGE_SIZE) {
-					const img = listFile[i];
-					list.push(URL.createObjectURL(img));
+				const img = listFile[i];
+				if (img && img.size >= MAX_POST_IMAGE_SIZE) {
+					toast(
+						`🦄 File size should be less then ${
+							MAX_POST_IMAGE_SIZE / 1000000
+						}MB`,
+						configToast
+					);
+				}
+				if (img && img.size < MAX_POST_IMAGE_SIZE) {
+					list.push(img);
 				}
 				i--;
 			}
@@ -161,10 +169,11 @@ const PostForm = ({ ...props }) => {
 									console.log(item);
 									return (
 										<img
+											key={item}
 											style={{
 												width: "50%",
 											}}
-											src={item}
+											src={URL.createObjectURL(item)}
 											alt="avatar"
 										/>
 									);

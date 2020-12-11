@@ -121,7 +121,10 @@ const PostForm = ({ ...props }) => {
 				centered
 				animation={false}
 				show={show}
-				onHide={() => setShow(false)}
+				onHide={() => {
+					handleReset();
+					setShow(false);
+				}}
 			>
 				<Modal.Header bsPrefix="post-form-modal__header" closeButton>
 					<Modal.Title bsPrefix="post-form-modal__header-title">
@@ -149,7 +152,6 @@ const PostForm = ({ ...props }) => {
 						{files && files.length > 0 ? (
 							<div className="image-area">
 								{files.map((item) => {
-									console.log(item);
 									return (
 										<img
 											style={{

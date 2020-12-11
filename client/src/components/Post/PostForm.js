@@ -142,7 +142,7 @@ const PostForm = ({ ...props }) => {
 							Tu Nguyen
 						</span>
 					</div>
-					<div className="post-form-modal__body--content">
+					<div className="post-form-modal__body-content">
 						<textarea
 							value={description}
 							type="text"
@@ -151,6 +151,12 @@ const PostForm = ({ ...props }) => {
 						/>
 						{files && files.length > 0 ? (
 							<div className="image-area">
+								<button
+									type="button"
+									onClick={() => setFiles([])}
+								>
+									x
+								</button>
 								{files.map((item) => {
 									return (
 										<img
@@ -192,7 +198,7 @@ const PostForm = ({ ...props }) => {
 				<Modal.Footer bsPrefix="post-form-modal__post-footer">
 					<button
 						style={
-							description.length || files
+							description.length || files.length
 								? {
 										backgroundColor: "#1877F2",
 										color: "white",

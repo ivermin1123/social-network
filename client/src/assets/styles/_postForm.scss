@@ -91,7 +91,7 @@
 				margin-left: 10px;
 			}
 		}
-		&--content {
+		&-content {
 			padding: 0 16px;
 			textarea{
 				height: 150px;
@@ -99,6 +99,23 @@
 				border: none;
 				resize: none;
 				outline: none;
+			}
+			.image-area{
+				padding: 16px 0;
+				button{
+					position: absolute;
+					right: 5px;
+					z-index: 1;
+					border: 1px solid lightgrey;
+					width: 30px;
+					height: 30px;
+					border-radius: 50px;
+					outline: none;
+					background-color: white;
+				}
+				button:hover{
+					background-color: lightgrey;
+				}
 			}
 		}
 	}

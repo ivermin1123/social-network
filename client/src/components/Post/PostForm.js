@@ -158,6 +158,7 @@ const PostForm = ({ ...props }) => {
 									x
 								</button>
 								{files.map((item) => {
+									console.log(item);
 									return (
 										<img
 											style={{

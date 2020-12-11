@@ -102,6 +102,9 @@
 			}
 			.image-area{
 				padding: 16px 0;
+				display: flow-root;
+				overflow-y: scroll;
+				max-height: 200px;
 				button{
 					position: absolute;
 					right: 5px;
@@ -115,6 +118,10 @@
 				}
 				button:hover{
 					background-color: lightgrey;
+				}
+				img{
+					object-fit: contain;
+					max-height: 200px;
 				}
 			}
 		}

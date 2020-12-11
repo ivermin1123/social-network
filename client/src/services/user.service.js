@@ -39,12 +39,9 @@ function changePassword(password, newPassword) {
 
 function updateUserImage(avatar) {
 	return axios
-		.post(
-			CF_ROUTE_USER.UPDATE_USER_IMAGE,
-			{
-				avatar,
-			},
-		)
+		.post(CF_ROUTE_USER.UPDATE_USER_IMAGE, {
+			avatar,
+		})
 		.then((response) => {
 			return response.data;
 		});
@@ -56,7 +53,7 @@ function register(user) {
 	});
 }
 
-function getUserDate(userId) {
+function getUserData(userId) {
 	return axios
 		.post(
 			CF_ROUTE_USER.GET_USER,
@@ -66,10 +63,6 @@ function getUserDate(userId) {
 			configAxios
 		)
 		.then((response) => {
-			if (response.data.user) {
-				localStorage.setItem("user", JSON.stringify(response.data));
-			}
-
 			return response.data;
 		});
 }
@@ -78,7 +71,7 @@ const userService = {
 	login,
 	logout,
 	register,
-	getUserDate,
+	getUserData,
 	changePassword,
 	updateUserImage,
 };

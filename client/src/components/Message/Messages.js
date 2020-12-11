@@ -10,17 +10,23 @@ import messageActions from "../../actions/message.actions";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
 function Messages(props) {
-	const { messages, conversationOpen } = props;
+	const { messages, conversationOpen, isConnecting, loadingMessage } = props;
 	const dispatch = useDispatch();
 	const { user } = useSelector((state) => state.authentication.user);
 	const { socket } = useSelector((state) => state.socket);
 	useEffect(() => {
 		dispatch(messageActions.getMessages(conversationOpen));
-		socket.emit("CSS_JOIN", {
-			name: `${user.username}`,
-			room: conversationOpen,
-		});
+		if (isConnecting) {
+			socket.emit("CSS_JOIN", {
+				name: `${user.username}`,
+				room: conversationOpen,
+			});
+		}
 	}, []);
+
+	if (!isConnecting || loadingMessage) {
+		return <h3>Loading...</h3>;
+	}
 
 	return (
 		<div className="col">
@@ -30,14 +36,9 @@ function Messages(props) {
 					{/* <PerfectScrollbar> */}
 					<ScrollToBottom className="messages-container">
 						<div className="grid-message">
-							{messages && messages.data.length
-								? messages.data.map((message) => (
-										<Message
-											message={message}
-											key={message._id}
-										/>
-								  ))
-								: null}
+							{messages.data.reverse().map((message) => (
+								<Message message={message} key={message._id} />
+							))}
 						</div>
 					</ScrollToBottom>
 					{/* </PerfectScrollbar> */}
@@ -53,6 +54,8 @@ const mapStateToProps = (state) => ({
 	reload: state.socket.reload,
 	conversationOpen: state.conversations.conversationOpen,
 	messages: state.messages.messages,
+	loadingMessage: state.messages.loadingMessage,
+	isConnecting: state.socket.isConnecting,
 });
 
 export default connect(mapStateToProps)(Messages);

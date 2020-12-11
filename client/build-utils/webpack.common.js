@@ -22,6 +22,7 @@ module.exports = {
 		new HtmlWebpackPlugin({
 			title: "Social Network ?",
 			template: path.resolve(__dirname, "..", "./src/index.html"),
+			publicPath: "/",
 		}),
 		new ESLintPlugin(),
 	],

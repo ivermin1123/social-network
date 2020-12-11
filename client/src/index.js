@@ -33,11 +33,8 @@ if (module.hot) {
 	};
 
 	module.hot.accept("./App", () => {
-		setImmediate(() => {
-			// Preventing the hot reloading error from react-router
-			unmountComponentAtNode(mountPoint);
-			reRenderApp();
-		});
+		unmountComponentAtNode(mountPoint);
+		reRenderApp();
 	});
 }
 

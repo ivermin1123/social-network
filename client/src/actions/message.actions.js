@@ -2,11 +2,15 @@ import { messageConstants, alertConstants } from "../constants";
 import { messageService } from "../services";
 
 const getMessages = (conversationId) => (dispatch) => {
+	function request() {
+		return { type: messageConstants.GET_LIST_MESSAGE_REQUEST };
+	}
+	dispatch(request());
 	return messageService.getMessages(conversationId).then(
 		(data) => {
 			dispatch({
 				type: messageConstants.GET_LIST_MESSAGE_SUCCESS,
-				payload: { data: data.data },
+				payload: { data: data.data.data },
 			});
 
 			return Promise.resolve();

@@ -1,6 +1,7 @@
 import messageConstants from "../constants/message.constants";
 
 const initialState = {
+	loadingMessage: true,
 	message: null,
 	messages: null,
 };
@@ -8,9 +9,15 @@ const initialState = {
 export default function message(state = initialState, action) {
 	const { type, payload } = action;
 	switch (type) {
+		case messageConstants.GET_LIST_MESSAGE_REQUEST:
+			return {
+				...state,
+				loadingMessage: true,
+			};
 		case messageConstants.GET_LIST_MESSAGE_SUCCESS:
 			return {
 				...state,
+				loadingMessage: false,
 				messages: {
 					data: payload.data,
 				},
@@ -18,7 +25,7 @@ export default function message(state = initialState, action) {
 		case messageConstants.GET_LIST_MESSAGE_FAILURE:
 			return {
 				...state,
-				messages: null,
+				loadingMessage: false,
 			};
 		case messageConstants.SEND_MESSAGE_SUCCESS:
 			return {

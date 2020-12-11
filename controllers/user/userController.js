@@ -321,7 +321,13 @@ export const getUser = async (req, res) => {
     const userIdToGet = userIdGet ? userIdGet : userId;
     const infoUser = await User.findById(userIdToGet)
       .populate("posts")
-      .populate("friends");
+      .populate({
+        path: "friends",
+        select: "_id firstName lastName username gender avatar",
+      })
+      .select(
+        "_id firstName lastName createdAt username gender birthday phone email avatar coverImage"
+      );
 
     if (!infoUser) res.status(500).json({ error: true, message: "cannot_get" });
     if (infoUser.deactivated)

@@ -1,6 +1,8 @@
 import React from "react";
 import { FaRegWindowClose } from "react-icons/fa";
 
+import img5 from "../../assets/image/avatar-5.png";
+
 const ChatBox = (props) => {
 	const { open, current, closeChat } = props;
 
@@ -12,12 +14,12 @@ const ChatBox = (props) => {
 						<div className="chat__first">
 							<div className="chat__header-img">
 								<img
-									src={current.image ? current.image : ""}
+									src={current.image ? current.image : img5}
 									alt="user"
 								/>
 							</div>
 							<div className="chat__header-name">
-								{current.name ? current.name : ""}
+								{`${current.firstName} ${current.lastName}`}
 							</div>
 						</div>
 						<div className="chat__second">

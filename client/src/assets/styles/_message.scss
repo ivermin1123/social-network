@@ -341,6 +341,7 @@
 	-ms-flex: 1;
 	flex: 1;
 	overflow: auto;
+	overflow-x: hidden;
 	.messages-container {
 		height: calc(100% - 69px);
 		overflow: auto;

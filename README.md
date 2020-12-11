@@ -42,7 +42,7 @@ npm start
 
 ## Contributing
 
-[Hoang Yen](https://www.facebook.com/trhgyen/)
+[Hoang Yen](https://www.facebook.com/trhgyen/),
 [Anh Tu](https://www.facebook.com/ntat007)
 
 ## License

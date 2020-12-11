@@ -2,17 +2,11 @@ import userConstants from "../constants/user.constants";
 
 function users(
 	state = {
-		loadingUser: false,
+		loadingUser: true,
 		updatingUser: false,
 		deleting: false,
 		hasError: false,
-		data: {
-			_id: "",
-			username: "",
-			firstName: "",
-			lastName: "",
-			email: "",
-		},
+		infoUser: null,
 	},
 	action
 ) {
@@ -29,35 +23,20 @@ function users(
 			return {
 				error: action.error,
 			};
-		case userConstants.DELETE_REQUEST:
-			// add 'deleting:true' property to user being deleted
+		case userConstants.GET_USER_REQUEST:
+			return {
+				loadingUser: true,
+			};
+		case userConstants.GET_USER_SUCCESS:
 			return {
 				...state,
-				items: state.items.map((user) => {
-					return user.id === action.id
-						? { ...user, deleting: true }
-						: user;
-				}),
+				infoUser: action.payload.data,
+				loadingUser: false,
 			};
-		case userConstants.DELETE_SUCCESS:
-			// remove deleted user from state
+		case userConstants.GET_USER_FAILURE:
 			return {
-				items: state.items.filter((user) => user.id !== action.id),
-			};
-		case userConstants.DELETE_FAILURE:
-			// remove 'deleting:true' property and add 'deleteError:[error]' property to user
-			return {
-				...state,
-				items: state.items.map((user) => {
-					if (user.id === action.id) {
-						// make copy of user without 'deleting:true' property
-						const { deleting, ...userCopy } = user;
-						// return copy of user with 'deleteError:[error]' property
-						return { ...userCopy, deleteError: action.error };
-					}
-
-					return user;
-				}),
+				error: action.error,
+				loadingUser: false,
 			};
 		default:
 			return state;

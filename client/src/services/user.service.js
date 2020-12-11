@@ -37,19 +37,6 @@ function changePassword(password, newPassword) {
 		});
 }
 
-function updateUserImage(avatar) {
-	return axios
-		.post(
-			CF_ROUTE_USER.UPDATE_USER_IMAGE,
-			{
-				avatar,
-			},
-		)
-		.then((response) => {
-			return response.data;
-		});
-}
-
 function register(user) {
 	return axios.post(CF_ROUTE_USER.REGISTER, user).then((response) => {
 		return response.data;
@@ -80,7 +67,6 @@ const userService = {
 	register,
 	getUserDate,
 	changePassword,
-	updateUserImage,
 };
 
 export default userService;

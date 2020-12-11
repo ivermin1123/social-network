@@ -1,6 +1,6 @@
 /* eslint-disable operator-linebreak */
 import { userConstants, alertConstants } from "../constants";
-import userService from "../services/user.service";
+import { userService, uploadService } from "../services";
 
 const login = (username, password) => (dispatch) => {
 	return userService.login(username, password).then(
@@ -41,7 +41,6 @@ const changePassword = (password, newPassword) => (dispatch) => {
 				type: alertConstants.SET_ALERT,
 				payload: data,
 			});
-
 			return Promise.resolve();
 		},
 		(error) => {
@@ -65,14 +64,13 @@ const changePassword = (password, newPassword) => (dispatch) => {
 		}
 	);
 };
-const updateUserImage = (avatar) => (dispatch) => {
-	return userService.updateUserImage(avatar).then(
+const updateUserImage = (file, data, dataSaveServer) => (dispatch) => {
+	return uploadService.UploadFileS3(file, data, dataSaveServer).then(
 		(data) => {
 			dispatch({
 				type: alertConstants.SET_ALERT,
 				payload: data,
 			});
-
 			return Promise.resolve();
 		},
 		(error) => {

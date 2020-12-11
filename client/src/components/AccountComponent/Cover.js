@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
-
 import { Tabs, Theme } from "../../constants/index";
+import userAction from "../../actions/user.actions";
 import "react-toastify/dist/ReactToastify.css";
 
 const Cover = (props) => {
@@ -23,6 +24,7 @@ const Cover = (props) => {
 	const [show, setShow] = useState(false);
 	const [file, setFile] = useState(null);
 	const [description, setDescription] = useState("");
+	const dispatch = useDispatch();
 
 	const handleAddProfile = () => {
 		setStatus(!status);
@@ -45,8 +47,32 @@ const Cover = (props) => {
 			setFile(URL.createObjectURL(img));
 		}
 	};
-	const handleSave = () => {
-		setShow(false);
+	const handleSave = (e) => {
+		e.preventDefault();
+		const list = [file];
+		try {
+			const data = { path: "post" };
+			const dataSaveServer = {
+				url: "POST",
+				method: "POST",
+				data: { description },
+			};
+			// Redux call
+			dispatch(userAction.updateUserImage(list, data, dataSaveServer))
+				.then((data) => {
+					toast(`🦄 Upload Image Success`);
+					console.log(data);
+					handleReset();
+					setShow(false);
+				})
+				.catch((err) => {
+					toast(`🦄 Upload Image Fail`);
+					handleReset();
+					console.log(err);
+				});
+		} catch (error) {
+			console.log(error);
+		}
 	};
 	return (
 		<>
@@ -334,7 +360,7 @@ const Cover = (props) => {
 								<button
 									type="button"
 									className="save"
-									onClick={() => handleSave()}
+									onClick={handleSave}
 								>
 									Lưu
 								</button>

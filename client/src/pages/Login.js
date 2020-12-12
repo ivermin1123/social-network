@@ -76,7 +76,7 @@ const Login = (props) => {
 								submitted={submitted}
 								name="username"
 								value={username}
-								onChange={(e) => handleChange(e)}
+								onChange={handleChange}
 							/>
 						</div>
 					</div>
@@ -90,7 +90,7 @@ const Login = (props) => {
 								submitted={submitted}
 								name="password"
 								value={password}
-								onChange={(e) => handleChange(e)}
+								onChange={handleChange}
 							/>
 						</div>
 					</div>

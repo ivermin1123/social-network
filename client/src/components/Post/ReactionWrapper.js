@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const ReactionsWrapper = styled(motion.div)`
 	position: absolute;
 	bottom: 45px;
-	left: -100px;
+	left: -10px;
 	/* left: 50%; */
 	/* transform: translateX(-50%); */
 

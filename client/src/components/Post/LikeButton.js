@@ -1,13 +1,12 @@
 import styled from "styled-components";
 
-const LikeButton = styled.span`
+const LikeButton = styled.div`
 	position: relative;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 
 	text-align: center;
-	width: 100px;
 	font-weight: 600;
 	color: #606770;
 	fill: #606770;
@@ -20,7 +19,7 @@ const LikeButton = styled.span`
 	&:after {
 		position: absolute;
 		content: "";
-		padding: 50px;
+		padding: 0;
 	}
 `;
 

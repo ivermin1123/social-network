@@ -17,6 +17,7 @@ import wow from "../../assets/icons/wow.svg";
 import sad from "../../assets/icons/sad.svg";
 import angry from "../../assets/icons/angry.svg";
 import ReactionsWrapper from "./ReactionWrapper";
+import ListComment from "./ListComment";
 
 const LINK_S3 = "https://socialawsbucket.s3-ap-southeast-1.amazonaws.com/";
 
@@ -41,6 +42,7 @@ export const list = {
 
 const Post = (props) => {
 	const [show, setShow] = useState(false);
+	const [showComment, setShowComment] = useState(false);
 	const [reactName, setReactName] = useState("Like");
 	const [reactIcon, setReactIcon] = useState(thumUp);
 	const { post } = props;
@@ -102,12 +104,17 @@ const Post = (props) => {
 					<div className="post-body__interact">
 						<LikeButton
 							type="button"
-							className="post-body__interact--reactions"
+							className="post-body__interact-option reactions"
 							onMouseOver={() => setIsHover(true)}
 							onMouseLeave={() => setIsHover(false)}
 							onClick={() => handleLike()}
 						>
-							<Reaction name={reactName} icon={reactIcon} />
+							<Reaction
+								name={reactName}
+								icon={reactIcon}
+								className="reactions-show"
+							/>
+							<span>Thích</span>
 							{/* <ThumbUp />
 							&nbsp;Like */}
 							<ReactionsWrapper
@@ -148,8 +155,18 @@ const Post = (props) => {
 							</ReactionsWrapper>
 						</LikeButton>
 
-						<CommentButton className="post-body__interact--comments" />
+						<div className="post-body__interact-option comments">
+							<button type="button" onClick={()=> setShowComment(true)}>
+								<FontAwesomeIcon
+									className="icon"
+									icon={Theme.ICONS.commentAlt}
+								/>
+								<span>Comment</span>
+							</button>
+						</div>
+						{/* <CommentButton/> */}
 					</div>
+					<ListComment show={showComment} />
 				</div>
 			</div>
 			<Modal

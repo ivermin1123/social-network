@@ -32,7 +32,7 @@ const Register = (props) => {
 			setSubmitted(true);
 			dispatch(userActions.register(user))
 				.then(() => {
-					props.history.push({ pathname: "/" });
+					props.history.push({ pathname: "/login" });
 					window.location.reload();
 				})
 				.catch(() => {

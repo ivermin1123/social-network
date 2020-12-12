@@ -1,7 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { FormLeft } from "../components/_components";
+import userActions from "../actions/user.actions";
 
-const Login = () => {
+const Login = (props) => {
+	const [inputs, setInputs] = useState({
+		email: "",
+		username: "",
+		password: "",
+		emailToVerify: "",
+		forgotPasswordEmail: "",
+		submitted: false,
+		showForm: false,
+		forgotPasswordForm: false,
+	});
+	const [submitted, setSubmitted] = useState(false);
+	const { username, password } = inputs;
+	const { isLoggedIn } = useSelector((state) => state.authentication);
+	const dispatch = useDispatch();
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setInputs((inputs) => ({ ...inputs, [name]: value }));
+	};
+
+	const handleLogin = (e) => {
+		e.preventDefault();
+
+		setSubmitted(true);
+		if (username && password) {
+			// get return url from location state or default to home page
+			dispatch(userActions.login(username, password))
+				.then(() => {
+					props.history.push({ pathname: "/" });
+					window.location.reload();
+				})
+				.catch(() => {
+					setSubmitted(false);
+				});
+		}
+	};
+
+	if (isLoggedIn) {
+		return <Redirect to="/" />;
+	}
 	return (
 		<div
 			className="login"
@@ -31,6 +73,10 @@ const Login = () => {
 								className="field__input"
 								type="email"
 								placeholder="Nhập tên đăng nhập hoặc email ..."
+								submitted={submitted}
+								name="username"
+								value={username}
+								onChange={(e) => handleChange(e)}
 							/>
 						</div>
 					</div>
@@ -41,12 +87,17 @@ const Login = () => {
 								className="field__input"
 								type="password"
 								placeholder="Nhập mật khẩu ..."
+								submitted={submitted}
+								name="password"
+								value={password}
+								onChange={(e) => handleChange(e)}
 							/>
 						</div>
 					</div>
 					<button
 						className="login__btn btn btn_purple btn_wide"
 						type="button"
+						onClick={handleLogin}
 					>
 						Tiếp tục
 					</button>

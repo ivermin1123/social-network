@@ -1,11 +1,14 @@
 body {
-	margin: 0;
-	background: white;
-	font-family: var(--font-family-apple);
+	min-width: 375px;
+	font-family: "Inter", sans-serif !important;
+	font-size: 14px !important;
+	line-height: 1.42857;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	color: #11142d;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	--HOVER: #f2f3f5;
-
 }
 
 code {
@@ -537,7 +540,7 @@ a {
 	margin: 0 10px 10px 10px;
 	border-top: 0.5px solid #cfd0d4;
 	border-bottom: 0.5px solid #cfd0d4;
-	&-option{
+	&-option {
 		width: 100%;
 		height: 100%;
 		align-items: center;
@@ -545,21 +548,22 @@ a {
 		border-radius: 5px;
 		display: flex;
 	}
-	&-option:hover{
+	&-option:hover {
 		background-color: lightgrey;
 	}
-	.reactions{
+	.reactions {
 		width: 100%;
-		.reactions-show, .reactions-show:hover{
-			width:30px;
+		.reactions-show,
+		.reactions-show:hover {
+			width: 30px;
 			height: 30px;
 		}
 	}
-	.comments{
+	.comments {
 		width: 100%;
 		padding: 0;
 		height: 100%;
-		button{
+		button {
 			cursor: pointer;
 			background-color: transparent;
 			border: 0;
@@ -567,19 +571,19 @@ a {
 		}
 	}
 }
-.comment-area{
+.comment-area {
 	padding: 4px 16px;
-	img{
+	img {
 		border-radius: 10px;
 		width: 36px;
 		height: 36px;
 		margin-right: 10px;
 	}
-	.comment-list{
+	.comment-list {
 		display: flex;
-		&-right{
-			&__content{
-				padding:4px 12px;
+		&-right {
+			&__content {
+				padding: 4px 12px;
 				border-radius: 10px;
 				background-color: var(--HOVER);
 			}

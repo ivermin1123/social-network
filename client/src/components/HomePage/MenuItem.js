@@ -12,7 +12,7 @@ function MenuItem(props) {
 		>
 			<div className="sidebar__icon">
 				<div className="sidebar__add">
-					<svg className="icon icon-add">
+					<svg className={`icon ${icon}`}>
 						<use href={`${sprite}#${icon}`} />
 					</svg>
 				</div>

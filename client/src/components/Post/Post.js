@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
 import moment from "moment";
 import { Theme } from "../../constants/index";
-import { CommentButton, LikeButton } from "../_components";
+import { LikeButton } from "../_components";
 import ListLikes from "./ListLikes";
 import img5 from "../../assets/image/avatar-5.png";
 import Reaction from "./Reaction";
@@ -156,7 +156,7 @@ const Post = (props) => {
 						</LikeButton>
 
 						<div className="post-body__interact-option comments">
-							<button type="button" onClick={()=> setShowComment(true)}>
+							<button type="button" onClick={() => setShowComment(true)}>
 								<FontAwesomeIcon
 									className="icon"
 									icon={Theme.ICONS.commentAlt}

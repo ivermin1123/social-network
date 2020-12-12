@@ -9,7 +9,7 @@ const ReactionWrapper = styled.div`
 	width: 45px;
 	height: 45px;
 	border-radius: 50%;
-	background-color: white;
+	background-color: transparent;
 	transition: 0.2s;
 	transform-origin: center bottom;
 	cursor: pointer;
@@ -40,10 +40,10 @@ const ReactionImage = styled.img`
 	height: 100%;
 `;
 
-const Reaction = ({ name, icon, callback }) => {
+const Reaction = ({ name, icon, callback, className }) => {
 	return (
 		<motion.div variants={list}>
-			<ReactionWrapper>
+			<ReactionWrapper className={className}>
 				<ReactionImage
 					name={name}
 					src={icon}

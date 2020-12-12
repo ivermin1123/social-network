@@ -18,7 +18,7 @@ export function addUser(req, res, next) {
       )
       .required(),
     gender: Joi.number().required(),
-    phone: Joi.string(),
+    // phone: Joi.string(),
     email: Joi.string()
       .min(5)
       .max(30)
@@ -29,7 +29,7 @@ export function addUser(req, res, next) {
       )
       .required(),
     password: Joi.string().min(3).max(30).required(),
-    repeat_password: Joi.required().valid(Joi.ref("password")),
+    // repeat_password: Joi.required().valid(Joi.ref("password")),
   });
 
   const { error, value } = schema.validate(req.body);

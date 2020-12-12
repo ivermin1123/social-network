@@ -7,9 +7,8 @@ const ListLikes = (props) => {
 		<ul className="list-likes">
 			{listLikes
 				? listLikes.map((like) => {
-						return <li> {like} </li>;
-						// eslint-disable-next-line no-mixed-spaces-and-tabs
-				  })
+					return <li key={like}> {like} </li>;
+				})
 				: null}
 		</ul>
 	);

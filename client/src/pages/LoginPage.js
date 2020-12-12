@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Redirect, Link } from "react-router-dom";
 import { useDispatch, useSelector, connect } from "react-redux";
-import "../assets/styles/_form.scss";
+// import "../assets/styles/_form.scss";
 import imageLogin from "../assets/image/showcase.4b31330b.jpg";
 
 import userActions from "../actions/user.actions";
@@ -56,6 +56,7 @@ function LoginPage(props) {
 
 	return (
 		<div className="row login">
+
 			<div className="col-md-5 col-xs-12 side-left">
 				<img src={imageLogin} alt="cat" />
 			</div>

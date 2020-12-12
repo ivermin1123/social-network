@@ -3,6 +3,8 @@ import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FormLeft } from "../components/_components";
 import userActions from "../actions/user.actions";
+import sprite from "../assets/icons/sprite.svg";
+import bgSignIn from "../assets/image/bg-sign-in.png";
 
 const Login = (props) => {
 	const [inputs, setInputs] = useState({
@@ -45,16 +47,15 @@ const Login = (props) => {
 		return <Redirect to="/" />;
 	}
 	return (
-		<div
-			className="login"
-			style={{ backgroundImage: "img/bg-sign-in.png" }}
-		>
+		<div className="login" style={{ backgroundImage: `url(${bgSignIn})` }}>
 			<div className="login__container">
 				<FormLeft />
 				<div className="login__form">
-					<a className="login__close mobile-hide" href="index.html">
+					<a className="login__close mobile-hide" href="/">
 						<svg className="icon icon-remove">
-							{/* <a href="img/sprite.svg#icon-remove" /> */}
+							<svg className="icon icon-add">
+								<use href={`${sprite}#icon-remove`} />
+							</svg>
 						</svg>
 					</a>
 					<div className="login__title h3">Đăng nhập</div>

@@ -1,10 +1,12 @@
 import React from "react";
+import sprite from "../../assets/icons/sprite.svg";
+import LogoWhite from "../../Icons/LogoWhite";
 
 const FormLeft = () => {
 	return (
 		<div className="login__wrap">
-			<a className="login__logo" href="index.html">
-				<img className="login__pic" src="img/logo-white.svg" alt="" />
+			<a className="login__logo" href="/">
+				<LogoWhite />
 			</a>
 			<div className="login__info">A Video Gaming Platfrom UI Kit</div>
 			<div className="games">
@@ -53,7 +55,9 @@ const FormLeft = () => {
 			</div>
 			<a className="login__add" href="/#">
 				<svg className="icon icon-add-square">
-					<a href="img/sprite.svg#icon-add-square" />
+					<svg className="icon icon-add">
+						<use href={`${sprite}#icon-add-square`} />
+					</svg>
 				</svg>
 				Discover more
 			</a>

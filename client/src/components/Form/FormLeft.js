@@ -22,7 +22,7 @@ const FormLeft = () => {
 						<div className="status orange">2.8K viewers</div>
 					</div>
 				</a>
-				<a className="games__item" href="#">
+				<a className="games__item" href="#/">
 					<div className="games__preview">
 						<img
 							className="games__pic"
@@ -36,7 +36,7 @@ const FormLeft = () => {
 						<div className="status orange">2.8K viewers</div>
 					</div>
 				</a>
-				<a className="games__item" href="#">
+				<a className="games__item" href="#/">
 					<div className="games__preview">
 						<img
 							className="games__pic"

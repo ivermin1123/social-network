@@ -11,7 +11,6 @@ import NewsFeed from "./NewsFeed";
 // Component's Navbar
 import DropdownMenu from "./Navbar/DropdownMenu";
 import NavItem from "./Navbar/NavItem";
-import Navbar from "./Navbar/Navbar";
 import SearchBox from "./Navbar/SearchBox";
 
 // Component AccountPage
@@ -38,7 +37,6 @@ export {
 	FormField,
 	// Navbar
 	NavItem,
-	Navbar,
 	SearchBox,
 	DropdownMenu,
 	// AccountPage

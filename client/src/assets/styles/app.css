@@ -1,3 +1,4 @@
+/* prettier-ignore */
 @charset "UTF-8";
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5,
 h6, p, blockquote, pre, a, abbr, acronym, address, big,
@@ -33,6 +34,7 @@ input[type="submit"],
 button {
   cursor: pointer;
   background: none;
+  outline: none;
 }
 
 input[type="submit"]::-moz-focus-inner,
@@ -1619,6 +1621,7 @@ body.dark .page__input::placeholder {
   width: 32px;
   height: 32px;
   font-size: 0;
+  outline: none !important;
 }
 
 .sidebar__burger:before, .sidebar__burger:after {

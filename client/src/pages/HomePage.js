@@ -1,33 +1,38 @@
-import { Row, Col } from "react-bootstrap";
-import React from "react";
-import { NewsFeed } from "../components/_components";
-import PostForm from "../components/Post/PostForm";
-import ChatBar from "../components/ChatBar";
-import ChatBox from "../components/ChatBar/ChatBox";
-import "../assets/styles/_postForm.scss";
+import React, { useState } from "react";
+import Logo from "../Icons/Logo1";
+import LogoWhite from "../Icons/LogoWhite";
+import Sprite from "../Icons/Sprite";
+import Wrapper from "../components/HomePage/Wrapper";
 
 function HomePage() {
-	const [open, setOpen] = React.useState(false);
-	const [current, setCurrent] = React.useState({});
-	const openChat = (user) => {
-		setOpen(true);
-		setCurrent(user);
-	};
-	const closeChat = () => {
-		setOpen(false);
+	const [open, setOpen] = useState(false);
+	const handleOpen = () => {
+		if (open) {
+			setOpen(false);
+		} else {
+			setOpen(true);
+		}
 	};
 	return (
-		<Row className="Home">
-			<Col>{/* <SideBar /> */}</Col>
-			<Col>
-				<PostForm />
-				<NewsFeed />
-			</Col>
-			<Col>
-				<ChatBar openChat={openChat} />
-				<ChatBox open={open} current={current} closeChat={closeChat} />
-			</Col>
-		</Row>
+		<div className={`page${open ? " toggle" : ""}`}>
+			<div className={`sidebar${open ? " active" : ""}`}>
+				<div className="sidebar__top">
+					<a className="sidebar__logo" href="/">
+						<Logo className="sidebar__pic sidebar__pic_black" />
+						<LogoWhite className="sidebar__pic sidebar__pic_white" />
+					</a>
+					<button
+						type="button"
+						className="sidebar__burger"
+						onClick={handleOpen}
+					/>
+					<button type="button" className="sidebar__close">
+						<Sprite className="icon icon-close" />
+					</button>
+				</div>
+				<Wrapper />
+			</div>
+		</div>
 	);
 }
 

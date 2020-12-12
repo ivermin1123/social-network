@@ -1,6 +1,6 @@
 import React, { useEffect, Suspense, lazy } from "react";
 import { Router, Route, Switch } from "react-router-dom";
-import { useDispatch, useSelector, connect } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import { clearAlert } from "./actions/alert.actions";
 import history from "./helpers/history";
 import PrivateRoute from "./components";
@@ -10,12 +10,9 @@ const AccountPage = lazy(() => import("./pages/AccountPage"));
 const Login = lazy(() => import("./pages/Login"));
 const Register = lazy(() => import("./pages/Register"));
 const MessagePage = lazy(() => import("./pages/MessagePage"));
-const ChangePassword = lazy(() => import("./pages/ChangePassword"));
-const Navbar = lazy(() => import("./components/Navbar/Navbar"));
 
 function App() {
 	const dispatch = useDispatch();
-	const { isLoggedIn } = useSelector((state) => state.authentication);
 
 	useEffect(() => {
 		history.listen(() => {
@@ -28,7 +25,6 @@ function App() {
 		<>
 			<Router history={history}>
 				<Suspense fallback={<div>Loading...</div>}>
-					{isLoggedIn ? <Navbar /> : null}
 					<Switch>
 						<PrivateRoute exact path="/" component={HomePage} />
 						<PrivateRoute

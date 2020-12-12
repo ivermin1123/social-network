@@ -24,6 +24,9 @@ import Wall from "./AccountComponent/Wall";
 // Commponent Form
 import FormField from "./FormField";
 
+	//new 11/12
+import FormLeft from "./Form/FormLeft";
+
 export {
 	// Component's HomePage
 	CommentButton,
@@ -44,4 +47,6 @@ export {
 	Cover,
 	Images,
 	Wall,
+	//new 11/12
+	FormLeft,
 };

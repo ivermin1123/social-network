@@ -7,6 +7,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import multer from "multer";
 import "../../models/User";
+import "../../models/File";
 
 import {
   notificationHandler,
@@ -15,6 +16,7 @@ import {
 } from "../../utils/main-utils";
 
 const User = mongoose.model("User");
+const File = mongoose.model("File");
 // const Post = mongoose.model("Post");
 // const Notification = mongoose.model("Notification");
 // const ChatRoom = mongoose.model("ChatRoom");
@@ -22,19 +24,20 @@ const User = mongoose.model("User");
 
 export async function updateUserImage(req, res) {
   try {
-    const { userId } = req.data;
+    const { userId } = req.userData;
     const { files } = req.body;
 
     const infoUser = await User.findById(userId).catch((error) => {
+      console.log(error.message);
       res.status(500).json({ error: true, message: error.message });
     });
 
+    let listFiles = [];
     if (files) {
       if (!Array.isArray(files)) {
         files = Array.from(files);
       }
       const promises = [];
-      let listFiles = [];
       files.forEach((file) => {
         const { type, url, name, size, path } = file;
         const newFile = new File({
@@ -49,6 +52,7 @@ export async function updateUserImage(req, res) {
       });
 
       await Promise.all(promises).catch((error) => {
+        console.log(error.message);
         res.status(500).json({ error: true, message: error.message });
         return;
       });
@@ -63,9 +67,11 @@ export async function updateUserImage(req, res) {
         res.status(200).json({ error: false, data: user });
       })
       .catch((error) => {
+        console.log(error.message);
         res.status(500).json({ error: true, message: error.message });
       });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ error: true, message: error.message });
   }
   User.findOneAndUpdate(req.userData.userId)
@@ -320,6 +326,7 @@ export const getUser = async (req, res) => {
     const { userId: userIdGet } = req.body;
     const userIdToGet = userIdGet ? userIdGet : userId;
     const infoUser = await User.findById(userIdToGet)
+      .populate("avatar")
       .populate("posts")
       .populate({
         path: "friends",

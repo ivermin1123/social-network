@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
@@ -17,19 +17,18 @@ const configToast = {
 	draggable: true,
 	progress: undefined,
 };
+const LINK_S3 = "https://socialawsbucket.s3-ap-southeast-1.amazonaws.com/";
 const Cover = (props) => {
-	const { user } = props;
 	const [sumFriend, setSumFriend] = useState(0);
 	const [value, setValue] = useState("");
 	const [status, setStatus] = useState(false);
 	const [state, setState] = useState();
 	const [popoverAvt, setPopoverAvt] = useState(false);
+	const { infoUser } = useSelector((state) => state.users);
 
-	const { firstName, lastName, avatar } = user;
+	const { firstName, lastName, avatar } = infoUser.data;
 	const name = `${firstName} ${lastName}`;
-	const avatarSrc =
-		avatar ||
-		`https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8`;
+	const avatarSrc = `${LINK_S3}${avatar.path}`;
 
 	const [show, setShow] = useState(false);
 	const [file, setFile] = useState(null);
@@ -68,7 +67,7 @@ const Cover = (props) => {
 	const handleSave = (e) => {
 		e.preventDefault();
 		try {
-			const data = { path: "post" };
+			const data = { path: "user" };
 			const dataSaveServer = {
 				url: "USER_IMAGE",
 				method: "POST",

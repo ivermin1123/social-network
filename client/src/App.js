@@ -7,8 +7,8 @@ import PrivateRoute from "./components";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AccountPage = lazy(() => import("./pages/AccountPage"));
-const LoginPage = lazy(() => import("./pages/LoginPage"));
-const RegisterPage = lazy(() => import("./pages/RegisterPage"));
+const Login = lazy(() => import("./pages/Login"));
+const Register = lazy(() => import("./pages/Register"));
 const MessagePage = lazy(() => import("./pages/MessagePage"));
 const ChangePassword = lazy(() => import("./pages/ChangePassword"));
 const Navbar = lazy(() => import("./components/Navbar/Navbar"));
@@ -46,8 +46,8 @@ function App() {
 							path="/changepassword"
 							component={ChangePassword}
 						/>
-						<Route path="/login" component={LoginPage} />
-						<Route path="/register" component={RegisterPage} />
+						<Route path="/login" component={Login} />
+						<Route path="/register" component={Register} />
 					</Switch>
 				</Suspense>
 			</Router>

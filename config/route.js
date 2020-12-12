@@ -15,6 +15,10 @@ function AppRouter(app) {
     res.sendFile(path.resolve(__dirname, "public", "NotFound.html"));
   });
 
+  app.get("/", (req, res) => {
+    res.redirect("http://localhost:3000");
+  });
+
   app.use("/api/user/", usersRouter);
   app.use("/api/post/", postsRouter);
   app.use("/api/reaction/", reactionsRouter);

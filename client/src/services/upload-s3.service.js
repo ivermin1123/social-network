@@ -295,7 +295,7 @@ function UploadFileS3(files, data, dataSaveServer) {
 									urlCall = null;
 									break;
 							}
-
+							console.log({ dataSaveServer, urlCall });
 							if (urlCall) {
 								await axios({
 									url: urlCall,

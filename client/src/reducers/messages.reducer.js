@@ -31,7 +31,7 @@ export default function message(state = initialState, action) {
 			return {
 				...state,
 				messages: {
-					data: [...state.messages.data, payload.data],
+					data: [payload.data, ...state.messages.data],
 				},
 			};
 		case messageConstants.SEND_MESSAGE_FAILURE:

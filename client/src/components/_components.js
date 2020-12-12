@@ -24,7 +24,7 @@ import Wall from "./AccountComponent/Wall";
 // Commponent Form
 import FormField from "./FormField";
 
-	//new 11/12
+// new 11/12
 import FormLeft from "./Form/FormLeft";
 
 export {
@@ -47,6 +47,6 @@ export {
 	Cover,
 	Images,
 	Wall,
-	//new 11/12
+	// new 11/12
 	FormLeft,
 };

@@ -1,19 +1,7 @@
 import mongoose from "mongoose";
-import path from "path";
-import fs from "fs";
-import Jimp from "jimp";
-import { v4 as uuidv4 } from "uuid";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import multer from "multer";
+
 import "../../models/User";
 import "../../models/File";
-
-import {
-  notificationHandler,
-  emailHandler,
-  messageHandler,
-} from "../../utils/main-utils";
 
 const User = mongoose.model("User");
 const File = mongoose.model("File");

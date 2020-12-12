@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { ToastContainer } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
-
 import { Tabs, Theme } from "../../constants/index";
+import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
+import userAction from "../../actions/user.actions";
 import "react-toastify/dist/ReactToastify.css";
 
+const configToast = {
+	position: "top-right",
+	autoClose: 1000,
+	hideProgressBar: false,
+	closeOnClick: true,
+	pauseOnHover: true,
+	draggable: true,
+	progress: undefined,
+};
 const Cover = (props) => {
 	const { user } = props;
 	const [sumFriend, setSumFriend] = useState(0);
@@ -22,7 +33,8 @@ const Cover = (props) => {
 
 	const [show, setShow] = useState(false);
 	const [file, setFile] = useState(null);
-	const [description, setDescription] = useState(null);
+	const [description, setDescription] = useState("");
+	const dispatch = useDispatch();
 
 	const handleAddProfile = () => {
 		setStatus(!status);
@@ -36,19 +48,49 @@ const Cover = (props) => {
 
 	const handleReset = () => {
 		setFile(null);
-		setDescription(null);
+		setDescription("");
 	};
 
 	const handleFile = (e) => {
-		if (e.target.files && e.target.files[0]) {
-			const img = e.target.files[0];
-			setFile(URL.createObjectURL(img));
+		const img = e.target.files[0];
+		if (img && img.size >= MAX_POST_IMAGE_SIZE) {
+			toast(
+				`🦄 File size should be less then ${
+					MAX_POST_IMAGE_SIZE / 1000000
+				}MB`,
+				configToast
+			);
+		}
+		if (img && img) {
+			setFile(img);
 		}
 	};
-	const handleSave = () => {
-		setShow(false)
-	}
-
+	const handleSave = (e) => {
+		e.preventDefault();
+		try {
+			const data = { path: "post" };
+			const dataSaveServer = {
+				url: "POST",
+				method: "POST",
+				data: { description },
+			};
+			// Redux call
+			dispatch(userAction.updateUserImage(file, data, dataSaveServer))
+				.then((data) => {
+					toast(`🦄 Upload Image Success`);
+					console.log(data);
+					handleReset();
+					setShow(false);
+				})
+				.catch((err) => {
+					toast(`🦄 Upload Image Fail`);
+					handleReset();
+					console.log(err);
+				});
+		} catch (error) {
+			console.log(error);
+		}
+	};
 	return (
 		<>
 			<ToastContainer
@@ -200,6 +242,7 @@ const Cover = (props) => {
 							{Tabs.map((item, index) => {
 								return (
 									<button
+										key={index.toString()}
 										type="button"
 										className={`menu-left-item ${
 											state === index ? "active" : ""
@@ -306,11 +349,12 @@ const Cover = (props) => {
 								/>
 								<div className="image-area">
 									<img
+										key={file}
 										className="image-show"
 										style={{
 											width: "50%",
 										}}
-										src={file}
+										src={URL.createObjectURL(file)}
 										alt="avatar"
 									/>
 								</div>
@@ -335,7 +379,7 @@ const Cover = (props) => {
 								<button
 									type="button"
 									className="save"
-									onClick={() => handleSave()}
+									onClick={handleSave}
 								>
 									Lưu
 								</button>

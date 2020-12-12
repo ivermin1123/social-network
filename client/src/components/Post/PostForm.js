@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Theme } from "../../constants/index";
 import postActions from "../../actions/post.actions";
 import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
 import "react-toastify/dist/ReactToastify.css";
@@ -18,37 +20,38 @@ const configToast = {
 
 const PostForm = ({ ...props }) => {
 	const [show, setShow] = useState(false);
-	const [files, setFiles] = useState(null);
+	const [files, setFiles] = useState([]);
 	const [description, setDescription] = useState("");
 	const dispatch = useDispatch();
 
 	const handleReset = () => {
 		setDescription("");
-		setFiles(null);
+		setFiles([]);
 	};
 
 	const handleFile = (e) => {
-		const { files } = e.target;
-
-		const error = [];
-		if (files && files.length) {
-			const arrFile = Array.from(files);
-			arrFile.forEach((file) => {
-				if (file.size >= MAX_POST_IMAGE_SIZE) {
-					error.push({
-						message: `🦄 File size should be less then ${
+		let list = [];
+		list = [...files];
+		const listFile = e.target.files;
+		if (listFile && listFile.length) {
+			let i = listFile.length;
+			while (i >= 0) {
+				const img = listFile[i];
+				if (img && img.size >= MAX_POST_IMAGE_SIZE) {
+					toast(
+						`🦄 File size should be less then ${
 							MAX_POST_IMAGE_SIZE / 1000000
 						}MB`,
-					});
+						configToast
+					);
 				}
-			});
-			if (error.length) {
-				toast(error[0].message, configToast);
+				if (img && img.size < MAX_POST_IMAGE_SIZE) {
+					list.push(img);
+				}
+				i--;
 			}
-			setFiles(arrFile);
 		}
-
-		// e.target.value = null;
+		setFiles(list);
 	};
 
 	const handleClick = (e) => {
@@ -126,7 +129,10 @@ const PostForm = ({ ...props }) => {
 				centered
 				animation={false}
 				show={show}
-				onHide={() => setShow(false)}
+				onHide={() => {
+					handleReset();
+					setShow(false);
+				}}
 			>
 				<Modal.Header bsPrefix="post-form-modal__header" closeButton>
 					<Modal.Title bsPrefix="post-form-modal__header-title">
@@ -134,40 +140,75 @@ const PostForm = ({ ...props }) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body bsPrefix="post-form-modal__body">
-					<img
-						src="https://i.pinimg.com/736x/d3/63/54/d363546caad6e492a4921549f174ae5d.jpg"
-						alt=""
-						className="post-form-modal__body--avt"
-					/>
-					<span className="post-form-modal__body--author">
-						Tu Nguyen
-					</span>
-					<br />
-					<textarea
-						value={description}
-						type="text"
-						className="post-form-modal__body--content"
-						placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
-						onChange={(e) => setDescription(e.target.value)}
-					/>
-					<div className="post-form-modal__footer">
-						<input
-							id="post-image"
-							type="file"
-							name="file"
-							onChange={(e) => handleFile(e)}
+					<div className="post-form-modal__body-account">
+						<img
+							src="https://i.pinimg.com/736x/d3/63/54/d363546caad6e492a4921549f174ae5d.jpg"
+							alt=""
+							className="post-form-modal__body-account-avt"
 						/>
+						<span className="post-form-modal__body-account-author">
+							Tu Nguyen
+						</span>
 					</div>
-					{/* <img
-						src={files ? URL.createObjectURL(files) : ""}
-						alt=""
-						className="post-form-top__avt"
-					/> */}
+					<div className="post-form-modal__body-content">
+						<textarea
+							value={description}
+							type="text"
+							placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
+							onChange={(e) => setDescription(e.target.value)}
+						/>
+						{files && files.length > 0 ? (
+							<div className="image-area">
+								<button
+									type="button"
+									onClick={() => setFiles([])}
+								>
+									x
+								</button>
+								{files.map((item) => {
+									console.log(item);
+									return (
+										<img
+											key={item}
+											style={{
+												width: "50%",
+											}}
+											src={URL.createObjectURL(item)}
+											alt="avatar"
+										/>
+									);
+								})}
+							</div>
+						) : null}
+					</div>
+					<div className="post-form-modal__footer row">
+						<div className="post-form-modal__footer-left col">
+							Thêm ảnh vào bài viết
+						</div>
+						<div className="post-form-modal__footer-right col">
+							<label
+								className="custom-file-upload"
+								htmlFor="file-upload"
+							>
+								<input
+									id="file-upload"
+									onChange={(e) => handleFile(e)}
+									type="file"
+									name="file"
+									multiple
+								/>
+								<FontAwesomeIcon
+									className="icon"
+									icon={Theme.ICONS.images}
+								/>
+							</label>
+						</div>
+					</div>
 				</Modal.Body>
 				<Modal.Footer bsPrefix="post-form-modal__post-footer">
 					<button
 						style={
-							description.length
+							description.length || files.length
 								? {
 										backgroundColor: "#1877F2",
 										color: "white",

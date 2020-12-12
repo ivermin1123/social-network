@@ -23,7 +23,20 @@ function users(
 			return {
 				error: action.error,
 			};
-		case userConstants.GET_USER_REQUEST:
+		case userConstants.UPDATE_IMAGE_REQUEST:
+			return {
+				updatingUser: true,
+			};
+		case userConstants.UPDATE_IMAGE_SUCCESS:
+			return {
+				items: action.users,
+			};
+		case userConstants.UPDATE_IMAGE_FAILURE:
+			return {
+				error: action.error,
+			};
+		case userConstants.DELETE_REQUEST:
+			// add 'deleting:true' property to user being deleted
 			return {
 				loadingUser: true,
 			};

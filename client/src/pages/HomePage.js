@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import logo from "../assets/icons/logo_1.svg";
 import logoWhite from "../assets/icons/logo-white.svg";
-import Wrapper from "../components/HomePage/Wrapper";
-import BottomControl from "../components/HomePage/BottomControl";
+import Wrapper from "../components/SideBar/Wrapper";
+import BottomControl from "../components/SideBar/BottomControl";
+import Header from "../components/MainContent/Header";
 import sprite from "../assets/icons/sprite.svg";
 
 function HomePage() {
@@ -39,6 +40,9 @@ function HomePage() {
 				</div>
 				<Wrapper />
 				<BottomControl />
+			</div>
+			<div className="page__wrapper">
+				<Header />
 			</div>
 		</div>
 	);

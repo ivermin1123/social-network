@@ -1710,7 +1710,7 @@ body.dark .page__input::placeholder {
 }
 
 .sidebar__logo .sidebar__pic {
-	width: 133px;
+	width: 107px;
 }
 
 .sidebar__logo .sidebar__pic_white {
@@ -2892,6 +2892,7 @@ body.dark .checkbox__input:checked + .checkbox__in .checkbox__text {
 }
 
 .header__line:hover {
+	color: #d9e8ff !important;
 	opacity: 0.8;
 }
 
@@ -3050,6 +3051,7 @@ body.dark .checkbox__input:checked + .checkbox__in .checkbox__text {
 	-webkit-transition: all 0.25s;
 	-o-transition: all 0.25s;
 	transition: all 0.25s;
+	outline: none !important;
 }
 
 .header__item_add .header__head .icon {
@@ -3076,6 +3078,7 @@ body.dark .checkbox__input:checked + .checkbox__in .checkbox__text {
 	-webkit-transition: all 0.25s;
 	-o-transition: all 0.25s;
 	transition: all 0.25s;
+	outline: none !important;
 }
 
 .header__item_notifications .header__head .icon {

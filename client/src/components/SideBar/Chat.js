@@ -4,7 +4,7 @@ import ChatItem from "./ChatItem";
 function Chat() {
 	return (
 		<div className="sidebar__group">
-			<div className="sidebar__caption caption-sm">Following</div>
+			<div className="sidebar__caption caption-sm">Người liên hệ</div>
 			<div className="sidebar__list">
 				<ChatItem name="Quốc Hoàng" online />
 				<ChatItem name="Anh Tú" />

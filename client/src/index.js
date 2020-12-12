@@ -5,7 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import store from "./helpers/store";
 import App from "./App";
-import "./assets/styles/app.scss";
+import "./assets/styles/app.css";
 import "./assets/styles/index.scss";
 import "antd/dist/antd.css";
 

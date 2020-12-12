@@ -14,7 +14,10 @@ const Images = ({ ...props }) => {
 				{acc.listImage
 					? acc.listImage.map((item) => {
 							return (
-								<div className="item__margin-bottom grid-item">
+								<div
+									key={item}
+									className="item__margin-bottom grid-item"
+								>
 									<div className="item__margin-right">
 										<a href="/#" className="">
 											<img

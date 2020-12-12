@@ -70,7 +70,7 @@ const Cover = (props) => {
 		try {
 			const data = { path: "post" };
 			const dataSaveServer = {
-				url: "POST",
+				url: "USER_IMAGE",
 				method: "POST",
 				data: { description },
 			};

@@ -10,6 +10,7 @@ const AccountPage = lazy(() => import("./pages/AccountPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const MessagePage = lazy(() => import("./pages/MessagePage"));
+const ChangePassword = lazy(() => import("./pages/ChangePassword"));
 const Navbar = lazy(() => import("./components/Navbar/Navbar"));
 
 function App() {
@@ -39,6 +40,11 @@ function App() {
 							exact
 							path="/message/:conversationId"
 							component={MessagePage}
+						/>
+						<PrivateRoute
+							exact
+							path="/changepassword"
+							component={ChangePassword}
 						/>
 						<Route path="/login" component={LoginPage} />
 						<Route path="/register" component={RegisterPage} />

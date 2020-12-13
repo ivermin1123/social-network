@@ -156,7 +156,10 @@ const Post = (props) => {
 						</LikeButton>
 
 						<div className="post-body__interact-option comments">
-							<button type="button" onClick={() => setShowComment(true)}>
+							<button
+								type="button"
+								onClick={() => setShowComment(true)}
+							>
 								<FontAwesomeIcon
 									className="icon"
 									icon={Theme.ICONS.commentAlt}
@@ -166,7 +169,7 @@ const Post = (props) => {
 						</div>
 						{/* <CommentButton/> */}
 					</div>
-					<ListComment show={showComment} />
+					<ListComment showComment={showComment} />
 				</div>
 			</div>
 			<Modal

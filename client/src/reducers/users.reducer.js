@@ -7,6 +7,7 @@ function users(
 		deleting: false,
 		hasError: false,
 		infoUser: null,
+		lastConversation: null,
 	},
 	action
 ) {
@@ -43,7 +44,8 @@ function users(
 		case userConstants.GET_USER_SUCCESS:
 			return {
 				...state,
-				infoUser: action.payload.data,
+				infoUser: action.payload.data.data.infoUser,
+				lastConversation: action.payload.data.data.lastConversation,
 				loadingUser: false,
 			};
 		case userConstants.GET_USER_FAILURE:

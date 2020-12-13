@@ -1,9 +1,8 @@
 import React from "react";
 
-const ListComment = ({ ...props }) => {
-	const { show } = props;
+const ListComment = () => {
 	return (
-		<div show={show} className="comment-area">
+		<div className="comment-area">
 			<div className="comment-list">
 				<div className="comment-list-left">
 					<div>

@@ -3,13 +3,11 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import "../../models/User";
 import "../../models/File";
+import "../../models/Conversation";
 
 const User = mongoose.model("User");
 const File = mongoose.model("File");
-// const Post = mongoose.model("Post");
-// const Notification = mongoose.model("Notification");
-// const ChatRoom = mongoose.model("ChatRoom");
-// const Message = mongoose.model("Message");
+const Conversation = mongoose.model("Conversation");
 
 export async function updateUserImage(req, res) {
   try {
@@ -322,13 +320,20 @@ export const getUser = async (req, res) => {
         select: "_id firstName lastName username gender avatar",
       })
       .select(
-        "_id firstName lastName createdAt username gender birthday phone email avatar coverImage"
+        "_id firstName lastName createdAt username gender birthday phone email avatar coverImage conversations"
       );
 
     if (!infoUser) res.status(500).json({ error: true, message: "cannot_get" });
     if (infoUser.deactivated)
       res.status(500).json({ error: true, message: "user_deactivated" });
-    res.status(200).json({ error: false, data: infoUser });
+    const lastConversation = await Conversation.find({
+      _id: { $in: infoUser.conversations },
+    })
+      .sort({ updatedAt: -1 })
+      .limit(1);
+    res
+      .status(200)
+      .json({ error: false, data: { infoUser, lastConversation } });
   } catch (error) {
     res.status(500).json({ error: true, message: error.message });
   }

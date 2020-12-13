@@ -1,11 +1,12 @@
 import React from "react";
 
 import NewsFeed from "../components/NewsFeed";
+import UserItem from "../components/MainContent/UserItem";
 import sprite from "../assets/icons/sprite.svg";
 
 function HomePage() {
 	return (
-		<>
+		<div className="page__center">
 			<div className="users">
 				<div className="users__container">
 					<div className="users__info h6">
@@ -20,19 +21,10 @@ function HomePage() {
 							</div>
 							<div className="users__title">Add Yours</div>
 						</a>
-						<a className="users__item" href="#/">
-							<div className="ava ava_online">
-								<img
-									className="ava__pic"
-									src="img/ava-1.png"
-									alt=""
-								/>
-							</div>
-							<div className="users__title">
-								Gabriel Erickson{" "}
-							</div>
-							<div className="users__time">14m ago</div>
-						</a>
+						<UserItem name="Thảo Như" />
+						<UserItem name="Thúy Vân" />
+						<UserItem name="Như Ngọc" />
+						<UserItem name="Yến Nhi" />
 					</div>
 				</div>
 			</div>
@@ -53,7 +45,7 @@ function HomePage() {
 					<NewsFeed />
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 
 import HeaderItem from "./HeaderItem";
 import NotificationItem from "./NotificationItem";
@@ -8,15 +8,17 @@ import ProfileItem from "./ProfileItem";
 import sprite from "../../assets/icons/sprite.svg";
 import avatar2 from "../../assets/image/avatarDefault.png";
 import userActions from "../../actions/user.actions";
+import LINK_CONSTANTS from "../../constants/link.constants";
 
 function Header(props) {
+	const dispatch = useDispatch();
 	const [isActive1, setActive1] = useState(false);
 	const [isActive2, setActive2] = useState(false);
 	const [isActive3, setActive3] = useState(false);
 	const [isActive4, setActive4] = useState(false);
 
-	const { avatar } = props;
-	const dispatch = useDispatch();
+	const { infoUser } = props;
+	const { avatar } = infoUser;
 
 	const handleLogout = (e) => {
 		e.preventDefault();
@@ -146,7 +148,11 @@ function Header(props) {
 					<a className="header__head" href="#/">
 						<img
 							className="header__pic"
-							src={avatar || avatar2}
+							src={
+								avatar
+									? `${LINK_CONSTANTS.LINK_S3}${avatar.path}`
+									: avatar2
+							}
 							alt=""
 						/>
 					</a>
@@ -167,4 +173,8 @@ function Header(props) {
 	);
 }
 
-export default Header;
+const mapStateToProps = (state) => ({
+	infoUser: state.users.infoUser,
+});
+
+export default connect(mapStateToProps)(Header);

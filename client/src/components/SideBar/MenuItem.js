@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import sprite from "../../assets/icons/sprite.svg";
 
 function MenuItem(props) {
 	const { icon, name, hasAdd, handleActive, info, href } = props;
 
 	return (
-		<a
+		<Link
 			className={`sidebar__item${info.active ? " active" : ""}`}
-			href={href || "#/"}
+			to={href || "#/"}
 			onClick={() => handleActive(info.id)}
 		>
 			<div className="sidebar__icon">
@@ -25,7 +26,7 @@ function MenuItem(props) {
 					</svg>
 				</div>
 			) : null}
-		</a>
+		</Link>
 	);
 }
 

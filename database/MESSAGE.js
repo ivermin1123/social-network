@@ -120,6 +120,7 @@ const getMessages = async ({ conversationId, currentPage }) => {
         .populate({
           path: "sender",
           select: "_id firstName lastName username isOnline avatar",
+          populate: [{ path: "avatar" }],
         })
         .populate({
           path: "receivers",

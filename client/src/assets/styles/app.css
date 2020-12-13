@@ -3166,11 +3166,12 @@ body.dark .checkbox__input:checked + .checkbox__in .checkbox__text {
 
 .header__item_profile .header__pic {
 	width: 48px;
-    min-height: 48px;
-    max-height: 48px;
-    overflow: hidden;
-    border-radius: 50%;
-    height: 48px;
+	min-width: 48px;
+	min-height: 48px;
+	max-height: 48px;
+	overflow: hidden;
+	border-radius: 50%;
+	height: 48px;
 }
 
 .header__item_profile .header__body {
@@ -7990,7 +7991,7 @@ body.dark .widget .slick-arrow:hover {
 }
 
 .chat__body {
-	display: none;
+	/* display: none; */
 	padding-top: 12px;
 }
 
@@ -8136,19 +8137,38 @@ body.dark .widget .slick-arrow:hover {
 
 .chat__container {
 	max-height: 100%;
-	padding: 32px 64px;
+	padding: 5px 15px;
 	overflow: auto;
+	display: flex;
+	flex: 3;
+	flex-direction: column;
+	min-width: 0;
 	-webkit-overflow-scrolling: touch;
 }
 
 .chat__top {
-	display: -webkit-box;
-	display: -ms-flexbox;
 	display: flex;
 	-webkit-box-align: center;
-	-ms-flex-align: center;
+	margin: 5px 10px 15px 10px;
 	align-items: center;
-	margin-bottom: 32px;
+	border-bottom: none;
+	box-shadow: 0px 1px 0px 0 rgba(0, 0, 0, 0.1);
+	height: 60px;
+	justify-content: space-between;
+}
+
+.messages {
+	flex: 2 0 0%;
+	overflow: hidden;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+}
+
+.messages__list {
+	height: calc(100vh - 255px);
+	position: relative;
+	overflow: auto;
 }
 
 .chat__actions {
@@ -8240,7 +8260,7 @@ body.dark .chat__action:hover .icon {
 }
 
 .messages__list:not(:last-child) {
-	margin-bottom: 32px;
+	margin-bottom: 10px;
 }
 
 .messages__item {
@@ -8412,7 +8432,7 @@ body.dark .messages__text:hover {
 
 .editor__wrap {
 	background: rgba(228, 228, 228, 0.25);
-	border-radius: 12px;
+	border-radius: 22px;
 }
 
 .editor__head {
@@ -8516,16 +8536,19 @@ body.dark .messages__text:hover {
 }
 
 .editor__body {
-	padding: 16px;
+	padding: 10px;
 }
 
 .editor__textarea {
 	width: 100%;
-	height: 110px;
+	height: auto;
 	border: none;
 	background: none;
 	resize: none;
 	font-size: 14px;
+	outline: none;
+	margin: 0;
+	padding-left: 10px;
 }
 
 .editor__btn {

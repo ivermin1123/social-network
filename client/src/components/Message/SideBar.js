@@ -1,48 +1,63 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, connect } from "react-redux";
-import conversationActions from "../../actions/conversation.actions";
-import Conversation from "./Conversation/Conversation";
+import SlideToggle from "react-slide-toggle";
 
-function SideBar(props) {
+import conversationActions from "../../actions/conversation.actions";
+import ConversationItem from "./ConversationItem";
+
+function SideBar() {
 	const [searchCon, setSearchCon] = useState("");
+	const [isActive, setActive] = useState(true);
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(conversationActions.getListConversations());
 	}, []);
 
-	const { conversations } = props;
+	// const { conversations } = props;
+
+	const handleActive = () => {
+		setActive(!isActive);
+	};
 	return (
-		<div className="col-left">
-			<div className="col-content">
-				<div className="messages">
-					<li>
-						<h1>Chat</h1>
-					</li>
-					<li>
-						<label className="search-label" htmlFor="search">
-							<input
-								name="search"
-								autoComplete="off"
-								className="search-conversations"
-								placeholder="Tìm kiếm trên Messenger"
-								spellCheck="false"
-								type="text"
-								aria-label="Tìm kiếm trên Messenger"
-								onChange={(e) => setSearchCon(e.target.value)}
-								value={searchCon}
-							/>
-						</label>
-					</li>
-					{conversations
-						? conversations.data.map((conversation) => (
-								<Conversation
-									conversation={conversation}
-									key={conversation._id}
+		<div className="chat__sidebar">
+			<SlideToggle>
+				{({ toggle, setCollapsibleElement }) => (
+					<div className={`chat__item${isActive ? " active" : ""}`}>
+						<div
+							className="chat__head"
+							onClick={() => {
+								toggle();
+								handleActive();
+							}}
+						>
+							Chat
+						</div>
+						<div
+							className="chat__body"
+							style={{ display: "block" }}
+							ref={setCollapsibleElement}
+						>
+							<label className="search-label" htmlFor="search">
+								<input
+									name="search"
+									autoComplete="off"
+									className="search-conversations"
+									placeholder="Tìm kiếm trên Messenger"
+									spellCheck="false"
+									type="text"
+									aria-label="Tìm kiếm trên Messenger"
+									onChange={(e) =>
+										setSearchCon(e.target.value)
+									}
+									value={searchCon}
 								/>
-						  ))
-						: null}
-				</div>
-			</div>
+							</label>
+							<ConversationItem />
+							<ConversationItem />
+						</div>
+					</div>
+				)}
+			</SlideToggle>
 		</div>
 	);
 }

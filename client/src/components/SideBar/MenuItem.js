@@ -2,12 +2,12 @@ import React from "react";
 import sprite from "../../assets/icons/sprite.svg";
 
 function MenuItem(props) {
-	const { icon, name, hasAdd, handleActive, info } = props;
+	const { icon, name, hasAdd, handleActive, info, href } = props;
 
 	return (
 		<a
 			className={`sidebar__item${info.active ? " active" : ""}`}
-			href="#/"
+			href={href || "#/"}
 			onClick={() => handleActive(info.id)}
 		>
 			<div className="sidebar__icon">

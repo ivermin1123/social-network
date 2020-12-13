@@ -47,18 +47,21 @@ function Menu() {
 					name="News Feed"
 					info={isActive[0]}
 					handleActive={handleActive}
+					href="/"
 				/>
 				<MenuItem
 					icon="icon-trending"
 					name="Trending"
 					info={isActive[1]}
 					handleActive={handleActive}
+					href="/login"
 				/>
 				<MenuItem
 					icon="icon-profile"
 					name="Following"
 					info={isActive[2]}
 					handleActive={handleActive}
+					href="/account"
 				/>
 				<MenuItem
 					icon="icon-camera"

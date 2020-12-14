@@ -3907,10 +3907,12 @@ body.dark .notifications__user {
 .main_channel .main__for .slick-prev {
 	right: 120px;
 	padding-right: 1px;
+	outline: none;
 }
 
 .main_channel .main__for .slick-next {
 	right: 64px;
+	outline: none;
 	padding-left: 2px;
 }
 

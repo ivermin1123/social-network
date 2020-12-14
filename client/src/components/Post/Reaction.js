@@ -40,14 +40,14 @@ const ReactionImage = styled.img`
 	height: 100%;
 `;
 
-const Reaction = ({ name, icon, callback, className }) => {
+const Reaction = ({ name, icon, handleLike, className }) => {
 	return (
 		<motion.div variants={list}>
 			<ReactionWrapper className={className}>
 				<ReactionImage
 					name={name}
 					src={icon}
-					onClick={() => callback(name)}
+					onClick={() => handleLike(name)}
 				/>
 			</ReactionWrapper>
 		</motion.div>

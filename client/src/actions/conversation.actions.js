@@ -105,7 +105,7 @@ const createConversation = (files, data, dataSaveServer) => (dispatch) => {
 const setConversationOpen = (conversationId) => (dispatch) => {
 	dispatch({
 		type: conversationConstants.SET_CONVERSATION_OPEN,
-		payload: { conversationOpen: conversationId },
+		payload: { id: conversationId },
 	});
 };
 

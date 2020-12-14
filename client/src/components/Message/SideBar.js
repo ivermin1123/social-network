@@ -5,7 +5,8 @@ import SlideToggle from "react-slide-toggle";
 import conversationActions from "../../actions/conversation.actions";
 import ConversationItem from "./ConversationItem";
 
-function SideBar() {
+function SideBar(props) {
+	const { conversations, loadingConversation } = props;
 	const [searchCon, setSearchCon] = useState("");
 	const [isActive, setActive] = useState(true);
 	const dispatch = useDispatch();
@@ -13,11 +14,12 @@ function SideBar() {
 		dispatch(conversationActions.getListConversations());
 	}, []);
 
-	// const { conversations } = props;
-
 	const handleActive = () => {
 		setActive(!isActive);
 	};
+	if (loadingConversation) {
+		return null;
+	}
 	return (
 		<div className="chat__sidebar">
 			<SlideToggle>
@@ -52,8 +54,13 @@ function SideBar() {
 									value={searchCon}
 								/>
 							</label>
-							<ConversationItem />
-							<ConversationItem />
+							{conversations &&
+								conversations.data.map((conversation) => (
+									<ConversationItem
+										item={conversation}
+										key={conversation._id}
+									/>
+								))}
 						</div>
 					</div>
 				)}

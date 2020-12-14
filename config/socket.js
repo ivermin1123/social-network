@@ -177,10 +177,10 @@ function ApplySocketIO(io) {
 
       socket.on(
         "CSS_SEND_MESSAGE",
-        async ({ message, conversationOpen, type, userId }, callback) => {
+        async ({ message, conversationId, type, userId }, callback) => {
           const user = getUser(socket.id);
           const infoMessage = await MESSAGE.sendMessage({
-            conversationId: conversationOpen,
+            conversationId,
             message,
             type,
             userId,

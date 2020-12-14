@@ -4,7 +4,11 @@ const reactionSchema = new Schema(
   {
     /**
      * 1: like
-     * 2: haha
+     * 2: love
+     * 3: haha
+     * 4: wow
+     * 5: sad
+     * 6: angry
      */
     type: Number,
     author: {

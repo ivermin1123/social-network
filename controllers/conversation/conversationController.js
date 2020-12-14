@@ -202,10 +202,12 @@ export const getConversations = async (req, res) => {
       .populate({
         path: "author",
         select: "_id firstName lastName username isOnline avatar",
+        populate: [{ path: "avatar" }],
       })
       .populate({
         path: "members",
         select: "_id firstName lastName username isOnline avatar",
+        populate: [{ path: "avatar" }],
       })
       .populate({
         path: "lastMessage",

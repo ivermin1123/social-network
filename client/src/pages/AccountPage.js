@@ -17,7 +17,7 @@ const AccountPage = () => {
 									Live
 								</div>
 								<div className="main__title h4">
-									Renegades vs Chiefs - ESL Pro League Season
+									Renegades vs Chiefs - ESL ProLeague Season
 									16
 								</div>
 								<div className="main__parameters">

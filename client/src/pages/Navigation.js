@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector, connect } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 import {
 	connect as connectSocket,
@@ -47,7 +48,7 @@ function Navigation(props) {
 		<div className={`page${open ? " toggle" : ""}`}>
 			<div className={`sidebar${open ? " active" : ""}`}>
 				<div className="sidebar__top">
-					<a className="sidebar__logo" href="/">
+					<Link className="sidebar__logo" to="/">
 						<img
 							src={logo}
 							className="sidebar__pic sidebar__pic_black"
@@ -58,7 +59,7 @@ function Navigation(props) {
 							className="sidebar__pic sidebar__pic_white"
 							alt=""
 						/>
-					</a>
+					</Link>
 					<button
 						type="button"
 						className="sidebar__burger"

@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from "uuid";
-import multer from "multer";
 import { checkObjectIDs } from "../../utils/db-check";
 
 import "../../models/Post";

@@ -9,7 +9,6 @@ const AccountPage = () => {
 	const catalogsNav = ["Videos", "About", "Stories", "Schedules"];
 	const [catalogTag, setCatalogTag] = useState(0);
 	const catalogsTag = ["All", "Stream Videos", "Videos"];
-	
 	return (
 		<div className="main main_channel js-main">
 			<SliderComponent />

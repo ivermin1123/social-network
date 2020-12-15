@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { DatePicker } from "antd";
+import { DatePicker, Select } from "antd";
 import "antd/dist/antd.css";
+import sprite from "../assets/icons/sprite.svg";
 import userActions from "../actions/user.actions";
 import { FormLeft } from "../components/_components";
+import bgSignIn from "../assets/image/bg-sign-in.png";
 
 const RegisterPage = (props) => {
 	const [user, setUser] = useState({
@@ -16,7 +18,7 @@ const RegisterPage = (props) => {
 		birthday: new Date(),
 		email: "",
 	});
-
+	const { Option } = Select;
 	const [submitted, setSubmitted] = useState(false);
 	const { isLoggedIn } = useSelector((state) => state.authentication);
 	const dispatch = useDispatch();
@@ -48,14 +50,18 @@ const RegisterPage = (props) => {
 	return (
 		<div
 			className="login"
-			style={{ backgroundImage: "img/bg-sign-in.png" }}
+			style={{
+				backgroundImage: `url(${bgSignIn})`,
+			}}
 		>
 			<div className="login__container">
 				<FormLeft />
 				<div className="login__form">
-					<a className="login__close" href="index.html">
+					<a className="login__close" href="/login">
 						<svg className="icon icon-arrow-left">
-							{/* <a href="img/sprite.svg#icon-arrow-left"></a> */}
+							<svg className="icon icon-arrow-left">
+								<use href={`${sprite}#icon-arrow-left`} />
+							</svg>
 						</svg>
 					</a>
 					<div className="login__title h3">Đăng ký</div>
@@ -118,16 +124,14 @@ const RegisterPage = (props) => {
 							<div className="field">
 								<div className="field__label">Giới tính</div>
 								<div className="field__wrap">
-									{/* option */}
-									<input
-										className="field__input"
-										type="text"
-										placeholder="đổi thành option"
-										submitted={submitted}
-										name="gender"
-										value={user.gender}
+									<Select
+										defaultValue="0"
 										onChange={handleChange}
-									/>
+										style={{ width: "100%" }}
+									>
+										<Option value="0">Nam</Option>
+										<Option value="1">Nữ</Option>
+									</Select>
 								</div>
 							</div>
 						</div>
@@ -136,7 +140,7 @@ const RegisterPage = (props) => {
 								<div className="field__label">Ngày sinh</div>
 								<div className="field__wrap">
 									<DatePicker
-										className="field__input"
+										style={{ width: "100%" }}
 										placeholder="Chọn ngày"
 										format="DD/MM/yyyy"
 										onChange={(date) => {

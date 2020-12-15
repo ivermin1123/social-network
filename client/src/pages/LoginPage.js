@@ -47,7 +47,12 @@ const LoginPage = (props) => {
 		return <Redirect to="/" />;
 	}
 	return (
-		<div className="login" style={{ backgroundImage: `url(${bgSignIn})` }}>
+		<div
+			className="login"
+			style={{
+				backgroundImage: `url(${bgSignIn})`,
+			}}
+		>
 			<div className="login__container">
 				<FormLeft />
 				<div className="login__form">

@@ -8638,12 +8638,14 @@ body.dark .editor__add:hover:after {
 	-webkit-transition: all 0.25s;
 	-o-transition: all 0.25s;
 	transition: all 0.25s;
+	outline: none;
 }
 
 .popup__tag:hover,
 .popup__tag.active {
 	background: #6c5dd3;
 	border-color: #6c5dd3;
+	outline: none;
 	color: #ffffff;
 }
 

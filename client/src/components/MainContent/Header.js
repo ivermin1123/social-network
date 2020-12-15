@@ -9,6 +9,7 @@ import sprite from "../../assets/icons/sprite.svg";
 import avatar2 from "../../assets/image/avatarDefault.png";
 import userActions from "../../actions/user.actions";
 import LINK_CONSTANTS from "../../constants/link.constants";
+import Setting from "./Setting";
 
 function Header(props) {
 	const dispatch = useDispatch();
@@ -16,6 +17,7 @@ function Header(props) {
 	const [isActive2, setActive2] = useState(false);
 	const [isActive3, setActive3] = useState(false);
 	const [isActive4, setActive4] = useState(false);
+	const [isModalShow, setIsModalShow] = useState(true);
 
 	const { infoUser } = props;
 	const { avatar } = infoUser;
@@ -157,18 +159,37 @@ function Header(props) {
 						/>
 					</a>
 					<div className="header__body">
-						<ProfileItem icon="icon-profile" name="Profile" href="/account" />
+						<ProfileItem
+							icon="icon-profile"
+							name="Profile"
+							href="/account"
+						/>
 						<ProfileItem icon="icon-document" name="My Playlist" />
 						<ProfileItem icon="icon-joystick" name="My Chanel" />
-						<ProfileItem icon="icon-settings" name="Setting" />
+						<ProfileItem
+							icon="icon-settings"
+							name="Cài đặt"
+							handleClick={() => {
+								setIsModalShow(true);
+							}}
+						/>
 						<ProfileItem
 							icon="icon-logout"
-							name="Logout"
+							name="Đăng xuất"
 							handleClick={handleLogout}
 						/>
 					</div>
 				</div>
 			</OutsideClick>
+			<Setting
+				visible={isModalShow}
+				handleOk={() => {
+					setIsModalShow(false);
+				}}
+				handleCancel={() => {
+					setIsModalShow(false);
+				}}
+			/>
 		</div>
 	);
 }

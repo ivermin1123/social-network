@@ -1377,7 +1377,8 @@ img {
 }
 
 .ava__pic {
-	width: 100%;
+	width: 40px;
+	height: 40px;
 	min-height: 100%;
 	border-radius: 50%;
 }
@@ -3909,9 +3910,8 @@ body.dark .notifications__user {
 	right: 120px;
 	padding-right: 1px;
 }
-.main_channel  .slick-arrow{
+.main_channel .slick-arrow {
 	outline: none;
-
 }
 .main_channel .main__for .slick-next {
 	right: 64px;
@@ -8554,9 +8554,9 @@ body.dark .messages__text:hover {
 	padding-left: 10px;
 }
 
-[contentEditable=true]:empty:not(:focus)::before{
-        content:attr(data-ph)
-    }
+[contentEditable="true"]:empty:not(:focus)::before {
+	content: attr(data-ph);
+}
 
 .editor__btn {
 	min-width: 195px;

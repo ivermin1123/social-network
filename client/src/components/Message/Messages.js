@@ -4,6 +4,7 @@ import moment from "moment";
 
 import ScrollToBottom from "react-scroll-to-bottom";
 import MessageItem from "./MessageItem";
+import MessageFooter from "./MessageFooter";
 import ButtonSVG from "../ButtonSVG";
 import messageActions from "../../actions/message.actions";
 import "react-perfect-scrollbar/dist/css/styles.css";
@@ -12,8 +13,9 @@ function checkTime(mess1, mess2) {
 	const time1m = moment(mess1.createdAt).unix();
 	const time2m = moment(mess2.createdAt).unix();
 
-	const date = new Date(Math.abs(time1m - time2m) * 1000);
-	const minutes = date.getMinutes();
+	const unixTime = Math.abs(time1m - time2m);
+	const minutes = Math.round(unixTime / 60);
+	console.log({ m1: mess1.content, m2: mess2.content, minutes });
 	if (minutes > 2 || mess1.sender._id !== mess2.sender._id) {
 		return false;
 	}
@@ -26,14 +28,14 @@ function dataToShow(arrToCalculator) {
 	for (let i = 0; i < arrToCalculator.length; i++) {
 		arr.push(arrToCalculator[i]);
 		if (i === arrToCalculator.length - 1) {
-			arrToShow.push(arr);
+			arrToShow.push(arr.reverse());
 		} else {
 			const result = checkTime(
 				arrToCalculator[i],
 				arrToCalculator[i + 1]
 			);
 			if (!result) {
-				arrToShow.push(arr);
+				arrToShow.push(arr.reverse());
 				arr = [];
 			}
 		}
@@ -67,6 +69,7 @@ function Messages(props) {
 	let arrToShow = [];
 	if (!loadingMessage) {
 		arrToShow = dataToShow(messages.data);
+		console.log(arrToShow);
 	}
 
 	let conversationName;
@@ -83,13 +86,6 @@ function Messages(props) {
 			});
 		}
 	}
-
-	const pasteAsPlainText = (event) => {
-		event.preventDefault();
-
-		const text = event.clipboardData.getData("text/plain");
-		document.execCommand("insertHTML", false, text);
-	};
 
 	return (
 		<div className="chat__container">
@@ -146,20 +142,7 @@ function Messages(props) {
 					</div>
 				</div>
 			</ScrollToBottom>
-			<div className="editor">
-				<div className="editor__wrap">
-					<div className="editor__body">
-						<div className="editor__field">
-							<p
-								className="editor__textarea"
-								contentEditable="true"
-								data-ph="Nhập tin nhắn"
-								onPaste={pasteAsPlainText}
-							/>
-						</div>
-					</div>
-				</div>
-			</div>
+			<MessageFooter conversationOpen={conversationOpen} />
 		</div>
 	);
 }

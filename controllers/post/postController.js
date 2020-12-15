@@ -101,7 +101,13 @@ export const createPost = async (req, res) => {
       })
       .populate({
         path: "reactions",
-        populate: [{ path: "author" }, { path: "post" }],
+        populate: [
+          {
+            path: "author",
+            populate: [{ path: "avatar" }],
+            select: "_id firstName lastName createdAt username avatar",
+          },
+        ],
       })
       .populate({
         path: "comments",

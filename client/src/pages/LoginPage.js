@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { notification } from "antd";
 import { FormLeft } from "../components/_components";
 import userActions from "../actions/user.actions";
 import sprite from "../assets/icons/sprite.svg";
@@ -26,12 +27,19 @@ const LoginPage = (props) => {
 		setInputs((inputs) => ({ ...inputs, [name]: value }));
 	};
 
+	const openNotificationWithIcon = (type) => {
+		notification[type]({
+			message: "Không thành công",
+			description:
+				"Bạn vui lòng thử lại",
+		});
+	};
+	
 	const handleLogin = (e) => {
 		e.preventDefault();
 
 		setSubmitted(true);
 		if (username && password) {
-			// get return url from location state or default to home page
 			dispatch(userActions.login(username, password))
 				.then(() => {
 					props.history.push({ pathname: "/" });
@@ -39,6 +47,7 @@ const LoginPage = (props) => {
 				})
 				.catch(() => {
 					setSubmitted(false);
+					openNotificationWithIcon('error');
 				});
 		}
 	};

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { DatePicker, Select } from "antd";
+import { DatePicker, Select, notification } from "antd";
 import "antd/dist/antd.css";
 import sprite from "../assets/icons/sprite.svg";
 import userActions from "../actions/user.actions";
@@ -27,6 +27,14 @@ const RegisterPage = (props) => {
 		const { name, value } = e.target;
 		setUser((user) => ({ ...user, [name]: value }));
 	};
+
+	const openNotificationWithIcon = (type) => {
+		notification[type]({
+			message: "Không thành công",
+			description: "Bạn vui lòng thử lại",
+		});
+	};
+
 	const handleRegister = (e) => {
 		try {
 			e.preventDefault();
@@ -39,9 +47,11 @@ const RegisterPage = (props) => {
 				})
 				.catch(() => {
 					setSubmitted(false);
+					openNotificationWithIcon("error");
 				});
 		} catch (error) {
 			console.log(error);
+			openNotificationWithIcon("error");
 		}
 	};
 	if (isLoggedIn) {

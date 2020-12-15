@@ -4,8 +4,8 @@ import { reactionService } from "../services";
 
 const likePost = (postId, type) => (dispatch) => {
 	return reactionService.likePost(postId, type).then(
-		() => {
-			return Promise.resolve();
+		(data) => {
+			return Promise.resolve(data);
 		},
 		(error) => {
 			const message =

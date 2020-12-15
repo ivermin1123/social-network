@@ -177,7 +177,7 @@ export const getPosts = async (req, res) => {
       })
       .populate({
         path: "reactions",
-        populate: [{ path: "author" }, { path: "post" }],
+        populate: [{ path: "author" }],
       })
       .populate({
         path: "comments",

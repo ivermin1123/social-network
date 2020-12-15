@@ -1,6 +1,7 @@
 import React, { useEffect, Suspense, lazy } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { useDispatch, connect } from "react-redux";
+// import { LoadingOutlined } from "@ant-design/icons";
 import { clearAlert } from "./actions/alert.actions";
 import history from "./helpers/history";
 import PrivateRoute from "./components";
@@ -22,10 +23,19 @@ function App() {
 		});
 	}, []);
 
+	// const Loading = (
+	// 	<LoadingOutlined
+	// 		style={{
+	// 			fontSize: "50px",
+	// 			color: "#08c",
+	// 			margin: "auto",
+	// 		}}
+	// 	/>
+	// );
 	return (
 		<>
 			<Router history={history}>
-				<Suspense fallback={<div>Loading...</div>}>
+				<Suspense fallback={<></>}>
 					{/* {isLoggedIn ? <Navigation /> : null} */}
 					<Switch>
 						<PrivateRoute

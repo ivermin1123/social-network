@@ -34,7 +34,6 @@ const LoginPage = (props) => {
 				"Bạn vui lòng thử lại",
 		});
 	};
-	
 	const handleLogin = (e) => {
 		e.preventDefault();
 

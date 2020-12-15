@@ -8554,6 +8554,10 @@ body.dark .messages__text:hover {
 	padding-left: 10px;
 }
 
+[contentEditable=true]:empty:not(:focus)::before{
+        content:attr(data-ph)
+    }
+
 .editor__btn {
 	min-width: 195px;
 	margin-top: 16px;

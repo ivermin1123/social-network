@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, connect, useSelector } from "react-redux";
 import moment from "moment";
-import { Tooltip } from "antd";
 
 import ScrollToBottom from "react-scroll-to-bottom";
+import MessageItem from "./MessageItem";
 import ButtonSVG from "../ButtonSVG";
-import avatar1 from "../../assets/image/ava-1.png";
 import messageActions from "../../actions/message.actions";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
@@ -39,7 +38,7 @@ function dataToShow(arrToCalculator) {
 			}
 		}
 	}
-	return arrToShow;
+	return arrToShow.reverse();
 }
 
 function Messages(props) {
@@ -67,7 +66,7 @@ function Messages(props) {
 
 	let arrToShow = [];
 	if (!loadingMessage) {
-		arrToShow = dataToShow(messages.data.reverse());
+		arrToShow = dataToShow(messages.data);
 	}
 
 	let conversationName;
@@ -84,79 +83,6 @@ function Messages(props) {
 			});
 		}
 	}
-
-	const MessageAction = () => {
-		return (
-			<div className="messages__actions">
-				{/* <div className="messages__time">🔥 {time}</div> */}
-				<ButtonSVG classN="messages__action" icon="icon-smile" />
-				<ButtonSVG classN="messages__action" icon="icon-bookmarks" />
-				<ButtonSVG classN="messages__action" icon="icon-menu" />
-			</div>
-		);
-	};
-
-	const MessageItem = (props) => {
-		const { message, listMessage, isRight, fullName } = props;
-		return (
-			<div className={`messages__item${isRight ? "_right" : ""}`}>
-				{isRight ? null : (
-					<div className="messages__ava">
-						<img className="messages__pic" src={avatar1} alt="" />
-					</div>
-				)}
-				<div className="messages__details">
-					<div className="messages__head">
-						<div className="messages__man">{fullName}</div>
-						{/* <div className="messages__time">🔥 3m ago</div> */}
-					</div>
-					<div className="messages__body">
-						{listMessage ? (
-							listMessage.map((message) => (
-								<Tooltip
-									title={moment(message.createdAt)
-										.locale("vi")
-										.fromNow()}
-									placement={isRight ? "right" : "left"}
-								>
-									<div
-										className={`messages__text${
-											isRight ? "_right" : ""
-										}`}
-										key={message._id}
-									>
-										{message.content}
-										<MessageAction />
-									</div>
-								</Tooltip>
-							))
-						) : (
-							<Tooltip
-								title={moment(message.createdAt)
-									.locale("vi")
-									.fromNow()}
-								placement={isRight ? "right" : "left"}
-							>
-								<div
-									className={`messages__text${
-										isRight ? "_right" : ""
-									}`}
-								>
-									{message.content}
-									<MessageAction />
-								</div>
-							</Tooltip>
-						)}
-					</div>
-				</div>
-				{isRight ? (
-					<div className="messages__ava">
-						<img className="messages__pic" src={avatar1} alt="" />
-					</div>
-				) : null}
-			</div>
-		);
-	};
 
 	const pasteAsPlainText = (event) => {
 		event.preventDefault();
@@ -227,7 +153,7 @@ function Messages(props) {
 							<p
 								className="editor__textarea"
 								contentEditable="true"
-								placeholder="text ..."
+								data-ph="Nhập tin nhắn"
 								onPaste={pasteAsPlainText}
 							/>
 						</div>

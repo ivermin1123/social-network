@@ -13,7 +13,11 @@ const NewsFeed = (props) => {
 	}, []);
 
 	if (loadingPost) {
-		return <LoadingOutlined />;
+		return (
+			<LoadingOutlined
+				style={{ fontSize: "50px", color: "#08c", margin: "auto" }}
+			/>
+		);
 	}
 	return (
 		<div id="post-list">

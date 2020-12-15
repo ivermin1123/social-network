@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import moment from "moment";
 
@@ -41,51 +41,75 @@ export const list = {
 	},
 };
 
+function setReactionPost(type, setReactIcon, setReactName) {
+	switch (type) {
+		case 1:
+			setReactIcon(like);
+			setReactName("Thích");
+			break;
+		case 2:
+			setReactIcon(love);
+			setReactName("Yêu thích");
+			break;
+		case 3:
+			setReactIcon(haha);
+			setReactName("Haha");
+			break;
+		case 4:
+			setReactIcon(wow);
+			setReactName("Wow");
+			break;
+		case 5:
+			setReactIcon(sad);
+			setReactName("Buồn");
+			break;
+		case 6:
+			setReactIcon(angry);
+			setReactName("Phẫn nộ");
+			break;
+		default:
+			break;
+	}
+}
 const Post = (props) => {
 	const dispatch = useDispatch();
+	const { infoUser } = useSelector((state) => state.users);
 	const [show, setShow] = useState(false);
 	const [showComment, setShowComment] = useState(false);
 	const [reactName, setReactName] = useState("Thích");
 	const [reactIcon, setReactIcon] = useState(thumUp);
 	const { post } = props;
-	const { author, comments, createdAt, description, files, reactions } = post;
+	const [postN, setPostN] = useState(post);
+	const {
+		author,
+		comments,
+		createdAt,
+		description,
+		files,
+		reactions,
+	} = postN;
 	// hover for reaction
 	const [isHover, setIsHover] = useState(false);
-
-	const handleLike = (name) => {
+	let isLike = 0;
+	const handleLike = (type) => {
 		setIsHover(false);
-		setReactName(name);
-		let type;
-		switch (name) {
-			case "Thích":
-				setReactIcon(like);
-				type = 1;
-				break;
-			case "Yêu thích":
-				setReactIcon(love);
-				type = 2;
-				break;
-			case "Haha":
-				setReactIcon(haha);
-				type = 3;
-				break;
-			case "Wow":
-				setReactIcon(wow);
-				type = 4;
-				break;
-			case "Buồn":
-				setReactIcon(sad);
-				type = 5;
-				break;
-			case "Phẫn nộ":
-				setReactIcon(angry);
-				type = 6;
-				break;
-			default:
-				break;
-		}
-		dispatch(reactionActions.likePost(post._id, type));
+		setReactionPost(type, setReactIcon, setReactName);
+		dispatch(reactionActions.likePost(post._id, type)).then((res) => {
+			setPostN(res.data);
+			console.log("POST like 🦼", { type, result: res.data });
+		});
 	};
+
+	useEffect(() => {
+		postN.reactions.forEach((reaction) => {
+			if (reaction.author._id === infoUser._id) {
+				isLike = reaction.type;
+			}
+		});
+		if (isLike) {
+			setReactionPost(isLike, setReactIcon, setReactName);
+		}
+	}, []);
 
 	return (
 		<>
@@ -126,7 +150,7 @@ const Post = (props) => {
 								icon={Theme.ICONS.thumbsUp}
 								color="blue"
 							/>
-							{reactions.length}
+							{postN.reactions.length}
 						</button>
 
 						<div className="post-body__react--comments">
@@ -157,32 +181,32 @@ const Post = (props) => {
 								variants={list}
 							>
 								<Reaction
-									name="Thích"
+									name={1}
 									icon={like}
 									handleLike={handleLike}
 								/>
 								<Reaction
-									name="Yêu thích"
+									name={2}
 									icon={love}
 									handleLike={handleLike}
 								/>
 								<Reaction
-									name="Haha"
+									name={3}
 									icon={haha}
 									handleLike={handleLike}
 								/>
 								<Reaction
-									name="Wow"
+									name={4}
 									icon={wow}
 									handleLike={handleLike}
 								/>
 								<Reaction
-									name="Buồn"
+									name={5}
 									icon={sad}
 									handleLike={handleLike}
 								/>
 								<Reaction
-									name="Phẫn nộ"
+									name={6}
 									icon={angry}
 									handleLike={handleLike}
 								/>

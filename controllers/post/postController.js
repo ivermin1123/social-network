@@ -1,6 +1,4 @@
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from "uuid";
-import multer from "multer";
 import { checkObjectIDs } from "../../utils/db-check";
 
 import "../../models/Post";
@@ -101,7 +99,13 @@ export const createPost = async (req, res) => {
       })
       .populate({
         path: "reactions",
-        populate: [{ path: "author" }, { path: "post" }],
+        populate: [
+          {
+            path: "author",
+            populate: [{ path: "avatar" }],
+            select: "_id firstName lastName createdAt username avatar",
+          },
+        ],
       })
       .populate({
         path: "comments",
@@ -177,7 +181,7 @@ export const getPosts = async (req, res) => {
       })
       .populate({
         path: "reactions",
-        populate: [{ path: "author" }, { path: "post" }],
+        populate: [{ path: "author" }],
       })
       .populate({
         path: "comments",

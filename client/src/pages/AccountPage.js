@@ -7,7 +7,7 @@ import { SliderComponent } from "../components/_components";
 const AccountPage = () => {
 	const [catalogNav, setCatalogNav] = useState(0);
 	const catalogsNav = ["Videos", "About", "Stories", "Schedules"];
-	const [catalogTag, setCatalogTag] = useState(0);
+	// const [catalogTag, setCatalogTag] = useState(0);
 	const catalogsTag = ["All", "Stream Videos", "Videos"];
 	return (
 		<div className="main main_channel js-main">
@@ -65,7 +65,7 @@ const AccountPage = () => {
 													? "active"
 													: null
 											}`}
-											href="#"
+											href="#/"
 											onClick={() => setCatalogNav(index)}
 										>
 											{item}
@@ -86,14 +86,14 @@ const AccountPage = () => {
 						</div>
 						<div className="catalog__tags mobile-hide">
 							{catalogsTag
-								? catalogsTag.map((item, index) => {
+								? catalogsTag.map((item) => {
 										return (
 											<a
 												className="catalog__tag"
-												href="#"
-												onClick={() =>
-													setCatalogTag(index)
-												}
+												href="#/"
+												// onClick={() =>
+												// 	setCatalogTag(index)
+												// }
 											>
 												{item}
 											</a>
@@ -119,8 +119,9 @@ const AccountPage = () => {
 									backgroundImage: `url(${callOfDuty})`,
 								}}
 							>
-								<label className="checkbox">
+								<label className="checkbox" htmlFor="chk">
 									<input
+										name="chk"
 										className="checkbox__input"
 										type="checkbox"
 									/>

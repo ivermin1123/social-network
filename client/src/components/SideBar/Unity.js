@@ -31,7 +31,11 @@ function App(props) {
 					icon="icon-chat"
 					name="Chat"
 					counter={10}
-					href={`/message/${lastConversation[0]._id}`}
+					href={
+						lastConversation.length
+							? `/message/${lastConversation[0]._id}`
+							: "#/"
+					}
 				/>
 				<UnityItem icon="icon-settings" name="Setting" />
 				<UnityItem icon="icon-chart" name="Analytics" />

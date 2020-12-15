@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import sprite from "../assets/icons/sprite.svg";
 import mainPic1 from "../assets/image/main-pic-1.png";
@@ -8,6 +8,15 @@ import mainPic4 from "../assets/image/main-pic-4.jpg";
 import league from "../assets/image/league-of-legends.png";
 
 const AccountPage = () => {
+	const [nav1, setNav1] = useState(null);
+	const [nav2, setNav2] = useState(null);
+
+	let slider1 = [];
+	let slider2 = [];
+	useEffect(() => {
+		setNav1(slider1);
+		setNav2(slider2);
+	});
 	const list = [
 		{
 			image: mainPic1,
@@ -45,9 +54,9 @@ const AccountPage = () => {
 		);
 	};
 	const MainSlide = (props) => {
-		const { item, image, title, text } = props;
+		const { className, image, title, text } = props;
 		return (
-			<div className="main__slide" key={item}>
+			<div className={className}>
 				<div
 					className="main__item"
 					style={{
@@ -79,6 +88,7 @@ const AccountPage = () => {
 		);
 	};
 	const settings = {
+		dotsClass: "main__nav",
 		infinite: true,
 		nextArrow: (
 			<ButtonArrow className="slick-next" icon="icon-arrow-next" />
@@ -90,12 +100,19 @@ const AccountPage = () => {
 	return (
 		<div className="main main_channel js-main">
 			<div className="main__container">
-				<Slider className="main__for" {...settings}>
+				<Slider
+					className="main__for"
+					{...settings}
+					asNavFor={nav2}
+					ref={(slider) => {
+						slider1 = slider;
+					}}
+				>
 					{list
-						? list.map((item, index) => {
+						? list.map((item) => {
 								return (
 									<MainSlide
-										item={index.toString()}
+										className="main__slide"
 										image={item.image}
 										title={item.title}
 										text={item.text}
@@ -104,25 +121,30 @@ const AccountPage = () => {
 						  })
 						: null}
 				</Slider>
-
-				{/* <Slider className="main__nav">
-					<div
-						className="main__preview"
-						style={{ backgroundImage: `url(${mainPic1})` }}
-					/>
-					<div
-						className="main__preview"
-						style={{ backgroundImage: `url(${mainPic2})` }}
-					/>
-					<div
-						className="main__preview"
-						style={{ backgroundImage: `url(${mainPic3})` }}
-					/>
-					<div
-						className="main__preview"
-						style={{ backgroundImage: `url(${mainPic4})` }}
-					/>
-				</Slider> */}
+				<Slider
+					className="main__nav"
+					{...settings}
+					asNavFor={nav1}
+					ref={(slider) => {
+						slider2 = slider;
+					}}
+					slidesToShow={3}
+					swipeToSlide="true"
+					focusOnSelect="true"
+				>
+					{list
+						? list.map((item) => {
+								return (
+									<div
+										className="main__preview"
+										style={{
+											backgroundImage: `url(${item.image})`,
+										}}
+									/>
+								);
+						  })
+						: null}
+				</Slider>
 			</div>
 		</div>
 	);

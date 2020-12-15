@@ -25,6 +25,7 @@ import FormField from "./FormField";
 
 // new 11/12
 import FormLeft from "./Form/FormLeft";
+import SliderComponent from "./AccountComponent/SliderComponent";
 
 export {
 	// Component's HomePage
@@ -47,4 +48,5 @@ export {
 	Wall,
 	// new 11/12
 	FormLeft,
+	SliderComponent,
 };

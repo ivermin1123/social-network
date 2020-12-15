@@ -157,7 +157,7 @@ function Header(props) {
 						/>
 					</a>
 					<div className="header__body">
-						<ProfileItem icon="icon-profile" name="Profile" />
+						<ProfileItem icon="icon-profile" name="Profile" href="/account" />
 						<ProfileItem icon="icon-document" name="My Playlist" />
 						<ProfileItem icon="icon-joystick" name="My Chanel" />
 						<ProfileItem icon="icon-settings" name="Setting" />

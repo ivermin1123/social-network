@@ -6,7 +6,7 @@ import "antd/dist/antd.css";
 import userActions from "../actions/user.actions";
 import { FormLeft } from "../components/_components";
 
-const Register = (props) => {
+const RegisterPage = (props) => {
 	const [user, setUser] = useState({
 		username: "",
 		firstName: "",
@@ -198,4 +198,4 @@ const Register = (props) => {
 	);
 };
 
-export default Register;
+export default RegisterPage;

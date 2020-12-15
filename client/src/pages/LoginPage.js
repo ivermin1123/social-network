@@ -6,7 +6,7 @@ import userActions from "../actions/user.actions";
 import sprite from "../assets/icons/sprite.svg";
 import bgSignIn from "../assets/image/bg-sign-in.png";
 
-const Login = (props) => {
+const LoginPage = (props) => {
 	const [inputs, setInputs] = useState({
 		email: "",
 		username: "",
@@ -114,4 +114,4 @@ const Login = (props) => {
 		</div>
 	);
 };
-export default Login;
+export default LoginPage;

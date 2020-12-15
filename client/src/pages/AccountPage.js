@@ -1,48 +1,176 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import {
-	Cover,
-	Introduction,
-	Wall,
-	Images,
-	Friends,
-} from "../components/_components";
-import "../assets/styles/_account.scss";
+import React, { useState } from "react";
+import sprite from "../assets/icons/sprite.svg";
+import callOfDuty from "../assets/image/call-of-duty.png";
+import ava from "../assets/image/ava-1.png";
+import { SliderComponent } from "../components/_components";
 
 const AccountPage = () => {
-	const listImage = [
-		"https://scontent.fsgn1-1.fna.fbcdn.net/v/t1.0-9/84003375_2572400089662880_7646270190476328960_n.jpg?_nc_cat=105&ccb=2&_nc_sid=0debeb&_nc_ohc=QrcgLbs2mSgAX8RKpRZ&_nc_ht=scontent.fsgn1-1.fna&oh=6b7af98b5586f41b18bb30a25cc70f79&oe=5FF135E2",
-		"https://scontent.fsgn1-1.fna.fbcdn.net/v/t1.0-9/82515029_2565303910372498_501621299357941760_o.jpg?_nc_cat=106&ccb=2&_nc_sid=0debeb&_nc_ohc=vKLDh3_iNNEAX82qriy&_nc_ht=scontent.fsgn1-1.fna&oh=fe488322cc93a4314f9aac919a964214&oe=5FF2D662",
-		"https://scontent.fsgn8-1.fna.fbcdn.net/v/t1.0-9/80498192_2547130955523127_7612657518719795200_o.jpg?_nc_cat=108&ccb=2&_nc_sid=0debeb&_nc_ohc=YIQ4Eb2Xi-cAX9TckF6&_nc_ht=scontent.fsgn8-1.fna&oh=368f5c55b800f41b57bfdee470e9f694&oe=5FF23809",
-		"https://scontent.fsgn3-1.fna.fbcdn.net/v/t1.0-9/56852823_2346635882239303_7906675625295872000_n.jpg?_nc_cat=109&ccb=2&_nc_sid=0debeb&_nc_ohc=Nz8tgpnNrl4AX8kV79G&_nc_ht=scontent.fsgn3-1.fna&oh=8e4d77ce10179e5a0d96736c10e83cac&oe=5FF2BF9B",
-		"https://scontent.fsgn3-1.fna.fbcdn.net/v/t1.0-9/118310303_2749420581960829_1865345142685906054_o.jpg?_nc_cat=111&ccb=2&_nc_sid=8bfeb9&_nc_ohc=vGYnUfln62oAX8TLje7&_nc_ht=scontent.fsgn3-1.fna&oh=04c7ef944db5277c13546a47c6b4e9bc&oe=5FF33B77",
-	];
-	const acc = {
-		cover:
-			"https://firebasestorage.googleapis.com/v0/b/my-project-a55fd.appspot.com/o/cover.jpg?alt=media&token=7fa54ce4-d846-4348-8c15-e8ae276dfa88",
-		avt:
-			"https://scontent.fvca1-2.fna.fbcdn.net/v/t1.0-1/c0.67.480.480a/p480x480/116914402_2736203649949189_1154568876833054310_o.jpg?_nc_cat=107&ccb=2&_nc_sid=7206a8&_nc_ohc=LCSC4jRgcVUAX-DZ5u6&_nc_ht=scontent.fvca1-2.fna&tp=27&oh=b1deefc9d9a4b44cd0e9e06b96c6c660&oe=5FED1531",
-		displayName: "Hoàng Yến",
-		listImage,
-		totalFriend: 469,
-	};
-
-	const { user } = useSelector((state) => state.authentication.user);
-
+	const [catalogNav, setCatalogNav] = useState(0);
+	const catalogsNav = ["Videos", "About", "Stories", "Schedules"];
+	const [catalogTag, setCatalogTag] = useState(0);
+	const catalogsTag = ["All", "Stream Videos", "Videos"];
+	
 	return (
-		<div className="account-page">
-			<Cover user={user} />
-			<div className="main-content row">
-				<div className="col-lg-5 col-md-12 main-content-left">
-					<div className="main-content-item">
-						<Introduction user={user} acc={acc} />
-						<Images user={user} acc={acc} />
-						<Friends user={user} acc={acc} />
+		<div className="main main_channel js-main">
+			<SliderComponent />
+			<div className="page__center page__center_pt0">
+				<div className="author author_big">
+					<div className="author__container">
+						<div className="author__details">
+							<div className="ava ava_online">
+								<img className="ava__pic" src={ava} alt="" />
+							</div>
+							<div className="author__wrap">
+								<div className="author__man h2 confirm">
+									Dylan Hodges
+								</div>
+								<div className="author__parameters">
+									<div className="author__parameter h6">
+										536K followers
+									</div>
+									<div className="author__parameter h6">
+										120 videos
+									</div>
+								</div>
+							</div>
+						</div>
+						<div className="author__btns">
+							<button
+								type="button"
+								className="author__btn btn btn_purple"
+							>
+								Message
+							</button>
+							<button
+								type="button"
+								className="author__btn btn btn_asphalt btn_square"
+							>
+								<svg className="icon icon-profile-check">
+									<use
+										href={`${sprite}#icon-profile-check`}
+									/>
+								</svg>
+							</button>
+						</div>
 					</div>
 				</div>
-				<div className="col-lg-7 col-md-12 main-content-right">
-					<div className="main-content-item">
-						<Wall user={user} acc={acc} />
+
+				<div className="catalog catalog_channel">
+					<div className="catalog__nav">
+						{catalogsNav
+							? catalogsNav.map((item, index) => {
+									return (
+										<a
+											className={`catalog__link ${
+												index === catalogNav
+													? "active"
+													: null
+											}`}
+											href="#"
+											onClick={() => setCatalogNav(index)}
+										>
+											{item}
+										</a>
+									);
+							  })
+							: null}
+					</div>
+					<div className="catalog__sorting">
+						<div className="field mobile-show">
+							<div className="field__wrap">
+								<select className="field__select purple">
+									<option>All</option>
+									<option>Stream Videos</option>
+									<option>Videos</option>
+								</select>
+							</div>
+						</div>
+						<div className="catalog__tags mobile-hide">
+							{catalogsTag
+								? catalogsTag.map((item, index) => {
+										return (
+											<a
+												className="catalog__tag"
+												href="#"
+												onClick={() =>
+													setCatalogTag(index)
+												}
+											>
+												{item}
+											</a>
+										);
+								  })
+								: null}
+						</div>
+						<div className="field">
+							<div className="field__wrap">
+								<select className="field__select">
+									<option>Popular Videos</option>
+									<option>New</option>
+									<option>Free</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div className="catalog__list">
+						<div className="game">
+							<div
+								className="game__preview"
+								style={{
+									backgroundImage: `url(${callOfDuty})`,
+								}}
+							>
+								<label className="checkbox">
+									<input
+										className="checkbox__input"
+										type="checkbox"
+									/>
+									<span className="checkbox__in">
+										<span className="checkbox__tick" />
+									</span>
+								</label>
+								<div className="game__time">10:42</div>
+								<div className="game__line">
+									<div
+										className="game__progress"
+										style={{ width: "65%" }}
+									/>
+								</div>
+							</div>
+							<div className="game__details">
+								<div className="game__title">
+									The Results Are Now – Call of Duty
+								</div>
+								<div className="game__status">
+									<div className="status blue">
+										8.1M views
+									</div>
+									<div className="status green">
+										3 months ago
+									</div>
+								</div>
+								<div className="game__name">
+									<div className="game__logo">
+										<img
+											className="game__pic"
+											src="img/call-of-duty.png"
+											alt=""
+										/>
+									</div>
+									<div className="game__text">
+										Call of Duty®
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="catalog__btns">
+						<button
+							type="button"
+							className="catalog__btn btn btn_gray"
+						>
+							Load More
+						</button>
 					</div>
 				</div>
 			</div>

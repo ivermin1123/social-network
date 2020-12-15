@@ -96,7 +96,8 @@ export const createPost = async (req, res) => {
     await Post.findById(infoAfterInsert._id)
       .populate({
         path: "author",
-        select: "_id firstName lastName createdAt username",
+        select: "_id firstName lastName createdAt username avatar",
+        populate: [{ path: "avatar" }],
       })
       .populate({
         path: "reactions",
@@ -171,7 +172,8 @@ export const getPosts = async (req, res) => {
     await Post.find()
       .populate({
         path: "author",
-        select: "_id firstName lastName createdAt username",
+        select: "_id firstName lastName createdAt username avatar",
+        populate: [{ path: "avatar" }],
       })
       .populate({
         path: "reactions",

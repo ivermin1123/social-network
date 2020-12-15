@@ -1,16 +1,34 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import ava2 from "../../assets/image/ava-2.png";
+import LINK_CONSTANT from "../../constants/link.constants";
 
 function Chat() {
+	const { infoUser } = useSelector((state) => state.users);
+
 	const ChatItem = (props) => {
-		const { online, name } = props;
+		const { user } = props;
 
 		return (
-			<a className={`sidebar__item${online ? " online" : ""}`} href="#/">
+			<a
+				className={`sidebar__item${user.online ? " online" : ""}`}
+				href="#/"
+				alt={`${user.firstName} ${user.lastName}`}
+			>
 				<div className="sidebar__ava">
-					<img className="sidebar__pic" src={ava2} alt="avatar" />
+					<img
+						className="sidebar__pic"
+						src={
+							user.avatar
+								? `${LINK_CONSTANT.LINK_S3}${user.avatar.path}`
+								: ava2
+						}
+						alt="avatar"
+					/>
 				</div>
-				<div className="sidebar__text">{name}</div>
+				<div className="sidebar__text">
+					{`${user.firstName} ${user.lastName}`}
+				</div>
 			</a>
 		);
 	};
@@ -19,12 +37,10 @@ function Chat() {
 		<div className="sidebar__group">
 			<div className="sidebar__caption caption-sm">Người liên hệ</div>
 			<div className="sidebar__list">
-				<ChatItem name="Quốc Hoàng" online />
-				<ChatItem name="Anh Tú" />
-				<ChatItem name="Hoàng Yến" online />
-				<ChatItem name="Việt Phi" />
-				<ChatItem name="Huấn Rose" />
-				<ChatItem name="Sơn Tùng MTP" online />
+				{infoUser &&
+					infoUser.friends.map((user) => (
+						<ChatItem user={user} key={user._id} />
+					))}
 			</div>
 		</div>
 	);

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useDispatch } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import moment from "moment";
+
 import { Theme } from "../../constants/index";
 import { LikeButton } from "../_components";
 import ListLikes from "./ListLikes";
 import img5 from "../../assets/image/avatar-5.png";
 import Reaction from "./Reaction";
-
 // import { ThumbUp } from "../../Icons/_icon";
 import like from "../../assets/icons/like.svg";
 import thumUp from "../../assets/icons/thumb-up.svg";
@@ -18,8 +19,8 @@ import sad from "../../assets/icons/sad.svg";
 import angry from "../../assets/icons/angry.svg";
 import ReactionsWrapper from "./ReactionWrapper";
 import ListComment from "./ListComment";
-
-const LINK_S3 = "https://socialawsbucket.s3-ap-southeast-1.amazonaws.com/";
+import LINK_CONSTANT from "../../constants/link.constants";
+import reactionActions from "../../actions/reaction.actions";
 
 export const list = {
 	visible: {
@@ -41,35 +42,65 @@ export const list = {
 };
 
 const Post = (props) => {
+	const dispatch = useDispatch();
 	const [show, setShow] = useState(false);
 	const [showComment, setShowComment] = useState(false);
-	const [reactName, setReactName] = useState("Like");
+	const [reactName, setReactName] = useState("Thích");
 	const [reactIcon, setReactIcon] = useState(thumUp);
 	const { post } = props;
 	const { author, comments, createdAt, description, files, reactions } = post;
 	// hover for reaction
 	const [isHover, setIsHover] = useState(false);
 
-	const handleLike = () => {
-		console.log(post._id);
+	const handleLike = (name) => {
 		setIsHover(false);
-		setReactName("VL");
-		setReactIcon(angry);
+		setReactName(name);
+		let type;
+		switch (name) {
+			case "Thích":
+				setReactIcon(like);
+				type = 1;
+				break;
+			case "Yêu thích":
+				setReactIcon(love);
+				type = 2;
+				break;
+			case "Haha":
+				setReactIcon(haha);
+				type = 3;
+				break;
+			case "Wow":
+				setReactIcon(wow);
+				type = 4;
+				break;
+			case "Buồn":
+				setReactIcon(sad);
+				type = 5;
+				break;
+			case "Phẫn nộ":
+				setReactIcon(angry);
+				type = 6;
+				break;
+			default:
+				break;
+		}
+		dispatch(reactionActions.likePost(post._id, type));
 	};
 
-	const callback = (name) => {
-		console.log(name);
-	};
 	return (
 		<>
 			<div className="post">
 				<div className="post-header">
 					<img
-						src={author.avatar || img5}
+						src={
+							author.avatar
+								? `${LINK_CONSTANT.LINK_S3}${author.avatar.path}`
+								: img5
+						}
 						alt=""
 						className="post-header__avt"
 					/>
-					<div className="post-header__name">{author.username}</div>
+					<div className="post-header__name">{`${author.firstName} ${author.lastName}`}</div>
 					<div className="post-header__created">
 						{moment(createdAt).locale("vi").fromNow()}
 					</div>
@@ -77,7 +108,11 @@ const Post = (props) => {
 				<div className="post-body">
 					<div className="post-body__content">{description}</div>
 					<img
-						src={files.length ? `${LINK_S3}${files[0].path}` : null}
+						src={
+							files.length
+								? `${LINK_CONSTANT.LINK_S3}${files[0].path}`
+								: null
+						}
 						alt=""
 						className="post-body__image"
 					/>
@@ -107,14 +142,13 @@ const Post = (props) => {
 							className="post-body__interact-option reactions"
 							onMouseOver={() => setIsHover(true)}
 							onMouseLeave={() => setIsHover(false)}
-							onClick={() => handleLike()}
 						>
 							<Reaction
 								name={reactName}
 								icon={reactIcon}
 								className="reactions-show"
 							/>
-							<span>Thích</span>
+							<span>{reactName}</span>
 							{/* <ThumbUp />
 							&nbsp;Like */}
 							<ReactionsWrapper
@@ -123,34 +157,34 @@ const Post = (props) => {
 								variants={list}
 							>
 								<Reaction
-									name="like"
+									name="Thích"
 									icon={like}
-									callback={callback}
+									handleLike={handleLike}
 								/>
 								<Reaction
-									name="love"
+									name="Yêu thích"
 									icon={love}
-									callback={callback}
+									handleLike={handleLike}
 								/>
 								<Reaction
-									name="haha"
+									name="Haha"
 									icon={haha}
-									callback={callback}
+									handleLike={handleLike}
 								/>
 								<Reaction
-									name="wow"
+									name="Wow"
 									icon={wow}
-									callback={callback}
+									handleLike={handleLike}
 								/>
 								<Reaction
-									name="sad"
+									name="Buồn"
 									icon={sad}
-									callback={callback}
+									handleLike={handleLike}
 								/>
 								<Reaction
-									name="angry"
+									name="Phẫn nộ"
 									icon={angry}
-									callback={callback}
+									handleLike={handleLike}
 								/>
 							</ReactionsWrapper>
 						</LikeButton>

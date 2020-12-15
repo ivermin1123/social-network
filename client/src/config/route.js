@@ -28,6 +28,10 @@ const CF_ROUTE_MESSAGE = {
 	SEND_MESSAGE: `${API_URL}/api/message/sendMessage`,
 };
 
+const CF_ROUTE_REACTION = {
+	LIKE_POST: `${API_URL}/api/reaction/likePost`,
+};
+
 const CF_ROUTE_PUBLIC = {
 	GENERATE_LINK_S3: `${API_URL}/api/generate-link-upload-s3`,
 };
@@ -38,4 +42,5 @@ export {
 	CF_ROUTE_PUBLIC,
 	CF_ROUTE_CONVERSATION,
 	CF_ROUTE_MESSAGE,
+	CF_ROUTE_REACTION,
 };

@@ -80,6 +80,8 @@ body.dark {
 			background-color: #242731;
 		}
 	}
+	.reactions-show {
+	}
 }
 #post-list {
 	margin: auto;
@@ -113,15 +115,16 @@ body.dark {
 }
 .post-header__name {
 	position: absolute;
-	left: 55px;
-	top: 12px;
+	left: 64px;
+	top: 15px;
 	font-weight: bold;
 }
 .post-header__created {
 	position: absolute;
-	left: 55px;
-	top: 30px;
+	left: 64px;
+	top: 34px;
 	font-size: x-small;
+	font-weight: 200;
 }
 /* Post-body */
 .post-body {
@@ -184,8 +187,9 @@ body.dark {
 		width: 100%;
 		.reactions-show,
 		.reactions-show:hover {
-			width: 30px;
-			height: 30px;
+			width: 20px;
+			height: 20px;
+			margin-right: 7px;
 		}
 	}
 	.comments {

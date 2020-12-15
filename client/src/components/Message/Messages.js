@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, connect, useSelector } from "react-redux";
 import moment from "moment";
+import { Tooltip } from "antd";
 
+import ScrollToBottom from "react-scroll-to-bottom";
 import ButtonSVG from "../ButtonSVG";
 import avatar1 from "../../assets/image/ava-1.png";
 import messageActions from "../../actions/message.actions";
@@ -19,52 +21,77 @@ function checkTime(mess1, mess2) {
 	return true;
 }
 
+function dataToShow(arrToCalculator) {
+	let arr = [];
+	const arrToShow = [];
+	for (let i = 0; i < arrToCalculator.length; i++) {
+		arr.push(arrToCalculator[i]);
+		if (i === arrToCalculator.length - 1) {
+			arrToShow.push(arr);
+		} else {
+			const result = checkTime(
+				arrToCalculator[i],
+				arrToCalculator[i + 1]
+			);
+			if (!result) {
+				arrToShow.push(arr);
+				arr = [];
+			}
+		}
+	}
+	return arrToShow;
+}
+
 function Messages(props) {
-	const { messages, conversationOpen, isConnecting, loadingMessage } = props;
+	const {
+		messages,
+		conversationOpen,
+		isConnecting,
+		loadingMessage,
+		conversations,
+		loadingConversation,
+	} = props;
 	const dispatch = useDispatch();
 	const { infoUser } = useSelector((state) => state.users);
 	const { socket } = useSelector((state) => state.socket);
 
 	useEffect(() => {
-		dispatch(messageActions.getMessages(conversationOpen));
+		dispatch(messageActions.getMessages(conversationOpen.id));
 		if (isConnecting) {
 			socket.emit("CSS_JOIN", {
 				name: `${infoUser.username}`,
-				room: conversationOpen,
+				room: conversationOpen.id,
 			});
 		}
 	}, []);
 
-	let arr = [];
-	const arrToShow = [];
+	let arrToShow = [];
 	if (!loadingMessage) {
-		const arrToCalculator = messages.data.reverse();
-		for (let i = 0; i < arrToCalculator.length; i++) {
-			arr.push(arrToCalculator[i]);
-			if (i === arrToCalculator.length - 1) {
-				arrToShow.push(arr);
-			} else {
-				const result = checkTime(
-					arrToCalculator[i],
-					arrToCalculator[i + 1]
-				);
-				if (!result) {
-					arrToShow.push(arr);
-					arr = [];
-				}
-			}
-		}
-		console.log(arrToShow);
+		arrToShow = dataToShow(messages.data.reverse());
 	}
 
-	const MessageAction = (props) => {
-		const { time } = props;
+	let conversationName;
+	if (!loadingConversation) {
+		const conversation = conversations.data.filter(
+			(conversation) => conversation._id === conversationOpen.id
+		);
+		conversationName = conversation[0].name;
+		if (conversation[0].members.length === 2) {
+			conversation[0].members.forEach((member) => {
+				if (member._id !== infoUser._id) {
+					conversationName = `${member.firstName} ${member.lastName}`;
+				}
+			});
+		}
+	}
+
+	const MessageAction = () => {
 		return (
 			<div className="messages__actions">
-				<div className="messages__time">🔥 {time}</div>
-				{/* <ButtonSVG classN="messages__action" icon="icon-smile" />
+				{/* <div className="messages__time">🔥 {time}</div> */}
+				<ButtonSVG classN="messages__action" icon="icon-smile" />
 				<ButtonSVG classN="messages__action" icon="icon-bookmarks" />
-				<ButtonSVG classN="messages__action" icon="icon-menu" /> */}
+				<ButtonSVG classN="messages__action" icon="icon-menu" />
 			</div>
 		);
 	};
@@ -85,34 +112,40 @@ function Messages(props) {
 					</div>
 					<div className="messages__body">
 						{listMessage ? (
-							listMessage.map((mess) => (
+							listMessage.map((message) => (
+								<Tooltip
+									title={moment(message.createdAt)
+										.locale("vi")
+										.fromNow()}
+									placement={isRight ? "right" : "left"}
+								>
+									<div
+										className={`messages__text${
+											isRight ? "_right" : ""
+										}`}
+										key={message._id}
+									>
+										{message.content}
+										<MessageAction />
+									</div>
+								</Tooltip>
+							))
+						) : (
+							<Tooltip
+								title={moment(message.createdAt)
+									.locale("vi")
+									.fromNow()}
+								placement={isRight ? "right" : "left"}
+							>
 								<div
 									className={`messages__text${
 										isRight ? "_right" : ""
 									}`}
-									key={mess._id}
 								>
-									{mess.content}
-									<MessageAction
-										time={moment(mess.createdAt)
-											.locale("vi")
-											.fromNow()}
-									/>
+									{message.content}
+									<MessageAction />
 								</div>
-							))
-						) : (
-							<div
-								className={`messages__text${
-									isRight ? "_right" : ""
-								}`}
-							>
-								{message.content}
-								<MessageAction
-									time={moment(message.createdAt)
-										.locale("vi")
-										.fromNow()}
-								/>
-							</div>
+							</Tooltip>
 						)}
 					</div>
 				</div>
@@ -135,24 +168,43 @@ function Messages(props) {
 	return (
 		<div className="chat__container">
 			<div className="chat__top">
-				<div className="chat__info h3 mr-auto">{`${infoUser.firstName} ${infoUser.lastName}`}</div>
+				<div className="chat__info h3 mr-auto">{conversationName}</div>
 				<div className="chat__actions">
 					<ButtonSVG icon="icon-star-fill" classN="chat__action" />
 					<ButtonSVG icon="icon-profile" classN="chat__action" />
 					<ButtonSVG icon="icon-game-play" classN="chat__action" />
 				</div>
 			</div>
-			<div className="messages">
-				<div className="messages__list">
-					{arrToShow.map((arr) => {
-						const fullName = `${arr[0].sender.firstName} ${arr[0].sender.lastName}`;
-						if (arr.length > 1) {
+			<ScrollToBottom>
+				<div className="messages">
+					<div className="messages__list">
+						{arrToShow.map((arr) => {
+							const fullName = `${arr[0].sender.firstName} ${arr[0].sender.lastName}`;
+							if (arr.length > 1) {
+								if (arr[0].sender._id === infoUser._id) {
+									return (
+										<MessageItem
+											listMessage={arr}
+											isRight
+											fullName={fullName}
+											key={arr[0]._id}
+										/>
+									);
+								}
+								return (
+									<MessageItem
+										fullName={fullName}
+										listMessage={arr}
+										key={arr[0]._id}
+									/>
+								);
+							}
 							if (arr[0].sender._id === infoUser._id) {
 								return (
 									<MessageItem
-										listMessage={arr}
 										isRight
 										fullName={fullName}
+										message={arr[0]}
 										key={arr[0]._id}
 									/>
 								);
@@ -160,50 +212,14 @@ function Messages(props) {
 							return (
 								<MessageItem
 									fullName={fullName}
-									listMessage={arr}
-									key={arr[0]._id}
-								/>
-							);
-						}
-						if (arr[0].sender._id === infoUser._id) {
-							return (
-								<MessageItem
-									isRight
-									fullName={fullName}
 									message={arr[0]}
 									key={arr[0]._id}
 								/>
 							);
-						}
-						return (
-							<MessageItem
-								fullName={fullName}
-								message={arr[0]}
-								key={arr[0]._id}
-							/>
-						);
-					})}
-					{/* <MessageItem message="Ok, trông ổn đấy" />
-					<MessageItem message="Tiếp tục như thế nhé" />
-					<MessageItem
-						listMessage={[
-							"Dài quá",
-							"Viết không hết",
-							"Buồn lắm",
-							"Nhưng không biết làm sao cả",
-						]}
-					/>
-					<MessageItem
-						isRight
-						listMessage={[
-							"Dài quá",
-							"Viết không hết",
-							"Buồn lắm",
-							"Nhưng không biết làm sao cả",
-						]}
-					/> */}
+						})}
+					</div>
 				</div>
-			</div>
+			</ScrollToBottom>
 			<div className="editor">
 				<div className="editor__wrap">
 					<div className="editor__body">
@@ -223,8 +239,9 @@ function Messages(props) {
 }
 
 const mapStateToProps = (state) => ({
-	reload: state.socket.reload,
 	conversationOpen: state.conversations.conversationOpen,
+	conversations: state.conversations.conversations,
+	loadingConversation: state.conversations.loadingConversation,
 	messages: state.messages.messages,
 	loadingMessage: state.messages.loadingMessage,
 	isConnecting: state.socket.isConnecting,

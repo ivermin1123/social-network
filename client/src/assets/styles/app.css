@@ -8161,7 +8161,7 @@ body.dark .widget .slick-arrow:hover {
 
 .messages {
 	flex: 2 0 0%;
-	overflow: hidden;
+	/* overflow: hidden; */
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -8170,7 +8170,7 @@ body.dark .widget .slick-arrow:hover {
 .messages__list {
 	height: calc(100vh - 255px);
 	position: relative;
-	overflow: auto;
+	/* overflow: auto; */
 }
 
 .chat__actions {

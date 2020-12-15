@@ -28,7 +28,10 @@ export const likePost = async (req, res) => {
       res.status(500).json({ error: true, message: "post_not_found" });
 
     const listReaction = await Reaction.find({ post: postId });
-    const checkLike = _.some(listReaction, { author: userId });
+    let checkLike = false;
+    listReaction.forEach((reaction) => {
+      if (reaction.author == userId) checkLike = true;
+    });
 
     if (checkLike) {
       const reaction = listReaction.filter(
@@ -36,11 +39,11 @@ export const likePost = async (req, res) => {
       );
       const infoPostAfterUnlike = await Post.findOneAndUpdate(
         { _id: postId },
-        { $pull: { reactions: reaction._id } }
+        { $pull: { reactions: reaction[0]._id } }
       );
       if (!infoPostAfterUnlike)
         res.status(500).json({ error: true, message: "cannot_update" });
-      await Reaction.deleteOne({ _id: reaction._id })
+      await Reaction.deleteOne({ _id: reaction[0]._id })
         .then((reaction) => {
           res.status(200).json({ error: false, data: infoPostAfterUnlike });
         })

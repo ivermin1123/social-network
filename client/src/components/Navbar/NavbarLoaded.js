@@ -95,7 +95,7 @@ function NavbarLoaded(props) {
 						<NavItem icon={<PlusIcon />} />
 						<NavItem icon={<BellIcon />} />
 						<NavItem
-							href={`/message/${conversationOpen}`}
+							href={`/message/${conversationOpen.id}`}
 							icon={<MessengerIcon />}
 						/>
 						<NavItem icon={<CaretIcon />}>

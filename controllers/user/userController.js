@@ -318,6 +318,7 @@ export const getUser = async (req, res) => {
       .populate({
         path: "friends",
         select: "_id firstName lastName username gender avatar",
+        populate: [{ path: "avatar" }],
       })
       .select(
         "_id firstName lastName createdAt username gender birthday phone email avatar coverImage conversations"

@@ -3,7 +3,10 @@ import conversationConstants from "../constants/conversation.constants";
 const initialState = {
 	loadingConversation: true,
 	conversation: null,
-	conversationOpen: "5fcca9d95cad3811bc177bef",
+	conversationOpen: {
+		id: "5fcca9d95cad3811bc177bef",
+		name: null,
+	},
 	conversations: null,
 };
 
@@ -52,7 +55,10 @@ export default function conversation(state = initialState, action) {
 		case conversationConstants.SET_CONVERSATION_OPEN:
 			return {
 				...state,
-				conversationOpen: payload.conversationOpen,
+				conversationOpen: {
+					...state.conversationOpen,
+					id: payload.conversationOpen
+				},
 			};
 		default:
 			return state;

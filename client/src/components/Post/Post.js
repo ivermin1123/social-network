@@ -30,8 +30,8 @@ export const list = {
 		transformOrigin: "50%",
 		scale: 1,
 		transition: {
-			when: "beforeChildren",
 			staggerChildren: 0.04,
+			delayChildren: 0,
 		},
 	},
 	hidden: {

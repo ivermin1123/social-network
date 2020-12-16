@@ -16,7 +16,6 @@ const ReactionWrapper = styled.div`
 
 	&:hover {
 		transform: scale(1.3);
-		transition: 0.2s;
 	}
 
 	&:after {
@@ -38,6 +37,9 @@ const ReactionWrapper = styled.div`
 const ReactionImage = styled.img`
 	width: 100%;
 	height: 100%;
+
+  }
+/>
 `;
 
 const Reaction = ({ name, icon, handleLike, className, style }) => {

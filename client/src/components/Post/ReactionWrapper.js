@@ -17,6 +17,14 @@ const ReactionsWrapper = styled(motion.div)`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+  	visible: {
+   	 	opacity: 1,
+   	 	scale: 1,
+    transition: {
+      	delayChildren: 0,
+      	staggerChildren: 0
+    }
+  }
 
 	/* opacity: 0; */
 `;

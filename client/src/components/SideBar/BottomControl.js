@@ -8,7 +8,6 @@ function BottomControl() {
 	const [checked, setChecked] = useState(false);
 	const dispatch = useDispatch();
 	useEffect(() => {
-		console.log(localStorage.getItem("darkMode"));
 		if (localStorage.getItem("darkMode") === "on") {
 			document.body.classList.add("dark");
 			setChecked(true);

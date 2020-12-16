@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 const ReactionsWrapper = styled(motion.div)`
 	position: absolute;
 	bottom: 45px;
+	z-index: 4;
 	left: -10px;
 	/* left: 50%; */
 	/* transform: translateX(-50%); */
@@ -18,7 +19,7 @@ const ReactionsWrapper = styled(motion.div)`
 	justify-content: space-between;
 	align-items: center;
   	visible: {
-   	 	opacity: 1,
+		opacity: 1,
    	 	scale: 1,
     transition: {
       	delayChildren: 0,

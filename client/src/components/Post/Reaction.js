@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-import { list } from "./Post";
+import { list } from "./PostReaction";
 
 const ReactionWrapper = styled.div`
 	position: relative;

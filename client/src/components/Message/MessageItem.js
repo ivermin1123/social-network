@@ -37,8 +37,9 @@ function MessageItem(props) {
 							<Tooltip
 								title={moment(message.createdAt)
 									.locale("vi")
-									.fromNow()}
-								placement={isRight ? "right" : "left"}
+									.calendar()}
+								placement="right"
+								key={message._id}
 							>
 								<div
 									className={`messages__text${
@@ -55,8 +56,8 @@ function MessageItem(props) {
 						<Tooltip
 							title={moment(message.createdAt)
 								.locale("vi")
-								.fromNow()}
-							placement={isRight ? "right" : "left"}
+								.calendar()}
+							placement="right"
 						>
 							<div
 								className={`messages__text${

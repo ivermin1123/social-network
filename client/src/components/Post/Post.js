@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
-import Modal from "react-bootstrap/Modal";
 import moment from "moment";
+import { Modal } from "antd";
 
 import { Theme } from "../../constants/index";
 import { LikeButton } from "../_components";
-import ListLikes from "./ListLikes";
 import img5 from "../../assets/image/avatar-5.png";
 import Reaction from "./Reaction";
-// import { ThumbUp } from "../../Icons/_icon";
+
 import like from "../../assets/icons/like.svg";
 import thumUp from "../../assets/icons/thumb-up.svg";
 import love from "../../assets/icons/love.svg";
@@ -17,6 +16,8 @@ import haha from "../../assets/icons/haha.svg";
 import wow from "../../assets/icons/wow.svg";
 import sad from "../../assets/icons/sad.svg";
 import angry from "../../assets/icons/angry.svg";
+
+import ListReactions from "./ListReactions";
 import ReactionsWrapper from "./ReactionWrapper";
 import ListComment from "./ListComment";
 import LINK_CONSTANT from "../../constants/link.constants";
@@ -74,20 +75,13 @@ function setReactionPost(type, setReactIcon, setReactName) {
 const Post = (props) => {
 	const dispatch = useDispatch();
 	const { infoUser } = useSelector((state) => state.users);
-	const [show, setShow] = useState(false);
+	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [showComment, setShowComment] = useState(false);
 	const [reactName, setReactName] = useState("Thích");
 	const [reactIcon, setReactIcon] = useState(thumUp);
 	const { post } = props;
 	const [postN, setPostN] = useState(post);
-	const {
-		author,
-		comments,
-		createdAt,
-		description,
-		files,
-		reactions,
-	} = postN;
+	const { author, comments, createdAt, description, files } = postN;
 	// hover for reaction
 	const [isHover, setIsHover] = useState(false);
 	let isLike = 0;
@@ -144,7 +138,7 @@ const Post = (props) => {
 						<button
 							type="button"
 							className="post-body__react--likes"
-							onClick={() => setShow(true)}
+							onClick={() => setIsModalVisible(true)}
 						>
 							<FontAwesomeIcon
 								icon={Theme.ICONS.thumbsUp}
@@ -231,19 +225,15 @@ const Post = (props) => {
 				</div>
 			</div>
 			<Modal
-				{...props}
-				dialogClassName="list-likes-modal"
-				centered
-				animation={false}
-				show={show}
-				onHide={() => setShow(false)}
+				title="Danh sách lượt thích"
+				visible={isModalVisible}
+				footer={null}
+				width="fit-content"
+				onCancel={() => setIsModalVisible(false)}
+				headStyle={{ borderRadius: "10px 10px 0 0" }}
+				style={{ borderRadius: "10px" }}
 			>
-				<Modal.Header bsPrefix="list-likes__header">
-					<Modal.Title bsPrefix="list-likes-modal__header-title">
-						List Likes
-					</Modal.Title>
-				</Modal.Header>
-				<ListLikes reactions={reactions} /> <Reaction />
+				<ListReactions postN={postN} />
 			</Modal>
 		</>
 	);

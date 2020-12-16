@@ -138,11 +138,19 @@ export const getPost = async (req, res) => {
     await Post.findById(postId)
       .populate({
         path: "author",
-        select: "_id firstName lastName createdAt username",
+        select: "_id firstName lastName createdAt username avatar",
+        populate: [{ path: "avatar" }],
       })
       .populate({
         path: "reactions",
-        populate: [{ path: "author" }, { path: "post" }],
+        populate: [
+          {
+            path: "author",
+            select: "_id firstName lastName createdAt username avatar",
+            populate: [{ path: "avatar" }],
+          },
+          { path: "post" },
+        ],
       })
       .populate({
         path: "comments",
@@ -150,7 +158,14 @@ export const getPost = async (req, res) => {
           { path: "author" },
           {
             path: "reactions",
-            populate: [{ path: "author" }, { path: "comment" }],
+            populate: [
+              {
+                path: "author",
+                select: "_id firstName lastName createdAt username avatar",
+                populate: [{ path: "avatar" }],
+              },
+              { path: "comment" },
+            ],
           },
         ],
         options: { sort: { createdAt: -1 } },
@@ -181,15 +196,32 @@ export const getPosts = async (req, res) => {
       })
       .populate({
         path: "reactions",
-        populate: [{ path: "author" }],
+        populate: [
+          {
+            path: "author",
+            select: "_id firstName lastName createdAt username avatar",
+            populate: [{ path: "avatar" }],
+          },
+        ],
       })
       .populate({
         path: "comments",
         populate: [
-          { path: "author" },
+          {
+            path: "author",
+            select: "_id firstName lastName createdAt username avatar",
+            populate: [{ path: "avatar" }],
+          },
           {
             path: "reactions",
-            populate: [{ path: "author" }, { path: "comment" }],
+            populate: [
+              {
+                path: "author",
+                select: "_id firstName lastName createdAt username avatar",
+                populate: [{ path: "avatar" }],
+              },
+              { path: "comment" },
+            ],
           },
         ],
         options: { sort: { createdAt: -1 } },
@@ -198,6 +230,7 @@ export const getPosts = async (req, res) => {
         path: "files",
       })
       .sort({ createdAt: -1 })
+      .limit(10)
       .then((post) => {
         res.status(200).json({ error: false, data: post });
       })

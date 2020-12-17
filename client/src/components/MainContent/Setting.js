@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Modal } from "antd";
-import ava from "../../assets/image/ava-1.png";
+import { PopupUser, ChangePassword } from "../_components";
 
 const Setting = ({ ...props }) => {
-	const { visible, handleOk, handleCancel } = props;
+	const { infoUser, visible, handleOk, handleCancel } = props;
 	const [popupTag, setPopupTag] = useState(0);
 	const popupTags = [
-		"Profile",
-		"Password",
-		"Email",
-		"Notification",
-		"Settings",
+		{ title: "profile", name: "Thông tin cá nhân" },
+		{ title: "password", name: "Đổi mật khẩu" },
+		{ title: "email", name: "Email" },
+		{ title: "notification", name: "Thông báo" },
+		{ title: "settings", name: "Cài đặt" },
 	];
 	return (
 		<Modal
@@ -28,18 +28,18 @@ const Setting = ({ ...props }) => {
 		>
 			<div className="popup__tags">
 				{popupTags
-					? popupTags.map((item, index) => {
+					? popupTags.map((item) => {
 							return (
 								<button
 									type="button"
 									className={`popup__tag ${
-										popupTag === index ? "active" : ""
+										popupTag === item.title ? "active" : ""
 									}`}
 									onClick={() => {
-										setPopupTag(index);
+										setPopupTag(item.title);
 									}}
 								>
-									{item}
+									{item.name}
 								</button>
 							);
 					  })
@@ -47,62 +47,33 @@ const Setting = ({ ...props }) => {
 			</div>
 			<div className="popup__field field mobile-show">
 				<div className="field__wrap">
-					<select className="field__select">
-						<option>Your Profile</option>
-						<option>Password</option>
-						<option>Channels</option>
-						<option>Apps</option>
-						<option>Data Export</option>
+					<select
+						className="field__select"
+						onChange={(e) => {
+							setPopupTag(e.target.value);
+						}}
+					>
+						{popupTags
+							? popupTags.map((item) => {
+									return (
+										<option value={item.title}>
+											{item.name}
+										</option>
+									);
+							  })
+							: null}
 					</select>
 				</div>
 			</div>
-			<div className="popup__user">
-				<div className="popup__title h6 mobile-show">Your Profile</div>
-				<div className="popup__category caption-sm">Your Avatar</div>
-				<div className="popup__line">
-					<div className="popup__ava">
-						<img className="popup__pic" src={ava} alt="" />
-					</div>
-					<div className="popup__details">
-						<div className="popup__btns">
-							<div className="popup__loading">
-								<input className="popup__file" type="file" />
-								<button
-									type="button"
-									className="popup__btn btn btn_purple"
-								>
-									Upload New
-								</button>
-							</div>
-							<button
-								type="button"
-								className="popup__btn btn btn_gray"
-							>
-								Delete Avatar
-							</button>
-						</div>
-						<div className="popup__text">
-							Avatar help your teammates recognize you in Unity.
-						</div>
-					</div>
-				</div>
-			</div>
-			<div className="popup__fieldset">
-				<div className="popup__row">
-					<div className="popup__field field">
-						<div className="field__label">Your Full Name</div>
-						<div className="field__wrap">
-							<input className="field__input" type="text" />
-						</div>
-					</div>
-					<div className="popup__field field">
-						<div className="field__label">Display Name</div>
-						<div className="field__wrap">
-							<input className="field__input" type="text" />
-						</div>
-					</div>
-				</div>
-			</div>
+
+			<PopupUser
+				infoUser={infoUser}
+				show={popupTag === "profile" ? "block" : "none"}
+			/>
+			<ChangePassword
+				infoUser={infoUser}
+				show={popupTag === "password" ? "block" : "none"}
+			/>
 
 			<button className="popup__btn btn btn_purple" type="submit">
 				Update Profile

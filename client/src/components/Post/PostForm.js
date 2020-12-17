@@ -67,9 +67,8 @@ const PostForm = ({ ...props }) => {
 			};
 			// Redux call
 			dispatch(postActions.createPost(arrFile, data, dataSaveServer))
-				.then((data) => {
+				.then(() => {
 					toast(`🦄 Upload Success`);
-					console.log(data);
 					handleReset();
 					setShow(false);
 				})

@@ -17,7 +17,7 @@ function Header(props) {
 	const [isActive2, setActive2] = useState(false);
 	const [isActive3, setActive3] = useState(false);
 	const [isActive4, setActive4] = useState(false);
-	const [isModalShow, setIsModalShow] = useState(true);
+	const [isModalShow, setIsModalShow] = useState(false);
 
 	const { infoUser } = props;
 	const { avatar } = infoUser;
@@ -182,6 +182,7 @@ function Header(props) {
 				</div>
 			</OutsideClick>
 			<Setting
+				infoUser={infoUser}
 				visible={isModalShow}
 				handleOk={() => {
 					setIsModalShow(false);

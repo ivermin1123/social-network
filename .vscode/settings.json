@@ -5,6 +5,7 @@
     "editor.detectIndentation": false,
 	"editor.insertSpaces": false,
 	"cSpell.words": [
+		"antd",
 		"linkify",
 		"linkifyjs"
 	]

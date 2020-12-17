@@ -41,7 +41,6 @@ export const likePost = async (req, res) => {
     });
 
     if (checkLike) {
-      console.log({ isUpdate });
       if (isUpdate.update) {
         const rs = await Reaction.findByIdAndUpdate(
           isUpdate.id,
@@ -58,15 +57,33 @@ export const likePost = async (req, res) => {
           })
           .populate({
             path: "reactions",
-            populate: [{ path: "author" }, { path: "post" }],
+            populate: [
+              {
+                path: "author",
+                select: "_id firstName lastName createdAt username avatar",
+                populate: [{ path: "avatar" }],
+              },
+              { path: "post" },
+            ],
           })
           .populate({
             path: "comments",
             populate: [
-              { path: "author" },
+              {
+                path: "author",
+                select: "_id firstName lastName createdAt username avatar",
+                populate: [{ path: "avatar" }],
+              },
               {
                 path: "reactions",
-                populate: [{ path: "author" }, { path: "comment" }],
+                populate: [
+                  {
+                    path: "author",
+                    select: "_id firstName lastName createdAt username avatar",
+                    populate: [{ path: "avatar" }],
+                  },
+                  { path: "comment" },
+                ],
               },
             ],
             options: { sort: { createdAt: -1 } },
@@ -98,15 +115,33 @@ export const likePost = async (req, res) => {
           })
           .populate({
             path: "reactions",
-            populate: [{ path: "author" }, { path: "post" }],
+            populate: [
+              {
+                path: "author",
+                select: "_id firstName lastName createdAt username avatar",
+                populate: [{ path: "avatar" }],
+              },
+              { path: "post" },
+            ],
           })
           .populate({
             path: "comments",
             populate: [
-              { path: "author" },
+              {
+                path: "author",
+                select: "_id firstName lastName createdAt username avatar",
+                populate: [{ path: "avatar" }],
+              },
               {
                 path: "reactions",
-                populate: [{ path: "author" }, { path: "comment" }],
+                populate: [
+                  {
+                    path: "author",
+                    select: "_id firstName lastName createdAt username avatar",
+                    populate: [{ path: "avatar" }],
+                  },
+                  { path: "comment" },
+                ],
               },
             ],
             options: { sort: { createdAt: -1 } },
@@ -150,7 +185,14 @@ export const likePost = async (req, res) => {
         })
         .populate({
           path: "reactions",
-          populate: [{ path: "author" }, { path: "post" }],
+          populate: [
+            {
+              path: "author",
+              select: "_id firstName lastName createdAt username avatar",
+              populate: [{ path: "avatar" }],
+            },
+            { path: "post" },
+          ],
         })
         .populate({
           path: "comments",

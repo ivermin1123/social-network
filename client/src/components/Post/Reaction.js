@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
-import { list } from "./Post";
+import { list } from "./PostReaction";
 
 const ReactionWrapper = styled.div`
 	position: relative;
@@ -16,7 +16,6 @@ const ReactionWrapper = styled.div`
 
 	&:hover {
 		transform: scale(1.3);
-		transition: 0.2s;
 	}
 
 	&:after {
@@ -38,13 +37,17 @@ const ReactionWrapper = styled.div`
 const ReactionImage = styled.img`
 	width: 100%;
 	height: 100%;
+
+  }
+/>
 `;
 
-const Reaction = ({ name, icon, handleLike, className }) => {
+const Reaction = ({ name, icon, handleLike, className, style }) => {
 	return (
 		<motion.div variants={list}>
 			<ReactionWrapper className={className}>
 				<ReactionImage
+					style={style}
 					name={name}
 					src={icon}
 					onClick={() => handleLike(name)}

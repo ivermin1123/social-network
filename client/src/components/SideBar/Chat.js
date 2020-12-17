@@ -1,5 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+
 import ava2 from "../../assets/image/ava-2.png";
 import LINK_CONSTANT from "../../constants/link.constants";
 
@@ -10,9 +12,9 @@ function Chat() {
 		const { user } = props;
 
 		return (
-			<a
+			<Link
 				className={`sidebar__item${user.online ? " online" : ""}`}
-				href="#/"
+				to={`/message/${user._id}`}
 				alt={`${user.firstName} ${user.lastName}`}
 			>
 				<div className="sidebar__ava">
@@ -29,7 +31,7 @@ function Chat() {
 				<div className="sidebar__text">
 					{`${user.firstName} ${user.lastName}`}
 				</div>
-			</a>
+			</Link>
 		);
 	};
 

@@ -57,7 +57,7 @@ function SideBar(props) {
 							{conversations &&
 								conversations.data.map((conversation) => (
 									<ConversationItem
-										item={conversation}
+										conversation={conversation}
 										key={conversation._id}
 									/>
 								))}

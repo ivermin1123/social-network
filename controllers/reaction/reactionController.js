@@ -11,15 +11,19 @@ export const likePost = async (req, res) => {
   try {
     const { postId, type } = req.body;
     const { userId } = req.userData;
-
-    const infoPost = await REACTION.countReaction({
+    console.log({ postId, type });
+    await REACTION.likePost({
       postId,
-      userId,
       type,
-    }).catch((error) => {
-      res.status(500).json(error);
-    });
-    res.status(200).json({ error: false, data: infoPost.data });
+      userId,
+    })
+      .then((data) => {
+        res.status(200).json({ error: false, data });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json(error);
+      });
   } catch (error) {
     res.status(500).json({ error: true, message: error.message });
   }

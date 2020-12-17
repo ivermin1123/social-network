@@ -15,8 +15,7 @@ function checkTime(mess1, mess2) {
 
 	const unixTime = Math.abs(time1m - time2m);
 	const minutes = Math.round(unixTime / 60);
-	console.log({ m1: mess1.content, m2: mess2.content, minutes });
-	if (minutes > 2 || mess1.sender._id !== mess2.sender._id) {
+	if (minutes > 2 || mess1.sender[0]._id !== mess2.sender[0]._id) {
 		return false;
 	}
 	return true;
@@ -69,7 +68,6 @@ function Messages(props) {
 	let arrToShow = [];
 	if (!loadingMessage) {
 		arrToShow = dataToShow(messages.data);
-		console.log(arrToShow);
 	}
 
 	let conversationName;
@@ -101,9 +99,9 @@ function Messages(props) {
 				<div className="messages">
 					<div className="messages__list">
 						{arrToShow.map((arr) => {
-							const fullName = `${arr[0].sender.firstName} ${arr[0].sender.lastName}`;
+							const fullName = `${arr[0].sender[0].firstName} ${arr[0].sender[0].lastName}`;
 							if (arr.length > 1) {
-								if (arr[0].sender._id === infoUser._id) {
+								if (arr[0].sender[0]._id === infoUser._id) {
 									return (
 										<MessageItem
 											listMessage={arr}
@@ -121,7 +119,7 @@ function Messages(props) {
 									/>
 								);
 							}
-							if (arr[0].sender._id === infoUser._id) {
+							if (arr[0].sender[0]._id === infoUser._id) {
 								return (
 									<MessageItem
 										isRight

@@ -7,13 +7,13 @@ import "../models/Conversation";
 
 const User = mongoose.model("User");
 const File = mongoose.model("File");
-const Conversation = mongoose.model("Conversation");
+// const Conversation = mongoose.model("Conversation");
 
 const updateUserImage = async ({ userId, files }) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const infoUser = await User.findById(userId).catch((error) => {
-        reject({ error: true, message: error.message });
+      await User.findById(userId).catch((error) => {
+        reject(error.message);
       });
 
       let listFiles = [];
@@ -36,7 +36,7 @@ const updateUserImage = async ({ userId, files }) => {
         });
 
         await Promise.all(promises).catch((error) => {
-          reject({ error: true, message: error.message });
+          reject(error.message);
         });
       }
 
@@ -46,13 +46,13 @@ const updateUserImage = async ({ userId, files }) => {
         { new: true }
       )
         .then((user) => {
-          resolve({ error: false, data: user });
+          resolve(user);
         })
         .catch((error) => {
-          reject({ error: true, message: error.message });
+          reject(error.message);
         });
     } catch (error) {
-      reject({ error: true, message: error.message });
+      reject(error.message);
     }
   });
 };
@@ -68,14 +68,14 @@ const insert = async ({ body }) => {
         username,
         birthday,
         gender,
-      } = infoUser;
+      } = body;
       User.findOne({
         $or: [{ email: email }, { username: username }],
       }).then((user) => {
         if (!user) {
           bcrypt.hash(password, 10, (err, hash) => {
-            if (err) {
-              resolve({ error: err });
+            if (error) {
+              reject(error.message);
             } else {
               const user = new User({
                 email,
@@ -90,42 +90,35 @@ const insert = async ({ body }) => {
               user
                 .save()
                 .then((user) => {
-                  notificationHandler.sendNewUser({ req, user });
-                  if (process.env.ENABLE_SEND_EMAIL === "true") {
-                    emailHandler.sendVerificationEmail({
-                      email: user.email,
-                      _id: user._id,
-                      username: user.username,
-                    });
-                    resolve({
-                      message: "Verify your email address",
-                    });
-                  } else {
-                    resolve({
-                      message: "Account created",
-                    });
-                  }
+                  //   notificationHandler.sendNewUser({ req, user });
+                  //   if (process.env.ENABLE_SEND_EMAIL === "true") {
+                  //     emailHandler.sendVerificationEmail({
+                  //       email: user.email,
+                  //       _id: user._id,
+                  //       username: user.username,
+                  //     });
+                  //     resolve("Verify your email address");
+                  //   } else {
+                  //     resolve("Account has been created");
+                  //   }
+                  resolve("Account has been created");
                 })
                 .catch((err) => {
-                  resolve({ message: err.message });
+                  resolve(err.message);
                 });
             }
           });
         } else {
           if (user.username === req.body.username) {
-            resolve({
-              message: "Username exists",
-            });
+            resolve("Username exists");
           }
           if (user.email === req.body.email) {
-            resolve({
-              message: "Email exists",
-            });
+            resolve("Email exists");
           }
         }
       });
     } catch (error) {
-      reject({ error: true, message: error.message });
+      reject(error.message);
     }
   });
 };
@@ -228,13 +221,15 @@ const getUser = async ({ userIdToGet }) => {
           },
         },
       ];
-      const infoUser = await User.aggregate(query).catch((err) => {
-        console.log(err.message);
-      });
-
-      resolve({ error: false, data: infoUser[0] });
+      await User.aggregate(query)
+        .then((data) => {
+          resolve(data[0]);
+        })
+        .catch((error) => {
+          reject(error.message);
+        });
     } catch (error) {
-      reject({ error: true, message: error.message });
+      reject(error.message);
     }
   });
 };
@@ -246,7 +241,7 @@ const changePassword = async ({ password, newPassword, userId }) => {
 
       const result = await bcrypt.compare(password, infoUser.password);
       if (!result) {
-        reject({ error: true, message: "password_incorrect" });
+        reject("password_incorrect");
       } else {
         bcrypt.hash(newPassword, 10, (err, hash) => {
           if (err) {
@@ -263,7 +258,7 @@ const changePassword = async ({ password, newPassword, userId }) => {
         });
       }
     } catch (error) {
-      reject({ error: true, message: error.message });
+      reject(error.message);
     }
   });
 };
@@ -348,15 +343,15 @@ const login = async ({ email, password }) => {
                 };
                 resolve(user);
               }
-              reject({ message: "Incorrect credentials." });
+              reject("Incorrect credentials.");
             });
           }
         })
         .catch((err) => {
-          reject({ message: err });
+          reject(err.message);
         });
     } catch (error) {
-      reject({ error: true, message: error.message });
+      reject(error.message);
     }
   });
 };
@@ -376,11 +371,11 @@ const getUsers = async ({ userId }) => {
           .sort({ createdAt: -1 })
           .limit(100)
           .then((data) => {
-            resolve({ error: false, data });
+            resolve(data);
           });
       }
     } catch (error) {
-      reject({ error: true, message: error.message });
+      reject(error.message);
     }
   });
 };

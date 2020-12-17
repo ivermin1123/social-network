@@ -6,29 +6,35 @@ import LINK_CONSTANT from "../../constants/link.constants";
 import avatar1 from "../../assets/image/ava-1.png";
 
 function ConversationItem(props) {
-	const { item } = props;
+	const { conversation } = props;
 	const { infoUser } = useSelector((state) => state.users);
-	const { members, lastMessage } = item;
+	const { members, lastMessage } = conversation;
 
-	let conversationName = item.name;
-	let avatar = item.logo;
+	let conversationName = conversation.name;
+	let avatarShow = conversation.logo;
 	if (members.length === 2) {
 		members.forEach((member) => {
-			if (member._id !== infoUser._id) {
-				conversationName = `${member.firstName} ${member.lastName}`;
-				if (member.avatar) avatar = member.avatar;
+			const { _id, avatar, firstName, lastName } = member;
+			if (_id !== infoUser._id) {
+				conversationName = `${firstName} ${lastName}`;
+				if (avatar.length) {
+					avatarShow = avatar;
+				}
 			}
 		});
 	}
 	// const { _id: id } = conversation;
 	return (
-		<a className="chat__line" href={item ? `message/${item._id}` : "#/"}>
+		<a
+			className="chat__line"
+			href={conversation ? `message/${conversation._id}` : "#/"}
+		>
 			<div className="ava ava_online">
 				<img
 					className="ava__pic"
 					src={
-						avatar
-							? `${LINK_CONSTANT.LINK_S3}${avatar.path}`
+						avatarShow.length
+							? `${LINK_CONSTANT.LINK_S3}${avatarShow[0].path}`
 							: avatar1
 					}
 					alt=""

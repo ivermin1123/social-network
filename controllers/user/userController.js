@@ -92,12 +92,15 @@ export const getUser = async (req, res) => {
     const { userId } = req.userData;
     const { userId: userIdGet } = req.body;
     const userIdToGet = userIdGet ? userIdGet : userId;
-    const infoUser = await USER.getUser({
+    await USER.getUser({
       userIdToGet,
-    }).catch((error) => {
-      res.status(500).json(error);
-    });
-    res.status(200).json({ error: false, data: infoUser.data });
+    })
+      .then((data) => {
+        res.status(200).json({ error: false, data });
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
   } catch (error) {
     res.status(500).json({ error: true, message: error.message });
   }

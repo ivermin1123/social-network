@@ -30,8 +30,7 @@ const LoginPage = (props) => {
 	const openNotificationWithIcon = (type) => {
 		notification[type]({
 			message: "Không thành công",
-			description:
-				"Bạn vui lòng thử lại",
+			description: "Bạn vui lòng thử lại",
 		});
 	};
 	const handleLogin = (e) => {
@@ -46,7 +45,7 @@ const LoginPage = (props) => {
 				})
 				.catch(() => {
 					setSubmitted(false);
-					openNotificationWithIcon('error');
+					openNotificationWithIcon("error");
 				});
 		}
 	};
@@ -71,13 +70,16 @@ const LoginPage = (props) => {
 							</svg>
 						</svg>
 					</a>
+
 					<div className="login__title h3">Đăng nhập</div>
+
 					<div className="login__line">
 						<div className="login__text">Người dùng mới?</div>
 						<a className="login__link" href="/register">
 							Tạo tài khoản
 						</a>
 					</div>
+
 					<div className="field">
 						<div className="field__label">
 							Tên đăng nhập hoặc mật khẩu
@@ -94,6 +96,7 @@ const LoginPage = (props) => {
 							/>
 						</div>
 					</div>
+
 					<div className="field">
 						<div className="field__label">Mật khẩu</div>
 						<div className="field__wrap">
@@ -108,6 +111,7 @@ const LoginPage = (props) => {
 							/>
 						</div>
 					</div>
+
 					<button
 						className="login__btn btn btn_purple btn_wide"
 						type="button"
@@ -115,6 +119,7 @@ const LoginPage = (props) => {
 					>
 						Tiếp tục
 					</button>
+
 					<div className="login__or">Hoặc tiếp tục với</div>
 					<button
 						className="login__btn btn btn_blue btn_wide"

@@ -16,10 +16,7 @@ const PopupUser = ({ ...props }) => {
 					<div className="popup__details">
 						<div className="popup__btns">
 							<div className="popup__loading">
-								<input
-									className="popup__file"
-									type="file"
-								/>
+								<input className="popup__file" type="file" />
 								<button
 									type="button"
 									className="popup__btn btn btn_purple"
@@ -45,7 +42,11 @@ const PopupUser = ({ ...props }) => {
 					<div className="popup__field field">
 						<div className="field__label">Họ tên</div>
 						<div className="field__wrap">
-							<input className="field__input" type="text" value={name} />
+							<input
+								className="field__input"
+								type="text"
+								value={name}
+							/>
 						</div>
 					</div>
 					<div className="popup__field field">
@@ -56,6 +57,9 @@ const PopupUser = ({ ...props }) => {
 					</div>
 				</div>
 			</div>
+			<button className="popup__btn btn btn_purple" type="submit">
+				Đổi mật khẩu
+			</button>
 		</div>
 	);
 };

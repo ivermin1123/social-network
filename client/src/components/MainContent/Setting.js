@@ -74,10 +74,6 @@ const Setting = ({ ...props }) => {
 				infoUser={infoUser}
 				show={popupTag === "password" ? "block" : "none"}
 			/>
-
-			<button className="popup__btn btn btn_purple" type="submit">
-				Update Profile
-			</button>
 		</Modal>
 	);
 };

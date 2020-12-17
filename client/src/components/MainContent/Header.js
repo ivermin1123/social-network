@@ -17,7 +17,7 @@ function Header(props) {
 	const [isActive2, setActive2] = useState(false);
 	const [isActive3, setActive3] = useState(false);
 	const [isActive4, setActive4] = useState(false);
-	const [isModalShow, setIsModalShow] = useState(false);
+	const [isModalShow, setIsModalShow] = useState(true);
 
 	const { infoUser } = props;
 	const { avatar } = infoUser;

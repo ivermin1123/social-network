@@ -16,13 +16,13 @@ import Introduction from "./AccountComponent/Introduction";
 import Friends from "./AccountComponent/Friends";
 import Images from "./AccountComponent/Images";
 import Wall from "./AccountComponent/Wall";
-
+import Catalog from "./AccountComponent/Catalog";
+import SliderComponent from "./AccountComponent/SliderComponent";
 // Commponent Form
 import FormField from "./FormField";
 
 // new 11/12
 import FormLeft from "./Form/FormLeft";
-import SliderComponent from "./AccountComponent/SliderComponent";
 import PopupUser from "./Popup/PopupUser";
 import ChangePassword from "./Popup/ChangePassword";
 
@@ -41,6 +41,7 @@ export {
 	Images,
 	Wall,
 	// new 11/12
+	Catalog,
 	FormLeft,
 	SliderComponent,
 	PopupUser,

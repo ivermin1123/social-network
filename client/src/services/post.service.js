@@ -24,9 +24,24 @@ function getPosts() {
 		});
 }
 
+function getUserPosts(userId) {
+	return axios
+		.get(
+			CF_ROUTE_POST.GET_USER_POSTS,
+			{
+				userId,
+			},
+			configAxios
+		)
+		.then((response) => {
+			return response.data;
+		});
+}
+
 const postService = {
 	getPost,
 	getPosts,
+	getUserPosts,
 };
 
 export default postService;

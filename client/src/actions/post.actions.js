@@ -33,6 +33,37 @@ const getPost = (postId) => (dispatch) => {
 		}
 	);
 };
+const getUserPosts = (postId) => (dispatch) => {
+	return postService.getPost(postId).then(
+		(data) => {
+			dispatch({
+				type: postConstants.GET_USER_POSTS_SUCCESS,
+				payload: { post: data },
+			});
+
+			return Promise.resolve();
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: postConstants.GET_USER_POSTS_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
 
 const getListPosts = () => (dispatch) => {
 	function request() {
@@ -106,5 +137,6 @@ const postActions = {
 	getPost,
 	createPost,
 	getListPosts,
+	getUserPosts,
 };
 export default postActions;

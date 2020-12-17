@@ -4,6 +4,7 @@ const initialState = {
 	loadingPost: true,
 	post: null,
 	posts: null,
+	userPosts: null
 };
 
 export default function posts(state = initialState, action) {
@@ -46,6 +47,17 @@ export default function posts(state = initialState, action) {
 			return {
 				...state,
 				post: null,
+			};
+
+		case postConstants.GET_USER_POSTS_SUCCESS:
+			return {
+				...state,
+				userPosts: payload.post,
+			};
+		case postConstants.GET_USER_POSTS_FAILURE:
+			return {
+				...state,
+				userPosts: null,
 			};
 		default:
 			return state;

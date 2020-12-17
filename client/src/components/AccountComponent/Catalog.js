@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, connect } from "react-redux";
 import { Games, Post, Introduction, Friends, Images } from "../_components";
+import postActions from "../../actions/post.actions";
 
 const Catalog = ({ ...props }) => {
 	const { userData } = props;
+	const { userPosts } = props;
+	const dispatch = useDispatch();
 	const [catalogNav, setCatalogNav] = useState("posts");
 	const catalogsNav = [
 		{ title: "posts", name: "Bài viết" },
@@ -11,6 +15,9 @@ const Catalog = ({ ...props }) => {
 		{ title: "images", name: "Ảnh" },
 		{ title: "games", name: "Trò chơi" },
 	];
+	useEffect(() => {
+		dispatch(postActions.getUserPosts(userData._id));
+	}, []);
 
 	return (
 		<div className="catalog catalog_channel">
@@ -35,7 +42,10 @@ const Catalog = ({ ...props }) => {
 					: null}
 			</div>
 			<Games display={catalogNav === "games" ? "block" : "none"} />
-			<Introduction display={catalogNav === "intro" ? "block" : "none"} />
+			<Introduction
+				userData={userData}
+				display={catalogNav === "intro" ? "block" : "none"}
+			/>
 			<Friends display={catalogNav === "friends" ? "block" : "none"} />
 			<Images display={catalogNav === "images" ? "block" : "none"} />
 			<div
@@ -43,10 +53,10 @@ const Catalog = ({ ...props }) => {
 					display: catalogNav === "posts" ? "block" : "none",
 				}}
 			>
-				{userData.post ? (
+				{userPosts ? (
 					<Post
 						display={catalogNav === "posts" ? "block" : "none"}
-						post={userData.posts}
+						post={userPosts}
 					/>
 				) : (
 					"Chưa bài viết nào"
@@ -56,4 +66,7 @@ const Catalog = ({ ...props }) => {
 	);
 };
 
-export default Catalog;
+const mapStateToProps = (state) => ({
+	userPosts: state.posts.userPosts,
+});
+export default connect(mapStateToProps)(Catalog);

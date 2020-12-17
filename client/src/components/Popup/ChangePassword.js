@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { notification } from "antd";
 import userActions from "../../actions/user.actions";
 
 const ChangePassword = ({ show }) => {
@@ -12,6 +13,12 @@ const ChangePassword = ({ show }) => {
 	const [submitted, setSubmitted] = useState(false);
 	const [reTypePassError, setReTypePassError] = useState(false);
 
+		const openNotificationWithIcon = (type, err) => {
+			notification[type]({
+				message: err,
+				description: "Bạn vui lòng thử lại",
+			});
+		};
 	function handleChange(e) {
 		const { name, value } = e.target;
 		setPass((pass) => ({ ...pass, [name]: value }));
@@ -22,6 +29,7 @@ const ChangePassword = ({ show }) => {
 			setReTypePassError(true);
 		} else {
 			setReTypePassError(false);
+			openNotificationWithIcon("warning", "Mật khẩu không trùng khớp");
 		}
 		setPass((pass) => ({ ...pass, [name]: value }));
 	}
@@ -94,7 +102,11 @@ const ChangePassword = ({ show }) => {
 						</div>
 					</div>
 				</div>
-				<button className="popup__btn btn btn_purple" type="submit">
+				<button
+					className="popup__btn btn btn_purple"
+					type="submit"
+					// onClick={handleSubmit}
+				>
 					Đổi mật khẩu
 				</button>
 			</form>

@@ -17,11 +17,9 @@ function Header(props) {
 	const [isActive2, setActive2] = useState(false);
 	const [isActive3, setActive3] = useState(false);
 	const [isActive4, setActive4] = useState(false);
-	const [isModalShow, setIsModalShow] = useState(true);
+	const [isModalShow, setIsModalShow] = useState(false);
 
 	const { infoUser } = props;
-	const { avatar } = infoUser;
-
 	const handleLogout = (e) => {
 		e.preventDefault();
 		dispatch(userActions.logout());
@@ -151,8 +149,8 @@ function Header(props) {
 						<img
 							className="header__pic"
 							src={
-								avatar
-									? `${LINK_CONSTANTS.LINK_S3}${avatar.path}`
+								infoUser && infoUser.avatar
+									? `${LINK_CONSTANTS.LINK_S3}${infoUser.avatar.path}`
 									: avatar2
 							}
 							alt=""
@@ -162,7 +160,11 @@ function Header(props) {
 						<ProfileItem
 							icon="icon-profile"
 							name="Profile"
-							href="/account"
+							href={
+								infoUser && infoUser._id
+									? `/account/${infoUser._id}`
+									: "/#"
+							}
 						/>
 						<ProfileItem icon="icon-document" name="My Playlist" />
 						<ProfileItem icon="icon-joystick" name="My Chanel" />

@@ -49,7 +49,7 @@ function App() {
 						/>
 						<PrivateRoute
 							exact
-							path="/account"
+							path="/account/:accountId"
 							component={() => (
 								<Navigation>
 									<AccountPage />

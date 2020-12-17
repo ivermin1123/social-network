@@ -1,14 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, connect } from "react-redux";
 import sprite from "../assets/icons/sprite.svg";
 import callOfDuty from "../assets/image/call-of-duty.png";
 import ava from "../assets/image/ava-1.png";
 import { SliderComponent } from "../components/_components";
+import userActions from "../actions/user.actions";
 
-const AccountPage = () => {
+const AccountPage = (props) => {
+	const { accountId } = useParams();
+	const dispatch = useDispatch();
+
+	const [userData, setUserData] = useState(null);
+	const { loadingUserProfile } = props;
+	// console.log("infoUser", accountId);
+
 	const [catalogNav, setCatalogNav] = useState(0);
 	const catalogsNav = ["Videos", "About", "Stories", "Schedules"];
 	// const [catalogTag, setCatalogTag] = useState(0);
 	const catalogsTag = ["All", "Stream Videos", "Videos"];
+
+	useEffect(() => {
+		dispatch(userActions.getUserProfile(accountId)).then((data) => {
+			setUserData(data.data);
+		});
+	}, []);
+	console.log("user: ", userData);
+
+	if (loadingUserProfile) return null;
+
 	return (
 		<div className="main main_channel js-main">
 			<SliderComponent />
@@ -60,6 +80,7 @@ const AccountPage = () => {
 							? catalogsNav.map((item, index) => {
 									return (
 										<a
+											key={index.toString()}
 											className={`catalog__link ${
 												index === catalogNav
 													? "active"
@@ -86,9 +107,10 @@ const AccountPage = () => {
 						</div>
 						<div className="catalog__tags mobile-hide">
 							{catalogsTag
-								? catalogsTag.map((item) => {
+								? catalogsTag.map((item, index) => {
 										return (
 											<a
+												key={index.toString()}
 												className="catalog__tag"
 												href="#/"
 												// onClick={() =>
@@ -178,4 +200,8 @@ const AccountPage = () => {
 	);
 };
 
-export default AccountPage;
+const mapStateToProps = (state) => ({
+	loadingUserProfile: state.users.loadingUserProfile,
+});
+
+export default connect(mapStateToProps)(AccountPage);

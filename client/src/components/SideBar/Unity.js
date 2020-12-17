@@ -32,7 +32,7 @@ function App(props) {
 					name="Chat"
 					counter={10}
 					href={
-						lastConversation.length
+						lastConversation && lastConversation.length
 							? `/message/${lastConversation[0]._id}`
 							: "#/"
 					}

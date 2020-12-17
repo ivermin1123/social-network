@@ -309,9 +309,11 @@ export const getUsers = async (req, res) => {
 
 export const getUser = async (req, res) => {
   try {
+	console.log(req.body);
     const { userId } = req.userData;
     const { userId: userIdGet } = req.body;
-    const userIdToGet = userIdGet ? userIdGet : userId;
+	const userIdToGet = userIdGet ? userIdGet : userId;
+	console.log(userIdToGet);
     const infoUser = await User.findById(userIdToGet)
       .populate("avatar")
       .populate("posts")

@@ -112,9 +112,10 @@ const SliderComponent = () => {
 				}}
 			>
 				{list
-					? list.map((item) => {
+					? list.map((item, index) => {
 							return (
 								<MainSlide
+									key={index.toString()}
 									className="main__slide"
 									image={item.image}
 									title={item.title}
@@ -136,9 +137,10 @@ const SliderComponent = () => {
 				focusOnSelect="true"
 			>
 				{list
-					? list.map((item) => {
+					? list.map((item, index) => {
 							return (
 								<div
+									key={index.toString()}
 									className="main__preview"
 									style={{
 										backgroundImage: `url(${item.image})`,

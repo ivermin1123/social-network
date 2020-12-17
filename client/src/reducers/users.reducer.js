@@ -3,6 +3,7 @@ import userConstants from "../constants/user.constants";
 function users(
 	state = {
 		loadingUser: true,
+		loadingUserProfile: true,
 		updatingUser: false,
 		deleting: false,
 		hasError: false,
@@ -52,6 +53,22 @@ function users(
 			return {
 				error: action.error,
 				loadingUser: false,
+			};
+
+		case userConstants.GET_USER_PROFILE_REQUEST:
+			return {
+				...state,
+				loadingUserProfile: true,
+			};
+		case userConstants.GET_USER_PROFILE_SUCCESS:
+			return {
+				...state,
+				loadingUserProfile: false,
+			};
+		case userConstants.GET_USER_PROFILE_FAILURE:
+			return {
+				error: action.error,
+				loadingUserProfile: false,
 			};
 		default:
 			return state;

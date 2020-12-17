@@ -33,7 +33,6 @@ const login = (username, password) => (dispatch) => {
 		}
 	);
 };
-
 const changePassword = (password, newPassword) => (dispatch) => {
 	return userService.changePassword(password, newPassword).then(
 		(data) => {
@@ -94,12 +93,10 @@ const updateUserImage = (file, data, dataSaveServer) => (dispatch) => {
 		}
 	);
 };
-
 const logout = () => (dispatch) => {
 	userService.logout();
 	dispatch({ type: userConstants.LOGOUT });
 };
-
 const register = (username, email, password) => (dispatch) => {
 	return userService.register(username, email, password).then(
 		(response) => {
@@ -135,7 +132,6 @@ const register = (username, email, password) => (dispatch) => {
 		}
 	);
 };
-
 const getUser = (userId) => (dispatch) => {
 	function request() {
 		return { type: userConstants.GET_USER_REQUEST };
@@ -174,6 +170,40 @@ const getUser = (userId) => (dispatch) => {
 		}
 	);
 };
+const getUserProfile = (userId) => (dispatch) => {
+	function request() {
+		return { type: userConstants.GET_USER_PROFILE_REQUEST };
+	}
+	dispatch(request());
+	return userService.getUserData(userId).then(
+		(data) => {
+			dispatch({
+				type: userConstants.GET_USER_PROFILE_SUCCESS,
+			});
+			console.log("data:", data);
+			return Promise.resolve(data);
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: userConstants.GET_USER_PROFILE_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
 const userActions = {
 	login,
 	logout,
@@ -181,6 +211,7 @@ const userActions = {
 	changePassword,
 	updateUserImage,
 	getUser,
+	getUserProfile,
 };
 
 export default userActions;

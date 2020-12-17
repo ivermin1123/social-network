@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Games, Post } from "../_components";
+import { Games, Post, Introduction, Friends, Images } from "../_components";
 
 const Catalog = ({ ...props }) => {
 	const { userData } = props;
@@ -35,6 +35,9 @@ const Catalog = ({ ...props }) => {
 					: null}
 			</div>
 			<Games display={catalogNav === "games" ? "block" : "none"} />
+			<Introduction display={catalogNav === "intro" ? "block" : "none"} />
+			<Friends display={catalogNav === "friends" ? "block" : "none"} />
+			<Images display={catalogNav === "images" ? "block" : "none"} />
 			<div
 				style={{
 					display: catalogNav === "posts" ? "block" : "none",

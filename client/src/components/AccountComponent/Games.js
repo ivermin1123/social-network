@@ -5,7 +5,7 @@ const Games = ({...props}) => {
 	const { display } = props;
 	const catalogsTag = ["All", "Stream Videos", "Videos"];
 		return (
-			<div style={{ display: display }}>
+			<div style={{ display: display || "none" }}>
 				<div className="catalog__sorting">
 					<div className="field mobile-show">
 						<div className="field__wrap">

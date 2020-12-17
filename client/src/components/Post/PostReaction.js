@@ -125,6 +125,7 @@ function PostReaction(props) {
 			className="post-body__interact-option reactions"
 			onMouseOver={() => setIsHover(true)}
 			onMouseLeave={() => setIsHover(false)}
+			// onClick={() => handleLike(1)}
 		>
 			<Reaction
 				name={reactName}

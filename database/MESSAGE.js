@@ -3,7 +3,6 @@ import "../models/Message";
 import "../models/Conversation";
 import { checkObjectIDs } from "../utils/db-check";
 
-const ObjectId = mongoose.Types.ObjectId;
 const Message = mongoose.model("Message");
 const Conversation = mongoose.model("Conversation");
 
@@ -190,9 +189,7 @@ const getMessages = async ({ conversationId, currentPage }) => {
   });
 };
 
-const MESSAGE = {
+export default {
   getMessages,
   sendMessage,
 };
-
-export default MESSAGE;

@@ -85,20 +85,20 @@ function PostReactionDisplay(props) {
 						<img src={listReact[0].img} alt="" />
 					</span>
 				</span>
-				<span className="react--reaction-second react--reaction">
-					{listReact[1] && (
+				{listReact[1] && (
+					<span className="react--reaction-second react--reaction">
 						<span>
 							<img src={listReact[1].img} alt="" />
 						</span>
-					)}
-				</span>
-				<span className="react--reaction-third react--reaction">
-					{listReact[2] && (
+					</span>
+				)}
+				{listReact[2] && (
+					<span className="react--reaction-third react--reaction">
 						<span>
 							<img src={listReact[2].img} alt="" />
 						</span>
-					)}
-				</span>
+					</span>
+				)}
 			</span>
 			<div className="react__display-react--amount">
 				<span>{reactions.length}</span>

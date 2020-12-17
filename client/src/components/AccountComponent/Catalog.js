@@ -18,6 +18,7 @@ const Catalog = ({ ...props }) => {
 	useEffect(() => {
 		dispatch(postActions.getUserPosts(userData._id));
 	}, []);
+	console.log("userPosts:", userPosts);
 
 	return (
 		<div className="catalog catalog_channel">

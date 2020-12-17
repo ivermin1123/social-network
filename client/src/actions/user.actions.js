@@ -180,7 +180,6 @@ const getUserProfile = (userId) => (dispatch) => {
 			dispatch({
 				type: userConstants.GET_USER_PROFILE_SUCCESS,
 			});
-			console.log("data:", data);
 			return Promise.resolve(data);
 		},
 		(error) => {

@@ -28,30 +28,45 @@ const RegisterPage = (props) => {
 		setUser((user) => ({ ...user, [name]: value }));
 	};
 
-	const openNotificationWithIcon = (type) => {
+	const openNotificationWithIcon = (type, error) => {
 		notification[type]({
-			message: "Không thành công",
-			description: "Bạn vui lòng thử lại",
+			message: error || "Không thành công",
+			description: "Vui lòng thử lại",
 		});
 	};
 
 	const handleRegister = (e) => {
-		try {
-			e.preventDefault();
-
-			setSubmitted(true);
-			dispatch(userActions.register(user))
-				.then(() => {
-					props.history.push({ pathname: "/" });
-					window.location.reload();
-				})
-				.catch(() => {
-					setSubmitted(false);
-					openNotificationWithIcon("error");
-				});
-		} catch (error) {
-			console.log(error);
-			openNotificationWithIcon("error");
+		console.log(user.user);
+		let result = true;
+		if (
+			user.username === "" ||
+			user.firstName === "" ||
+			user.lastName === "" ||
+			user.password === "" ||
+			user.email === ""
+		) {
+			openNotificationWithIcon(
+				"warning",
+				"Yêu cầu nhập đầy đủ thông tin"
+			);
+			result = false;
+		}
+		if (result) {
+			try {
+				e.preventDefault();
+				setSubmitted(true);
+				dispatch(userActions.register(user))
+					.then(() => {
+						props.history.push({ pathname: "/login" });
+						window.location.reload();
+					})
+					.catch((error) => {
+						setSubmitted(false);
+						openNotificationWithIcon("error", error);
+					});
+			} catch (error) {
+				openNotificationWithIcon("error", error);
+			}
 		}
 	};
 	if (isLoggedIn) {
@@ -135,8 +150,14 @@ const RegisterPage = (props) => {
 								<div className="field__label">Giới tính</div>
 								<div className="field__wrap">
 									<Select
+										name="gender"
 										defaultValue="0"
-										onChange={handleChange}
+										onChange={(value) =>
+											setUser((user) => ({
+												...user,
+												gender: value,
+											}))
+										}
 										style={{ width: "100%" }}
 									>
 										<Option value="0">Nam</Option>
@@ -197,15 +218,8 @@ const RegisterPage = (props) => {
 						type="button"
 						onClick={handleRegister}
 					>
-						Tiếp tục
+						Tạo tài khoản
 					</button>
-					{/* <div className="login__or">Đăng ký bằng</div>
-					<button
-						className="login__btn btn btn_blue btn_wide"
-						type="button"
-					>
-						Tài khoản Google
-					</button> */}
 				</div>
 			</div>
 		</div>

@@ -27,26 +27,39 @@ const LoginPage = (props) => {
 		setInputs((inputs) => ({ ...inputs, [name]: value }));
 	};
 
-	const openNotificationWithIcon = (type) => {
+	const openNotificationWithIcon = (type, error) => {
 		notification[type]({
-			message: "Không thành công",
+			message: error || "Không thành công",
 			description: "Bạn vui lòng thử lại",
 		});
 	};
 	const handleLogin = (e) => {
-		e.preventDefault();
+		let result = true;
+		if (
+			inputs.username === "" ||
+			inputs.password === ""
+		) {
+			openNotificationWithIcon(
+				"warning",
+				"Yêu cầu nhập đầy đủ thông tin"
+			);
+			result = false;
+		}
+		if (result) {
+			e.preventDefault();
 
-		setSubmitted(true);
-		if (username && password) {
-			dispatch(userActions.login(username, password))
-				.then(() => {
-					props.history.push({ pathname: "/" });
-					window.location.reload();
-				})
-				.catch(() => {
-					setSubmitted(false);
-					openNotificationWithIcon("error");
-				});
+			setSubmitted(true);
+			if (username && password) {
+				dispatch(userActions.login(username, password))
+					.then(() => {
+						props.history.push({ pathname: "/" });
+						window.location.reload();
+					})
+					.catch(() => {
+						setSubmitted(false);
+						openNotificationWithIcon("error");
+					});
+			}
 		}
 	};
 

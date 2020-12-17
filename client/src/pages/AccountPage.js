@@ -17,11 +17,18 @@ const AccountPage = (props) => {
 
 	const [catalogNav, setCatalogNav] = useState(0);
 	const catalogsNav = ["Videos", "About", "Stories", "Schedules"];
+	// [
+	// 	{ title: "posts", name: "Bài viết" },
+	// 	{ title: "intro", name: "Giới thiệu" },
+	// 	{ title: "rriends", name: "Bạn bè" },
+	// 	{ title: "images", name: "Ảnh" },
+	// ];
 	// const [catalogTag, setCatalogTag] = useState(0);
 	const catalogsTag = ["All", "Stream Videos", "Videos"];
 
 	useEffect(() => {
 		dispatch(userActions.getUserProfile(accountId)).then((data) => {
+			console.log("data: ", data);
 			setUserData(data.data);
 		});
 	}, []);

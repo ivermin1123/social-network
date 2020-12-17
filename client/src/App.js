@@ -65,7 +65,7 @@ function App() {
 								</Navigation>
 							)}
 						/>
-						<Route path="/Login" component={LoginPage} />
+						<Route path="/login" component={LoginPage} />
 						<Route path="/register" component={RegisterPage} />
 					</Switch>
 				</Suspense>

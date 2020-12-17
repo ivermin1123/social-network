@@ -26,12 +26,12 @@ const Post = (props) => {
 					size={40}
 					className="post-header__avt"
 					src={
-						postN.author.avatar
-							? `${LINK_CONSTANT.LINK_S3}${postN.author.avatar.path}`
+						postN.author[0].avatar.length
+							? `${LINK_CONSTANT.LINK_S3}${postN.author[0].avatar[0].path}`
 							: img5
 					}
 				/>
-				<div className="post-header__name">{`${postN.author.firstName} ${postN.author.lastName}`}</div>
+				<div className="post-header__name">{`${postN.author[0].firstName} ${postN.author[0].lastName}`}</div>
 				<div className="post-header__created">
 					{moment(postN.createdAt).locale("vi").fromNow()}
 				</div>

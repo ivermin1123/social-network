@@ -151,8 +151,8 @@ function Header(props) {
 							size={48}
 							className="header__pic"
 							src={
-								avatar
-									? `${LINK_CONSTANTS.LINK_S3}${avatar.path}`
+								avatar.length
+									? `${LINK_CONSTANTS.LINK_S3}${avatar[0].path}`
 									: avatar2
 							}
 						/>

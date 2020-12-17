@@ -11,4 +11,11 @@ router.post(
   reactionController.likePost
 );
 
+router.get(
+  "/countReaction",
+  helpers.checkAuth,
+  validator.reactionValidator.countReaction,
+  reactionController.countReaction
+);
+
 export default router;

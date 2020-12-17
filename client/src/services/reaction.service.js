@@ -17,8 +17,23 @@ function likePost(postId, type) {
 		});
 }
 
+function countReaction(postId) {
+	return axios
+		.post(
+			CF_ROUTE_REACTION.COUNT_REACTION,
+			{
+				postId,
+			},
+			configAxios
+		)
+		.then((response) => {
+			return response.data;
+		});
+}
+
 const reactionService = {
 	likePost,
+	countReaction,
 };
 
 export default reactionService;

@@ -1,5 +1,9 @@
 /* eslint-disable operator-linebreak */
-import { userConstants, alertConstants } from "../constants";
+import {
+	userConstants,
+	alertConstants,
+	conversationConstants,
+} from "../constants";
 import { userService, uploadService } from "../services";
 
 const login = (username, password) => (dispatch) => {
@@ -142,15 +146,20 @@ const getUser = (userId) => (dispatch) => {
 	}
 	dispatch(request());
 	return userService.getUserData(userId).then(
-		(data) => {
+		(res) => {
 			dispatch({
 				type: userConstants.GET_USER_SUCCESS,
-				payload: { data },
+				payload: { data: res.data },
+			});
+
+			dispatch({
+				type: conversationConstants.SET_CONVERSATION_OPEN,
+				payload: { conversation: res.data.lastConversation },
 			});
 
 			dispatch({
 				type: alertConstants.SET_ALERT,
-				payload: data.data,
+				payload: res.data,
 			});
 		},
 		(error) => {

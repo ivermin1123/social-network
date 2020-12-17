@@ -25,13 +25,14 @@ const ListReactions = (props) => {
 						size={40}
 						className="reaction-item__left--avatar"
 						src={
-							reaction.author.avatar
-								? `${LINK_CONSTANT.LINK_S3}${reaction.author.avatar.path}`
+							reaction.author[0].avatar.length
+								? `${LINK_CONSTANT.LINK_S3}${reaction.author[0].avatar[0].path}`
 								: img5
 						}
 					/>
 					<span className="reaction-item__left--name">
-						{reaction.author.firstName} {reaction.author.lastName}
+						{reaction.author[0].firstName}{" "}
+						{reaction.author[0].lastName}
 					</span>
 				</div>
 				<div className="reaction-item__right" />
@@ -49,14 +50,14 @@ const ListReactions = (props) => {
 								size={40}
 								className="reaction-item__left--avatar"
 								src={
-									reaction.author.avatar
-										? `${LINK_CONSTANT.LINK_S3}${reaction.author.avatar.path}`
+									reaction.author[0].avatar.length
+										? `${LINK_CONSTANT.LINK_S3}${reaction.author[0].avatar[0].path}`
 										: img5
 								}
 							/>
 							<span className="reaction-item__left--name">
-								{reaction.author.firstName}{" "}
-								{reaction.author.lastName}
+								{reaction.author[0].firstName}{" "}
+								{reaction.author[0].lastName}
 							</span>
 						</div>
 						<div className="reaction-item__right" />

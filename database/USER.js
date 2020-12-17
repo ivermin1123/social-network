@@ -130,30 +130,109 @@ const insert = async ({ body }) => {
   });
 };
 
+const userLookup = [
+  {
+    $lookup: {
+      from: "users",
+      let: { friends: "$friends" },
+      pipeline: [
+        {
+          $match: { $expr: { $in: ["$_id", "$$friends"] } },
+        },
+        {
+          $lookup: {
+            from: "files",
+            localField: "avatar",
+            foreignField: "_id",
+            as: "avatar",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            createdAt: 1,
+            username: 1,
+            avatar: 1,
+          },
+        },
+      ],
+      as: "friends",
+    },
+  },
+  {
+    $lookup: {
+      from: "files",
+      localField: "avatar",
+      foreignField: "_id",
+      as: "avatar",
+    },
+  },
+  {
+    $lookup: {
+      from: "files",
+      localField: "coverImage",
+      foreignField: "_id",
+      as: "coverImage",
+    },
+  },
+  {
+    $lookup: {
+      from: "conversations",
+      let: { conversations: "$conversations" },
+      pipeline: [
+        {
+          $match: { $expr: { $in: ["$_id", "$$conversations"] } },
+        },
+        { $sort: { updatedAt: -1 } },
+        { $limit: 1 },
+        {
+          $project: {
+            _id: 1,
+            name: 1,
+          },
+        },
+      ],
+      as: "lastConversation",
+    },
+  },
+];
+
 const getUser = async ({ userIdToGet }) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const infoUser = await User.findById(userIdToGet)
-        .populate("avatar")
-        .populate("posts")
-        .populate({
-          path: "friends",
-          select: "_id firstName lastName username gender avatar",
-          populate: [{ path: "avatar" }],
-        })
-        .select(
-          "_id firstName lastName createdAt username gender birthday phone email avatar coverImage conversations"
-        );
+      const query = [
+        {
+          $match: {
+            _id: mongoose.Types.ObjectId(userIdToGet),
+          },
+        },
+        ...userLookup,
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            createdAt: 1,
+            username: 1,
+            gender: 1,
+            conversations: 1,
+            lastConversation: 1,
+            birthday: 1,
+            phone: 1,
+            email: 1,
+            avatar: 1,
+            coverImage: 1,
+            friends: 1,
+          },
+        },
+      ];
+      const infoUser = await User.aggregate(query).catch((err) => {
+        console.log(err.message);
+      });
 
-      if (!infoUser) reject({ error: true, message: "cannot_get" });
-      if (infoUser.deactivated)
-        reject({ error: true, message: "user_deactivated" });
-      const lastConversation = await Conversation.find({
-        _id: { $in: infoUser.conversations },
-      })
-        .sort({ updatedAt: -1 })
-        .limit(1);
-      resolve({ error: false, data: { infoUser, lastConversation } });
+      resolve({ error: false, data: infoUser[0] });
     } catch (error) {
       reject({ error: true, message: error.message });
     }

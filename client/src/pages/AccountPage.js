@@ -21,11 +21,11 @@ const AccountPage = (props) => {
 	useEffect(() => {
 		dispatch(userActions.getUserProfile(accountId)).then((data) => {
 			setUserData(data.data);
-			if (accountId === data.data.infoUser._id) {
+			if (accountId === data.data._id) {
 				setIsType(0);
 			} else {
 				setIsType(
-					data.data.infoUser.friends.indexOf(infoUser._id) > -1
+					data.data.friends.indexOf(infoUser._id) > -1
 						? 1
 						: -1
 				);
@@ -35,7 +35,7 @@ const AccountPage = (props) => {
 	console.log("userData", userData);
 	if (loadingUserProfile) return null;
 
-	return userData && userData.infoUser ? (
+	return userData ? (
 		<div className="main main_channel js-main">
 			<SliderComponent />
 			<div className="page__center page__center_pt0">

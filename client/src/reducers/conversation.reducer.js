@@ -4,7 +4,7 @@ const initialState = {
 	loadingConversation: true,
 	conversation: null,
 	conversationOpen: {
-		id: "5fcca9d95cad3811bc177bef",
+		id: null,
 		name: null,
 	},
 	conversations: null,
@@ -56,8 +56,8 @@ export default function conversation(state = initialState, action) {
 			return {
 				...state,
 				conversationOpen: {
-					...state.conversationOpen,
-					id: payload.conversationOpen
+					id: payload.conversation[0]._id,
+					name: payload.conversation[0].name,
 				},
 			};
 		default:

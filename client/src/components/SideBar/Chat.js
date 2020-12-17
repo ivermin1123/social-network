@@ -19,8 +19,8 @@ function Chat() {
 					<img
 						className="sidebar__pic"
 						src={
-							user.avatar
-								? `${LINK_CONSTANT.LINK_S3}${user.avatar.path}`
+							user.avatar.length
+								? `${LINK_CONSTANT.LINK_S3}${user.avatar[0].path}`
 								: ava2
 						}
 						alt="avatar"

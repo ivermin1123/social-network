@@ -30,6 +30,7 @@ const CF_ROUTE_MESSAGE = {
 
 const CF_ROUTE_REACTION = {
 	LIKE_POST: `${API_URL}/api/reaction/likePost`,
+	COUNT_REACTION: `${API_URL}/api/reaction/countReaction`,
 };
 
 const CF_ROUTE_PUBLIC = {

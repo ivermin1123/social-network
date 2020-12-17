@@ -184,59 +184,221 @@ export const getPost = async (req, res) => {
   }
 };
 
+const postsLookup = [
+  {
+    $lookup: {
+      from: "users",
+      let: { author: "$author" },
+      pipeline: [
+        {
+          $match: { $expr: { $eq: ["$_id", "$$author"] } },
+        },
+        {
+          $lookup: {
+            from: "files",
+            localField: "avatar",
+            foreignField: "_id",
+            as: "avatar",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            createdAt: 1,
+            username: 1,
+            avatar: 1,
+          },
+        },
+      ],
+      as: "author",
+    },
+  },
+  {
+    $lookup: {
+      from: "reactions",
+      let: { reactions: "$reactions" },
+      pipeline: [
+        {
+          $match: { $expr: { $in: ["$_id", "$$reactions"] } },
+        },
+        {
+          $lookup: {
+            from: "users",
+            let: { author: "$author" },
+            pipeline: [
+              {
+                $match: { $expr: { $eq: ["$_id", "$$author"] } },
+              },
+              {
+                $lookup: {
+                  from: "files",
+                  localField: "avatar",
+                  foreignField: "_id",
+                  as: "avatar",
+                },
+              },
+              {
+                $project: {
+                  _id: 1,
+                  firstName: 1,
+                  lastName: 1,
+                  createdAt: 1,
+                  username: 1,
+                  avatar: 1,
+                },
+              },
+            ],
+            as: "author",
+          },
+        },
+      ],
+      as: "reactions",
+    },
+  },
+  {
+    $lookup: {
+      from: "comments",
+      let: { comments: "$comments" },
+      pipeline: [
+        {
+          $match: { $expr: { $eq: ["$_id", "$$comments"] } },
+        },
+        {
+          $lookup: {
+            from: "reactions",
+            let: { reactions: "$reactions" },
+            pipeline: [
+              {
+                $match: { $expr: { $in: ["$_id", "$$reactions"] } },
+              },
+              {
+                $lookup: {
+                  from: "users",
+                  let: { author: "$author" },
+                  pipeline: [
+                    {
+                      $match: { $expr: { $eq: ["$_id", "$$author"] } },
+                    },
+                    {
+                      $lookup: {
+                        from: "files",
+                        localField: "avatar",
+                        foreignField: "_id",
+                        as: "avatar",
+                      },
+                    },
+                    {
+                      $project: {
+                        _id: 1,
+                        firstName: 1,
+                        lastName: 1,
+                        createdAt: 1,
+                        username: 1,
+                        avatar: 1,
+                      },
+                    },
+                  ],
+                  as: "author",
+                },
+              },
+              {
+                $lookup: {
+                  from: "users",
+                  let: { author: "$author" },
+                  pipeline: [
+                    {
+                      $match: { $expr: { $eq: ["$_id", "$$author"] } },
+                    },
+                    {
+                      $lookup: {
+                        from: "files",
+                        localField: "avatar",
+                        foreignField: "_id",
+                        as: "avatar",
+                      },
+                    },
+                    {
+                      $project: {
+                        _id: 1,
+                        firstName: 1,
+                        lastName: 1,
+                        createdAt: 1,
+                        username: 1,
+                        avatar: 1,
+                      },
+                    },
+                  ],
+                  as: "author",
+                },
+              },
+            ],
+            as: "reactions",
+          },
+        },
+      ],
+      as: "comments",
+    },
+  },
+  {
+    $lookup: {
+      from: "files",
+      localField: "files",
+      foreignField: "_id",
+      as: "files",
+    },
+  },
+];
+
 export const getPosts = async (req, res) => {
   try {
-    const { userId } = req.userData;
+    // const { userId } = req.userData;
+    const query = [
+      {
+        $facet: {
+          posts: [{ $sort: { createdAt: -1 } }, { $limit: 10 }, ...postsLookup],
+        },
+      },
+    ];
+    await Post.aggregate(query)
+      .then((data) => {
+        res.status(200).json({ error: false, data: data[0].posts });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+};
 
-    await Post.find()
-      .populate({
-        path: "author",
-        select: "_id firstName lastName createdAt username avatar",
-        populate: [{ path: "avatar" }],
-      })
-      .populate({
-        path: "reactions",
-        populate: [
-          {
-            path: "author",
-            select: "_id firstName lastName createdAt username avatar",
-            populate: [{ path: "avatar" }],
-          },
-        ],
-      })
-      .populate({
-        path: "comments",
-        populate: [
-          {
-            path: "author",
-            select: "_id firstName lastName createdAt username avatar",
-            populate: [{ path: "avatar" }],
-          },
-          {
-            path: "reactions",
-            populate: [
-              {
-                path: "author",
-                select: "_id firstName lastName createdAt username avatar",
-                populate: [{ path: "avatar" }],
+export const getUserPosts = async (req, res) => {
+  try {
+    const { userId } = req.userData;
+    const query = [
+      {
+        $facet: {
+          posts: [
+            {
+              $match: {
+                author: mongoose.Types.ObjectId(userId),
               },
-              { path: "comment" },
-            ],
-          },
-        ],
-        options: { sort: { createdAt: -1 } },
+            },
+            { $sort: { createdAt: -1 } },
+            { $limit: 10 },
+            ...postsLookup,
+          ],
+        },
+      },
+    ];
+    await Post.aggregate(query)
+      .then((data) => {
+        res.status(200).json({ error: false, data: data[0].posts });
       })
-      .populate({
-        path: "files",
-      })
-      .sort({ createdAt: -1 })
-      .limit(10)
-      .then((post) => {
-        res.status(200).json({ error: false, data: post });
-      })
-      .catch((err) =>
-        res.status(500).json({ error: true, message: err.message })
-      );
+      .catch((err) => {
+        console.log(err.message);
+      });
   } catch (error) {
     res.status(500).json({ error: true, message: error.message });
   }

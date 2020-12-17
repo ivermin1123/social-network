@@ -43,10 +43,10 @@ const Catalog = ({ ...props }) => {
 					display: catalogNav === "posts" ? "block" : "none",
 				}}
 			>
-				{userData.infoUser.post ? (
+				{userData.post ? (
 					<Post
 						display={catalogNav === "posts" ? "block" : "none"}
-						post={userData.infoUser.posts}
+						post={userData.posts}
 					/>
 				) : (
 					"Chưa bài viết nào"

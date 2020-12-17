@@ -45,8 +45,8 @@ function users(
 		case userConstants.GET_USER_SUCCESS:
 			return {
 				...state,
-				infoUser: action.payload.data.data.infoUser,
-				lastConversation: action.payload.data.data.lastConversation,
+				infoUser: action.payload.data,
+				lastConversation: action.payload.data.lastConversation[0],
 				loadingUser: false,
 			};
 		case userConstants.GET_USER_FAILURE:

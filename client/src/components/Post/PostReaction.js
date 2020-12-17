@@ -107,7 +107,7 @@ function PostReaction(props) {
 	let isLike = 0;
 	useEffect(() => {
 		postN.reactions.forEach((reaction) => {
-			if (reaction.author._id === infoUser._id) {
+			if (reaction.author[0]._id === infoUser._id) {
 				isLike = reaction.type;
 			}
 		});
@@ -125,6 +125,7 @@ function PostReaction(props) {
 			className="post-body__interact-option reactions"
 			onMouseOver={() => setIsHover(true)}
 			onMouseLeave={() => setIsHover(false)}
+			// onClick={() => handleLike(1)}
 		>
 			<Reaction
 				name={reactName}

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, connect } from "react-redux";
+import { Avatar } from "antd";
 
 import HeaderItem from "./HeaderItem";
 import NotificationItem from "./NotificationItem";
@@ -146,14 +147,14 @@ function Header(props) {
 					onClick={() => setActive4(!isActive4)}
 				>
 					<a className="header__head" href="#/">
-						<img
+						<Avatar
+							size={48}
 							className="header__pic"
 							src={
-								infoUser && infoUser.avatar
-									? `${LINK_CONSTANTS.LINK_S3}${infoUser.avatar.path}`
+								infoUser && infoUser.avatar[0]
+									? `${LINK_CONSTANTS.LINK_S3}${infoUser.avatar[0].path}`
 									: avatar2
 							}
-							alt=""
 						/>
 					</a>
 					<div className="header__body">

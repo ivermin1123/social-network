@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
-import { Modal } from "antd";
+import { Modal, Avatar } from "antd";
 
 import { Theme } from "../../constants/index";
 import img5 from "../../assets/image/avatar-5.png";
@@ -22,20 +22,16 @@ const Post = (props) => {
 	return postN && postN.author ? (
 		<div className="post">
 			<div className="post-header">
-				<img
+				<Avatar
+					size={40}
+					className="post-header__avt"
 					src={
-						postN.author.avatar
-							? `${LINK_CONSTANT.LINK_S3}${postN.author.avatar.path}`
+						postN.author[0].avatar.length
+							? `${LINK_CONSTANT.LINK_S3}${postN.author[0].avatar[0].path}`
 							: img5
 					}
-					alt=""
-					className="post-header__avt"
 				/>
-				<div className="post-header__name">
-					{`${postN.author.firstName || ""} ${
-						postN.author.lastName || ""
-					}`}
-				</div>
+				<div className="post-header__name">{`${postN.author[0].firstName} ${postN.author[0].lastName}`}</div>
 				<div className="post-header__created">
 					{moment(postN.createdAt).locale("vi").fromNow()}
 				</div>
@@ -55,25 +51,10 @@ const Post = (props) => {
 					className="post-body__image"
 				/>
 				<div className="post-body__react">
-					{/* <button
-						type="button"
-						className="post-body__react--likes"
-						onClick={() => setIsModalVisible(true)}
-					>
-						<FontAwesomeIcon
-							icon={Theme.ICONS.thumbsUp}
-							color="blue"
-						/>
-						{postN.reactions.length}
-					</button> */}
 					<PostReactionDisplay
 						post={postN}
 						onClick={setIsModalVisible}
 					/>
-					{/* <span className="post-body__react--amount">
-						{postN.reactions.length}
-					</span> */}
-
 					<div className="post-body__react--comments">
 						{postN.comments.length
 							? `${postN.comments.lenght} bình luận`

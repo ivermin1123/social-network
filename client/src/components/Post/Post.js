@@ -19,7 +19,7 @@ const Post = (props) => {
 	const { post } = props;
 	const [postN, setPostN] = useState(post);
 
-	return (
+	return postN && postN.author ? (
 		<div className="post">
 			<div className="post-header">
 				<img
@@ -31,14 +31,20 @@ const Post = (props) => {
 					alt=""
 					className="post-header__avt"
 				/>
-				<div className="post-header__name">{`${postN.author.firstName} ${postN.author.lastName}`}</div>
+				<div className="post-header__name">
+					{`${postN.author.firstName || ""} ${
+						postN.author.lastName || ""
+					}`}
+				</div>
 				<div className="post-header__created">
 					{moment(postN.createdAt).locale("vi").fromNow()}
 				</div>
 			</div>
 
 			<div className="post-body">
-				<div className="post-body__content">{postN.description}</div>
+				<div className="post-body__content">
+					{postN.description || ""}
+				</div>
 				<img
 					src={
 						postN.files.length
@@ -109,7 +115,7 @@ const Post = (props) => {
 				<ListReactions postN={postN} />
 			</Modal>
 		</div>
-	);
+	) : null;
 };
 
 export default Post;

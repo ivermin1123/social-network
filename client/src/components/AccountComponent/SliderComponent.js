@@ -84,7 +84,7 @@ const SliderComponent = () => {
 							<div className="main__parameter">🇺🇸 English</div>
 						</div>
 						<a className="main__btn btn btn_purple" href="/#">
-							Watch Now
+							Chỉnh sửa ảnh bìa
 						</a>
 					</div>
 				</div>

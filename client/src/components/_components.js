@@ -1,4 +1,4 @@
-// Component's HomePage
+// Component's Post
 import CommentButton from "./Post/CommentButton";
 
 import ListComment from "./Post/ListComment";
@@ -17,7 +17,10 @@ import Friends from "./AccountComponent/Friends";
 import Images from "./AccountComponent/Images";
 import Wall from "./AccountComponent/Wall";
 import Catalog from "./AccountComponent/Catalog";
+import AuthorButton from "./AccountComponent/AuthorButton";
+import AuthorDetail from "./AccountComponent/AuthorDetail";
 import SliderComponent from "./AccountComponent/SliderComponent";
+import Games from "./AccountComponent/Games";
 // Commponent Form
 import FormField from "./FormField";
 
@@ -41,6 +44,9 @@ export {
 	Images,
 	Wall,
 	// new 11/12
+	Games,
+	AuthorButton,
+	AuthorDetail,
 	Catalog,
 	FormLeft,
 	SliderComponent,

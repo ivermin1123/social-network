@@ -82,7 +82,7 @@ const Games = ({ ...props }) => {
 							<div className="game__logo">
 								<img
 									className="game__pic"
-									src="img/call-of-duty.png"
+									src={callOfDuty}
 									alt=""
 								/>
 							</div>

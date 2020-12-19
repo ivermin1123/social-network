@@ -18,7 +18,7 @@ const Post = (props) => {
 
 	const { post } = props;
 	const [postN, setPostN] = useState(post);
-
+console.log("post: ", post);
 	return postN && postN.author ? (
 		<div className="post">
 			<div className="post-header">

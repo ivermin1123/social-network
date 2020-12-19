@@ -16,6 +16,10 @@ import {
 	faArrowLeft,
 	faCamera,
 	faPortrait,
+	faPhone,
+	faEnvelope,
+	faBirthdayCake,
+	faTransgenderAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
@@ -36,6 +40,10 @@ const ICONS = {
 	camera: faCamera,
 	images: faImages,
 	portrait: faPortrait,
+	phone: faPhone,
+	envelope: faEnvelope,
+	birthday: faBirthdayCake,
+	transgenderAlt: faTransgenderAlt,
 };
 
 const COLORS = {

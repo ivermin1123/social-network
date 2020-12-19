@@ -7,15 +7,11 @@ import mainPic3 from "../../assets/image/main-pic-3.jpg";
 import mainPic4 from "../../assets/image/main-pic-4.jpg";
 import league from "../../assets/image/league-of-legends.png";
 
-const SliderComponent = () => {
+const SliderComponent = ({ ...props }) => {
+	const { isType } = props;
 	const [nav1, setNav1] = useState(null);
 	const [nav2, setNav2] = useState(null);
-	let slider1 = [];
-	let slider2 = [];
-	useEffect(() => {
-		setNav1(slider1);
-		setNav2(slider2);
-	});
+	useEffect(() => {});
 	const list = [
 		{
 			image: mainPic1,
@@ -83,9 +79,11 @@ const SliderComponent = () => {
 							</div>
 							<div className="main__parameter">🇺🇸 English</div>
 						</div>
-						<a className="main__btn btn btn_purple" href="/#">
-							Chỉnh sửa ảnh bìa
-						</a>
+						{isType === 0 ? (
+							<a className="main__btn btn btn_purple" href="/#">
+								Chỉnh sửa ảnh bìa
+							</a>
+						) : null}
 					</div>
 				</div>
 			</div>
@@ -103,16 +101,17 @@ const SliderComponent = () => {
 	};
 	return (
 		<div className="main__container">
-			<Slider
-				className="main__for"
-				{...settings}
-				asNavFor={nav2}
-				ref={(slider) => {
-					slider1 = slider;
-				}}
-			>
-				{list
-					? list.map((item, index) => {
+			{list ? (
+				<>
+					<Slider
+						className="main__for"
+						{...settings}
+						asNavFor={nav2}
+						ref={(slider) => {
+							setNav1(slider);
+						}}
+					>
+						{list.map((item, index) => {
 							return (
 								<MainSlide
 									key={index.toString()}
@@ -122,22 +121,21 @@ const SliderComponent = () => {
 									text={item.text}
 								/>
 							);
-					  })
-					: null}
-			</Slider>
-			<Slider
-				className="main__nav"
-				{...settings}
-				asNavFor={nav1}
-				ref={(slider) => {
-					slider2 = slider;
-				}}
-				slidesToShow={4}
-				swipeToSlide="true"
-				focusOnSelect="true"
-			>
-				{list
-					? list.map((item, index) => {
+						})}
+					</Slider>
+
+					<Slider
+						className="main__nav"
+						{...settings}
+						asNavFor={nav1}
+						ref={(slider) => {
+							setNav2(slider);
+						}}
+						slidesToShow={4}
+						swipeToSlide="true"
+						focusOnSelect="true"
+					>
+						{list.map((item, index) => {
 							return (
 								<div
 									key={index.toString()}
@@ -147,9 +145,10 @@ const SliderComponent = () => {
 									}}
 								/>
 							);
-					  })
-					: null}
-			</Slider>
+						})}
+					</Slider>
+				</>
+			) : null}
 		</div>
 	);
 };

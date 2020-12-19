@@ -8,6 +8,7 @@ import {
 	AuthorDetail,
 } from "../components/_components";
 import userActions from "../actions/user.actions";
+import "../assets/styles/_account_page.scss";
 
 const AccountPage = (props) => {
 	const { accountId } = useParams();
@@ -18,26 +19,31 @@ const AccountPage = (props) => {
 	const { loadingUserProfile, infoUser } = props;
 	console.log("infoUser", infoUser);
 
+	const checkIsType = () => {
+		if (infoUser._id === accountId) {
+			setIsType(0);
+		} else {
+			setIsType(
+				infoUser.friends.filter((e) => e._id === accountId).length > 0
+					? 1
+					: -1
+			);
+		}
+	};
+
 	useEffect(() => {
 		dispatch(userActions.getUserProfile(accountId)).then((data) => {
 			setUserData(data.data);
-			if (accountId === data.data._id) {
-				setIsType(0);
-			} else {
-				setIsType(
-					data.data.friends.indexOf(infoUser._id) > -1
-						? 1
-						: -1
-				);
-			}
 		});
+		checkIsType();
 	}, []);
+
 	console.log("userData", userData);
 	if (loadingUserProfile) return null;
 
 	return userData ? (
 		<div className="main main_channel js-main">
-			<SliderComponent />
+			<SliderComponent userData={userData} isType={isType} />
 			<div className="page__center page__center_pt0">
 				<div className="author author_big">
 					<div className="author__container">

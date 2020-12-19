@@ -12,7 +12,7 @@ function Chat() {
 		return (
 			<a
 				className={`sidebar__item${user.online ? " online" : ""}`}
-				href="#/"
+				href={`/account/${user._id}`}
 				alt={`${user.firstName} ${user.lastName}`}
 			>
 				<div className="sidebar__ava">

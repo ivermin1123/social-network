@@ -1,0 +1,39 @@
+.intro {
+	&-field {
+		&-row {
+			flex-direction: row;
+			margin: 16px 10px;
+			display: flex;
+			&__col {
+				display: inline-table;
+				margin-right: 10px;
+				&-icon {
+					font-size: 20px;
+				}
+				&-value {
+					font-size: 16px;
+				}
+				&-title {
+					font-size: 14px;
+					color: grey;
+				}
+			}
+		}
+	}
+}
+.friend {
+	&-item {
+		display: flex;
+		flex-direction: row;
+		&-col__avatar {
+			display: inline-table;
+			width: 25%;
+		}
+		&-col__info {
+			display: inline-table;
+
+			&-name {
+			}
+		}
+	}
+}

@@ -4,8 +4,7 @@ import { Games, Post, Introduction, Friends, Images } from "../_components";
 import postActions from "../../actions/post.actions";
 
 const Catalog = ({ ...props }) => {
-	const { userData } = props;
-	const { userPosts } = props;
+	const { userData, userPosts } = props;
 	const dispatch = useDispatch();
 	const [catalogNav, setCatalogNav] = useState("posts");
 	const catalogsNav = [
@@ -18,7 +17,7 @@ const Catalog = ({ ...props }) => {
 	useEffect(() => {
 		dispatch(postActions.getUserPosts(userData._id));
 	}, []);
-	console.log("userPosts:", userPosts);
+	console.log("userPosts:", userPosts || null);
 
 	return (
 		<div className="catalog catalog_channel">
@@ -47,14 +46,18 @@ const Catalog = ({ ...props }) => {
 				userData={userData}
 				display={catalogNav === "intro" ? "block" : "none"}
 			/>
-			<Friends display={catalogNav === "friends" ? "block" : "none"} />
+			<Friends
+				userData={userData}
+				display={catalogNav === "friends" ? "block" : "none"}
+			/>
+
 			<Images display={catalogNav === "images" ? "block" : "none"} />
 			<div
 				style={{
 					display: catalogNav === "posts" ? "block" : "none",
 				}}
 			>
-				{userPosts ? (
+				{userPosts && userPosts.length ? (
 					<Post
 						display={catalogNav === "posts" ? "block" : "none"}
 						post={userPosts}

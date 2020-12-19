@@ -1,13 +1,18 @@
 import React from "react";
 import ava from "../../assets/image/ava-1.png";
+import LINK_CONSTANT from "../../constants/link.constants";
 
 const AuthorDetail = ({ ...props }) => {
 	const { userData } = props;
 	return userData ? (
 		<div className="author__details">
 			<div className="ava ava_online">
-				{userData.avatar[0] ? (
-					<img className="ava__pic" src={userData.avatar[0]} alt="" />
+				{userData.avatar && userData.avatar.length ? (
+					<img
+						className="ava__pic"
+						src={`${LINK_CONSTANT.LINK_S3}${userData.avatar[0].path}`}
+						alt=""
+					/>
 				) : (
 					<img className="ava__pic" src={ava} alt="" />
 				)}

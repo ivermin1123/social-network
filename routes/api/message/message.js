@@ -4,10 +4,6 @@ import { helpers, validator } from "../../../middleware/main-middleware";
 
 const router = express.Router();
 
-router.get(
-  "/getMessages/:conversationId",
-  helpers.checkAuth,
-  messageController.getMessages
-);
+router.post("/getMessages", helpers.checkAuth, messageController.getMessages);
 
 export default router;

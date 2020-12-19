@@ -4,6 +4,7 @@ import { checkObjectIDs } from "../utils/db-check";
 
 import "../models/Post";
 import "../models/Reaction";
+import POST from "./POST";
 
 const Post = mongoose.model("Post");
 const Reaction = mongoose.model("Reaction");
@@ -12,7 +13,7 @@ const likePost = async ({ postId, type, userId }) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!checkObjectIDs(postId))
-        reject({ error: true, message: "param_invalid" });
+        reject({ error: true, message: "param_invalid_1" });
 
       const infoPost = await Post.findById(postId);
       if (!infoPost) reject({ error: true, message: "post_not_found" });
@@ -39,115 +40,35 @@ const likePost = async ({ postId, type, userId }) => {
             },
             { new: true }
           );
-          await Post.findById(postId)
-            .populate({
-              path: "author",
-              select: "_id firstName lastName createdAt username avatar",
-              populate: [{ path: "avatar" }],
-            })
-            .populate({
-              path: "reactions",
-              populate: [
-                {
-                  path: "author",
-                  select: "_id firstName lastName createdAt username avatar",
-                  populate: [{ path: "avatar" }],
-                },
-                { path: "post" },
-              ],
-            })
-            .populate({
-              path: "comments",
-              populate: [
-                {
-                  path: "author",
-                  select: "_id firstName lastName createdAt username avatar",
-                  populate: [{ path: "avatar" }],
-                },
-                {
-                  path: "reactions",
-                  populate: [
-                    {
-                      path: "author",
-                      select:
-                        "_id firstName lastName createdAt username avatar",
-                      populate: [{ path: "avatar" }],
-                    },
-                    { path: "comment" },
-                  ],
-                },
-              ],
-              options: { sort: { createdAt: -1 } },
-            })
-            .populate({
-              path: "files",
-            })
-            .then((post) => {
-              resolve({ error: false, data: post });
+          await POST.getPostById({ postId })
+            .then((data) => {
+              resolve(data[0]);
             })
             .catch((error) => {
-              reject({ error: true, message: error.message });
+              reject(error.message);
             });
         } else {
           const reaction = listReaction.filter(
             (reaction) => reaction.author == userId
           );
-          const infoPostAfterUnlike = await Post.findOneAndUpdate(
-            { _id: postId },
+          const infoPostAfterUnlike = await Post.findByIdAndUpdate(
+            postId,
             { $pull: { reactions: reaction[0]._id } },
             { new: true }
-          )
-            .populate({
-              path: "author",
-              select: "_id firstName lastName createdAt username avatar",
-              populate: [{ path: "avatar" }],
-            })
-            .populate({
-              path: "reactions",
-              populate: [
-                {
-                  path: "author",
-                  select: "_id firstName lastName createdAt username avatar",
-                  populate: [{ path: "avatar" }],
-                },
-                { path: "post" },
-              ],
-            })
-            .populate({
-              path: "comments",
-              populate: [
-                {
-                  path: "author",
-                  select: "_id firstName lastName createdAt username avatar",
-                  populate: [{ path: "avatar" }],
-                },
-                {
-                  path: "reactions",
-                  populate: [
-                    {
-                      path: "author",
-                      select:
-                        "_id firstName lastName createdAt username avatar",
-                      populate: [{ path: "avatar" }],
-                    },
-                    { path: "comment" },
-                  ],
-                },
-              ],
-              options: { sort: { createdAt: -1 } },
-            })
-            .populate({
-              path: "files",
-            });
+          );
 
-          if (!infoPostAfterUnlike)
-            reject({ error: true, message: "cannot_update" });
+          const infoPost = await POST.getPostById({
+            postId: infoPostAfterUnlike._id,
+          }).catch((error) => {
+            reject(error.message);
+          });
+
           await Reaction.deleteOne({ _id: reaction[0]._id })
-            .then((reaction) => {
-              resolve({ error: false, data: infoPostAfterUnlike });
+            .then(() => {
+              resolve(infoPost[0]);
             })
             .catch((error) => {
-              reject({ error: true, message: error.message });
+              reject(error.message);
             });
         }
       } else {
@@ -161,52 +82,24 @@ const likePost = async ({ postId, type, userId }) => {
           reject({ error: true, message: error.message });
         });
 
-        await Post.findByIdAndUpdate(
+        const infoAfterUpdate = await Post.findByIdAndUpdate(
           postId,
           {
             $push: { reactions: infoNewReaction._id },
           },
           { new: true }
-        )
-          .populate({
-            path: "author",
-            select: "_id firstName lastName createdAt username avatar",
-            populate: [{ path: "avatar" }],
-          })
-          .populate({
-            path: "reactions",
-            populate: [
-              {
-                path: "author",
-                select: "_id firstName lastName createdAt username avatar",
-                populate: [{ path: "avatar" }],
-              },
-              { path: "post" },
-            ],
-          })
-          .populate({
-            path: "comments",
-            populate: [
-              { path: "author" },
-              {
-                path: "reactions",
-                populate: [{ path: "author" }, { path: "comment" }],
-              },
-            ],
-            options: { sort: { createdAt: -1 } },
-          })
-          .populate({
-            path: "files",
-          })
-          .then((post) => {
-            resolve({ error: false, data: post });
+        );
+
+        await POST.getPostById({ postId: infoAfterUpdate._id })
+          .then((data) => {
+            resolve(data[0]);
           })
           .catch((error) => {
-            reject({ error: true, message: error.message });
+            reject(error.message);
           });
       }
     } catch (error) {
-      reject({ error: true, message: error.message });
+      reject(error);
     }
   });
 };
@@ -226,13 +119,13 @@ const countReaction = async ({ postId }) => {
         },
       ])
         .then((data) => {
-          resolve({ error: false, data });
+          resolve(data);
         })
         .catch((error) => {
-          reject({ error: true, message: error.message });
+          reject(error.message);
         });
     } catch (error) {
-      reject({ error: true, message: error.message });
+      reject(error.message);
     }
   });
 };

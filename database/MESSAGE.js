@@ -6,11 +6,235 @@ import { checkObjectIDs } from "../utils/db-check";
 const Message = mongoose.model("Message");
 const Conversation = mongoose.model("Conversation");
 
+const messagesLookup = [
+  {
+    $lookup: {
+      from: "users",
+      let: { sender: "$sender" },
+      pipeline: [
+        {
+          $match: { $expr: { $eq: ["$_id", "$$sender"] } },
+        },
+        {
+          $lookup: {
+            from: "files",
+            localField: "avatar",
+            foreignField: "_id",
+            as: "avatar",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            createdAt: 1,
+            username: 1,
+            avatar: 1,
+          },
+        },
+      ],
+      as: "sender",
+    },
+  },
+  {
+    $lookup: {
+      from: "users",
+      let: { receivers: "$receivers" },
+      pipeline: [
+        {
+          $match: { $expr: { $in: ["$_id", "$$receivers"] } },
+        },
+        {
+          $lookup: {
+            from: "files",
+            localField: "avatar",
+            foreignField: "_id",
+            as: "avatar",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            createdAt: 1,
+            username: 1,
+            avatar: 1,
+          },
+        },
+      ],
+      as: "receivers",
+    },
+  },
+  {
+    $lookup: {
+      from: "users",
+      let: { listSeen: "$listSeen" },
+      pipeline: [
+        {
+          $match: { $expr: { $in: ["$_id", "$$listSeen"] } },
+        },
+        {
+          $lookup: {
+            from: "files",
+            localField: "avatar",
+            foreignField: "_id",
+            as: "avatar",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            createdAt: 1,
+            username: 1,
+            avatar: 1,
+          },
+        },
+      ],
+      as: "listSeen",
+    },
+  },
+  {
+    $lookup: {
+      from: "reactions",
+      let: { reactions: "$reactions" },
+      pipeline: [
+        {
+          $match: { $expr: { $in: ["$_id", "$$reactions"] } },
+        },
+        {
+          $lookup: {
+            from: "users",
+            let: { author: "$author" },
+            pipeline: [
+              {
+                $match: { $expr: { $eq: ["$_id", "$$author"] } },
+              },
+              {
+                $lookup: {
+                  from: "files",
+                  localField: "avatar",
+                  foreignField: "_id",
+                  as: "avatar",
+                },
+              },
+              {
+                $project: {
+                  _id: 1,
+                  firstName: 1,
+                  lastName: 1,
+                  createdAt: 1,
+                  username: 1,
+                  avatar: 1,
+                },
+              },
+            ],
+            as: "author",
+          },
+        },
+      ],
+      as: "reactions",
+    },
+  },
+  {
+    $lookup: {
+      from: "users",
+      let: { listSeen: "$listSeen" },
+      pipeline: [
+        {
+          $match: { $expr: { $in: ["$_id", "$$listSeen"] } },
+        },
+        {
+          $lookup: {
+            from: "files",
+            localField: "avatar",
+            foreignField: "_id",
+            as: "avatar",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            createdAt: 1,
+            username: 1,
+            avatar: 1,
+          },
+        },
+      ],
+      as: "listSeen",
+    },
+  },
+  {
+    $lookup: {
+      from: "messages",
+      let: { lastMessage: "$lastMessage" },
+      pipeline: [
+        {
+          $match: { $expr: { $eq: ["$_id", "$$lastMessage"] } },
+        },
+        {
+          $lookup: {
+            from: "users",
+            let: { sender: "$sender" },
+            pipeline: [
+              {
+                $match: { $expr: { $eq: ["$_id", "$$sender"] } },
+              },
+              {
+                $lookup: {
+                  from: "files",
+                  localField: "avatar",
+                  foreignField: "_id",
+                  as: "avatar",
+                },
+              },
+              {
+                $project: {
+                  _id: 1,
+                  firstName: 1,
+                  lastName: 1,
+                  createdAt: 1,
+                  username: 1,
+                  avatar: 1,
+                  isOnline: 1,
+                },
+              },
+            ],
+            as: "author",
+          },
+        },
+      ],
+      as: "author",
+    },
+  },
+  {
+    $lookup: {
+      from: "files",
+      localField: "files",
+      foreignField: "_id",
+      as: "files",
+    },
+  },
+  {
+    $lookup: {
+      from: "files",
+      localField: "logo",
+      foreignField: "_id",
+      as: "logo",
+    },
+  },
+];
+
 const sendMessage = async ({ conversationId, message, type, userId }) => {
   return new Promise(async (resolve) => {
     try {
       if (!checkObjectIDs(conversationId)) {
-        resolve({ error: true, message: "param_invalid" });
+        reject({ error: true, message: "param_invalid" });
       }
 
       const newMessage = new Message({
@@ -21,85 +245,33 @@ const sendMessage = async ({ conversationId, message, type, userId }) => {
       });
 
       const infoMessAfterInsert = await newMessage.save().catch((error) => {
-        resolve({ error: true, message: error.message });
+        reject({ error: true, message: error.message });
       });
 
       await Conversation.findByIdAndUpdate(
-        infoMessAfterInsert.conversation,
+        mongoose.Types.ObjectId(infoMessAfterInsert.conversation),
         {
           lastMessage: infoMessAfterInsert._id,
         },
         { new: true }
       );
 
-      await Message.findById(infoMessAfterInsert._id)
-        .populate({
-          path: "sender",
-          select: "_id firstName lastName username isOnline avatar",
-        })
-        .populate({
-          path: "receivers",
-          select: "_id firstName lastName username isOnline avatar",
-        })
-        .populate({
-          path: "listSeen",
-          select: "_id firstName lastName username isOnline avatar",
-        })
-        .populate({
-          path: "reactions",
-          populate: [
-            {
-              path: "author",
-              select: "_id firstName lastName username isOnline avatar",
-            },
-            {
-              path: "message",
-            },
-          ],
-        })
-        .populate({
-          path: "lastMessage",
-          populate: [
-            {
-              path: "sender",
-              select: "_id firstName lastName username isOnline avatar",
-            },
-            {
-              path: "receivers",
-              select: "_id firstName lastName username isOnline avatar",
-            },
-            {
-              path: "listSeen",
-              select: "_id firstName lastName username isOnline avatar",
-            },
-            {
-              path: "reactions",
-              populate: [
-                {
-                  path: "author",
-                  select: "_id firstName lastName username isOnline avatar",
-                },
-                {
-                  path: "message",
-                },
-              ],
-            },
-          ],
-        })
-        .populate({
-          path: "logo",
-        })
-        .populate({
-          path: "files",
-        })
-        .then((infoMessage) => {
-          resolve({ error: false, data: infoMessage });
+      await Message.aggregate([
+        {
+          $match: {
+            conversation: mongoose.Types.ObjectId(infoMessAfterInsert._id),
+          },
+        },
+        ...messagesLookup,
+      ])
+        .then((data) => {
+          resolve(data);
         })
         .catch((error) => {
-          resolve({ error: true, message: error.message });
+          reject({ error: true, message: error.message });
         });
     } catch (error) {
-      resolve({ error: true, message: error.message });
+      reject({ error: true, message: error.message });
     }
   });
 };
@@ -109,82 +281,30 @@ const getMessages = async ({ conversationId, currentPage }) => {
     try {
       const page = Number(currentPage) || 1;
       const perPage = 20;
-      const infoConversation = await Conversation.findById(
-        conversationId
-      ).select("_id");
-      await Message.find({
-        conversation: infoConversation._id,
-      })
-        .populate("conversation")
-        .populate({
-          path: "sender",
-          select: "_id firstName lastName username isOnline avatar",
-          populate: [{ path: "avatar" }],
+
+      await Message.aggregate([
+        {
+          $match: {
+            conversation: mongoose.Types.ObjectId(conversationId),
+          },
+        },
+        ...messagesLookup,
+        {
+          $sort: { createdAt: -1 },
+        },
+        {
+          $skip: page * perPage - perPage,
+        },
+        {
+          $limit: perPage,
+        },
+      ])
+        .then((data) => {
+          resolve(data);
         })
-        .populate({
-          path: "receivers",
-          select: "_id firstName lastName username isOnline avatar",
-        })
-        .populate({
-          path: "listSeen",
-          select: "_id firstName lastName username isOnline avatar",
-        })
-        .populate({
-          path: "reactions",
-          populate: [
-            {
-              path: "author",
-              select: "_id firstName lastName username isOnline avatar",
-            },
-            {
-              path: "message",
-            },
-          ],
-        })
-        .populate({
-          path: "lastMessage",
-          populate: [
-            {
-              path: "sender",
-              select: "_id firstName lastName username isOnline avatar",
-            },
-            {
-              path: "receivers",
-              select: "_id firstName lastName username isOnline avatar",
-            },
-            {
-              path: "listSeen",
-              select: "_id firstName lastName username isOnline avatar",
-            },
-            {
-              path: "reactions",
-              populate: [
-                {
-                  path: "author",
-                  select: "_id firstName lastName username isOnline avatar",
-                },
-                {
-                  path: "message",
-                },
-              ],
-            },
-          ],
-        })
-        .populate({
-          path: "logo",
-        })
-        .populate({
-          path: "files",
-        })
-        .skip(page * perPage - perPage)
-        .limit(perPage)
-        .sort({ createdAt: -1 })
-        .then((messages) => {
-          resolve({ error: false, data: messages });
-        })
-        .catch((err) => resolve({ error: true, message: err.message }));
+        .catch((err) => reject({ error: true, message: err.message }));
     } catch (error) {
-      return resolve({ error: true, message: error.message });
+      return reject({ error: true, message: error.message });
     }
   });
 };

@@ -11,12 +11,7 @@ router.post(
   postController.createPost
 );
 
-router.post(
-  "/getPost",
-  helpers.checkAuth,
-  validator.postValidator.getPost,
-  postController.getPost
-);
+router.post("/getPost", postController.getPost);
 
 router.get("/getPosts", helpers.checkAuth, postController.getPosts);
 

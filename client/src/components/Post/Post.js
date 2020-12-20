@@ -1,20 +1,26 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
 import moment from "moment";
-import { Modal, Avatar } from "antd";
+import { Modal, Avatar, Dropdown } from "antd";
 
 import { Theme } from "../../constants/index";
 import img5 from "../../assets/image/avatar-5.png";
-
+import ButtonSVG from "../ButtonSVG";
 import PostReactionDisplay from "./PostReactionDisplay";
 import PostReaction from "./PostReaction";
 import ListReactions from "./ListReactions";
+import MenuOption from "./MenuOption";
 import ListComment from "./ListComment";
+import EditPost from "./EditPost";
 import LINK_CONSTANT from "../../constants/link.constants";
 
 const Post = (props) => {
+	const { infoUser } = useSelector((state) => state.users);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [showComment, setShowComment] = useState(false);
+	const [optionShow, setOptionShow] = useState(false);
+	const [visible, setVisible] = useState(false);
 
 	const { post } = props;
 	const [postN, setPostN] = useState(post);
@@ -22,19 +28,46 @@ console.log("post: ", post);
 	return postN && postN.author ? (
 		<div className="post">
 			<div className="post-header">
-				<Avatar
-					size={40}
-					className="post-header__avt"
-					src={
-						postN.author[0].avatar.length
-							? `${LINK_CONSTANT.LINK_S3}${postN.author[0].avatar[0].path}`
-							: img5
-					}
-				/>
-				<div className="post-header__name">{`${postN.author[0].firstName} ${postN.author[0].lastName}`}</div>
-				<div className="post-header__created">
-					{moment(postN.createdAt).locale("vi").fromNow()}
+				<div className="post-header__left">
+					<Avatar
+						size={40}
+						className="post-header__avt"
+						src={
+							postN.author[0].avatar.length
+								? `${LINK_CONSTANT.LINK_S3}${postN.author[0].avatar[0].path}`
+								: img5
+						}
+					/>
+					<div className="post-header__name">{`${postN.author[0].firstName} ${postN.author[0].lastName}`}</div>
+					<div className="post-header__created">
+						{moment(postN.createdAt).locale("vi").fromNow()}
+					</div>
 				</div>
+				{postN.author[0]._id === infoUser._id && (
+					<div className="post-header__right">
+						<Dropdown
+							overlay={
+								<MenuOption
+									clickFunc={setOptionShow}
+									setVisible={setVisible}
+								/>
+							}
+							placement="bottomRight"
+							visible={optionShow}
+							onClick={() => setOptionShow(!optionShow)}
+						>
+							<a
+								className="ant-dropdown-link"
+								onClick={(e) => e.preventDefault()}
+							>
+								<ButtonSVG
+									icon="icon-menu"
+									// onClick={() => setOption(!option)}
+								/>
+							</a>
+						</Dropdown>
+					</div>
+				)}
 			</div>
 
 			<div className="post-body">
@@ -85,15 +118,28 @@ console.log("post: ", post);
 				/>
 			</div>
 			<Modal
-				title="Danh sách lượt thích"
+				// title="Danh sách lượt thích"
+				className="list-reactions-modal"
+				getContainer={false}
 				visible={isModalVisible}
 				footer={null}
-				width="fit-content"
+				width="455px"
+				closable={false}
 				onCancel={() => setIsModalVisible(false)}
 				headStyle={{ borderRadius: "10px 10px 0 0" }}
 				style={{ borderRadius: "10px" }}
 			>
 				<ListReactions postN={postN} />
+			</Modal>
+			<Modal
+				className="modal-edit-post"
+				title="Chỉnh sửa bài viết"
+				getContainer={false}
+				visible={visible}
+				onOk={() => setVisible(false)}
+				onCancel={() => setVisible(false)}
+			>
+				<EditPost post={postN} />
 			</Modal>
 		</div>
 	) : null;

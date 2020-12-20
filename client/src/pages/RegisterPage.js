@@ -19,7 +19,7 @@ const RegisterPage = (props) => {
 		email: "",
 	});
 	const { Option } = Select;
-	const [submitted, setSubmitted] = useState(false);
+	const [submitted, setSubmitted] = useState("false");
 	const { isLoggedIn } = useSelector((state) => state.authentication);
 	const dispatch = useDispatch();
 
@@ -36,7 +36,7 @@ const RegisterPage = (props) => {
 	};
 
 	const handleRegister = (e) => {
-		console.log(user.user);
+		console.log(user);
 		let result = true;
 		if (
 			user.username === "" ||
@@ -54,14 +54,14 @@ const RegisterPage = (props) => {
 		if (result) {
 			try {
 				e.preventDefault();
-				setSubmitted(true);
+				setSubmitted("true");
 				dispatch(userActions.register(user))
 					.then(() => {
 						props.history.push({ pathname: "/login" });
 						window.location.reload();
 					})
 					.catch((error) => {
-						setSubmitted(false);
+						setSubmitted("false");
 						openNotificationWithIcon("error", error);
 					});
 			} catch (error) {
@@ -110,116 +110,122 @@ const RegisterPage = (props) => {
 							/>
 						</div>
 					</div>
-					<div className="login__row">
-						<div className="login__col">
-							<div className="field">
-								<div className="field__label">Họ</div>
-								<div className="field__wrap">
-									<input
-										className="field__input"
-										type="text"
-										placeholder="Nhập họ ..."
-										submitted={submitted}
-										name="firstName"
-										value={user.firstName}
-										onChange={handleChange}
-									/>
+
+					<form onSubmit={handleRegister}>
+						<div className="login__row">
+							<div className="login__col">
+								<div className="field">
+									<div className="field__label">Họ</div>
+									<div className="field__wrap">
+										<input
+											className="field__input"
+											type="text"
+											placeholder="Nhập họ ..."
+											submitted={submitted}
+											name="firstName"
+											value={user.firstName}
+											onChange={handleChange}
+										/>
+									</div>
+								</div>
+							</div>
+							<div className="login__col">
+								<div className="field">
+									<div className="field__label">Tên</div>
+									<div className="field__wrap">
+										<input
+											className="field__input"
+											type="text"
+											placeholder="Nhập tên ..."
+											submitted={submitted}
+											name="lastName"
+											value={user.lastName}
+											onChange={handleChange}
+										/>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div className="login__col">
-							<div className="field">
-								<div className="field__label">Tên</div>
-								<div className="field__wrap">
-									<input
-										className="field__input"
-										type="text"
-										placeholder="Nhập tên ..."
-										submitted={submitted}
-										name="lastName"
-										value={user.lastName}
-										onChange={handleChange}
-									/>
+						<div className="login__row">
+							<div className="login__col">
+								<div className="field">
+									<div className="field__label">
+										Giới tính
+									</div>
+									<div className="field__wrap">
+										<Select
+											name="gender"
+											defaultValue="0"
+											onChange={(value) =>
+												setUser((user) => ({
+													...user,
+													gender: value,
+												}))
+											}
+											style={{ width: "100%" }}
+										>
+											<Option value="0">Nam</Option>
+											<Option value="1">Nữ</Option>
+										</Select>
+									</div>
+								</div>
+							</div>
+							<div className="login__col">
+								<div className="field">
+									<div className="field__label">
+										Ngày sinh
+									</div>
+									<div className="field__wrap">
+										<DatePicker
+											style={{ width: "100%" }}
+											placeholder="Chọn ngày"
+											format="DD/MM/yyyy"
+											onChange={(date) => {
+												setUser((user) => ({
+													...user,
+													birthday: date,
+												}));
+											}}
+										/>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div className="login__row">
-						<div className="login__col">
-							<div className="field">
-								<div className="field__label">Giới tính</div>
-								<div className="field__wrap">
-									<Select
-										name="gender"
-										defaultValue="0"
-										onChange={(value) =>
-											setUser((user) => ({
-												...user,
-												gender: value,
-											}))
-										}
-										style={{ width: "100%" }}
-									>
-										<Option value="0">Nam</Option>
-										<Option value="1">Nữ</Option>
-									</Select>
-								</div>
+						<div className="field">
+							<div className="field__label">Email</div>
+							<div className="field__wrap">
+								<input
+									className="field__input"
+									type="email"
+									placeholder="Nhập email ..."
+									submitted={submitted}
+									name="email"
+									value={user.email}
+									onChange={handleChange}
+								/>
 							</div>
 						</div>
-						<div className="login__col">
-							<div className="field">
-								<div className="field__label">Ngày sinh</div>
-								<div className="field__wrap">
-									<DatePicker
-										style={{ width: "100%" }}
-										placeholder="Chọn ngày"
-										format="DD/MM/yyyy"
-										onChange={(date) => {
-											setUser((user) => ({
-												...user,
-												birthday: date,
-											}));
-										}}
-									/>
-								</div>
+						<div className="field">
+							<div className="field__label">Mật khẩu</div>
+							<div className="field__wrap">
+								<input
+									className="field__input"
+									type="password"
+									placeholder="Nhập mật khẩu ..."
+									submitted={submitted}
+									name="password"
+									value={user.password}
+									onChange={handleChange}
+								/>
 							</div>
 						</div>
-					</div>
-					<div className="field">
-						<div className="field__label">Email</div>
-						<div className="field__wrap">
-							<input
-								className="field__input"
-								type="email"
-								placeholder="Nhập email ..."
-								submitted={submitted}
-								name="email"
-								value={user.email}
-								onChange={handleChange}
-							/>
-						</div>
-					</div>
-					<div className="field">
-						<div className="field__label">Mật khẩu</div>
-						<div className="field__wrap">
-							<input
-								className="field__input"
-								type="password"
-								placeholder="Nhập mật khẩu ..."
-								submitted={submitted}
-								name="password"
-								value={user.password}
-								onChange={handleChange}
-							/>
-						</div>
-					</div>
-					<button
-						className="login__btn btn btn_purple btn_wide"
-						type="button"
-						onClick={handleRegister}
-					>
-						Tạo tài khoản
-					</button>
+						<button
+							className="login__btn btn btn_purple btn_wide"
+							type="submit"
+						>
+							Tạo tài khoản
+						</button>
+					</form>
 				</div>
 			</div>
 		</div>

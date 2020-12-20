@@ -73,7 +73,7 @@ const insert = async ({ body }) => {
         $or: [{ email: email }, { username: username }],
       }).then((user) => {
         if (!user) {
-          bcrypt.hash(password, 10, (err, hash) => {
+          bcrypt.hash(password, 10, (error, hash) => {
             if (error) {
               reject(error.message);
             } else {

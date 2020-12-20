@@ -15,7 +15,7 @@ const AccountPage = (props) => {
 	const dispatch = useDispatch();
 
 	const [userData, setUserData] = useState(null);
-	const [isType, setIsType] = useState(-1);
+	const [isType, setIsType] = useState(-1); // -1: kết bạn, 0: is me, 1: bạn bè
 	const { loadingUserProfile, infoUser } = props;
 	console.log("infoUser", infoUser);
 

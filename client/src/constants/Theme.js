@@ -20,6 +20,9 @@ import {
 	faEnvelope,
 	faBirthdayCake,
 	faTransgenderAlt,
+	faUserPlus,
+	faUserCheck,
+	faUserTimes,
 } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
@@ -44,6 +47,9 @@ const ICONS = {
 	envelope: faEnvelope,
 	birthday: faBirthdayCake,
 	transgenderAlt: faTransgenderAlt,
+	faUserPlus,
+	faUserCheck,
+	faUserTimes,
 };
 
 const COLORS = {

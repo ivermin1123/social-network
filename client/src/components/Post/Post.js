@@ -24,8 +24,8 @@ const Post = (props) => {
 
 	const { post } = props;
 	const [postN, setPostN] = useState(post);
-
-	return (
+console.log("post: ", post);
+	return postN && postN.author ? (
 		<div className="post">
 			<div className="post-header">
 				<div className="post-header__left">
@@ -71,7 +71,9 @@ const Post = (props) => {
 			</div>
 
 			<div className="post-body">
-				<div className="post-body__content">{postN.description}</div>
+				<div className="post-body__content">
+					{postN.description || ""}
+				</div>
 				<img
 					src={
 						postN.files.length
@@ -140,7 +142,7 @@ const Post = (props) => {
 				<EditPost post={postN} />
 			</Modal>
 		</div>
-	);
+	) : null;
 };
 
 export default Post;

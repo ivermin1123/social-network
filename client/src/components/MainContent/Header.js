@@ -10,6 +10,7 @@ import sprite from "../../assets/icons/sprite.svg";
 import avatar2 from "../../assets/image/avatarDefault.png";
 import userActions from "../../actions/user.actions";
 import LINK_CONSTANTS from "../../constants/link.constants";
+import Setting from "./Setting";
 
 function Header(props) {
 	const dispatch = useDispatch();
@@ -17,10 +18,9 @@ function Header(props) {
 	const [isActive2, setActive2] = useState(false);
 	const [isActive3, setActive3] = useState(false);
 	const [isActive4, setActive4] = useState(false);
+	const [isModalShow, setIsModalShow] = useState(false);
 
 	const { infoUser } = props;
-	const { avatar } = infoUser;
-
 	const handleLogout = (e) => {
 		e.preventDefault();
 		dispatch(userActions.logout());
@@ -151,8 +151,8 @@ function Header(props) {
 							size={48}
 							className="header__pic"
 							src={
-								avatar.length
-									? `${LINK_CONSTANTS.LINK_S3}${avatar[0].path}`
+								infoUser && infoUser.avatar[0]
+									? `${LINK_CONSTANTS.LINK_S3}${infoUser.avatar[0].path}`
 									: avatar2
 							}
 						/>
@@ -161,19 +161,39 @@ function Header(props) {
 						<ProfileItem
 							icon="icon-profile"
 							name="Profile"
-							href="/account"
+							href={
+								infoUser && infoUser._id
+									? `/account/${infoUser._id}`
+									: "/#"
+							}
 						/>
 						<ProfileItem icon="icon-document" name="My Playlist" />
 						<ProfileItem icon="icon-joystick" name="My Chanel" />
-						<ProfileItem icon="icon-settings" name="Setting" />
+						<ProfileItem
+							icon="icon-settings"
+							name="Cài đặt"
+							handleClick={() => {
+								setIsModalShow(true);
+							}}
+						/>
 						<ProfileItem
 							icon="icon-logout"
-							name="Logout"
+							name="Đăng xuất"
 							handleClick={handleLogout}
 						/>
 					</div>
 				</div>
 			</OutsideClick>
+			<Setting
+				infoUser={infoUser}
+				visible={isModalShow}
+				handleOk={() => {
+					setIsModalShow(false);
+				}}
+				handleCancel={() => {
+					setIsModalShow(false);
+				}}
+			/>
 		</div>
 	);
 }

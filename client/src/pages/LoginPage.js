@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { notification } from "antd";
 import { FormLeft } from "../components/_components";
 import userActions from "../actions/user.actions";
 import sprite from "../assets/icons/sprite.svg";
@@ -8,16 +9,10 @@ import bgSignIn from "../assets/image/bg-sign-in.png";
 
 const LoginPage = (props) => {
 	const [inputs, setInputs] = useState({
-		email: "",
 		username: "",
 		password: "",
-		emailToVerify: "",
-		forgotPasswordEmail: "",
-		submitted: false,
-		showForm: false,
-		forgotPasswordForm: false,
 	});
-	const [submitted, setSubmitted] = useState(false);
+	const [submitted, setSubmitted] = useState("false");
 	const { username, password } = inputs;
 	const { isLoggedIn } = useSelector((state) => state.authentication);
 	const dispatch = useDispatch();
@@ -26,20 +21,36 @@ const LoginPage = (props) => {
 		setInputs((inputs) => ({ ...inputs, [name]: value }));
 	};
 
+	const openNotificationWithIcon = (type, error) => {
+		notification[type]({
+			message: error || "Không thành công",
+			description: "Bạn vui lòng thử lại",
+		});
+	};
 	const handleLogin = (e) => {
-		e.preventDefault();
+		let result = true;
+		if (inputs.username === "" || inputs.password === "") {
+			openNotificationWithIcon(
+				"warning",
+				"Yêu cầu nhập đầy đủ thông tin"
+			);
+			result = false;
+		}
+		if (result) {
+			e.preventDefault();
 
-		setSubmitted(true);
-		if (username && password) {
-			// get return url from location state or default to home page
-			dispatch(userActions.login(username, password))
-				.then(() => {
-					props.history.push({ pathname: "/" });
-					window.location.reload();
-				})
-				.catch(() => {
-					setSubmitted(false);
-				});
+			setSubmitted("true");
+			if (username && password) {
+				dispatch(userActions.login(username, password))
+					.then(() => {
+						props.history.push({ pathname: "/" });
+						window.location.reload();
+					})
+					.catch(() => {
+						setSubmitted("false");
+						openNotificationWithIcon("error");
+					});
+			}
 		}
 	};
 
@@ -47,7 +58,12 @@ const LoginPage = (props) => {
 		return <Redirect to="/" />;
 	}
 	return (
-		<div className="login" style={{ backgroundImage: `url(${bgSignIn})` }}>
+		<div
+			className="login"
+			style={{
+				backgroundImage: `url(${bgSignIn})`,
+			}}
+		>
 			<div className="login__container">
 				<FormLeft />
 				<div className="login__form">
@@ -65,43 +81,46 @@ const LoginPage = (props) => {
 							Tạo tài khoản
 						</a>
 					</div>
-					<div className="field">
-						<div className="field__label">
-							Tên đăng nhập hoặc mật khẩu
+					<form onSubmit={handleLogin}>
+						<div className="field">
+							<div className="field__label">
+								Tên đăng nhập hoặc mật khẩu
+							</div>
+							<div className="field__wrap">
+								<input
+									className="field__input"
+									type="text"
+									placeholder="Nhập tên đăng nhập hoặc email ..."
+									submitted={submitted}
+									name="username"
+									value={username}
+									onChange={handleChange}
+								/>
+							</div>
 						</div>
-						<div className="field__wrap">
-							<input
-								className="field__input"
-								type="email"
-								placeholder="Nhập tên đăng nhập hoặc email ..."
-								submitted={submitted}
-								name="username"
-								value={username}
-								onChange={handleChange}
-							/>
+
+						<div className="field">
+							<div className="field__label">Mật khẩu</div>
+							<div className="field__wrap">
+								<input
+									className="field__input"
+									type="password"
+									placeholder="Nhập mật khẩu ..."
+									submitted={submitted}
+									name="password"
+									value={password}
+									onChange={handleChange}
+								/>
+							</div>
 						</div>
-					</div>
-					<div className="field">
-						<div className="field__label">Mật khẩu</div>
-						<div className="field__wrap">
-							<input
-								className="field__input"
-								type="password"
-								placeholder="Nhập mật khẩu ..."
-								submitted={submitted}
-								name="password"
-								value={password}
-								onChange={handleChange}
-							/>
-						</div>
-					</div>
-					<button
-						className="login__btn btn btn_purple btn_wide"
-						type="button"
-						onClick={handleLogin}
-					>
-						Tiếp tục
-					</button>
+
+						<button
+							className="login__btn btn btn_purple btn_wide"
+							type="submit"
+						>
+							Tiếp tục
+						</button>
+					</form>
 					<div className="login__or">Hoặc tiếp tục với</div>
 					<button
 						className="login__btn btn btn_blue btn_wide"

@@ -8,6 +8,7 @@ import App from "./App";
 import "./assets/styles/app.css";
 import "./assets/styles/index.scss";
 import "antd/dist/antd.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const mountPoint = document.getElementById("root");
 

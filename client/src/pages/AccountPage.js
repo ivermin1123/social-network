@@ -47,7 +47,7 @@ const AccountPage = (props) => {
 			<div className="page__center page__center_pt0">
 				<div className="author author_big">
 					<div className="author__container">
-						<AuthorDetail userData={userData} />
+						<AuthorDetail userData={userData} isType={isType} />
 						<AuthorButton isType={isType} />
 					</div>
 				</div>

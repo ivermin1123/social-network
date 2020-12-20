@@ -18,6 +18,9 @@ const ListReactions = (props) => {
 		const arrReaction = postN.reactions.filter(
 			(reaction) => reaction.type === type
 		);
+		if (arrReaction.length <= 0) {
+			return null;
+		}
 		return arrReaction.map((reaction) => (
 			<div className="reaction-item" key={reaction._id}>
 				<div className="reaction-item__left">
@@ -64,102 +67,120 @@ const ListReactions = (props) => {
 					</div>
 				))}
 			</TabPane>
-			<TabPane
-				tab={
-					<span className="list-reaction-icon">
-						<img src={like} alt="" />
-						&nbsp;{" "}
-						{
-							postN.reactions.filter(
-								(reaction) => reaction.type === 1
-							).length
-						}
-					</span>
-				}
-				key="2"
-			>
-				{getListReactionByType(1)}
-			</TabPane>
-			<TabPane
-				tab={
-					<span className="list-reaction-icon">
-						<img src={love} alt="" />
-						&nbsp;
-						{
-							postN.reactions.filter(
-								(reaction) => reaction.type === 2
-							).length
-						}
-					</span>
-				}
-				key="3"
-			>
-				{getListReactionByType(2)}
-			</TabPane>
-			<TabPane
-				tab={
-					<span className="list-reaction-icon">
-						<img src={haha} alt="" />
-						&nbsp;
-						{
-							postN.reactions.filter(
-								(reaction) => reaction.type === 3
-							).length
-						}
-					</span>
-				}
-				key="4"
-			>
-				{getListReactionByType(3)}
-			</TabPane>
-			<TabPane
-				tab={
-					<span className="list-reaction-icon">
-						<img src={wow} alt="" />
-						&nbsp;
-						{
-							postN.reactions.filter(
-								(reaction) => reaction.type === 4
-							).length
-						}
-					</span>
-				}
-				key="5"
-			>
-				{getListReactionByType(4)}
-			</TabPane>
-			<TabPane
-				tab={
-					<span className="list-reaction-icon">
-						<img src={sad} alt="" />
-						&nbsp;
-						{
-							postN.reactions.filter(
-								(reaction) => reaction.type === 5
-							).length
-						}
-					</span>
-				}
-				key="6"
-			>
-				{getListReactionByType(5)}
-			</TabPane>
-			<TabPane
-				tab={
-					<span className="list-reaction-icon">
-						<img src={angry} alt="" />
-						&nbsp;
-						{
-							postN.reactions.filter(
-								(reaction) => reaction.type === 6
-							).length
-						}
-					</span>
-				}
-				key="7"
-			>
-				{getListReactionByType(6)}
-			</TabPane>
+			{postN.reactions.filter((reaction) => reaction.type === 1)
+				.length ? (
+				<TabPane
+					tab={
+						<span className="list-reaction-icon">
+							<img src={like} alt="" />
+							&nbsp;{" "}
+							{
+								postN.reactions.filter(
+									(reaction) => reaction.type === 1
+								).length
+							}
+						</span>
+					}
+					key="2"
+				>
+					{getListReactionByType(1)}
+				</TabPane>
+			) : null}
+			{postN.reactions.filter((reaction) => reaction.type === 2)
+				.length ? (
+				<TabPane
+					tab={
+						<span className="list-reaction-icon">
+							<img src={love} alt="" />
+							&nbsp;
+							{
+								postN.reactions.filter(
+									(reaction) => reaction.type === 2
+								).length
+							}
+						</span>
+					}
+					key="3"
+				>
+					{getListReactionByType(2)}
+				</TabPane>
+			) : null}
+			{postN.reactions.filter((reaction) => reaction.type === 3)
+				.length ? (
+				<TabPane
+					tab={
+						<span className="list-reaction-icon">
+							<img src={haha} alt="" />
+							&nbsp;
+							{
+								postN.reactions.filter(
+									(reaction) => reaction.type === 3
+								).length
+							}
+						</span>
+					}
+					key="4"
+				>
+					{getListReactionByType(3)}
+				</TabPane>
+			) : null}
+			{postN.reactions.filter((reaction) => reaction.type === 4)
+				.length ? (
+				<TabPane
+					tab={
+						<span className="list-reaction-icon">
+							<img src={wow} alt="" />
+							&nbsp;
+							{
+								postN.reactions.filter(
+									(reaction) => reaction.type === 4
+								).length
+							}
+						</span>
+					}
+					key="5"
+				>
+					{getListReactionByType(4)}
+				</TabPane>
+			) : null}
+			{postN.reactions.filter((reaction) => reaction.type === 5)
+				.length ? (
+				<TabPane
+					tab={
+						<span className="list-reaction-icon">
+							<img src={sad} alt="" />
+							&nbsp;
+							{
+								postN.reactions.filter(
+									(reaction) => reaction.type === 5
+								).length
+							}
+						</span>
+					}
+					key="6"
+				>
+					{getListReactionByType(5)}
+				</TabPane>
+			) : null}
+			{postN.reactions.filter((reaction) => reaction.type === 6)
+				.length ? (
+				<TabPane
+					tab={
+						<span className="list-reaction-icon">
+							<img src={angry} alt="" />
+							&nbsp;
+							{
+								postN.reactions.filter(
+									(reaction) => reaction.type === 6
+								).length
+							}
+						</span>
+					}
+					key="7"
+				>
+					{getListReactionByType(6)}
+				</TabPane>
+			) : null}
 		</Tabs>
 	);
 };

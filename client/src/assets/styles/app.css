@@ -2451,14 +2451,10 @@ body.dark .sidebar__bottom {
 
 .btn_white {
 	background: #ffffff;
-	border-color:white;
-	color: #1b1d21;	
-	box-shadow: 0 3px 3px var(--shadow-1),
-		inset 0 0 0 0 var(--shadow-inset);
+	color: #1b1d21;
 }
 
 .btn_white:hover {
-	border-color:#5a49ce;
 	color: #6c5dd3;
 }
 
@@ -9086,7 +9082,7 @@ body.dark .mfp-bg {
 	width: 124px;
 	height: 124px;
 	margin-right: 32px;
-	border-width: 3px;
+	border-width: 7px;
 	-webkit-box-shadow: 0 0 0 4px #0049c6;
 	box-shadow: 0 0 0 4px #0049c6;
 }

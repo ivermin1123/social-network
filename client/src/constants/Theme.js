@@ -23,7 +23,6 @@ import {
 	faUserPlus,
 	faUserCheck,
 	faUserTimes,
-	faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { faInstagram } from "@fortawesome/free-brands-svg-icons";
 
@@ -51,7 +50,6 @@ const ICONS = {
 	faUserPlus,
 	faUserCheck,
 	faUserTimes,
-	faPlus,
 };
 
 const COLORS = {

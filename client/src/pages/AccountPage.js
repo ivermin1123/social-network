@@ -17,7 +17,6 @@ const AccountPage = (props) => {
 	const [userData, setUserData] = useState(null);
 	const [isType, setIsType] = useState(-1); // -1: kết bạn, 0: is me, 1: bạn bè
 	const { loadingUserProfile, infoUser } = props;
-	console.log("infoUser", infoUser);
 
 	const checkIsType = () => {
 		if (infoUser._id === accountId) {
@@ -38,7 +37,6 @@ const AccountPage = (props) => {
 		checkIsType();
 	}, []);
 
-	console.log("userData", userData);
 	if (loadingUserProfile) return null;
 
 	return userData ? (

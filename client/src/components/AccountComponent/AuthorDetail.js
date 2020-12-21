@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
 import { Popover } from "antd";
@@ -22,6 +22,8 @@ const configToast = {
 
 const AuthorDetail = ({ ...props }) => {
 	const { userData, isType } = props;
+	const { infoUser } = props;
+	console.log("infoUser: ", infoUser);
 	const [show, setShow] = useState(false);
 	const [description, setDescription] = useState("");
 	const [file, setFile] = useState(null);
@@ -235,4 +237,7 @@ const AuthorDetail = ({ ...props }) => {
 	) : null;
 };
 
-export default AuthorDetail;
+const mapStateToProps = (state) => ({
+	infoUser: state.users.infoUser,
+});
+export default connect(mapStateToProps)(AuthorDetail);

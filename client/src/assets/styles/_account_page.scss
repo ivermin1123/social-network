@@ -3,6 +3,9 @@
 }
 .intro {
 	&-field {
+		&-header {
+			font-size: 1.25rem;
+		}
 		&-row {
 			flex-direction: row;
 			margin: 16px 10px;
@@ -25,17 +28,25 @@
 	}
 }
 .friend {
+	padding: 16px;
 	&-item {
-		display: flex;
 		flex-direction: row;
-		&-col__avatar {
-			display: inline-table;
-			width: 25%;
-		}
-		&-col__info {
-			display: inline-table;
-
-			&-name {
+		display: flex;
+		flex-wrap: wrap;
+		&-row {
+			display: inline-flex;
+			flex-direction: row;
+			flex: 0 50%;
+			&__avatar {
+				width: 70px;
+				height: 70px;
+				margin-right: 10px;
+				img {
+					object-fit: contain;
+				}
+			}
+			&__info {
+				font-size: 16px;
 			}
 		}
 	}

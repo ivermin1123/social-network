@@ -21,10 +21,12 @@ const NewsFeed = (props) => {
 	}
 	return (
 		<div id="post-list">
-			{posts.data.map((post) => {
-				const { _id: id } = post;
-				return <Post post={post} key={id} />;
-			})}
+			{posts.data
+				? posts.data.map((post) => {
+						const { _id: id } = post;
+						return <Post post={post} key={id} />;
+				  })
+				: null}
 		</div>
 	);
 };

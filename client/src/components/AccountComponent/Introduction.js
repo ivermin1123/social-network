@@ -8,9 +8,7 @@ const Introduction = ({ ...props }) => {
 		<div style={{ display: display || "none" }}>
 			<div className="intro">
 				<div className="intro-field">
-					<div className="intro-field-header">
-						<h5>Thông tin liên hệ</h5>
-					</div>
+					<div className="intro-field-header">Thông tin liên hệ</div>
 					{userData.phone ? (
 						<div className="intro-field-row">
 							<div className="intro-field-row__col">
@@ -54,9 +52,7 @@ const Introduction = ({ ...props }) => {
 				</div>
 			</div>
 			<div className="intro-field">
-				<div className="intro-field-header">
-					<h5>Thông tin cơ bản</h5>
-				</div>
+				<div className="intro-field-header">Thông tin cơ bản</div>
 				{userData.gender ? (
 					<div className="intro-field-row">
 						<div className="intro-field-row__col">

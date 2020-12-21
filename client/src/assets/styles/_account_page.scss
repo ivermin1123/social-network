@@ -1,5 +1,11 @@
+:root {
+	--hover: #f2f3f5;
+}
 .intro {
 	&-field {
+		&-header {
+			font-size: 1.25rem;
+		}
 		&-row {
 			flex-direction: row;
 			margin: 16px 10px;
@@ -22,17 +28,155 @@
 	}
 }
 .friend {
+	padding: 16px;
 	&-item {
-		display: flex;
 		flex-direction: row;
-		&-col__avatar {
-			display: inline-table;
-			width: 25%;
+		display: flex;
+		flex-wrap: wrap;
+		&-row {
+			display: inline-flex;
+			flex-direction: row;
+			flex: 0 50%;
+			&__avatar {
+				width: 70px;
+				height: 70px;
+				margin-right: 10px;
+				img {
+					object-fit: contain;
+				}
+			}
+			&__info {
+				font-size: 16px;
+			}
 		}
-		&-col__info {
-			display: inline-table;
-
-			&-name {
+	}
+}
+.ant-popover-content {
+	background-color: white;
+	width: 260px;
+	.ant-popover-inner {
+		border-radius: 10px;
+		&-content {
+			padding: 8px;
+		}
+		.item {
+			border-radius: 10px;
+			padding: 8px 16px;
+			height: 40px;
+			width: 100%;
+			.item-value {
+				cursor: pointer;
+				text-align: left;
+				margin: 0;
+				padding: 0;
+				height: 100%;
+				outline: none;
+				.icon {
+					margin-right: 5px;
+					width: 20px;
+				}
+			}
+		}
+		.item:hover {
+			background-color: var(--hover);
+		}
+	}
+}
+body.dark.post-form-modal {
+	background-color: black;
+}
+.post-form-modal {
+	background-color: #ffffff;
+	max-height: 700px;
+	min-height: 100px;
+	max-width: 678px;
+	width: 678px;
+	border-radius: 10px;
+	margin-top: 72px;
+	@media (max-width: 1260px) {
+		width: 100%;
+	}
+	&__header {
+		border-bottom: 1px solid lightgrey;
+		height: 45px;
+		display: flex;
+		justify-content: space-between;
+		&-title {
+			width: 100%;
+			margin: 0;
+			text-align: center;
+			font-size: 20px;
+			line-height: 45px;
+			font-weight: 600;
+		}
+		button {
+			margin: auto 5px;
+			width: 36px;
+			height: 36px;
+			border-radius: 50px;
+			outline: none;
+			background-color: var(--secondary-button-background);
+		}
+		button:hover {
+			background-color: var(--hover);
+		}
+	}
+	&__body {
+		padding: 0;
+		&-top {
+			display: flex;
+			padding: 16px;
+			width: 100%;
+			margin: 0;
+			label {
+				margin: auto;
+				outline: none;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				.icon {
+					font-size: 14px;
+					margin-right: 5px;
+				}
+				input[type="file"] {
+					display: none;
+				}
+			}
+		}
+		&-main {
+			&-top {
+				padding: 16px;
+				textarea {
+					width: 100%;
+					resize: none;
+					border-radius: 5px;
+					outline: none;
+					border: 1px solid lightgrey;
+					padding: 12px;
+				}
+				textarea:hover {
+					border-color: black;
+				}
+				.image-area {
+					padding: 16px 0;
+					text-align: center;
+					img {
+						margin: auto;
+						max-height: 500px;
+						object-fit: contain;
+					}
+				}
+				span {
+					margin-left: 10px;
+				}
+			}
+			&-bottom {
+				border-top: 1px solid lightgrey;
+				padding: 16px;
+				text-align: end;
+				.cancel {
+					margin-right: 10px;
+				}
 			}
 		}
 	}

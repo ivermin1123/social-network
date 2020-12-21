@@ -6,7 +6,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Theme } from "../../constants/index";
 import postActions from "../../actions/post.actions";
 import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
-import "react-toastify/dist/ReactToastify.css";
+import LINK_CONSTANT from "../../constants/link.constants";
+import "../../assets/styles/_postForm.scss";
+import ava from "../../assets/image/ava-1.png";
 
 const configToast = {
 	position: "top-right",
@@ -19,6 +21,7 @@ const configToast = {
 };
 
 const PostForm = ({ ...props }) => {
+	const { userData } = props;
 	const [show, setShow] = useState(false);
 	const [files, setFiles] = useState([]);
 	const [description, setDescription] = useState("");
@@ -97,11 +100,15 @@ const PostForm = ({ ...props }) => {
 			/>
 			<div className="post-form">
 				<div className="post-form-top">
-					<img
-						src="https://i.pinimg.com/736x/ae/c4/53/aec453161b2f33ffc6219d8a758307a9.jpg"
-						alt=""
-						className="post-form-top__avt"
-					/>
+					{userData.avatar && userData.avatar.length ? (
+						<img
+							className="img_avt"
+							src={`${LINK_CONSTANT.LINK_S3}${userData.avatar[0].path}`}
+							alt=""
+						/>
+					) : (
+						<img className="img_avt" src={ava} alt="" />
+					)}
 					<button
 						type="button"
 						className="post-form-top__btn"
@@ -140,11 +147,15 @@ const PostForm = ({ ...props }) => {
 				</Modal.Header>
 				<Modal.Body bsPrefix="post-form-modal__body">
 					<div className="post-form-modal__body-account">
-						<img
-							src="https://i.pinimg.com/736x/d3/63/54/d363546caad6e492a4921549f174ae5d.jpg"
-							alt=""
-							className="post-form-modal__body-account-avt"
-						/>
+						{userData.avatar && userData.avatar.length ? (
+							<img
+								className="img_avt"
+								src={`${LINK_CONSTANT.LINK_S3}${userData.avatar[0].path}`}
+								alt=""
+							/>
+						) : (
+							<img className="img_avt" src={ava} alt="" />
+						)}
 						<span className="post-form-modal__body-account-author">
 							Tu Nguyen
 						</span>
@@ -180,43 +191,35 @@ const PostForm = ({ ...props }) => {
 							</div>
 						) : null}
 					</div>
-					<div className="post-form-modal__footer row">
-						<div className="post-form-modal__footer-left col">
-							Thêm ảnh vào bài viết
-						</div>
-						<div className="post-form-modal__footer-right col">
-							<label
-								className="custom-file-upload"
-								htmlFor="file-upload"
-							>
-								<input
-									id="file-upload"
-									onChange={(e) => handleFile(e)}
-									type="file"
-									name="file"
-									multiple
-								/>
-								<FontAwesomeIcon
-									className="icon"
-									icon={Theme.ICONS.images}
-								/>
-							</label>
-						</div>
+					<div className="post-form-modal__footer">
+						<label
+							className="custom-file-upload"
+							htmlFor="file-upload"
+						>
+							<span>Thêm ảnh vào bài viết</span>
+							<input
+								id="file-upload"
+								onChange={(e) => handleFile(e)}
+								type="file"
+								name="file"
+								multiple
+							/>
+							<FontAwesomeIcon
+								className="icon"
+								icon={Theme.ICONS.images}
+							/>
+						</label>
 					</div>
 				</Modal.Body>
 				<Modal.Footer bsPrefix="post-form-modal__post-footer">
 					<button
-						style={
-							description.length || files.length
-								? {
-										backgroundColor: "#1877F2",
-										color: "white",
-										cursor: "pointer",
-								  }
-								: null
-						}
 						type="button"
-						className="post-form-bot__btn"
+						disabled={
+							description.length || files.length
+								? "false"
+								: "true"
+						}
+						className="btn btn_purple"
 						onClick={handleClick}
 					>
 						Đăng

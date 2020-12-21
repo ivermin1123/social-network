@@ -2,7 +2,9 @@ const webpack = require("webpack");
 const path = require("path");
 const Dotenv = require("dotenv-webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
+// const smp = new SpeedMeasurePlugin();
 module.exports = {
 	mode: "development",
 	resolve: {
@@ -10,11 +12,6 @@ module.exports = {
 	},
 	module: {
 		rules: [
-			{
-				test: /\.js$/,
-				exclude: /node_modules/,
-				loader: "babel-loader",
-			},
 			{
 				test: /\.scss$/,
 				exclude: /node_modules/,
@@ -120,8 +117,9 @@ module.exports = {
 		historyApiFallback: true,
 		hot: true,
 		port: 3000,
+		open: "chrome",
 	},
-	devtool: "cheap-module-source-map",
+	devtool: "eval-cheap-module-source-map",
 	entry: [
 		"react-hot-loader/patch",
 		"webpack-dev-server/client?http://localhost:3000",

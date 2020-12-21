@@ -57,7 +57,8 @@ export const list = {
 	},
 };
 
-function setReactionPost(type, setReactIcon, setReactName) {
+function setReactionPost(type, setReactIcon, setReactName, setTypeR) {
+	setTypeR(type);
 	switch (type) {
 		case 1:
 			setReactIcon(like);
@@ -95,11 +96,21 @@ function PostReaction(props) {
 	const [isHover, setIsHover] = useState(false);
 	const [reactName, setReactName] = useState("Thích");
 	const [reactIcon, setReactIcon] = useState(thumUp);
+	const [typeR, setTypeR] = useState();
 	const handleLike = (type) => {
 		setIsHover(false);
-		setReactionPost(type, setReactIcon, setReactName);
+		setReactionPost(postN.type, setReactIcon, setReactName, setTypeR);
 		dispatch(reactionActions.likePost(postN._id, type)).then((res) => {
 			setPostN(res.data);
+		});
+	};
+
+	const handleLikeButton = () => {
+		setIsHover(false);
+		setReactionPost(typeR, setReactIcon, setReactName, setTypeR);
+		dispatch(reactionActions.likePost(postN._id, typeR)).then((res) => {
+			setPostN(res.data);
+			setTypeR(1);
 		});
 	};
 
@@ -112,7 +123,7 @@ function PostReaction(props) {
 			}
 		});
 		if (isLike) {
-			setReactionPost(isLike, setReactIcon, setReactName);
+			setReactionPost(isLike, setReactIcon, setReactName, setTypeR);
 		} else {
 			setReactIcon(thumUp);
 			setReactName("Thích");
@@ -120,23 +131,27 @@ function PostReaction(props) {
 	}, [postN]);
 
 	return (
-		<LikeButton
-			type="button"
-			className="post-body__interact-option reactions"
-			onMouseOver={() => setIsHover(true)}
-			onMouseLeave={() => setIsHover(false)}
-			// onClick={() => handleLike(1)}
-		>
-			<Reaction
-				name={reactName}
-				icon={reactIcon}
-				className="reactions-show"
-			/>
-			<span>{reactName}</span>
+		<>
+			<LikeButton
+				type="button"
+				className="post-body__interact-option reactions"
+				onMouseOver={() => setIsHover(true)}
+				onMouseLeave={() => setIsHover(false)}
+				onClick={() => handleLikeButton()}
+			>
+				<Reaction
+					name={reactName}
+					icon={reactIcon}
+					className="reactions-show"
+				/>
+				<span>{reactName}</span>
+			</LikeButton>
 			<ReactionsWrapper
 				initial="hidden"
 				animate={isHover ? "visible" : "hidden"}
 				variants={list}
+				onMouseOver={() => setIsHover(true)}
+				onMouseLeave={() => setIsHover(false)}
 			>
 				<Reaction name={1} icon={like} handleLike={handleLike} />
 				<Reaction name={2} icon={love} handleLike={handleLike} />
@@ -145,7 +160,7 @@ function PostReaction(props) {
 				<Reaction name={5} icon={sad} handleLike={handleLike} />
 				<Reaction name={6} icon={angry} handleLike={handleLike} />
 			</ReactionsWrapper>
-		</LikeButton>
+		</>
 	);
 }
 

@@ -4,7 +4,7 @@ const initialState = {
 	loadingPost: true,
 	post: null,
 	posts: null,
-	userPosts: null
+	userPosts: null,
 };
 
 export default function posts(state = initialState, action) {
@@ -59,6 +59,35 @@ export default function posts(state = initialState, action) {
 				...state,
 				userPosts: null,
 			};
+		case postConstants.DELETE_POST_SUCCESS: {
+			const { postDelete } = payload;
+			const arrPost = state.posts.data.filter(
+				(post) => post._id !== postDelete._id
+			);
+			return {
+				...state,
+				posts: {
+					...state.posts,
+					data: arrPost,
+				},
+			};
+		}
+		case postConstants.EDIT_POST_SUCCESS: {
+			const { postEdit } = payload;
+			const arrPost = state.posts.data.map((post) => {
+				if (post._id === postEdit._id) {
+					post.description = postEdit.description;
+				}
+				return post;
+			});
+			return {
+				...state,
+				posts: {
+					...state.posts,
+					data: arrPost,
+				},
+			};
+		}
 		default:
 			return state;
 	}

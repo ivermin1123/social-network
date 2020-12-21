@@ -52,14 +52,22 @@ export default function conversation(state = initialState, action) {
 				...state,
 				conversation: null,
 			};
-		case conversationConstants.SET_CONVERSATION_OPEN:
+		case conversationConstants.SET_CONVERSATION_OPEN: {
+			const { conversation } = payload;
+			const newId = conversation.length
+				? conversation[0]._id
+				: "NotFound";
+			const newName = conversation.length
+				? conversation[0].name
+				: "NotFound";
 			return {
 				...state,
 				conversationOpen: {
-					id: payload.conversation[0]._id,
-					name: payload.conversation[0].name,
+					id: newId,
+					name: newName,
 				},
 			};
+		}
 		default:
 			return state;
 	}

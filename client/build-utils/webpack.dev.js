@@ -4,7 +4,7 @@ const Dotenv = require("dotenv-webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 // const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
 
-// const smp = new SpeedMeasurePlugin();
+// const smp = new SpeedMeasurePlugin();smp.wrap(
 module.exports = {
 	mode: "development",
 	resolve: {

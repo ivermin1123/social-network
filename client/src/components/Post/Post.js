@@ -24,7 +24,14 @@ const Post = (props) => {
 
 	const { post } = props;
 	const [postN, setPostN] = useState(post);
-console.log("post: ", post);
+	const fullName = `${postN.author[0].firstName} ${postN.author[0].lastName}`;
+	const timePost = { time: null, isEdit: false };
+	if (postN.isUpdated === true) {
+		timePost.time = moment(postN.updatedAt).locale("vi").fromNow();
+		timePost.isEdit = true;
+	} else {
+		timePost.time = moment(postN.createdAt).locale("vi").fromNow();
+	}
 	return postN && postN.author ? (
 		<div className="post">
 			<div className="post-header">
@@ -38,9 +45,10 @@ console.log("post: ", post);
 								: img5
 						}
 					/>
-					<div className="post-header__name">{`${postN.author[0].firstName} ${postN.author[0].lastName}`}</div>
+					<div className="post-header__name">{fullName}</div>
 					<div className="post-header__created">
-						{moment(postN.createdAt).locale("vi").fromNow()}
+						{timePost.time}{" "}
+						{postN.isUpdated === true ? "(Edited)" : null}
 					</div>
 				</div>
 				{postN.author[0]._id === infoUser._id && (
@@ -50,6 +58,8 @@ console.log("post: ", post);
 								<MenuOption
 									clickFunc={setOptionShow}
 									setVisible={setVisible}
+									post={postN}
+									user={infoUser}
 								/>
 							}
 							placement="bottomRight"
@@ -136,10 +146,15 @@ console.log("post: ", post);
 				title="Chỉnh sửa bài viết"
 				getContainer={false}
 				visible={visible}
-				onOk={() => setVisible(false)}
-				onCancel={() => setVisible(false)}
+				footer={null}
+				// onOk={() => setVisible(false)}
+				// onCancel={() => setVisible(false)}
 			>
-				<EditPost post={postN} />
+				<EditPost
+					post={postN}
+					fullName={fullName}
+					setVisible={setVisible}
+				/>
 			</Modal>
 		</div>
 	) : null;

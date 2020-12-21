@@ -6,6 +6,10 @@ const postSchema = new Schema(
     filter: String,
     type: String,
     location: String,
+    isUpdated: {
+      type: Boolean,
+      default: false,
+    },
     files: [
       {
         type: Schema.Types.ObjectId,

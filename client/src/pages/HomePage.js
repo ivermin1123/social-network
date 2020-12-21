@@ -2,6 +2,7 @@ import React from "react";
 
 import NewsFeed from "../components/NewsFeed";
 import UserItem from "../components/MainContent/UserItem";
+import PostForm from "../components/Post/PostForm";
 import sprite from "../assets/icons/sprite.svg";
 
 function HomePage() {
@@ -41,6 +42,7 @@ function HomePage() {
 						</div>
 					</div>
 				</div>
+				<PostForm />
 				<div className="collection__list">
 					<NewsFeed />
 				</div>

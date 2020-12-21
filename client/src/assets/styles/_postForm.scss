@@ -12,8 +12,10 @@ label:hover {
 }
 .post-form {
 	background-color: #ffffff;
+	margin: auto;
 	margin-bottom: 15px;
-	height: 125px;
+	height: auto;
+	width: 590px;
 	border-radius: 8px;
 	display: flex;
 	flex-direction: column;

@@ -11,10 +11,24 @@ router.post(
   postController.createPost
 );
 
-router.post("/getPost", postController.getPost);
+router.post(
+  "/getPost",
+  helpers.checkAuth,
+  validator.postValidator.getPost,
+  postController.getPost
+);
 
 router.get("/getPosts", helpers.checkAuth, postController.getPosts);
 
 router.get("/getUserPosts", helpers.checkAuth, postController.getUserPosts);
+
+router.post("/deletePost", helpers.checkAuth, postController.deletePost);
+
+router.post(
+  "/editPost",
+  helpers.checkAuth,
+  validator.postValidator.editPost,
+  postController.editPost
+);
 
 export default router;

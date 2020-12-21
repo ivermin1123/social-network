@@ -72,3 +72,36 @@ export const getUserPosts = async (req, res) => {
     res.status(500).json({ error: true, message: error.message });
   }
 };
+
+export const deletePost = async (req, res) => {
+  try {
+    const { userId } = req.userData;
+    const { postId } = req.body;
+
+    await POST.deletePost({ postId, userId })
+      .then((data) => {
+        res.status(200).json({ error: false, data });
+      })
+      .catch((error) => {
+        res.status(500).json({ error: true, message: error });
+      });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+};
+
+export const editPost = async (req, res) => {
+  try {
+    const { userId } = req.userData;
+
+    await POST.editPost({ body: req.body, userId })
+      .then((data) => {
+        res.status(200).json({ error: false, data });
+      })
+      .catch((error) => {
+        res.status(500).json({ error: true, message: error });
+      });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+};

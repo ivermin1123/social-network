@@ -38,10 +38,28 @@ function getUserPosts(userId) {
 		});
 }
 
+function deletePost({ postId }) {
+	return axios
+		.post(CF_ROUTE_POST.DELETE_POST, { postId }, configAxios)
+		.then((response) => {
+			return response.data;
+		});
+}
+
+function editPost({ postId, description }) {
+	return axios
+		.post(CF_ROUTE_POST.EDIT_POST, { postId, description }, configAxios)
+		.then((response) => {
+			return response.data;
+		});
+}
+
 const postService = {
 	getPost,
 	getPosts,
 	getUserPosts,
+	deletePost,
+	editPost,
 };
 
 export default postService;

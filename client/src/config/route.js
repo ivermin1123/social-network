@@ -16,6 +16,8 @@ const CF_ROUTE_POST = {
 	GET_POSTS: `${API_URL}/api/post/getPosts`,
 	CREATE_POST: `${API_URL}/api/post/addPost`,
 	GET_USER_POSTS: `${API_URL}/api/post/getUserPosts`,
+	DELETE_POST: `${API_URL}/api/post/deletePost`,
+	EDIT_POST: `${API_URL}/api/post/editPost`,
 };
 
 const CF_ROUTE_CONVERSATION = {

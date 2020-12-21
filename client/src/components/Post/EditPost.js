@@ -1,14 +1,43 @@
 import React, { useState, useRef } from "react";
-import { Avatar } from "antd";
+import { Avatar, notification, Button } from "antd";
+import { useDispatch } from "react-redux";
 import ContentEditable from "react-contenteditable";
 import img5 from "../../assets/image/avatar-5.png";
 
+import postActions from "../../actions/post.actions";
 import LINK_CONSTANT from "../../constants/link.constants";
 
 function EditPost(props) {
-	const { post } = props;
+	const { post, fullName, setVisible } = props;
+	const dispatch = useDispatch();
 	const postInput = useRef(null);
 	const [value, setValue] = useState(post.description);
+
+	const handleEdit = () => {
+		if (value === post.description) {
+			notification.success({
+				message: "Cập nhật thành công",
+				// description: "Bài viết đã được xóa.",
+			});
+		} else {
+			dispatch(
+				postActions.editPost({ postId: post._id, description: value })
+			)
+				.then(() => {
+					notification.success({
+						message: "Cập nhật thành công",
+						// description: "Bài viết đã được xóa.",
+					});
+				})
+				.catch(() => {
+					notification.error({
+						message: "Đã xảy ra lỗi!!",
+						// description: "Bài viết đã được xóa.",
+					});
+				});
+		}
+		setVisible(false);
+	};
 
 	return (
 		<div className="edit-post">
@@ -24,7 +53,7 @@ function EditPost(props) {
 					/>
 				</div>
 				<div className="edit-post__header--right">
-					<span>Quốc Hoàng</span>
+					<span> {fullName} </span>
 				</div>
 			</div>
 			<ContentEditable
@@ -35,9 +64,9 @@ function EditPost(props) {
 				tagName="article"
 				className="edit-post__body"
 			/>
-			{/* <div ref={postInput} className="edit-post__body" contentEditable>
-				{post.description}
-			</div> */}
+			<Button type="primary" block onClick={handleEdit}>
+				Cập nhật
+			</Button>
 		</div>
 	);
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Theme } from "../../constants/index";
@@ -21,7 +21,7 @@ const configToast = {
 };
 
 const PostForm = ({ ...props }) => {
-	const { userData } = props;
+	const userData = useSelector((state) => state.users.infoUser);
 	const [show, setShow] = useState(false);
 	const [files, setFiles] = useState([]);
 	const [description, setDescription] = useState("");
@@ -114,10 +114,10 @@ const PostForm = ({ ...props }) => {
 						className="post-form-top__btn"
 						onClick={() => setShow(true)}
 					>
-						Bạn mình ơi, bạn đang nghĩ gì vậy nè?
+						Bạn ơi, bạn đang nghĩ gì vậy nè?
 					</button>
 				</div>
-				<div className="post-form-bot">
+				{/* <div className="post-form-bot">
 					<button type="button" className="post-form-bot__btn">
 						Anh
 					</button>
@@ -127,7 +127,7 @@ const PostForm = ({ ...props }) => {
 					<button type="button" className="post-form-bot__btn">
 						Nguyễn
 					</button>
-				</div>
+				</div> */}
 			</div>
 			<Modal
 				{...props}
@@ -167,7 +167,7 @@ const PostForm = ({ ...props }) => {
 							placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
 							onChange={(e) => setDescription(e.target.value)}
 						/>
-						{files && files.length > 0 ? (
+						{files.length ? (
 							<div className="image-area">
 								<button
 									type="button"
@@ -214,11 +214,7 @@ const PostForm = ({ ...props }) => {
 				<Modal.Footer bsPrefix="post-form-modal__post-footer">
 					<button
 						type="button"
-						disabled={
-							description.length || files.length
-								? "false"
-								: "true"
-						}
+						// disabled={description ? "true" : "false"}
 						className="btn btn_purple"
 						onClick={handleClick}
 					>

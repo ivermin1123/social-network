@@ -33,6 +33,7 @@ const getPost = (postId) => (dispatch) => {
 		}
 	);
 };
+
 const getUserPosts = (postId) => (dispatch) => {
 	return postService.getPost(postId).then(
 		(data) => {
@@ -133,10 +134,76 @@ const createPost = (files, data, dataSaveServer) => (dispatch) => {
 	);
 };
 
+const deletePost = ({ userId, postId }) => (dispatch) => {
+	return postService.deletePost({ userId, postId }).then(
+		(data) => {
+			dispatch({
+				type: postConstants.DELETE_POST_SUCCESS,
+				payload: { postDelete: data.data },
+			});
+
+			return Promise.resolve();
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: postConstants.DELETE_POST_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
+const editPost = ({ description, postId }) => (dispatch) => {
+	return postService.editPost({ description, postId }).then(
+		(data) => {
+			dispatch({
+				type: postConstants.EDIT_POST_SUCCESS,
+				payload: { postEdit: data.data },
+			});
+
+			return Promise.resolve();
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: postConstants.EDIT_POST_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
 const postActions = {
 	getPost,
 	createPost,
 	getListPosts,
 	getUserPosts,
+	deletePost,
+	editPost,
 };
 export default postActions;

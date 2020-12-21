@@ -356,9 +356,71 @@ const getUserPosts = async ({ userId }) => {
   });
 };
 
+const deletePost = async ({ userId, postId }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const infoPost = await Post.findById(postId)
+        .populate("author")
+        .catch((error) => {
+          reject(error.message);
+        });
+
+      if (
+        infoPost &&
+        (infoPost.author._id == userId || infoPost.author.level === 100)
+      ) {
+        await Post.deleteOne({ _id: postId })
+          .then(() => resolve(infoPost))
+          .catch((error) => {
+            reject(error.message);
+          });
+      }
+      reject("Access Denied or NotFound.");
+    } catch (error) {
+      reject(error.message);
+    }
+  });
+};
+
+const editPost = async ({ userId, body }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { postId, description } = body;
+      const infoPost = await Post.findById(postId)
+        .populate("author")
+        .catch((error) => {
+          reject(error.message);
+        });
+
+      if (
+        infoPost &&
+        (infoPost.author._id == userId || infoPost.author.level === 100)
+      ) {
+        await Post.findByIdAndUpdate(
+          postId,
+          {
+            description,
+            isUpdated: true,
+          },
+          { new: true }
+        )
+          .then((data) => resolve(data))
+          .catch((error) => {
+            reject(error.message);
+          });
+      }
+      reject("Access Denied or NotFound.");
+    } catch (error) {
+      reject(error.message);
+    }
+  });
+};
+
 export default {
   createPost,
   getPostById,
   getPosts,
   getUserPosts,
+  deletePost,
+  editPost,
 };

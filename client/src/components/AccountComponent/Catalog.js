@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, connect } from "react-redux";
-import { Games, Post, Introduction, Friends, Images } from "../_components";
+import {
+	Games,
+	Post,
+	Introduction,
+	Friends,
+	Images,
+	PostForm,
+} from "../_components";
 import postActions from "../../actions/post.actions";
 
 const Catalog = ({ ...props }) => {
@@ -57,14 +64,21 @@ const Catalog = ({ ...props }) => {
 					display: catalogNav === "posts" ? "block" : "none",
 				}}
 			>
-				{userPosts && userPosts.length ? (
-					<Post
-						display={catalogNav === "posts" ? "block" : "none"}
-						post={userPosts}
-					/>
-				) : (
-					"Chưa bài viết nào"
-				)}
+				{catalogNav === "posts" ? (
+					<>
+						<PostForm userData={userData} />
+						{userPosts && userPosts.length ? (
+							<Post
+								display={
+									catalogNav === "posts" ? "block" : "none"
+								}
+								post={userPosts}
+							/>
+						) : (
+							"Chưa bài viết nào"
+						)}
+					</>
+				) : null}
 			</div>
 		</div>
 	);

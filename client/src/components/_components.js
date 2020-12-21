@@ -3,6 +3,7 @@ import CommentButton from "./Post/CommentButton";
 
 import ListComment from "./Post/ListComment";
 import Post from "./Post/Post";
+import PostForm from "./Post/PostForm";
 import NewsFeed from "./NewsFeed";
 
 // Component's Navbar
@@ -34,6 +35,7 @@ export {
 	ListComment,
 	NewsFeed,
 	Post,
+	PostForm,
 	FormField,
 	NavItem,
 	SearchBox,

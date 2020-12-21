@@ -10,7 +10,11 @@ const Friends = ({ ...props }) => {
 				{userData.friends &&
 					userData.friends.map((item) => {
 						return (
-							<div key={item._id} className="friend-item-row">
+							<a
+								key={item._id}
+								className="friend-item-row"
+								href={`/account/${item._id}`}
+							>
 								<div className="friend-item-row__avatar">
 									{item.avatar && item.avatar.length ? (
 										<img
@@ -31,7 +35,7 @@ const Friends = ({ ...props }) => {
 										{item.firstName} {item.lastName}
 									</div>
 								</div>
-							</div>
+							</a>
 						);
 					})}
 			</div>

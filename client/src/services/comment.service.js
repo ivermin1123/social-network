@@ -18,8 +18,24 @@ function commentOnPost({ postId, parent, content }) {
 		});
 }
 
+function deleteComment({ postId, commentId }) {
+	return axios
+		.post(
+			CF_ROUTE_COMMENT.DELETE_COMMENT,
+			{
+				postId,
+				commentId,
+			},
+			configAxios
+		)
+		.then((response) => {
+			return response.data;
+		});
+}
+
 const commentService = {
 	commentOnPost,
+	deleteComment,
 };
 
 export default commentService;

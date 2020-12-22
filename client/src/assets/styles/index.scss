@@ -373,10 +373,45 @@ body.dark {
 	.ant-comment-content-author-name > * {
 		color: black;
 	}
-}
-
-.comment-area-hidden {
-	display: none;
+	.comment-area__body {
+		align-items: center;
+		display: flex;
+		flex-direction: row;
+		&:hover {
+			.comment-area__body--right {
+				a {
+					display: flex;
+				}
+			}
+		}
+		.comment-area__body--left {
+			display: flex;
+			flex: 9;
+		}
+		.comment-area__body--right {
+			display: flex;
+			flex: 1;
+			align-items: self-end;
+			justify-content: flex-end;
+			margin-right: 5px;
+			min-height: 60px;
+			a {
+				display: none;
+				button {
+					.icon {
+						font-size: 7px;
+						fill: #808191;
+					}
+					// &:focus {
+					// 	    display: flex;
+					// }
+				}
+				svg {
+					width: 28px;
+				}
+			}
+		}
+	}
 }
 
 .edit-post {

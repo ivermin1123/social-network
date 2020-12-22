@@ -83,7 +83,11 @@ const Post = (props) => {
 
 			<div className="post-body">
 				<div className="post-body__content">
-					{postN.description || ""}
+					<span
+						dangerouslySetInnerHTML={{
+							__html: postN.description,
+						}}
+					/>
 				</div>
 				<img
 					src={

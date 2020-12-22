@@ -1,10 +1,13 @@
 import React, { createElement, useState } from "react";
-import { Comment, Tooltip, Avatar } from "antd";
+import { Comment, Tooltip, Avatar, Dropdown } from "antd";
 import moment from "moment";
 import { LikeOutlined, LikeFilled } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import commentActions from "../../actions/comment.actions";
 import LINK_CONSTANT from "../../constants/link.constants";
+import ButtonSVG from "../ButtonSVG";
+
+import MenuOptionComment from "./MenuOptionComment";
 
 function ListComment(props) {
 	const { user, post: postO } = props;
@@ -72,48 +75,84 @@ function ListComment(props) {
 		);
 	};
 
+	const DropDownOption = (props) => {
+		// const [optionShow, setOptionShow] = useState(false);
+		const { comment } = props;
+		return (
+			<Dropdown
+				overlay={
+					<MenuOptionComment
+						setPost={setPost}
+						post={post}
+						comment={comment}
+					/>
+				}
+				placement="bottomRight"
+				// visible={optionShow}
+				// onClick={() => setOptionShow(!optionShow)}
+			>
+				<a
+					className="ant-dropdown-link"
+					onClick={(e) => e.preventDefault()}
+				>
+					<ButtonSVG
+						icon="icon-menu"
+						// onClick={() => setOption(!option)}
+					/>
+				</a>
+			</Dropdown>
+		);
+	};
+
 	return (
 		<div className="comment-area">
 			<InputComment />
 			{(post.comments.length &&
 				post.comments.map((comment) => (
-					<Comment
-						key={comment._id}
-						actions={actions}
-						author={
-							<span style={{ fontWeight: "bold" }}>
-								{`${comment.author[0].firstName} ${comment.author[0].lastName}`}
-							</span>
-						}
-						avatar={
-							<span>
-								<Avatar
-									src={`${LINK_CONSTANT.LINK_S3}${comment.author[0].avatar[0].path}`}
-									alt={`${comment.author[0].firstName} ${comment.author[0].lastName}`}
-									size={32}
-									style={{
-										border: "0.3px solid gray",
-									}}
-								/>
-							</span>
-						}
-						content={<span>{comment.content}</span>}
-						datetime={
-							<Tooltip
-								title={moment(comment.createdAt)
-									.locale("vi")
-									.format(
-										"dddd[,] DD [Tháng] MM [,] YYYY [lúc] HH:mm"
-									)}
-							>
-								<span>
-									{moment(comment.createdAt)
-										.locale("vi")
-										.fromNow()}
-								</span>
-							</Tooltip>
-						}
-					/>
+					<div className="comment-area__body" key={comment._id}>
+						<div className="comment-area__body--left">
+							<Comment
+								key={comment._id}
+								actions={actions}
+								author={
+									<span style={{ fontWeight: "bold" }}>
+										{`${comment.author[0].firstName} ${comment.author[0].lastName}`}
+									</span>
+								}
+								avatar={
+									<span>
+										<Avatar
+											src={`${LINK_CONSTANT.LINK_S3}${comment.author[0].avatar[0].path}`}
+											alt={`${comment.author[0].firstName} ${comment.author[0].lastName}`}
+											size={32}
+											style={{
+												border: "0.3px solid gray",
+											}}
+										/>
+									</span>
+								}
+								content={<span>{comment.content}</span>}
+								datetime={
+									<Tooltip
+										title={moment(comment.createdAt)
+											.locale("vi")
+											.format(
+												"dddd[,] DD [Tháng] MM [,] YYYY [lúc] HH:mm"
+											)}
+									>
+										<span>
+											{moment(comment.createdAt)
+												.locale("vi")
+												.fromNow()}
+										</span>
+									</Tooltip>
+								}
+							/>
+						</div>
+						<div className="comment-area__body--right">
+							<DropDownOption comment={comment} />
+						</div>
+					</div>
 				))) ||
 				null}
 		</div>

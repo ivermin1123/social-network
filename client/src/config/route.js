@@ -38,6 +38,7 @@ const CF_ROUTE_REACTION = {
 
 const CF_ROUTE_COMMENT = {
 	COMMENT_ON_POST: `${API_URL}/api/comment/commentOnPost`,
+	DELETE_COMMENT: `${API_URL}/api/comment/deleteComment`,
 };
 
 const CF_ROUTE_PUBLIC = {

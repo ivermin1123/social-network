@@ -33,7 +33,40 @@ const commentOnPost = ({ postId, parent, content }) => (dispatch) => {
 	);
 };
 
+const deleteComment = ({ postId, commentId }) => (dispatch) => {
+	return commentService.deleteComment({ postId, commentId }).then(
+		(data) => {
+			dispatch({
+				type: commentConstants.DELETE_COMMENT_SUCCESS,
+				payload: { post: data.data },
+			});
+
+			return Promise.resolve(data.data);
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: commentConstants.DELETE_COMMENT_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
 const commentActions = {
 	commentOnPost,
+	deleteComment,
 };
 export default commentActions;

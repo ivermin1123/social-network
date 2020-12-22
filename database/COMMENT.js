@@ -10,7 +10,7 @@ const Comment = mongoose.model("Comment");
 const commentOnPost = async ({ postId, parent, content, userId }) => {
   return new Promise(async (resolve, reject) => {
     try {
-      if (!checkObjectIDs(postId)) reject("param_invalid");
+      if (!checkObjectIDs(postId)) return reject("param_invalid");
 
       let infoComment;
       if (!parent) {
@@ -21,7 +21,7 @@ const commentOnPost = async ({ postId, parent, content, userId }) => {
         });
 
         infoComment = await newComment.save().catch((error) => {
-          reject(error.message);
+          return reject(error.message);
         });
       } else {
         const newComment = new Comment({
@@ -32,7 +32,7 @@ const commentOnPost = async ({ postId, parent, content, userId }) => {
         });
 
         infoComment = await newComment.save().catch((error) => {
-          reject(error.message);
+          return reject(error.message);
         });
 
         await Comment.findByIdAndUpdate(
@@ -42,7 +42,7 @@ const commentOnPost = async ({ postId, parent, content, userId }) => {
           },
           { new: true }
         ).catch((error) => {
-          reject(error.message);
+          return reject(error.message);
         });
       }
 
@@ -53,16 +53,47 @@ const commentOnPost = async ({ postId, parent, content, userId }) => {
         },
         { new: true }
       ).catch((error) => {
-        reject(error.message);
+        return reject(error.message);
       });
 
       await POST.getPostById({ postId }).then((data) => {
         resolve(data);
       });
     } catch (error) {
-      reject(error.message);
+      return reject(error.message);
     }
   });
 };
 
-export default { commentOnPost };
+const deleteComment = async ({ postId, commentId, userId }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const infoComment = await Comment.findById(commentId).catch((error) => {
+        return reject(error.message);
+      });
+      if (infoComment.author != userId) return reject("ACCESS DENIED.");
+
+      await Comment.deleteOne({ _id: commentId }).catch((error) => {
+        return reject(error.message);
+      });
+
+      await Post.findByIdAndUpdate(
+        postId,
+        {
+          $pull: { comments: commentId },
+        },
+        { new: true }
+      ).catch((error) => {
+        return reject(error.message);
+      });
+
+      await POST.getPostById({ postId }).then((data) => {
+        resolve(data);
+      });
+    } catch (error) {
+      return reject(error.message);
+    }
+  });
+};
+
+export default { commentOnPost, deleteComment };

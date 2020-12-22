@@ -11,4 +11,10 @@ router.post(
   commentController.commentOnPost
 );
 
+router.post(
+  "/deleteComment",
+  helpers.checkAuth,
+  commentController.deleteComment
+);
+
 export default router;

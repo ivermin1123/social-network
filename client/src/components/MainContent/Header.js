@@ -118,9 +118,9 @@ function Header(props) {
 						</button>
 						<div className="header__body js-header-body">
 							<div className="notifications">
-								<div className="notifications__info h6">
+								{/* <div className="notifications__info h6">
 									Recent Notification
-								</div>
+								</div> */}
 								<div className="notifications__list">
 									<NotificationItem
 										name="Quốc Hoàng"

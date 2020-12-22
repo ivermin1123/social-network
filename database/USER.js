@@ -209,6 +209,7 @@ const getUser = async ({ userIdToGet }) => {
             lastName: 1,
             createdAt: 1,
             username: 1,
+            level: 1,
             gender: 1,
             conversations: 1,
             lastConversation: 1,

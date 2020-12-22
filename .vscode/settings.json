@@ -6,6 +6,7 @@
 	"editor.insertSpaces": false,
 	"cSpell.words": [
 		"antd",
+		"datetime",
 		"linkify",
 		"linkifyjs"
 	],

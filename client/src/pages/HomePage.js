@@ -30,7 +30,7 @@ function HomePage() {
 				</div>
 			</div>
 			<div className="collection">
-				<div className="collection__head">
+				{/* <div className="collection__head">
 					<div className="collection__title h5">Recently Post</div>
 					<div className="collection__field field">
 						<div className="field__wrap">
@@ -41,7 +41,7 @@ function HomePage() {
 							</select>
 						</div>
 					</div>
-				</div>
+				</div> */}
 				<PostForm />
 				<div className="collection__list">
 					<NewsFeed />

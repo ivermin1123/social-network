@@ -5,6 +5,7 @@ import messageService from "./message.service";
 import uploadService from "./upload-s3.service";
 import socketService from "./socket.service";
 import reactionService from "./reaction.service";
+import commentService from "./comment.service";
 
 export {
 	postService,
@@ -14,4 +15,5 @@ export {
 	conversationService,
 	messageService,
 	reactionService,
+	commentService,
 };

@@ -85,6 +85,12 @@ body.dark {
 				}
 			}
 		}
+		.ant-comment-content-author-name > * {
+			color: white;
+		}
+		.ant-comment-actions > li > span {
+			color: white;
+		}
 	}
 	.reactions-show {
 	}
@@ -258,7 +264,7 @@ body.dark {
 				// position: absolute;
 				// left: 6px;
 				z-index: 2;
-				margin-left: -4px;
+				margin-left: 0px;
 			}
 			.react--reaction-second {
 				// position: absolute;
@@ -289,6 +295,7 @@ body.dark {
 	.post-body__react--comments {
 		display: flex;
 		flex: 2;
+		justify-content: flex-end;
 	}
 }
 .post-body__interact {
@@ -298,9 +305,9 @@ body.dark {
 	align-items: center;
 	height: 50px;
 	cursor: pointer;
-	margin: 0 10px 10px 10px;
+	margin: 0 10px 0 10px;
 	border-top: 0.5px solid #cfd0d4;
-	border-bottom: 0.5px solid #cfd0d4;
+	// border-bottom: 0.5px solid #cfd0d4;
 	padding: 5px 10px;
 	flex-direction: row;
 	&-option {
@@ -345,23 +352,31 @@ body.dark {
 	}
 }
 .comment-area {
-	padding: 4px 16px;
-	img {
-		border-radius: 10px;
-		width: 36px;
-		height: 36px;
-		margin-right: 10px;
+	padding: 4px 0px;
+	margin: 0 10px 0 10px;
+	border-top: 0.5px solid #cfd0d4;
+	.ant-comment-actions {
+		margin-top: 5px;
 	}
-	.comment-list {
+	.editor-comment {
 		display: flex;
-		&-right {
-			&__content {
-				padding: 4px 12px;
-				border-radius: 10px;
-				background-color: var(--HOVER);
-			}
+		margin: 10px 0;
+		.editor-avatar {
+			margin-right: 5px;
+			display: flex;
+			align-items: center;
+		}
+		.editor__wrap {
+			width: 100%;
 		}
 	}
+	.ant-comment-content-author-name > * {
+		color: black;
+	}
+}
+
+.comment-area-hidden {
+	display: none;
 }
 
 .edit-post {

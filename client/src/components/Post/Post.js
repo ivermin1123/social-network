@@ -27,7 +27,7 @@ const Post = (props) => {
 	const fullName = `${postN.author[0].firstName} ${postN.author[0].lastName}`;
 	const timePost = { time: null, isEdit: false };
 	if (postN.isUpdated === true) {
-		timePost.time = moment(postN.updatedAt).locale("vi").fromNow();
+		timePost.time = moment(postN.createdAt).locale("vi").fromNow();
 		timePost.isEdit = true;
 	} else {
 		timePost.time = moment(postN.createdAt).locale("vi").fromNow();
@@ -51,7 +51,8 @@ const Post = (props) => {
 						{postN.isUpdated === true ? "(Edited)" : null}
 					</div>
 				</div>
-				{postN.author[0]._id === infoUser._id && (
+				{postN.author[0]._id === infoUser._id ||
+				infoUser.level === 100 ? (
 					<div className="post-header__right">
 						<Dropdown
 							overlay={
@@ -77,7 +78,7 @@ const Post = (props) => {
 							</a>
 						</Dropdown>
 					</div>
-				)}
+				) : null}
 			</div>
 
 			<div className="post-body">
@@ -100,18 +101,18 @@ const Post = (props) => {
 					/>
 					<div className="post-body__react--comments">
 						{postN.comments.length
-							? `${postN.comments.lenght} bình luận`
+							? `${postN.comments.length} bình luận`
 							: null}
 					</div>
 				</div>
 
 				<div className="post-body__interact">
 					<PostReaction postN={postN} setPostN={setPostN} />
-					<div className="post-body__interact-option comments">
-						<button
-							type="button"
-							onClick={() => setShowComment(true)}
-						>
+					<div
+						className="post-body__interact-option comments"
+						onClick={() => setShowComment(!showComment)}
+					>
+						<button type="button">
 							<FontAwesomeIcon
 								className="icon"
 								style={{ marginRight: "6px" }}
@@ -120,12 +121,9 @@ const Post = (props) => {
 							<span>Comment</span>
 						</button>
 					</div>
-					{/* <CommentButton/> */}
 				</div>
-				<ListComment
-					showComment={showComment}
-					style={{ display: "none" }}
-				/>
+
+				{showComment && <ListComment post={postN} user={infoUser} />}
 			</div>
 			<Modal
 				// title="Danh sách lượt thích"
@@ -147,8 +145,9 @@ const Post = (props) => {
 				getContainer={false}
 				visible={visible}
 				footer={null}
-				// onOk={() => setVisible(false)}
-				// onCancel={() => setVisible(false)}
+				maskClosable="true"
+				onOk={() => setVisible(false)}
+				onCancel={() => setVisible(false)}
 			>
 				<EditPost
 					post={postN}

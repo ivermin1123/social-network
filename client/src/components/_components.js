@@ -1,7 +1,4 @@
 // Component's Post
-import CommentButton from "./Post/CommentButton";
-
-import ListComment from "./Post/ListComment";
 import Post from "./Post/Post";
 import PostForm from "./Post/PostForm";
 import NewsFeed from "./NewsFeed";
@@ -31,8 +28,6 @@ import PopupUser from "./Popup/PopupUser";
 import ChangePassword from "./Popup/ChangePassword";
 
 export {
-	CommentButton,
-	ListComment,
 	NewsFeed,
 	Post,
 	PostForm,

@@ -1,36 +1,123 @@
-import React from "react";
+import React, { createElement, useState } from "react";
+import { Comment, Tooltip, Avatar } from "antd";
+import moment from "moment";
+import { LikeOutlined, LikeFilled } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import commentActions from "../../actions/comment.actions";
+import LINK_CONSTANT from "../../constants/link.constants";
 
-const ListComment = () => {
+function ListComment(props) {
+	const { user, post: postO } = props;
+	const dispatch = useDispatch();
+	const [likes, setLikes] = useState(0);
+	const [action, setAction] = useState(null);
+	const [post, setPost] = useState(postO);
+	const like = () => {
+		setLikes(1);
+		setAction("liked");
+	};
+
+	const actions = [
+		<Tooltip key="comment-basic-like" title="Like">
+			<span onClick={like}>
+				{createElement(action === "liked" ? LikeFilled : LikeOutlined)}
+				<span className="comment-action">{likes}</span>
+			</span>
+		</Tooltip>,
+		<span key="comment-basic-reply-to">Reply</span>,
+	];
+
+	const InputComment = (props) => {
+		const { parent } = props;
+		const [message, setMessage] = useState("");
+		const handleSubmit = (e) => {
+			e.preventDefault();
+			const dataSendServer = parent
+				? { postId: post._id, parent, content: message }
+				: { postId: post._id, content: message };
+			dispatch(commentActions.commentOnPost(dataSendServer)).then(
+				(data) => {
+					setPost(data[0]);
+				}
+			);
+			setMessage("");
+		};
+		return (
+			<div className="editor-comment">
+				<span className="editor-avatar">
+					<Avatar
+						src={`${LINK_CONSTANT.LINK_S3}${user.avatar[0].path}`}
+						size={32}
+						style={{ border: "0.3px solid gray" }}
+					/>
+				</span>
+				<div className="editor__wrap">
+					<div className="editor__body">
+						<div className="editor__field">
+							<form onSubmit={handleSubmit}>
+								<input
+									className="editor__textarea"
+									type="text"
+									name="message"
+									placeholder="Viết bình luận..."
+									onChange={(e) => setMessage(e.target.value)}
+									value={message}
+									required
+								/>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		);
+	};
+
 	return (
 		<div className="comment-area">
-			<div className="comment-list">
-				<div className="comment-list-left">
-					<div>
-						<img
-							src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
-							alt=""
-						/>
-					</div>
-				</div>
-				<div className="comment-list-right">
-					<div className="comment-list-right__content">
-						<div>Hoang Yen</div>
-						<div>Hay quá</div>
-					</div>
-					<div className="comment-list-right__option" />
-				</div>
-			</div>
-			<div className="new-comment">
-				<div className="new-comment-avatar">
-					<img
-						src="https://scontent.fsgn2-3.fna.fbcdn.net/v/t1.0-9/37219759_789164267954095_7853071637418082304_o.jpg?_nc_cat=108&ccb=2&_nc_sid=e3f864&_nc_ohc=_gkEKZIIipAAX_IL5wJ&_nc_ht=scontent.fsgn2-3.fna&oh=755c486ebfaac7383ec70bb92ff5211e&oe=5FEB72A8"
-						alt=""
+			<InputComment />
+			{(post.comments.length &&
+				post.comments.map((comment) => (
+					<Comment
+						key={comment._id}
+						actions={actions}
+						author={
+							<span style={{ fontWeight: "bold" }}>
+								{`${comment.author[0].firstName} ${comment.author[0].lastName}`}
+							</span>
+						}
+						avatar={
+							<span>
+								<Avatar
+									src={`${LINK_CONSTANT.LINK_S3}${comment.author[0].avatar[0].path}`}
+									alt={`${comment.author[0].firstName} ${comment.author[0].lastName}`}
+									size={32}
+									style={{
+										border: "0.3px solid gray",
+									}}
+								/>
+							</span>
+						}
+						content={<span>{comment.content}</span>}
+						datetime={
+							<Tooltip
+								title={moment(comment.createdAt)
+									.locale("vi")
+									.format(
+										"dddd[,] DD [Tháng] MM [,] YYYY [lúc] HH:mm"
+									)}
+							>
+								<span>
+									{moment(comment.createdAt)
+										.locale("vi")
+										.fromNow()}
+								</span>
+							</Tooltip>
+						}
 					/>
-				</div>
-				<div className="new-comment-input" />
-			</div>
+				))) ||
+				null}
 		</div>
 	);
-};
+}
 
 export default ListComment;

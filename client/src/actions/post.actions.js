@@ -1,4 +1,3 @@
-/* eslint-disable operator-linebreak */
 import { postConstants, alertConstants } from "../constants";
 import { postService, uploadService } from "../services";
 

@@ -36,6 +36,10 @@ const CF_ROUTE_REACTION = {
 	COUNT_REACTION: `${API_URL}/api/reaction/countReaction`,
 };
 
+const CF_ROUTE_COMMENT = {
+	COMMENT_ON_POST: `${API_URL}/api/comment/commentOnPost`,
+};
+
 const CF_ROUTE_PUBLIC = {
 	GENERATE_LINK_S3: `${API_URL}/api/generate-link-upload-s3`,
 };
@@ -47,4 +51,5 @@ export {
 	CF_ROUTE_CONVERSATION,
 	CF_ROUTE_MESSAGE,
 	CF_ROUTE_REACTION,
+	CF_ROUTE_COMMENT,
 };

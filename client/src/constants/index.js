@@ -4,21 +4,19 @@ import alertConstants from "./alert.constants";
 import conversationConstants from "./conversation.constants";
 import messageConstants from "./message.constants";
 import reactionConstants from "./reaction.constants";
+import commentConstants from "./comment.constants";
 
 import Tabs from "./tabs";
 import Theme from "./Theme";
-
-const LINK_S3 = "https://socialawsbucket.s3-ap-southeast-1.amazonaws.com/";
 
 export {
 	userConstants,
 	postConstants,
 	alertConstants,
 	reactionConstants,
-	LINK_S3,
+	commentConstants,
 	conversationConstants,
 	messageConstants,
-	//
 	Tabs,
 	Theme,
 };

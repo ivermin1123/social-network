@@ -91,7 +91,37 @@ const postsLookup = [
       let: { comments: "$comments" },
       pipeline: [
         {
-          $match: { $expr: { $eq: ["$_id", "$$comments"] } },
+          $match: { $expr: { $in: ["$_id", "$$comments"] } },
+        },
+        {
+          $lookup: {
+            from: "users",
+            let: { author: "$author" },
+            pipeline: [
+              {
+                $match: { $expr: { $eq: ["$_id", "$$author"] } },
+              },
+              {
+                $lookup: {
+                  from: "files",
+                  localField: "avatar",
+                  foreignField: "_id",
+                  as: "avatar",
+                },
+              },
+              {
+                $project: {
+                  _id: 1,
+                  firstName: 1,
+                  lastName: 1,
+                  createdAt: 1,
+                  username: 1,
+                  avatar: 1,
+                },
+              },
+            ],
+            as: "author",
+          },
         },
         {
           $lookup: {

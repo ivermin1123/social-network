@@ -3,7 +3,7 @@ import { Modal, Menu, notification } from "antd";
 import { useDispatch } from "react-redux";
 import {
 	DeleteOutlined,
-	EditOutlined,
+	// EditOutlined,
 	ExclamationCircleOutlined,
 } from "@ant-design/icons";
 

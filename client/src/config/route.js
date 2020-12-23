@@ -33,6 +33,7 @@ const CF_ROUTE_MESSAGE = {
 
 const CF_ROUTE_REACTION = {
 	LIKE_POST: `${API_URL}/api/reaction/likePost`,
+	LIKE_COMMENT: `${API_URL}/api/reaction/likeComment`,
 	COUNT_REACTION: `${API_URL}/api/reaction/countReaction`,
 };
 

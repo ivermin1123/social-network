@@ -387,6 +387,9 @@ body.dark {
 		.comment-area__body--left {
 			display: flex;
 			flex: 9;
+			.ant-comment-inner {
+				padding: 0 0 10px 0;
+			}
 		}
 		.comment-area__body--right {
 			display: flex;
@@ -430,6 +433,11 @@ body.dark {
 		outline: none;
 		margin-bottom: 12px;
 	}
+}
+
+.reactions-show-comment {
+	display: flex;
+	align-items: center;
 }
 
 // .modal-edit-post {

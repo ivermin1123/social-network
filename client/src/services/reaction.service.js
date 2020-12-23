@@ -17,6 +17,22 @@ function likePost(postId, type) {
 		});
 }
 
+function likeComment({ postId, commentId, type }) {
+	return axios
+		.post(
+			CF_ROUTE_REACTION.LIKE_COMMENT,
+			{
+				postId,
+				commentId,
+				type,
+			},
+			configAxios
+		)
+		.then((response) => {
+			return response.data;
+		});
+}
+
 function countReaction(postId) {
 	return axios
 		.post(
@@ -34,6 +50,7 @@ function countReaction(postId) {
 const reactionService = {
 	likePost,
 	countReaction,
+	likeComment,
 };
 
 export default reactionService;

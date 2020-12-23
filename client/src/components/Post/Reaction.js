@@ -37,15 +37,12 @@ const ReactionWrapper = styled.div`
 const ReactionImage = styled.img`
 	width: 100%;
 	height: 100%;
-
-  }
-/>
 `;
 
-const Reaction = ({ name, icon, handleLike, className, style }) => {
+const Reaction = ({ name, icon, handleLike, className, style, styleWrap }) => {
 	return (
 		<motion.div variants={list}>
-			<ReactionWrapper className={className}>
+			<ReactionWrapper className={className} style={styleWrap}>
 				<ReactionImage
 					style={style}
 					name={name}

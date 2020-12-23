@@ -71,6 +71,7 @@ const deleteComment = async ({ postId, commentId, userId }) => {
       const infoComment = await Comment.findById(commentId).catch((error) => {
         return reject(error.message);
       });
+      console.log({ infoComment, commentId, userId });
       if (infoComment.author != userId) return reject("ACCESS DENIED.");
 
       await Comment.deleteOne({ _id: commentId }).catch((error) => {

@@ -57,11 +57,11 @@ export const getPosts = async (req, res) => {
 export const getUserPosts = async (req, res) => {
   try {
     const { userId } = req.userData;
-    const { postId, userId: userIdGet } = req.body;
+    const { userId: userIdGet } = req.body;
 
     const userIdQuery = userIdGet || userId;
 
-    await POST.getUserPosts({ postId, userId: userIdQuery })
+    await POST.getUserPosts({ userId: userIdQuery })
       .then((data) => {
         res.status(200).json({ error: false, data });
       })

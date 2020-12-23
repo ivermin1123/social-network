@@ -1,34 +1,18 @@
-import React, { createElement, useState } from "react";
+import React, { useState } from "react";
 import { Comment, Tooltip, Avatar, Dropdown } from "antd";
 import moment from "moment";
-import { LikeOutlined, LikeFilled } from "@ant-design/icons";
+// import { LikeOutlined, LikeFilled } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import commentActions from "../../actions/comment.actions";
 import LINK_CONSTANT from "../../constants/link.constants";
 import ButtonSVG from "../ButtonSVG";
-
+import CommentReaction from "./CommentReaction";
 import MenuOptionComment from "./MenuOptionComment";
 
 function ListComment(props) {
 	const { user, post: postO } = props;
 	const dispatch = useDispatch();
-	const [likes, setLikes] = useState(0);
-	const [action, setAction] = useState(null);
 	const [post, setPost] = useState(postO);
-	const like = () => {
-		setLikes(1);
-		setAction("liked");
-	};
-
-	const actions = [
-		<Tooltip key="comment-basic-like" title="Like">
-			<span onClick={like}>
-				{createElement(action === "liked" ? LikeFilled : LikeOutlined)}
-				<span className="comment-action">{likes}</span>
-			</span>
-		</Tooltip>,
-		<span key="comment-basic-reply-to">Reply</span>,
-	];
 
 	const InputComment = (props) => {
 		const { parent } = props;
@@ -113,7 +97,13 @@ function ListComment(props) {
 						<div className="comment-area__body--left">
 							<Comment
 								key={comment._id}
-								actions={actions}
+								actions={[
+									<CommentReaction
+										comment={comment}
+										post={post}
+										setPost={setPost}
+									/>,
+								]}
 								author={
 									<span style={{ fontWeight: "bold" }}>
 										{`${comment.author[0].firstName} ${comment.author[0].lastName}`}

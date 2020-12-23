@@ -20,7 +20,7 @@ router.post(
 
 router.get("/getPosts", helpers.checkAuth, postController.getPosts);
 
-router.get("/getUserPosts", helpers.checkAuth, postController.getUserPosts);
+router.post("/getUserPosts", helpers.checkAuth, postController.getUserPosts);
 
 router.post("/deletePost", helpers.checkAuth, postController.deletePost);
 

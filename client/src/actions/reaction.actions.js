@@ -29,7 +29,35 @@ const likePost = (postId, type) => (dispatch) => {
 	);
 };
 
+const likeComment = ({ postId, commentId, type }) => (dispatch) => {
+	return reactionService.likeComment({ postId, commentId, type }).then(
+		(data) => {
+			return Promise.resolve(data.data);
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: reactionConstants.LIKE_COMMENT_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
 const reactionActions = {
 	likePost,
+	likeComment,
 };
 export default reactionActions;

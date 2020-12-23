@@ -3,6 +3,7 @@ import { checkObjectIDs } from "../utils/db-check";
 
 import "../models/Post";
 import "../models/File";
+import "../models/Reaction";
 // import { reject, resolve } from "bluebird";
 
 const linkify = require("linkifyjs");
@@ -11,6 +12,7 @@ require("linkifyjs/plugins/mention")(linkify);
 
 const Post = mongoose.model("Post");
 const File = mongoose.model("File");
+const Reaction = mongoose.model("Reaction");
 
 const postsLookup = [
   {
@@ -130,36 +132,6 @@ const postsLookup = [
             pipeline: [
               {
                 $match: { $expr: { $in: ["$_id", "$$reactions"] } },
-              },
-              {
-                $lookup: {
-                  from: "users",
-                  let: { author: "$author" },
-                  pipeline: [
-                    {
-                      $match: { $expr: { $eq: ["$_id", "$$author"] } },
-                    },
-                    {
-                      $lookup: {
-                        from: "files",
-                        localField: "avatar",
-                        foreignField: "_id",
-                        as: "avatar",
-                      },
-                    },
-                    {
-                      $project: {
-                        _id: 1,
-                        firstName: 1,
-                        lastName: 1,
-                        createdAt: 1,
-                        username: 1,
-                        avatar: 1,
-                      },
-                    },
-                  ],
-                  as: "author",
-                },
               },
               {
                 $lookup: {
@@ -399,6 +371,9 @@ const deletePost = async ({ userId, postId }) => {
         infoPost &&
         (infoPost.author._id == userId || infoPost.author.level === 100)
       ) {
+        await Reaction.deleteMany({ post: postId }).catch((error) => {
+          reject(error.message);
+        });
         await Post.deleteOne({ _id: postId })
           .then(() => resolve(infoPost))
           .catch((error) => {
@@ -422,10 +397,7 @@ const editPost = async ({ userId, body }) => {
           reject(error.message);
         });
 
-      if (
-        infoPost &&
-        (infoPost.author._id == userId || infoPost.author.level === 100)
-      ) {
+      if (infoPost.author._id == userId || infoPost.author.level == 100) {
         await Post.findByIdAndUpdate(
           postId,
           {

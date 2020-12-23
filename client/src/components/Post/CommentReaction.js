@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
 
 import Reaction from "./Reaction";
 import ReactionsWrapper from "./ReactionWrapper";
 
-import thumUp from "../../assets/icons/thumb-up.svg";
+import { list } from "./PostReaction";
 import like from "../../assets/icons/like.svg";
 import love from "../../assets/icons/love.svg";
 import haha from "../../assets/icons/haha.svg";
 import wow from "../../assets/icons/wow.svg";
 import sad from "../../assets/icons/sad.svg";
 import angry from "../../assets/icons/angry.svg";
-
 import reactionActions from "../../actions/reaction.actions";
 
 const LikeButton = styled.div`
@@ -26,7 +25,7 @@ const LikeButton = styled.div`
 	// color: #606770;
 	// fill: #606770;
 
-	padding: 15px 20px;
+	padding: 0px 5px 0px 0px;
 	// border-radius: 100px;
 	// box-shadow: 0 0px 20px -2px rgba(0, 0, 0, 0.2);
 
@@ -38,50 +37,31 @@ const LikeButton = styled.div`
 	}
 `;
 
-export const list = {
-	visible: {
-		opacity: 1,
-		y: 0,
-		transformOrigin: "50%",
-		scale: 1,
-		transition: {
-			staggerChildren: 0.04,
-			delayChildren: 0,
-		},
-	},
-	hidden: {
-		opacity: 0,
-		y: 50,
-		transformOrigin: "50%",
-		scale: 0,
-	},
-};
-
-export const setReactionPost = (type, setReactIcon, setReactName, setTypeR) => {
+const setReactionPost = (type, setReactName, setTypeR, setColorText) => {
 	setTypeR(type);
 	switch (type) {
 		case 1:
-			setReactIcon(like);
+			setColorText("#2078F6");
 			setReactName("Thích");
 			break;
 		case 2:
-			setReactIcon(love);
+			setColorText("#F33E58");
 			setReactName("Yêu thích");
 			break;
 		case 3:
-			setReactIcon(haha);
+			setColorText("#F7B125");
 			setReactName("Haha");
 			break;
 		case 4:
-			setReactIcon(wow);
+			setColorText("#F7B125");
 			setReactName("Wow");
 			break;
 		case 5:
-			setReactIcon(sad);
+			setColorText("#F7B125");
 			setReactName("Buồn");
 			break;
 		case 6:
-			setReactIcon(angry);
+			setColorText("#E9710F");
 			setReactName("Phẫn nộ");
 			break;
 		default:
@@ -89,27 +69,41 @@ export const setReactionPost = (type, setReactIcon, setReactName, setTypeR) => {
 	}
 };
 
-function PostReaction(props) {
-	const { postN, setPostN } = props;
+function CommentReaction(props) {
+	const { setPost, post, comment } = props;
 	const dispatch = useDispatch();
 	const { infoUser } = useSelector((state) => state.users);
 	const [isHover, setIsHover] = useState(false);
 	const [reactName, setReactName] = useState("Thích");
-	const [reactIcon, setReactIcon] = useState(thumUp);
+	// const [reactIcon, setReactIcon] = useState(thumUp);
+	const [colorText, setColorText] = useState("#65676B");
 	const [typeR, setTypeR] = useState();
+
 	const handleLike = (type) => {
 		setIsHover(false);
-		setReactionPost(type, setReactIcon, setReactName, setTypeR);
-		dispatch(reactionActions.likePost(postN._id, type)).then((res) => {
-			setPostN(res.data);
+		setReactionPost(type, setReactName, setTypeR, setColorText);
+		dispatch(
+			reactionActions.likeComment({
+				postId: post._id,
+				commentId: comment._id,
+				type,
+			})
+		).then((data) => {
+			setPost(data[0]);
 		});
 	};
 
 	const handleLikeButton = () => {
 		setIsHover(false);
-		setReactionPost(typeR, setReactIcon, setReactName, setTypeR);
-		dispatch(reactionActions.likePost(postN._id, typeR)).then((res) => {
-			setPostN(res.data);
+		setReactionPost(typeR, setReactName, setTypeR, setColorText);
+		dispatch(
+			reactionActions.likeComment({
+				postId: post._id,
+				commentId: comment._id,
+				type: typeR,
+			})
+		).then((data) => {
+			setPost(data[0]);
 			setTypeR(1);
 		});
 	};
@@ -117,19 +111,24 @@ function PostReaction(props) {
 	// hover for reaction
 	let isLike = 0;
 	useEffect(() => {
-		postN.reactions.forEach((reaction) => {
+		comment.reactions.forEach((reaction) => {
 			if (reaction.author[0]._id === infoUser._id) {
 				isLike = reaction.type;
 			}
 		});
 		if (isLike) {
-			setReactionPost(isLike, setReactIcon, setReactName, setTypeR);
+			setReactionPost(isLike, setReactName, setTypeR, setColorText);
 		} else {
-			setReactIcon(thumUp);
+			// setReactIcon(thumUp);
 			setReactName("Thích");
+			setColorText("#65676B");
 		}
-	}, [postN]);
+	}, [comment]);
 
+	const styleWrap = {
+		width: "35px",
+		height: "30px",
+	};
 	return (
 		<>
 			<LikeButton
@@ -139,12 +138,7 @@ function PostReaction(props) {
 				onMouseLeave={() => setIsHover(false)}
 				onClick={() => handleLikeButton()}
 			>
-				<Reaction
-					name={reactName}
-					icon={reactIcon}
-					className="reactions-show"
-				/>
-				<span>{reactName}</span>
+				<span style={{ color: colorText }}>{reactName}</span>
 			</LikeButton>
 			<ReactionsWrapper
 				initial="hidden"
@@ -152,16 +146,52 @@ function PostReaction(props) {
 				variants={list}
 				onMouseOver={() => setIsHover(true)}
 				onMouseLeave={() => setIsHover(false)}
+				style={{
+					width: "235px",
+					bottom: "20px",
+					left: "-40px",
+					padding: "5px",
+				}}
 			>
-				<Reaction name={1} icon={like} handleLike={handleLike} />
-				<Reaction name={2} icon={love} handleLike={handleLike} />
-				<Reaction name={3} icon={haha} handleLike={handleLike} />
-				<Reaction name={4} icon={wow} handleLike={handleLike} />
-				<Reaction name={5} icon={sad} handleLike={handleLike} />
-				<Reaction name={6} icon={angry} handleLike={handleLike} />
+				<Reaction
+					styleWrap={styleWrap}
+					name={1}
+					icon={like}
+					handleLike={handleLike}
+				/>
+				<Reaction
+					styleWrap={styleWrap}
+					name={2}
+					icon={love}
+					handleLike={handleLike}
+				/>
+				<Reaction
+					styleWrap={styleWrap}
+					name={3}
+					icon={haha}
+					handleLike={handleLike}
+				/>
+				<Reaction
+					styleWrap={styleWrap}
+					name={4}
+					icon={wow}
+					handleLike={handleLike}
+				/>
+				<Reaction
+					styleWrap={styleWrap}
+					name={5}
+					icon={sad}
+					handleLike={handleLike}
+				/>
+				<Reaction
+					styleWrap={styleWrap}
+					name={6}
+					icon={angry}
+					handleLike={handleLike}
+				/>
 			</ReactionsWrapper>
 		</>
 	);
 }
 
-export default PostReaction;
+export default CommentReaction;

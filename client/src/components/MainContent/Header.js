@@ -46,10 +46,6 @@ function Header(props) {
 						</svg>
 					</div>
 					<div className="header__body">
-						<HeaderItem name="Đức" icon1="icon-star" />
-						<HeaderItem name="Năng" icon1="icon-star" />
-						<HeaderItem name="Thắng" icon1="icon-star" />
-						<HeaderItem name="Số" icon1="icon-star" />
 						<HeaderItem name="Nhân" icon1="icon-star" openPopup />
 						<HeaderItem name="Định" icon1="icon-star" />
 						<HeaderItem name="Thắng" icon1="icon-star" />

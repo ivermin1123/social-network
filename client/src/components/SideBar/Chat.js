@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { Avatar } from "antd";
 
 import ava2 from "../../assets/image/ava-2.png";
 import LINK_CONSTANT from "../../constants/link.constants";
@@ -18,7 +19,16 @@ function Chat() {
 				alt={`${user.firstName} ${user.lastName}`}
 			>
 				<div className="sidebar__ava">
-					<img
+					<Avatar
+						className="sidebar__pic"
+						size={30}
+						src={
+							user.avatar.length
+								? `${LINK_CONSTANT.LINK_S3}${user.avatar[0].path}`
+								: ava2
+						}
+					/>
+					{/* <img
 						className="sidebar__pic"
 						src={
 							user.avatar.length
@@ -26,7 +36,7 @@ function Chat() {
 								: ava2
 						}
 						alt="avatar"
-					/>
+					/> */}
 				</div>
 				<div className="sidebar__text">
 					{`${user.firstName} ${user.lastName}`}

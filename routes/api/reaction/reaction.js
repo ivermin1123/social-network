@@ -11,6 +11,13 @@ router.post(
   reactionController.likePost
 );
 
+router.post(
+  "/likeComment",
+  helpers.checkAuth,
+  validator.reactionValidator.likeComment,
+  reactionController.likeComment
+);
+
 router.get(
   "/countReaction",
   helpers.checkAuth,

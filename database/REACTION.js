@@ -4,10 +4,12 @@ import { checkObjectIDs } from "../utils/db-check";
 
 import "../models/Post";
 import "../models/Reaction";
+import "../models/Comment";
 import POST from "./POST";
 
 const Post = mongoose.model("Post");
 const Reaction = mongoose.model("Reaction");
+const Comment = mongoose.model("Comment");
 
 const likePost = async ({ postId, type, userId }) => {
   return new Promise(async (resolve, reject) => {
@@ -16,7 +18,9 @@ const likePost = async ({ postId, type, userId }) => {
         reject({ error: true, message: "param_invalid_1" });
 
       const infoPost = await Post.findById(postId);
-      if (!infoPost) reject({ error: true, message: "post_not_found" });
+      if (!infoPost) {
+        return reject("post_not_found");
+      }
 
       const listReaction = await Reaction.find({ post: postId });
       let checkLike = false;
@@ -33,7 +37,7 @@ const likePost = async ({ postId, type, userId }) => {
 
       if (checkLike) {
         if (isUpdate.update) {
-          const rs = await Reaction.findByIdAndUpdate(
+          await Reaction.findByIdAndUpdate(
             isUpdate.id,
             {
               type,
@@ -104,6 +108,103 @@ const likePost = async ({ postId, type, userId }) => {
   });
 };
 
+const likeComment = async ({ postId, commentId, type, userId }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!checkObjectIDs(commentId))
+        return reject({ error: true, message: "param_invalid_1" });
+
+      const infoPost = await Comment.findById(commentId);
+      if (!infoPost) {
+        return reject("comment_not_found");
+      }
+
+      const listReaction = await Reaction.find({ comment: commentId });
+      let checkLike = false;
+      let isUpdate = { update: false, id: null };
+      listReaction.forEach((reaction) => {
+        if (reaction.author == userId) {
+          if (reaction.type != type) {
+            isUpdate.update = true;
+            isUpdate.id = reaction._id;
+          }
+          checkLike = true;
+        }
+      });
+
+      if (checkLike) {
+        if (isUpdate.update) {
+          await Reaction.findByIdAndUpdate(
+            isUpdate.id,
+            {
+              type,
+            },
+            { new: true }
+          );
+          await POST.getPostById({ postId })
+            .then((data) => {
+              return resolve(data);
+            })
+            .catch((error) => {
+              return reject(error.message);
+            });
+        } else {
+          const reaction = listReaction.filter(
+            (reaction) => reaction.author == userId
+          );
+          await Comment.findByIdAndUpdate(
+            commentId,
+            { $pull: { reactions: reaction[0]._id } },
+            { new: true }
+          );
+
+          const infoPost = await POST.getPostById({
+            postId,
+          }).catch((error) => {
+            return reject(error.message);
+          });
+
+          await Reaction.deleteOne({ _id: reaction[0]._id })
+            .then(() => {
+              return resolve(infoPost);
+            })
+            .catch((error) => {
+              return reject(error.message);
+            });
+        }
+      } else {
+        let newReaction = new Reaction({
+          author: userId,
+          comment: commentId,
+          type,
+        });
+
+        const infoNewReaction = await newReaction.save().catch((error) => {
+          return reject({ error: true, message: error.message });
+        });
+
+        await Comment.findByIdAndUpdate(
+          commentId,
+          {
+            $push: { reactions: infoNewReaction._id },
+          },
+          { new: true }
+        );
+
+        await POST.getPostById({ postId })
+          .then((data) => {
+            return resolve(data);
+          })
+          .catch((error) => {
+            return reject(error.message);
+          });
+      }
+    } catch (error) {
+      return reject(error);
+    }
+  });
+};
+
 const countReaction = async ({ postId }) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -130,4 +231,4 @@ const countReaction = async ({ postId }) => {
   });
 };
 
-export default { countReaction, likePost };
+export default { countReaction, likePost, likeComment };

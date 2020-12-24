@@ -168,6 +168,14 @@ const commentLookup = [
             as: "reactions",
           },
         },
+        {
+          $lookup: {
+            from: "posts",
+            localField: "post",
+            foreignField: "_id",
+            as: "post",
+          },
+        },
       ],
       as: "children",
     },

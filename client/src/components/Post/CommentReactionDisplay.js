@@ -58,10 +58,14 @@ function CommentReactionDisplay(props) {
 		return null;
 	}
 
+	const handleClick = (reactions) => {
+		onClick(reactions, true);
+	};
+
 	return (
 		<div
 			className="comment-reaction"
-			onClick={() => onClick(reactions, true)}
+			onClick={() => handleClick(reactions)}
 		>
 			<span className="comment-reaction__icon">
 				<span className="comment-reaction__icon--first ">

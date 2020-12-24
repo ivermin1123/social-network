@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Comment, Tooltip, Avatar, Dropdown, Modal } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, SwapRightOutlined } from "@ant-design/icons";
 import moment from "moment";
 // import { LikeOutlined, LikeFilled } from "@ant-design/icons";
 import { useDispatch, connect } from "react-redux";
@@ -122,17 +122,18 @@ function ListComment(props) {
 			</div>
 		);
 	}
-	return (
-		<div className="comment-area">
-			<InputComment />
-			{(comments.length &&
-				comments.map((comment) => (
-					<div className="comment-area__body" key={comment._id}>
-						<div className="comment-area__body--left">
+
+	const ListCommentChild = (props) => {
+		const { comments, parent, setShowChild } = props;
+		return (
+			<>
+				{comments.length
+					? comments.map((comment) => (
 							<Comment
 								key={comment._id}
 								actions={[
 									<CommentReaction
+										setShowChild={setShowChild}
 										comment={comment}
 										setComments={setComments}
 									/>,
@@ -179,6 +180,96 @@ function ListComment(props) {
 									</Tooltip>
 								}
 							/>
+					  ))
+					: null}
+				<InputComment parent={parent} />
+			</>
+		);
+	};
+
+	const CommentItem = (props) => {
+		const { comment } = props;
+		const [showChild, setShowChild] = useState(false);
+		return (
+			<>
+				<Comment
+					key={comment._id}
+					actions={[
+						<CommentReaction
+							comment={comment}
+							setComments={setComments}
+						/>,
+						<span onClick={() => setShowChild(!showChild)}>
+							Trả lời
+						</span>,
+					]}
+					author={
+						<span style={{ fontWeight: "bold" }}>
+							{`${comment.author[0].firstName} ${comment.author[0].lastName}`}
+						</span>
+					}
+					avatar={
+						<span>
+							<Avatar
+								src={`${LINK_CONSTANT.LINK_S3}${comment.author[0].avatar[0].path}`}
+								alt={`${comment.author[0].firstName} ${comment.author[0].lastName}`}
+								size={32}
+								style={{
+									border: "0.3px solid gray",
+								}}
+							/>
+						</span>
+					}
+					content={
+						<div className="comment-reaction-high">
+							<span>{comment.content}</span>
+							<CommentReactionDisplay
+								onClick={handleClick}
+								reactions={comment.reactions}
+							/>
+						</div>
+					}
+					datetime={
+						<Tooltip
+							title={moment(comment.createdAt)
+								.locale("vi")
+								.format(
+									"dddd[,] DD [Tháng] MM [,] YYYY [lúc] HH:mm"
+								)}
+						>
+							<span>
+								{moment(comment.createdAt)
+									.locale("vi")
+									.fromNow()}
+							</span>
+						</Tooltip>
+					}
+				>
+					{comment.children.length && !showChild ? (
+						<a onClick={() => setShowChild(true)}>
+							<SwapRightOutlined />
+							{comment.children.length} trả lời
+						</a>
+					) : null}
+					{showChild ? (
+						<ListCommentChild
+							setShowChild={setShowChild}
+							comments={comment.children}
+							parent={comment._id}
+						/>
+					) : null}
+				</Comment>
+			</>
+		);
+	};
+	return (
+		<div className="comment-area">
+			<InputComment />
+			{(comments.length &&
+				comments.map((comment) => (
+					<div className="comment-area__body" key={comment._id}>
+						<div className="comment-area__body--left">
+							<CommentItem comment={comment} />
 						</div>
 						<div className="comment-area__body--right">
 							<DropDownOption comment={comment} />

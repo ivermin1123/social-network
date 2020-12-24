@@ -84,6 +84,11 @@ body.dark {
 					background-color: rgba(255, 255, 255, 0.1) !important;
 				}
 			}
+			// .post-body__interact {
+			// 	&-comment:hover {
+
+			// 	}
+			// }
 		}
 		.ant-comment-content-author-name > * {
 			color: white;
@@ -393,11 +398,11 @@ body.dark {
 			display: flex;
 			flex: 9;
 			.ant-comment-inner {
-				padding: 0 0 10px 0;
+				padding: 0;
 			}
 			.comment-reaction-high {
 				display: flex;
-				cursor: pointer;
+
 				.comment-reaction {
 					display: flex;
 					position: absolute;
@@ -405,6 +410,7 @@ body.dark {
 					top: 40px;
 					background: rgba(228, 228, 228, 0.25);
 					padding: 1px 4px;
+					cursor: pointer;
 					border-radius: 20px;
 					.comment-reaction__icon {
 						display: flex;

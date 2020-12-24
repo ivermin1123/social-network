@@ -70,7 +70,7 @@ const setReactionPost = (type, setReactName, setTypeR, setColorText) => {
 };
 
 function CommentReaction(props) {
-	const { setComments, comment } = props;
+	const { setComments, comment, setShowChild } = props;
 	const dispatch = useDispatch();
 	const { infoUser } = useSelector((state) => state.users);
 	const [isHover, setIsHover] = useState(false);
@@ -91,6 +91,7 @@ function CommentReaction(props) {
 			})
 		).then((data) => {
 			setComments(data);
+			setShowChild(true);
 		});
 	};
 
@@ -106,6 +107,7 @@ function CommentReaction(props) {
 		).then((data) => {
 			setComments(data);
 			setTypeR(1);
+			setShowChild(true);
 		});
 	};
 
@@ -134,12 +136,14 @@ function CommentReaction(props) {
 		<>
 			<LikeButton
 				type="button"
-				className="post-body__interact-option reactions"
+				className="post-body__interact-comment reactions"
 				onMouseOver={() => setIsHover(true)}
 				onMouseLeave={() => setIsHover(false)}
 				onClick={() => handleLikeButton()}
 			>
-				<span style={{ color: colorText }}>{reactName}</span>
+				<span style={{ color: colorText, marginRight: "5px" }}>
+					{reactName}
+				</span>
 			</LikeButton>
 			<ReactionsWrapper
 				initial="hidden"

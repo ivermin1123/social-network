@@ -22,8 +22,7 @@ const configToast = {
 
 const AuthorDetail = ({ ...props }) => {
 	const { userData, isType } = props;
-	const { infoUser } = props;
-	console.log("infoUser: ", infoUser);
+	// const { infoUser } = props;
 	const [show, setShow] = useState(false);
 	const [description, setDescription] = useState("");
 	const [file, setFile] = useState(null);
@@ -84,16 +83,14 @@ const AuthorDetail = ({ ...props }) => {
 			};
 			// Redux call
 			dispatch(userAction.updateUserImage(file, data, dataSaveServer))
-				.then((data) => {
+				.then(() => {
 					toast(`🦄 Upload Image Success`);
-					console.log(data);
 					handleReset();
 					setShow(false);
 				})
-				.catch((err) => {
+				.catch(() => {
 					toast(`🦄 Upload Image Fail`);
 					handleReset();
-					console.log(err);
 				});
 		} catch (error) {
 			console.log(error);

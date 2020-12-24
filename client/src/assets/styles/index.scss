@@ -94,6 +94,11 @@ body.dark {
 	}
 	.reactions-show {
 	}
+	.comment-reaction__amout {
+		span {
+			color: white !important;
+		}
+	}
 }
 #post-list {
 	margin: auto;
@@ -389,6 +394,42 @@ body.dark {
 			flex: 9;
 			.ant-comment-inner {
 				padding: 0 0 10px 0;
+			}
+			.comment-reaction-high {
+				display: flex;
+				cursor: pointer;
+				.comment-reaction {
+					display: flex;
+					position: absolute;
+					right: 0px;
+					top: 40px;
+					background: rgba(228, 228, 228, 0.25);
+					padding: 1px 4px;
+					border-radius: 20px;
+					.comment-reaction__icon {
+						display: flex;
+						align-items: center;
+						margin-right: 4px;
+						.comment-reaction__icon--first {
+							z-index: 2;
+							margin-left: 0px;
+						}
+						.comment-reaction__icon--second {
+							z-index: 1;
+							margin-left: -4px;
+						}
+						.comment-reaction__icon--third {
+							margin-left: -4px;
+						}
+					}
+					.comment-reaction__amout {
+						display: flex;
+						align-items: center;
+						span {
+							color: black;
+						}
+					}
+				}
 			}
 		}
 		.comment-area__body--right {

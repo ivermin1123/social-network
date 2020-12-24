@@ -15,7 +15,6 @@ export const uploadFile_S3 = async (req, res) => {
     const pathFile = `${path}/${name}`;
     await GENERATE_LINK_S3(path, name, type)
       .then((linkUpload) => {
-        // console.log(linkUpload, path, type);
         res.json({ error: false, linkUpload, path: pathFile, type });
       })
       .catch((error) => {

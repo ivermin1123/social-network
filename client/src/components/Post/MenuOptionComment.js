@@ -10,7 +10,7 @@ import {
 import commentActions from "../../actions/comment.actions";
 
 function MenuOptionComment(props) {
-	const { setPost, post, comment } = props;
+	const { setComments, post, comment } = props;
 	const dispatch = useDispatch();
 	const deleteComment = () => {
 		dispatch(
@@ -23,7 +23,7 @@ function MenuOptionComment(props) {
 				message: "Bình luận đã được xóa.",
 				// description: "Bài viết đã được xóa.",
 			});
-			setPost(data[0]);
+			setComments(data);
 		});
 	};
 	const handleDeleteComment = () => {

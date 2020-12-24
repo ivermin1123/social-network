@@ -17,7 +17,6 @@ function ChatBar(props) {
 	}, []);
 	const { openChat, infoUser, loadingUser } = props;
 
-	console.log("loadingUser 🐱‍👤", { loadingUser, user, infoUser });
 	if (loadingUser) {
 		return <LoadingOutlined />;
 	}

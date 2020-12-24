@@ -3,7 +3,6 @@ import MESSAGE from "../../database/MESSAGE";
 export const getMessages = async (req, res) => {
   try {
     const { conversationId, currentPage } = req.body;
-    // console.log({req});
     const { userId } = req.userData;
 
     const infoMessages = await MESSAGE.getMessages({

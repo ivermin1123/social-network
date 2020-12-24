@@ -40,3 +40,23 @@ export const deleteComment = async (req, res) => {
     res.status(500).json({ error: true, message: error.message });
   }
 };
+
+export const getCommentsByPost = async (req, res) => {
+  try {
+    const { postId, commentId } = req.body;
+    // const { userId } = req.userData;
+    await COMMENT.getCommentsByPost({
+      postId,
+    })
+      .then((data) => {
+        res.status(200).json({ error: false, data });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).json({ error: true, message: error.message });
+      });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: true, message: error.message });
+  }
+};

@@ -1,18 +1,23 @@
-import React, { useState } from "react";
-import { Comment, Tooltip, Avatar, Dropdown } from "antd";
+import React, { useState, useEffect } from "react";
+import { Comment, Tooltip, Avatar, Dropdown, Modal } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import moment from "moment";
 // import { LikeOutlined, LikeFilled } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import commentActions from "../../actions/comment.actions";
 import LINK_CONSTANT from "../../constants/link.constants";
 import ButtonSVG from "../ButtonSVG";
 import CommentReaction from "./CommentReaction";
 import MenuOptionComment from "./MenuOptionComment";
+import CommentReactionDisplay from "./CommentReactionDisplay";
+import ListReactions from "./ListReactions";
 
 function ListComment(props) {
-	const { user, post: postO } = props;
+	const { user, post, loadingComment } = props;
 	const dispatch = useDispatch();
-	const [post, setPost] = useState(postO);
+	const [comments, setComments] = useState([]);
+	const [visibleModal, setVisibleModal] = useState(false);
+	const [reactions, setReactions] = useState();
 
 	const InputComment = (props) => {
 		const { parent } = props;
@@ -24,7 +29,7 @@ function ListComment(props) {
 				: { postId: post._id, content: message };
 			dispatch(commentActions.commentOnPost(dataSendServer)).then(
 				(data) => {
-					setPost(data[0]);
+					setComments(data);
 				}
 			);
 			setMessage("");
@@ -66,7 +71,7 @@ function ListComment(props) {
 			<Dropdown
 				overlay={
 					<MenuOptionComment
-						setPost={setPost}
+						setComments={setComments}
 						post={post}
 						comment={comment}
 					/>
@@ -88,11 +93,40 @@ function ListComment(props) {
 		);
 	};
 
+	useEffect(() => {
+		dispatch(commentActions.getCommentsByPost({ postId: post._id })).then(
+			(data) => {
+				setComments(data);
+			}
+		);
+	}, []);
+
+	const handleClick = (data, isShow) => {
+		setReactions(data);
+		setVisibleModal(isShow);
+	};
+	if (loadingComment) {
+		return (
+			<div
+				style={{
+					display: "flex",
+					margin: "10px",
+					paddingTop: "12px",
+					paddingBottom: "5px",
+					borderTop: "0.5px solid #cfd0d4",
+				}}
+			>
+				<LoadingOutlined
+					style={{ fontSize: "30px", color: "#08c", margin: "auto" }}
+				/>
+			</div>
+		);
+	}
 	return (
 		<div className="comment-area">
 			<InputComment />
-			{(post.comments.length &&
-				post.comments.map((comment) => (
+			{(comments.length &&
+				comments.map((comment) => (
 					<div className="comment-area__body" key={comment._id}>
 						<div className="comment-area__body--left">
 							<Comment
@@ -100,8 +134,7 @@ function ListComment(props) {
 								actions={[
 									<CommentReaction
 										comment={comment}
-										post={post}
-										setPost={setPost}
+										setComments={setComments}
 									/>,
 								]}
 								author={
@@ -121,7 +154,15 @@ function ListComment(props) {
 										/>
 									</span>
 								}
-								content={<span>{comment.content}</span>}
+								content={
+									<div className="comment-reaction-high">
+										<span>{comment.content}</span>
+										<CommentReactionDisplay
+											onClick={handleClick}
+											reactions={comment.reactions}
+										/>
+									</div>
+								}
 								datetime={
 									<Tooltip
 										title={moment(comment.createdAt)
@@ -145,8 +186,28 @@ function ListComment(props) {
 					</div>
 				))) ||
 				null}
+			<Modal
+				// title="Danh sách lượt thích"
+				className="list-reactions-modal"
+				getContainer={false}
+				visible={visibleModal}
+				footer={null}
+				width="455px"
+				closable={false}
+				onCancel={() => setVisibleModal(false)}
+				headStyle={{
+					borderRadius: "10px 10px 0 0",
+				}}
+				style={{ borderRadius: "10px" }}
+			>
+				<ListReactions reactions={reactions} />
+			</Modal>
 		</div>
 	);
 }
 
-export default ListComment;
+const mapStateToProps = (state) => ({
+	loadingComment: state.comments.loadingComment,
+});
+
+export default connect(mapStateToProps)(ListComment);

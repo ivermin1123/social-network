@@ -56,8 +56,41 @@ const likeComment = ({ postId, commentId, type }) => (dispatch) => {
 	);
 };
 
+const countReaction = ({ typeId, typeReact }) => (dispatch) => {
+	return reactionService.countReaction({ typeId, typeReact }).then(
+		(data) => {
+			dispatch({
+				type: reactionConstants.COUNT_REACTION_SUCCESS,
+				payload: data.data,
+			});
+
+			return Promise.resolve(data.data);
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: reactionConstants.COUNT_REACTION_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
 const reactionActions = {
 	likePost,
 	likeComment,
+	countReaction,
 };
 export default reactionActions;

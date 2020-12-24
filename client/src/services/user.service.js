@@ -17,7 +17,6 @@ function login(email, password) {
 			if (response.data.user) {
 				localStorage.setItem("user", JSON.stringify(response.data));
 			}
-			console.log(response.data);
 			return response.data;
 		});
 }

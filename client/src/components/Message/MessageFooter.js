@@ -8,12 +8,6 @@ function MessageFooter(props) {
 	const { infoUser } = useSelector((state) => state.users);
 	function handleSubmit(e) {
 		e.preventDefault();
-		console.log({
-			message,
-			conversationId: conversationOpen.id,
-			type: 0,
-			userId: infoUser._id,
-		});
 		socket.emit("CSS_SEND_MESSAGE", {
 			message,
 			conversationId: conversationOpen.id,

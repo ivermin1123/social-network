@@ -26,11 +26,8 @@ function NavbarLoaded(props) {
 		setDisplay(value);
 	};
 	const { isConnecting } = props;
-	console.log("RENDER 😎");
 	useEffect(() => {
-		console.log("CONNECT SOCKET CLIENT 😛");
 		dispatch(connectSocket());
-
 		// CLEAN UP THE EFFECT
 		return () => dispatch(disconnectSocket());
 		//

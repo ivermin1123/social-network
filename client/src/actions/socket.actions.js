@@ -12,7 +12,6 @@ function connect() {
 		socketClient.connect().then((socket) => {
 			dispatch(connectSocket(socket));
 			socket.on("SSC_SEND_MESSAGE", ({ infoMessage }) => {
-				console.log("SSC_SEND_MESSAGE", infoMessage);
 				dispatch({
 					type: messageConstants.SEND_MESSAGE_SUCCESS,
 					payload: infoMessage,

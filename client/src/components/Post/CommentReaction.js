@@ -70,7 +70,7 @@ const setReactionPost = (type, setReactName, setTypeR, setColorText) => {
 };
 
 function CommentReaction(props) {
-	const { setPost, post, comment } = props;
+	const { setComments, comment } = props;
 	const dispatch = useDispatch();
 	const { infoUser } = useSelector((state) => state.users);
 	const [isHover, setIsHover] = useState(false);
@@ -80,16 +80,17 @@ function CommentReaction(props) {
 	const [typeR, setTypeR] = useState();
 
 	const handleLike = (type) => {
+		console.log(comment);
 		setIsHover(false);
 		setReactionPost(type, setReactName, setTypeR, setColorText);
 		dispatch(
 			reactionActions.likeComment({
-				postId: post._id,
+				postId: comment.post[0]._id,
 				commentId: comment._id,
 				type,
 			})
 		).then((data) => {
-			setPost(data[0]);
+			setComments(data);
 		});
 	};
 
@@ -98,12 +99,12 @@ function CommentReaction(props) {
 		setReactionPost(typeR, setReactName, setTypeR, setColorText);
 		dispatch(
 			reactionActions.likeComment({
-				postId: post._id,
+				postId: comment.post[0]._id,
 				commentId: comment._id,
 				type: typeR,
 			})
 		).then((data) => {
-			setPost(data[0]);
+			setComments(data);
 			setTypeR(1);
 		});
 	};

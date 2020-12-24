@@ -6,6 +6,7 @@ import "../models/Post";
 import "../models/Reaction";
 import "../models/Comment";
 import POST from "./POST";
+import COMMENT from "./COMMENT";
 
 const Post = mongoose.model("Post");
 const Reaction = mongoose.model("Reaction");
@@ -141,7 +142,7 @@ const likeComment = async ({ postId, commentId, type, userId }) => {
             },
             { new: true }
           );
-          await POST.getPostById({ postId })
+          await COMMENT.getCommentsByPost({ postId })
             .then((data) => {
               return resolve(data);
             })
@@ -158,7 +159,7 @@ const likeComment = async ({ postId, commentId, type, userId }) => {
             { new: true }
           );
 
-          const infoPost = await POST.getPostById({
+          const infoPost = await COMMENT.getCommentsByPost({
             postId,
           }).catch((error) => {
             return reject(error.message);
@@ -191,7 +192,7 @@ const likeComment = async ({ postId, commentId, type, userId }) => {
           { new: true }
         );
 
-        await POST.getPostById({ postId })
+        await COMMENT.getCommentsByPost({ postId })
           .then((data) => {
             return resolve(data);
           })
@@ -205,15 +206,28 @@ const likeComment = async ({ postId, commentId, type, userId }) => {
   });
 };
 
-const countReaction = async ({ postId }) => {
+const countReaction = async ({ typeId, typeReact }) => {
   return new Promise(async (resolve, reject) => {
     try {
+      let matchType = {};
+      switch (typeReact) {
+        case "post":
+          matchType = {
+            $match: {
+              post: mongoose.Types.ObjectId(typeId),
+            },
+          };
+          break;
+        case "comment":
+          matchType = {
+            $match: {
+              comment: mongoose.Types.ObjectId(typeId),
+            },
+          };
+          break;
+      }
       await Reaction.aggregate([
-        {
-          $match: {
-            post: mongoose.Types.ObjectId(postId),
-          },
-        },
+        matchType,
         { $group: { _id: "$type", amount: { $sum: 1 } } },
         {
           $sort: { _id: 1 },

@@ -52,12 +52,12 @@ export const likeComment = async (req, res) => {
 
 export const countReaction = async (req, res) => {
   try {
-    const { postId } = req.body;
-    const data = await REACTION.countReaction({
-      postId,
-    }).catch((error) => {
-      res.status(500).json(error);
-    });
+    const { typeId, typeReact } = req.body;
+    const data = await REACTION.countReaction({ typeId, typeReact }).catch(
+      (error) => {
+        res.status(500).json(error);
+      }
+    );
     res.status(200).json({ error: false, data });
   } catch (error) {
     res.status(500).json({ error: true, message: error.message });

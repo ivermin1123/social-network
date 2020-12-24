@@ -24,9 +24,7 @@ function Navigation(props) {
 		setOpen(!open);
 	};
 
-	console.log("RENDER 😎");
 	useEffect(() => {
-		console.log("CONNECT SOCKET CLIENT 😛");
 		dispatch(connectSocket());
 		dispatch(userActions.getUser(user._id));
 

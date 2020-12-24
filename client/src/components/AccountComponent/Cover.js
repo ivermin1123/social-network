@@ -75,16 +75,14 @@ const Cover = (props) => {
 			};
 			// Redux call
 			dispatch(userAction.updateUserImage(file, data, dataSaveServer))
-				.then((data) => {
+				.then(() => {
 					toast(`🦄 Upload Image Success`);
-					console.log(data);
 					handleReset();
 					setShow(false);
 				})
-				.catch((err) => {
+				.catch(() => {
 					toast(`🦄 Upload Image Fail`);
 					handleReset();
-					console.log(err);
 				});
 		} catch (error) {
 			console.log(error);

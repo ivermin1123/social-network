@@ -33,12 +33,13 @@ function likeComment({ postId, commentId, type }) {
 		});
 }
 
-function countReaction(postId) {
+function countReaction({ typeId, typeReact }) {
 	return axios
 		.post(
 			CF_ROUTE_REACTION.COUNT_REACTION,
 			{
-				postId,
+				typeId,
+				typeReact,
 			},
 			configAxios
 		)

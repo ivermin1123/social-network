@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { sortReact, sortTypeReact } from "./PostReactionDisplay";
 
 import like from "../../assets/icons/like.svg";
 import love from "../../assets/icons/love.svg";
@@ -7,30 +8,9 @@ import wow from "../../assets/icons/wow.svg";
 import sad from "../../assets/icons/sad.svg";
 import angry from "../../assets/icons/angry.svg";
 
-export const sortReact = (a, b) => {
-	if (a.amount < b.amount) {
-		return 1;
-	}
-	if (a.amount > b.amount) {
-		return -1;
-	}
-	return 0;
-};
-
-export const sortTypeReact = (a, b) => {
-	if (a.type < b.type) {
-		return -1;
-	}
-	if (a.type > b.type) {
-		return 1;
-	}
-	return 0;
-};
-
-function PostReactionDisplay(props) {
-	const { post, onClick } = props;
-	const { reactions } = post;
-	const [listReact, setListReact] = useState(null);
+function CommentReactionDisplay(props) {
+	const { reactions, onClick } = props;
+	const [listReact, setListReact] = useState(reactions);
 
 	useEffect(() => {
 		const arrReact = [
@@ -72,39 +52,43 @@ function PostReactionDisplay(props) {
 		arrToShow = arrToShow.sort(sortTypeReact);
 		arrToShow = arrToShow.sort(sortReact);
 		setListReact(arrToShow);
-	}, [post]);
+	}, [reactions]);
 
 	if (!reactions.length || listReact === null) {
 		return null;
 	}
+
 	return (
-		<div className="react__display-react" onClick={onClick}>
-			<span className="react__display-react--reaction">
-				<span className="react--reaction-first react--reaction">
+		<div
+			className="comment-reaction"
+			onClick={() => onClick(reactions, true)}
+		>
+			<span className="comment-reaction__icon">
+				<span className="comment-reaction__icon--first ">
 					<span>
 						<img src={listReact[0].img} alt="" />
 					</span>
 				</span>
 				{listReact[1] && (
-					<span className="react--reaction-second react--reaction">
+					<span className="comment-reaction__icon--second">
 						<span>
 							<img src={listReact[1].img} alt="" />
 						</span>
 					</span>
 				)}
 				{listReact[2] && (
-					<span className="react--reaction-third react--reaction">
+					<span className="comment-reaction__icon--third">
 						<span>
 							<img src={listReact[2].img} alt="" />
 						</span>
 					</span>
 				)}
 			</span>
-			<div className="react__display-react--amount">
+			<div className="comment-reaction__amout">
 				<span>{reactions.length}</span>
 			</div>
 		</div>
 	);
 }
 
-export default PostReactionDisplay;
+export default CommentReactionDisplay;

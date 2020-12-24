@@ -8,7 +8,6 @@ const getMessages = (conversationId) => (dispatch) => {
 	dispatch(request());
 	return messageService.getMessages(conversationId).then(
 		(data) => {
-			console.log("MESSAGE 🚕", { data });
 			dispatch({
 				type: messageConstants.GET_LIST_MESSAGE_SUCCESS,
 				payload: { data: data.data },

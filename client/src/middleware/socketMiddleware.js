@@ -16,7 +16,6 @@ export default function socketMiddleware(socket) {
 			// Move on! Not a socket request or a badly formed one.
 			return next(action);
 		}
-		console.log("SOCKET IS HERE");
 		const [REQUEST, SUCCESS, FAILURE] = types;
 		next({ ...rest, type: REQUEST });
 

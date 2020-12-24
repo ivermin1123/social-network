@@ -17,4 +17,10 @@ router.post(
   commentController.deleteComment
 );
 
+router.post(
+  "/getCommentsByPost",
+  helpers.checkAuth,
+  commentController.getCommentsByPost
+);
+
 export default router;

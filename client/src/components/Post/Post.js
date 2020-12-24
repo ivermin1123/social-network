@@ -141,7 +141,7 @@ const Post = (props) => {
 				headStyle={{ borderRadius: "10px 10px 0 0" }}
 				style={{ borderRadius: "10px" }}
 			>
-				<ListReactions postN={postN} />
+				<ListReactions reactions={postN.reactions} />
 			</Modal>
 			<Modal
 				className="modal-edit-post"

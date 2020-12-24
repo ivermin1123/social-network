@@ -36,7 +36,6 @@ const RegisterPage = (props) => {
 	};
 
 	const handleRegister = (e) => {
-		console.log(user);
 		let result = true;
 		if (
 			user.username === "" ||

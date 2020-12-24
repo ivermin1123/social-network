@@ -33,9 +33,24 @@ function deleteComment({ postId, commentId }) {
 		});
 }
 
+function getCommentsByPost({ postId }) {
+	return axios
+		.post(
+			CF_ROUTE_COMMENT.GET_COMMENTS_BY_POST,
+			{
+				postId,
+			},
+			configAxios
+		)
+		.then((response) => {
+			return response.data;
+		});
+}
+
 const commentService = {
 	commentOnPost,
 	deleteComment,
+	getCommentsByPost,
 };
 
 export default commentService;

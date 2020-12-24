@@ -10,6 +10,7 @@ import messages from "./messages.reducer";
 import alert from "./alert.reducer";
 import socket from "./socket.reducer";
 import posts from "./posts.reducer";
+import comments from "./comment.reducer";
 
 export default combineReducers({
 	routing: routerReducer,
@@ -17,6 +18,7 @@ export default combineReducers({
 	conversations,
 	registration,
 	socket,
+	comments,
 	messages,
 	users,
 	alert,

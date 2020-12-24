@@ -11,11 +11,11 @@ import sad from "../../assets/icons/sad.svg";
 import angry from "../../assets/icons/angry.svg";
 
 const ListReactions = (props) => {
-	const { postN } = props;
+	const { reactions } = props;
 	const { TabPane } = Tabs;
 
 	const getListReactionByType = (type) => {
-		const arrReaction = postN.reactions.filter(
+		const arrReaction = reactions.filter(
 			(reaction) => reaction.type === type
 		);
 		if (arrReaction.length <= 0) {
@@ -46,7 +46,7 @@ const ListReactions = (props) => {
 	return (
 		<Tabs defaultActiveKey="1">
 			<TabPane tab={<span>Tất cả</span>} key="1">
-				{postN.reactions.map((reaction) => (
+				{reactions.map((reaction) => (
 					<div className="reaction-item" key={reaction._id}>
 						<div className="reaction-item__left">
 							<Avatar
@@ -67,15 +67,14 @@ const ListReactions = (props) => {
 					</div>
 				))}
 			</TabPane>
-			{postN.reactions.filter((reaction) => reaction.type === 1)
-				.length ? (
+			{reactions.filter((reaction) => reaction.type === 1).length ? (
 				<TabPane
 					tab={
 						<span className="list-reaction-icon">
 							<img src={like} alt="" />
 							&nbsp;{" "}
 							{
-								postN.reactions.filter(
+								reactions.filter(
 									(reaction) => reaction.type === 1
 								).length
 							}
@@ -86,15 +85,14 @@ const ListReactions = (props) => {
 					{getListReactionByType(1)}
 				</TabPane>
 			) : null}
-			{postN.reactions.filter((reaction) => reaction.type === 2)
-				.length ? (
+			{reactions.filter((reaction) => reaction.type === 2).length ? (
 				<TabPane
 					tab={
 						<span className="list-reaction-icon">
 							<img src={love} alt="" />
 							&nbsp;
 							{
-								postN.reactions.filter(
+								reactions.filter(
 									(reaction) => reaction.type === 2
 								).length
 							}
@@ -105,15 +103,14 @@ const ListReactions = (props) => {
 					{getListReactionByType(2)}
 				</TabPane>
 			) : null}
-			{postN.reactions.filter((reaction) => reaction.type === 3)
-				.length ? (
+			{reactions.filter((reaction) => reaction.type === 3).length ? (
 				<TabPane
 					tab={
 						<span className="list-reaction-icon">
 							<img src={haha} alt="" />
 							&nbsp;
 							{
-								postN.reactions.filter(
+								reactions.filter(
 									(reaction) => reaction.type === 3
 								).length
 							}
@@ -124,15 +121,14 @@ const ListReactions = (props) => {
 					{getListReactionByType(3)}
 				</TabPane>
 			) : null}
-			{postN.reactions.filter((reaction) => reaction.type === 4)
-				.length ? (
+			{reactions.filter((reaction) => reaction.type === 4).length ? (
 				<TabPane
 					tab={
 						<span className="list-reaction-icon">
 							<img src={wow} alt="" />
 							&nbsp;
 							{
-								postN.reactions.filter(
+								reactions.filter(
 									(reaction) => reaction.type === 4
 								).length
 							}
@@ -143,15 +139,14 @@ const ListReactions = (props) => {
 					{getListReactionByType(4)}
 				</TabPane>
 			) : null}
-			{postN.reactions.filter((reaction) => reaction.type === 5)
-				.length ? (
+			{reactions.filter((reaction) => reaction.type === 5).length ? (
 				<TabPane
 					tab={
 						<span className="list-reaction-icon">
 							<img src={sad} alt="" />
 							&nbsp;
 							{
-								postN.reactions.filter(
+								reactions.filter(
 									(reaction) => reaction.type === 5
 								).length
 							}
@@ -162,15 +157,14 @@ const ListReactions = (props) => {
 					{getListReactionByType(5)}
 				</TabPane>
 			) : null}
-			{postN.reactions.filter((reaction) => reaction.type === 6)
-				.length ? (
+			{reactions.filter((reaction) => reaction.type === 6).length ? (
 				<TabPane
 					tab={
 						<span className="list-reaction-icon">
 							<img src={angry} alt="" />
 							&nbsp;
 							{
-								postN.reactions.filter(
+								reactions.filter(
 									(reaction) => reaction.type === 6
 								).length
 							}

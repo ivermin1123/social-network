@@ -116,20 +116,17 @@ function ApplySocketIO(io) {
   io.use(async (socket, next) => {
     const { id: socketID } = socket;
     arraySocketConnect.push(socketID);
-    // console.log(socket);
     if (socket.handshake.query && socket.handshake.query.token) {
       const token = socket.handshake.query.token.split(" ")[1];
       jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
         if (err) return next(new Error("Authentication error"));
         socket.userData = decoded;
-        console.log("next---------------------");
       });
     } else {
       const token = socket.handshake.query.token.split(" ")[1];
       jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
         if (err) return next(new Error("Authentication error"));
         socket.userData = decoded;
-        console.log("next---------------------");
       });
       // next(new Error("Authentication error"));
     }
@@ -141,12 +138,10 @@ function ApplySocketIO(io) {
       // socket.join(socket.userData.userId);
       // io.in(socket.userData.userId).clients((err, clients) => {
       //   //userController.changeStatus(socket.userData.userId, clients, io);
-      //   console.log(clients);
       // });
       sockets[socket.io] = socket;
       const { id: socketID } = socket;
       console.log(`New client connected ${socketID}`.rainbow);
-      //   console.log({ socket });
 
       socket.on("CSS_JOIN", ({ name, room }, callback) => {
         console.log("JOIN", { name, room });
@@ -169,10 +164,6 @@ function ApplySocketIO(io) {
         }
 
         //   callback();
-      });
-
-      socket.on("TEST_VL", (data, callback) => {
-        console.log(data);
       });
 
       socket.on(

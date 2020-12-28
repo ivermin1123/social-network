@@ -1,4 +1,4 @@
-import COMMENT from "../../database/COMMENT";
+import COMMENT from "../database/COMMENT";
 
 export const commentOnPost = async (req, res) => {
   try {

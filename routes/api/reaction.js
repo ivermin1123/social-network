@@ -1,6 +1,6 @@
 import express from "express";
-import { reactionController } from "../../../controllers/main-controllers";
-import { helpers, validator } from "../../../middleware/main-middleware";
+import { reactionController } from "../../controllers/main-controllers";
+import { helpers, validator } from "../../middleware/main-middleware";
 
 const router = express.Router();
 

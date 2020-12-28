@@ -1,4 +1,4 @@
-import MESSAGE from "../../database/MESSAGE";
+import MESSAGE from "../database/MESSAGE";
 
 export const getMessages = async (req, res) => {
   try {

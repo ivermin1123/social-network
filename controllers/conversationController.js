@@ -1,4 +1,4 @@
-import CONVERSATION from "../../database/CONVERSATION";
+import CONVERSATION from "../database/CONVERSATION";
 
 export const createConversation = async (req, res) => {
   try {

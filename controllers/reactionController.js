@@ -1,4 +1,4 @@
-import REACTION from "../../database/REACTION";
+import REACTION from "../database/REACTION";
 
 /**
  * Type:

@@ -1,4 +1,4 @@
-import USER from "../../database/USER";
+import USER from "../database/USER";
 
 export async function updateUserImage(req, res) {
   try {

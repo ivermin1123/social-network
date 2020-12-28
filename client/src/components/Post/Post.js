@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import moment from "moment";
 import { Modal, Avatar, Dropdown } from "antd";
 
@@ -45,7 +46,11 @@ const Post = (props) => {
 								: img5
 						}
 					/>
-					<div className="post-header__name">{fullName}</div>
+					<div className="post-header__name">
+						<Link to={`account/${postN.author[0]._id}`}>
+							<span>{fullName}</span>
+						</Link>
+					</div>
 					<div className="post-header__created">
 						{timePost.time}{" "}
 						{postN.isUpdated === true ? "(Edited)" : null}

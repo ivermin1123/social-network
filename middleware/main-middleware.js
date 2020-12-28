@@ -13,7 +13,7 @@ import * as reactionValidator from "./schemaValidators/reactionValidator";
 import * as commentValidator from "./schemaValidators/commentValidator";
 import * as conversationValidator from "./schemaValidators/conversationValidator";
 import * as messageValidator from "./schemaValidators/messageValidator";
-// import * as notificationValidator from "./schemaValidators/userValidator";
+import * as friendRequestValidator from "./schemaValidators/friendRequestValidator";
 
 export const helpers = {
   checkAuth,
@@ -30,6 +30,7 @@ export const validator = {
   messageValidator,
   conversationValidator,
   reactionValidator,
+  friendRequestValidator,
   postValidator,
   userValidator,
 };

@@ -1,4 +1,4 @@
-import POST from "../../database/POST";
+import POST from "../database/POST";
 
 export const createPost = async (req, res) => {
   try {

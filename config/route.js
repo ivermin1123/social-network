@@ -2,13 +2,13 @@ import swaggerUi from "swagger-ui-express";
 import createError from "http-errors";
 
 import swaggerDocument from "../swagger.json";
-import usersRouter from "../routes/api/user/user";
-import postsRouter from "../routes/api/post/post";
-import reactionsRouter from "../routes/api/reaction/reaction";
-import commentsRouter from "../routes/api/comment/comment";
-import conversationsRouter from "../routes/api/conversation/conversation";
-import messagesRouter from "../routes/api/message/message";
-import publicRouter from "../routes/public";
+import usersRouter from "../routes/api/user";
+import postsRouter from "../routes/api/post";
+import reactionsRouter from "../routes/api/reaction";
+import commentsRouter from "../routes/api/comment";
+import conversationsRouter from "../routes/api/conversation";
+import messagesRouter from "../routes/api/message";
+import publicRouter from "../routes/api/public";
 
 function AppRouter(app) {
   app.get("/404", (req, res) => {

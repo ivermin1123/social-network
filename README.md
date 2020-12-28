@@ -31,12 +31,7 @@ npm start
 ## Extension (optional)
 
 - **ESlint**
-- **Git History**
-- **GitLens — Git supercharged**
-- **Material Icon Theme**
 - **Prettier - Code formatter**
-- **Git History**
-- **Import Cost**
 
 ---
 

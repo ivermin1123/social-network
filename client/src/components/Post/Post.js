@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { Modal, Avatar, Dropdown } from "antd";
+import FbImageLibrary from "react-fb-image-grid";
 
 import { Theme } from "../../constants/index";
 import img5 from "../../assets/image/avatar-5.png";
@@ -33,6 +34,11 @@ const Post = (props) => {
 	} else {
 		timePost.time = moment(postN.createdAt).locale("vi").fromNow();
 	}
+
+	const imageArray = [];
+	postN.files.forEach((file) => {
+		imageArray.push(`${LINK_CONSTANT.LINK_S3}${file.path}`);
+	});
 	return postN && postN.author ? (
 		<div className="post">
 			<div className="post-header">
@@ -94,15 +100,7 @@ const Post = (props) => {
 						}}
 					/>
 				</div>
-				<img
-					src={
-						postN.files.length
-							? `${LINK_CONSTANT.LINK_S3}${postN.files[0].path}`
-							: null
-					}
-					alt=""
-					className="post-body__image"
-				/>
+				<FbImageLibrary images={imageArray} hideOverlay />
 				<div className="post-body__react">
 					<PostReactionDisplay
 						post={postN}

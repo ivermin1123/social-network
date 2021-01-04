@@ -3,6 +3,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import FbImageLibrary from "react-fb-image-grid";
+
 import { Theme } from "../../constants/index";
 import postActions from "../../actions/post.actions";
 import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
@@ -68,6 +70,7 @@ const PostForm = ({ ...props }) => {
 				method: "POST",
 				data: { description },
 			};
+			console.log({ arrFile });
 			// Redux call
 			dispatch(postActions.createPost(arrFile, data, dataSaveServer))
 				.then(() => {
@@ -85,6 +88,25 @@ const PostForm = ({ ...props }) => {
 		}
 	};
 
+	const ImageGrid = () => {
+		const imageArray = [];
+		files.forEach((item) => {
+			imageArray.push(URL.createObjectURL(item));
+		});
+
+		return (
+			<>
+				{files.length ? (
+					<div className="image-area">
+						<button type="button" onClick={() => setFiles([])}>
+							x
+						</button>
+						<FbImageLibrary images={imageArray} hideOverlay />
+					</div>
+				) : null}
+			</>
+		);
+	};
 	return (
 		<>
 			<ToastContainer
@@ -167,29 +189,7 @@ const PostForm = ({ ...props }) => {
 							placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
 							onChange={(e) => setDescription(e.target.value)}
 						/>
-						{files.length ? (
-							<div className="image-area">
-								<button
-									type="button"
-									onClick={() => setFiles([])}
-								>
-									x
-								</button>
-								{files.map((item) => {
-									console.log(item);
-									return (
-										<img
-											key={item}
-											style={{
-												width: "50%",
-											}}
-											src={URL.createObjectURL(item)}
-											alt="avatar"
-										/>
-									);
-								})}
-							</div>
-						) : null}
+						<ImageGrid />
 					</div>
 					<div className="post-form-modal__footer">
 						<label

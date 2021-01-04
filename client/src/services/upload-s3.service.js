@@ -198,7 +198,7 @@ function UploadFileS3(files, data, dataSaveServer) {
 				let maxWidthOrHeight;
 				let height = 5000;
 				let width = 5000;
-				const newListFile = [];
+				let newListFile = [];
 				const promises = [];
 				files.forEach(async (file) => {
 					// doc chieu cao va chieu rong cua anh
@@ -246,6 +246,24 @@ function UploadFileS3(files, data, dataSaveServer) {
 				// console.log(newListFile[1]);
 				// console.log(typeof newListFile);
 				const arrayFile = [];
+				newListFile = newListFile.sort((a, b) => {
+					if (a.name < b.name) {
+						return -1;
+					}
+					if (a.name > b.name) {
+						return 1;
+					}
+					return 0;
+				});
+				listLinkupLoadS3 = listLinkupLoadS3.sort((a, b) => {
+					if (a.file.name < b.file.name) {
+						return -1;
+					}
+					if (a.file.name > b.file.name) {
+						return 1;
+					}
+					return 0;
+				});
 				for (let i = 0; i < listLinkupLoadS3.length; i++) {
 					const infoFile = {};
 					if (listLinkupLoadS3[i].file.name === newListFile[i].name) {
@@ -263,6 +281,7 @@ function UploadFileS3(files, data, dataSaveServer) {
 				dataSaveServer.data.files = arrayFile;
 
 				// dua anh len S3
+				console.log({ listLinkupLoadS3, arrayFile, newListFile });
 				const processingUploadS3 = ClientSendMutilFileToS3({
 					listLinkupLoadS3,
 					files: newListFile,
@@ -279,7 +298,6 @@ function UploadFileS3(files, data, dataSaveServer) {
 								break;
 							}
 						}
-						console.log({ isUploadFail });
 						if (!isUploadFail) {
 							// Upload thành công lưu thông tin về server
 							const { url, method, data } = dataSaveServer;

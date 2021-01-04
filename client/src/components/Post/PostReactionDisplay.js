@@ -74,7 +74,7 @@ function PostReactionDisplay(props) {
 		setListReact(arrToShow);
 	}, [post]);
 
-	if (!reactions.length || listReact === null) {
+	if (!reactions.length || listReact === null || !listReact.length) {
 		return null;
 	}
 	return (

@@ -28,3 +28,15 @@ export function friendRequest(req, res, next) {
   }
   next();
 }
+
+export function unfriend(req, res, next) {
+  const schema = Joi.object({
+    friend: Joi.objectId().required(),
+  });
+
+  const { error, value } = schema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.message });
+  }
+  next();
+}

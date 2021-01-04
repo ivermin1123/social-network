@@ -48,6 +48,25 @@ function acceptRequest({ receiver, sender, requestId }) {
 		});
 }
 
-const friendReqService = { sendRequest, acceptRequest, deleteRequest };
+function unfriend({ friend }) {
+	return axios
+		.post(
+			CF_ROUTE_FRIEND_REQUEST.UNFRIEND,
+			{
+				friend,
+			},
+			configAxios
+		)
+		.then((response) => {
+			return response.data;
+		});
+}
+
+const friendReqService = {
+	sendRequest,
+	acceptRequest,
+	deleteRequest,
+	unfriend,
+};
 
 export default friendReqService;

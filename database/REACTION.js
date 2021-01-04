@@ -84,7 +84,7 @@ const likePost = async ({ postId, type, userId }) => {
         });
 
         const infoNewReaction = await newReaction.save().catch((error) => {
-          reject({ error: true, message: error.message });
+          return reject({ error: true, message: error.message });
         });
 
         const infoAfterUpdate = await Post.findByIdAndUpdate(
@@ -97,7 +97,7 @@ const likePost = async ({ postId, type, userId }) => {
 
         await POST.getPostById({ postId: infoAfterUpdate._id })
           .then((data) => {
-            resolve(data[0]);
+            return resolve(data[0]);
           })
           .catch((error) => {
             reject(error.message);

@@ -16,28 +16,16 @@ const FriendRequestPage = lazy(() => import("./pages/FriendRequestPage"));
 
 function App() {
 	const dispatch = useDispatch();
-	// const { isLoggedIn } = useSelector((state) => state.authentication);
 	useEffect(() => {
 		history.listen(() => {
-			// clear alert on location change
 			dispatch(clearAlert());
 		});
 	}, []);
 
-	// const Loading = (
-	// 	<LoadingOutlined
-	// 		style={{
-	// 			fontSize: "50px",
-	// 			color: "#08c",
-	// 			margin: "auto",
-	// 		}}
-	// 	/>
-	// );
 	return (
 		<>
 			<Router history={history}>
 				<Suspense fallback={<></>}>
-					{/* {isLoggedIn ? <Navigation /> : null} */}
 					<Switch>
 						<PrivateRoute
 							exact

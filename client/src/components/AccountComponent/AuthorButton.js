@@ -1,28 +1,66 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
+import { Modal, notification } from "antd";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Theme } from "../../constants/index";
 import friendRequestActions from "../../actions/friendRequest.actions";
 
 const AuthorButton = ({ ...props }) => {
-	const { isSendReq, isFriend, isMySelf, sender, receiver } = props;
+	const {
+		isSendReq,
+		isFriend,
+		isMySelf,
+		sender,
+		receiver,
+		setIsFriend,
+	} = props;
 	const dispatch = useDispatch();
 	const [addFr, setAddFriend] = useState(isSendReq);
 
+	const unfriend = () => {
+		dispatch(friendRequestActions.unfriend({ friend: receiver })).then(
+			() => {
+				setIsFriend(false);
+				notification.success({
+					message: "Thông báo",
+					description: "Hủy kết bạn thành công.",
+				});
+			}
+		);
+	};
+
+	const confirm = () => {
+		Modal.confirm({
+			getContainer: false,
+			title: "Confirm",
+			icon: <ExclamationCircleOutlined />,
+			content: "Bạn có chắc muốn hủy bạn bè với người này?",
+			okText: "OK",
+			cancelText: "Cancel",
+			onOk: unfriend,
+		});
+	};
+
 	const handleAddFriend = () => {
-		if (!isSendReq) {
-			dispatch(friendRequestActions.sendRequest({ sender, receiver }));
+		if (!isFriend) {
+			if (!isSendReq) {
+				dispatch(
+					friendRequestActions.sendRequest({ sender, receiver })
+				);
+			} else {
+				dispatch(
+					friendRequestActions.deleteRequest({
+						sender,
+						receiver,
+					})
+				);
+			}
+			setAddFriend(!addFr);
 		} else {
-			dispatch(
-				friendRequestActions.deleteRequest({
-					sender,
-					receiver,
-				})
-			);
+			confirm();
 		}
-		setAddFriend(!addFr);
 	};
 
 	return (

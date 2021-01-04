@@ -46,6 +46,7 @@ const CF_ROUTE_COMMENT = {
 const CF_ROUTE_FRIEND_REQUEST = {
 	SEND_REQUEST: `${API_URL}/api/friend-request/sendFriendRequest`,
 	ACCEPT_REQUEST: `${API_URL}/api/friend-request/acceptFriendRequest`,
+	UNFRIEND: `${API_URL}/api/friend-request/unfriend`,
 };
 
 const CF_ROUTE_PUBLIC = {

@@ -116,9 +116,47 @@ const acceptRequest = ({ receiver, sender, requestId }) => (dispatch) => {
 	);
 };
 
+const unfriend = ({ friend }) => (dispatch) => {
+	return friendReqService.unfriend({ friend }).then(
+		(data) => {
+			dispatch({
+				type: friendRequestConstants.UNFRIEND_REQ_SUCCESS,
+				payload: { data },
+			});
+
+			dispatch({
+				type: userConstants.GET_USER_SUCCESS,
+				payload: { data: data.data },
+			});
+
+			return Promise.resolve();
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: friendRequestConstants.UNFRIEND_REQ_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
 const friendRequestActions = {
 	sendRequest,
 	deleteRequest,
 	acceptRequest,
+	unfriend,
 };
 export default friendRequestActions;

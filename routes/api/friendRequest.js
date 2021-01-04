@@ -18,4 +18,11 @@ router.post(
   friendRequestController.acceptFriendRequest
 );
 
+router.post(
+  "/unfriend",
+  helpers.checkAuth,
+  validator.friendRequestValidator.unfriend,
+  friendRequestController.unfriend
+);
+
 export default router;

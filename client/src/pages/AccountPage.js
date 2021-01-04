@@ -66,13 +66,14 @@ const AccountPage = (props) => {
 							<AuthorButton
 								sender={infoUser._id}
 								receiver={accountId}
+								setIsFriend={setIsFriend}
 								isSendReq={isSendReq}
 								isFriend={isFriend}
 							/>
 						)}
 					</div>
 				</div>
-				<Catalog userData={userData} />
+				<Catalog userData={userData} isFriend={isFriend} />
 			</div>
 		</div>
 	) : null;

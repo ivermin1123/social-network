@@ -72,6 +72,38 @@ const acceptFriendRequest = async ({ requestId, userId }) => {
       }).catch((error) => {
         return reject(error.message);
       });
+      await User.findByIdAndUpdate(infoReq.sender, {
+        $push: { friends: infoReq.receiver },
+      }).catch((error) => {
+        return reject(error.message);
+      });
+
+      await USER.getUser({ userIdToGet: userId })
+        .then((data) => {
+          return resolve(data);
+        })
+        .catch((error) => {
+          return reject(error.message);
+        });
+    } catch (error) {
+      return reject(error.message);
+    }
+  });
+};
+
+const unfriend = async ({ friend, userId }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await User.findByIdAndUpdate(userId, {
+        $pull: { friends: friend },
+      }).catch((error) => {
+        return reject(error.message);
+      });
+      await User.findByIdAndUpdate(friend, {
+        $pull: { friends: userId },
+      }).catch((error) => {
+        return reject(error.message);
+      });
 
       await USER.getUser({ userIdToGet: userId })
         .then((data) => {
@@ -89,4 +121,5 @@ const acceptFriendRequest = async ({ requestId, userId }) => {
 export default {
   sendFriendRequest,
   acceptFriendRequest,
+  unfriend,
 };

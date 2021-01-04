@@ -4395,7 +4395,7 @@ body.dark .field .option.selected {
 	border-radius: 8px;
 	font-size: 13px;
 	font-weight: 700;
-	line-height: 24px;
+	line-height: 35px;
 	color: #5f75ee;
 }
 
@@ -4923,6 +4923,7 @@ body.dark .categories .slick-arrow:hover {
 	-webkit-transition: opacity 0.25s;
 	-o-transition: opacity 0.25s;
 	transition: opacity 0.25s;
+	outline: none !important;
 }
 
 .trending__tag:hover {

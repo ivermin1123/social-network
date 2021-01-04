@@ -5,17 +5,15 @@ const friendRequestSchema = new Schema(
     type: String,
     sender: {
       type: Schema.Types.ObjectId,
+      required: true,
       ref: "User",
     },
     receiver: {
       type: Schema.Types.ObjectId,
+      required: true,
       ref: "User",
     },
     accepted: {
-      type: Boolean,
-      default: false,
-    },
-    rejected: {
       type: Boolean,
       default: false,
     },

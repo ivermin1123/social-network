@@ -156,15 +156,15 @@ function Header(props) {
 					<div className="header__body">
 						<ProfileItem
 							icon="icon-profile"
-							name="Profile"
-							href={
-								infoUser && infoUser._id
-									? `/account/${infoUser._id}`
-									: "/#"
-							}
+							name="Trang cá nhân"
+							href={`/account/${infoUser._id}`}
 						/>
-						<ProfileItem icon="icon-document" name="My Playlist" />
-						<ProfileItem icon="icon-joystick" name="My Chanel" />
+						<ProfileItem
+							icon="icon-document"
+							name="Lời mời kết bạn"
+							href="/friend-request"
+						/>
+						{/* <ProfileItem icon="icon-joystick" name="My Chanel" /> */}
 						<ProfileItem
 							icon="icon-settings"
 							name="Cài đặt"

@@ -3,7 +3,9 @@ Joi.objectId = require("joi-objectid")(Joi);
 
 export function sendFriendRequest(req, res, next) {
   const schema = Joi.object({
-    sendTo: Joi.objectId().required(),
+    receiver: Joi.objectId().required(),
+    sender: Joi.objectId().required(),
+    requestId: Joi.objectId(),
   });
 
   const { error, value } = schema.validate(req.body);
@@ -15,6 +17,8 @@ export function sendFriendRequest(req, res, next) {
 
 export function friendRequest(req, res, next) {
   const schema = Joi.object({
+    receiver: Joi.objectId().required(),
+    sender: Joi.objectId().required(),
     requestId: Joi.objectId().required(),
   });
 

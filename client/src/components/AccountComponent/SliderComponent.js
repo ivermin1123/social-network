@@ -8,7 +8,7 @@ import mainPic4 from "../../assets/image/main-pic-4.jpg";
 import league from "../../assets/image/league-of-legends.png";
 
 const SliderComponent = ({ ...props }) => {
-	const { isType } = props;
+	const { isSendReq, isFriend } = props;
 	const [nav1, setNav1] = useState(null);
 	const [nav2, setNav2] = useState(null);
 	useEffect(() => {});
@@ -79,7 +79,7 @@ const SliderComponent = ({ ...props }) => {
 							</div>
 							<div className="main__parameter">🇺🇸 English</div>
 						</div>
-						{isType === 0 ? (
+						{isSendReq === false && isFriend === false ? (
 							<a className="main__btn btn btn_purple" href="/#">
 								Chỉnh sửa ảnh bìa
 							</a>

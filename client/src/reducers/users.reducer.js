@@ -47,6 +47,8 @@ function users(
 				...state,
 				infoUser: action.payload.data,
 				lastConversation: action.payload.data.lastConversation[0],
+				sendReqFri: action.payload.data.sendFriReq,
+				receiveReqFri: action.payload.data.receiveReqFri,
 				loadingUser: false,
 			};
 		case userConstants.GET_USER_FAILURE:

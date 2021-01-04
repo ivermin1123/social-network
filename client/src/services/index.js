@@ -6,12 +6,14 @@ import uploadService from "./upload-s3.service";
 import socketService from "./socket.service";
 import reactionService from "./reaction.service";
 import commentService from "./comment.service";
+import friendReqService from "./friendReqService.service";
 
 export {
 	postService,
 	userService,
 	socketService,
 	uploadService,
+	friendReqService,
 	conversationService,
 	messageService,
 	reactionService,

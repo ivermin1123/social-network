@@ -201,6 +201,7 @@ const getUserProfile = (userId) => (dispatch) => {
 
 			dispatch({
 				type: userConstants.GET_USER_PROFILE_FAILURE,
+				payload: error,
 			});
 
 			dispatch({

@@ -15,19 +15,21 @@ const AccountPage = (props) => {
 	const dispatch = useDispatch();
 
 	const [userData, setUserData] = useState(null);
-	const [isType, setIsType] = useState(-1); // -1: kết bạn, 0: is me, 1: bạn bè
-	const { loadingUserProfile, infoUser } = props;
-
+	const [isFriend, setIsFriend] = useState(false);
+	// eslint-disable-next-line no-unused-vars
+	const [isSendReq, setIsSendReq] = useState(false);
+	const { loadingUserProfile, infoUser, sendReqFri } = props;
 	const checkIsType = () => {
-		if (infoUser._id === accountId) {
-			setIsType(0);
-		} else {
-			setIsType(
-				infoUser.friends.filter((e) => e._id === accountId).length > 0
-					? 1
-					: -1
-			);
+		if (infoUser.friends.filter((e) => e._id === accountId).length) {
+			setIsFriend(true);
 		}
+		if (
+			sendReqFri.filter((user) => user.receiver[0]._id === accountId)
+				.length
+		) {
+			setIsSendReq(true);
+		}
+		// else setIsSendReq(true);
 	};
 
 	useEffect(() => {
@@ -35,18 +37,39 @@ const AccountPage = (props) => {
 			setUserData(data.data);
 		});
 		checkIsType();
-	}, []);
+	}, [accountId]);
 
 	if (loadingUserProfile) return null;
 
 	return userData ? (
 		<div className="main main_channel js-main">
-			<SliderComponent userData={userData} isType={isType} />
+			<SliderComponent
+				userData={userData}
+				isSendReq={isSendReq}
+				isFriend={isFriend}
+			/>
 			<div className="page__center page__center_pt0">
 				<div className="author author_big">
 					<div className="author__container">
-						<AuthorDetail userData={userData} isType={isType} />
-						<AuthorButton isType={isType} />
+						<AuthorDetail
+							userData={userData}
+							isSendReq={isSendReq}
+							isFriend={isFriend}
+						/>
+						{infoUser._id === accountId ? (
+							<AuthorButton
+								isMySelf
+								isSendReq={isSendReq}
+								isFriend={isFriend}
+							/>
+						) : (
+							<AuthorButton
+								sender={infoUser._id}
+								receiver={accountId}
+								isSendReq={isSendReq}
+								isFriend={isFriend}
+							/>
+						)}
 					</div>
 				</div>
 				<Catalog userData={userData} />
@@ -58,6 +81,7 @@ const AccountPage = (props) => {
 const mapStateToProps = (state) => ({
 	loadingUserProfile: state.users.loadingUserProfile,
 	infoUser: state.users.infoUser,
+	sendReqFri: state.users.sendReqFri,
 });
 
 export default connect(mapStateToProps)(AccountPage);

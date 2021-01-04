@@ -190,6 +190,90 @@ const userLookup = [
       as: "lastConversation",
     },
   },
+  {
+    $lookup: {
+      from: "friendrequests",
+      let: { idUser: "$_id" },
+      pipeline: [
+        {
+          $match: { $expr: { $eq: ["$sender", "$$idUser"] } },
+        },
+        {
+          $lookup: {
+            from: "users",
+            let: { receiver: "$receiver" },
+            pipeline: [
+              {
+                $match: { $expr: { $eq: ["$_id", "$$receiver"] } },
+              },
+              {
+                $lookup: {
+                  from: "files",
+                  localField: "avatar",
+                  foreignField: "_id",
+                  as: "avatar",
+                },
+              },
+              {
+                $project: {
+                  _id: 1,
+                  firstName: 1,
+                  lastName: 1,
+                  createdAt: 1,
+                  username: 1,
+                  avatar: 1,
+                },
+              },
+            ],
+            as: "receiver",
+          },
+        },
+      ],
+      as: "sendFriReq",
+    },
+  },
+  {
+    $lookup: {
+      from: "friendrequests",
+      let: { idUser: "$_id" },
+      pipeline: [
+        {
+          $match: { $expr: { $eq: ["$receiver", "$$idUser"] } },
+        },
+        {
+          $lookup: {
+            from: "users",
+            let: { sender: "$sender" },
+            pipeline: [
+              {
+                $match: { $expr: { $eq: ["$_id", "$$sender"] } },
+              },
+              {
+                $lookup: {
+                  from: "files",
+                  localField: "avatar",
+                  foreignField: "_id",
+                  as: "avatar",
+                },
+              },
+              {
+                $project: {
+                  _id: 1,
+                  firstName: 1,
+                  lastName: 1,
+                  createdAt: 1,
+                  username: 1,
+                  avatar: 1,
+                },
+              },
+            ],
+            as: "sender",
+          },
+        },
+      ],
+      as: "receiveReqFri",
+    },
+  },
 ];
 
 const getUser = async ({ userIdToGet }) => {
@@ -213,6 +297,8 @@ const getUser = async ({ userIdToGet }) => {
             gender: 1,
             conversations: 1,
             lastConversation: 1,
+            sendFriReq: 1,
+            receiveReqFri: 1,
             birthday: 1,
             phone: 1,
             email: 1,

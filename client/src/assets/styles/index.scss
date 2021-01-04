@@ -76,6 +76,14 @@ body.dark {
 		background-color: #242731;
 		.post-header {
 			background-color: #242731;
+			.post-header__name {
+				a {
+					color: white;
+					&:hover {
+						color: #3f8cff;
+					}
+				}
+			}
 		}
 		.post-body {
 			background-color: #242731;
@@ -485,6 +493,17 @@ body.dark {
 .reactions-show-comment {
 	display: flex;
 	align-items: center;
+}
+
+.card__category {
+	&:first-child {
+		background: #6c5dd3;
+		color: #ffffff;
+		margin-right: 12px;
+	}
+	&:hover {
+		opacity: 0.8;
+	}
 }
 
 // .modal-edit-post {

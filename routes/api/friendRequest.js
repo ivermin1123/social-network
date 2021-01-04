@@ -18,11 +18,4 @@ router.post(
   friendRequestController.acceptFriendRequest
 );
 
-router.post(
-  "/deleteFriendRequest",
-  helpers.checkAuth,
-  validator.friendRequestValidator.friendRequest,
-  friendRequestController.deleteFriendRequest
-);
-
 export default router;

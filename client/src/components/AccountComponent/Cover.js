@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
-import { Tabs, Theme } from "../../constants/index";
+import { Tabs, Theme, LINK } from "../../constants/index";
 import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
 import userAction from "../../actions/user.actions";
 import "react-toastify/dist/ReactToastify.css";
@@ -17,7 +17,7 @@ const configToast = {
 	draggable: true,
 	progress: undefined,
 };
-const LINK_S3 = "https://socialawsbucket.s3-ap-southeast-1.amazonaws.com/";
+
 const Cover = (props) => {
 	const [sumFriend, setSumFriend] = useState(0);
 	const [value, setValue] = useState("");
@@ -28,7 +28,7 @@ const Cover = (props) => {
 
 	const { firstName, lastName, avatar } = infoUser.data;
 	const name = `${firstName} ${lastName}`;
-	const avatarSrc = `${LINK_S3}${avatar.path}`;
+	const avatarSrc = `${LINK.LINK_S3}${avatar.path}`;
 
 	const [show, setShow] = useState(false);
 	const [file, setFile] = useState(null);

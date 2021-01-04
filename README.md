@@ -13,7 +13,7 @@ cd client
 npm i
 ```
 
-_Create a new .env file from .env.example - Just ctrl A => ctrl C => ctrl V._
+\_Create a new .env file from .env.example and fill your key
 
 ## Run
 

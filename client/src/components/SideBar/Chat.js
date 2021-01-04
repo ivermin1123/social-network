@@ -15,7 +15,7 @@ function Chat() {
 		return (
 			<Link
 				className={`sidebar__item${user.online ? " online" : ""}`}
-				to={`/message/${user._id}`}
+				to={`/account/${user._id}`}
 				alt={`${user.firstName} ${user.lastName}`}
 			>
 				<div className="sidebar__ava">

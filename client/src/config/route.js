@@ -43,6 +43,11 @@ const CF_ROUTE_COMMENT = {
 	DELETE_COMMENT: `${API_URL}/api/comment/deleteComment`,
 };
 
+const CF_ROUTE_FRIEND_REQUEST = {
+	SEND_REQUEST: `${API_URL}/api/friend-request/sendFriendRequest`,
+	ACCEPT_REQUEST: `${API_URL}/api/friend-request/acceptFriendRequest`,
+};
+
 const CF_ROUTE_PUBLIC = {
 	GENERATE_LINK_S3: `${API_URL}/api/generate-link-upload-s3`,
 };
@@ -55,4 +60,5 @@ export {
 	CF_ROUTE_MESSAGE,
 	CF_ROUTE_REACTION,
 	CF_ROUTE_COMMENT,
+	CF_ROUTE_FRIEND_REQUEST,
 };

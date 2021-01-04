@@ -20,7 +20,7 @@ const MessagePage = () => {
 		) {
 			setExist(true);
 		}
-	}, []);
+	}, [conversationId]);
 	return (
 		<div className="chat">
 			{isExist ? (

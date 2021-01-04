@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
-import { Popover } from "antd";
+import { Popover, Avatar } from "antd";
 import { ToastContainer, toast } from "react-toastify";
 import ava from "../../assets/image/ava-1.png";
 import LINK_CONSTANT from "../../constants/link.constants";
@@ -118,13 +118,12 @@ const AuthorDetail = ({ ...props }) => {
 					className="ava ava_online"
 				>
 					{userData.avatar && userData.avatar.length ? (
-						<img
+						<Avatar
 							className="ava__pic"
 							src={`${LINK_CONSTANT.LINK_S3}${userData.avatar[0].path}`}
-							alt=""
 						/>
 					) : (
-						<img className="ava__pic" src={ava} alt="" />
+						<Avatar className="ava__pic" src={ava} />
 					)}
 				</Popover>
 

@@ -89,18 +89,6 @@ const userSchema = new Schema(
         ref: "User",
       },
     ],
-    friendsRequestSend: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "SendRequest",
-      },
-    ],
-    friendsRequestReceive: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "SendRequest",
-      },
-    ],
     conversations: [
       {
         type: Schema.Types.ObjectId,

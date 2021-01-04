@@ -1,32 +1,51 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Theme } from "../../constants/index";
+import friendRequestActions from "../../actions/friendRequest.actions";
 
 const AuthorButton = ({ ...props }) => {
-	const { isType } = props;
-	const [addFr, setAddfr] = useState(false);
+	const { isSendReq, isFriend, isMySelf, sender, receiver } = props;
+	const dispatch = useDispatch();
+	const [addFr, setAddFriend] = useState(isSendReq);
+
+	const handleAddFriend = () => {
+		if (!isSendReq) {
+			dispatch(friendRequestActions.sendRequest({ sender, receiver }));
+		} else {
+			dispatch(
+				friendRequestActions.deleteRequest({
+					sender,
+					receiver,
+				})
+			);
+		}
+		setAddFriend(!addFr);
+	};
+
 	return (
 		<div className="author__btns">
-			{isType === 0 ? (
+			{isMySelf ? (
 				<button type="button" className="author__btn btn btn_purple">
 					Chỉnh sửa trang cá nhân
 				</button>
 			) : (
 				<div>
-					<button
+					<Link
+						to="#/"
 						type="button"
 						className="author__btn btn btn_purple"
 					>
 						Message
-					</button>
+					</Link>
 					<button
 						type="button"
 						className="author__btn btn btn_asphalt btn_square"
-						onClick={() => {
-							setAddfr(!addFr);
-						}}
+						onClick={handleAddFriend}
 					>
-						{isType === 1 ? (
+						{isFriend ? (
 							<FontAwesomeIcon
 								className="icon"
 								icon={Theme.ICONS.faUserCheck}

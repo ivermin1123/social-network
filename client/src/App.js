@@ -12,6 +12,7 @@ const AccountPage = lazy(() => import("./pages/AccountPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const MessagePage = lazy(() => import("./pages/MessagePage"));
+const FriendRequestPage = lazy(() => import("./pages/FriendRequestPage"));
 
 function App() {
 	const dispatch = useDispatch();
@@ -62,6 +63,15 @@ function App() {
 							component={() => (
 								<Navigation>
 									<MessagePage />
+								</Navigation>
+							)}
+						/>
+						<PrivateRoute
+							exact
+							path="/friend-request"
+							component={() => (
+								<Navigation>
+									<FriendRequestPage />
 								</Navigation>
 							)}
 						/>

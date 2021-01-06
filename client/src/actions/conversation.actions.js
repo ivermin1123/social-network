@@ -34,6 +34,38 @@ const getConversation = (conversationId) => (dispatch) => {
 	);
 };
 
+const getConversationId = ({ user }) => (dispatch) => {
+	return conversationService.getConversationId({ user }).then(
+		(data) => {
+			dispatch({
+				type: conversationConstants.GET_CONVERSATION_ID_SUCCESS,
+				payload: { conversation: data },
+			});
+
+			return Promise.resolve(data);
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: conversationConstants.GET_CONVERSATION_ID_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
 const getListConversations = () => (dispatch) => {
 	function request() {
 		return { type: conversationConstants.GET_LIST_CONVERSATION_REQUEST };
@@ -114,5 +146,6 @@ const conversationActions = {
 	createConversation,
 	getListConversations,
 	setConversationOpen,
+	getConversationId,
 };
 export default conversationActions;

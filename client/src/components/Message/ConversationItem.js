@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
 import LINK_CONSTANT from "../../constants/link.constants";
@@ -12,11 +13,13 @@ function ConversationItem(props) {
 
 	let conversationName = conversation.name;
 	let avatarShow = conversation.logo;
+	let userId;
 	if (members.length === 2) {
 		members.forEach((member) => {
 			const { _id, avatar, firstName, lastName } = member;
 			if (_id !== infoUser._id) {
 				conversationName = `${firstName} ${lastName}`;
+				userId = _id;
 				if (avatar.length) {
 					avatarShow = avatar;
 				}
@@ -25,10 +28,7 @@ function ConversationItem(props) {
 	}
 	// const { _id: id } = conversation;
 	return (
-		<a
-			className="chat__line"
-			href={conversation ? `message/${conversation._id}` : "#/"}
-		>
+		<Link className="chat__line" to={`/message/${userId}`}>
 			<div className="ava ava_online">
 				<img
 					className="ava__pic"
@@ -57,7 +57,7 @@ function ConversationItem(props) {
 				</div>
 				<div className="chat__counter bg-orange">3</div>
 			</div> */}
-		</a>
+		</Link>
 	);
 }
 

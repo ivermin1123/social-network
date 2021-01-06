@@ -10,7 +10,7 @@ function MessageFooter(props) {
 		e.preventDefault();
 		socket.emit("CSS_SEND_MESSAGE", {
 			message,
-			conversationId: conversationOpen.id,
+			conversationId: conversationOpen,
 			type: 0,
 			userId: infoUser._id,
 		});

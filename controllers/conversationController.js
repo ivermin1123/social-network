@@ -46,3 +46,20 @@ export const getConversations = async (req, res) => {
     res.status(500).json({ error: true, message: error.message });
   }
 };
+
+export const getConversationId = async (req, res) => {
+  try {
+    const { user } = req.body;
+    const { userId } = req.userData;
+
+    await CONVERSATION.getConversationId({ user, userId })
+      .then((data) => {
+        res.status(200).json({ error: false, data });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: true, message: err.message });
+      });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+};

@@ -231,10 +231,10 @@ const messagesLookup = [
 ];
 
 const sendMessage = async ({ conversationId, message, type, userId }) => {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     try {
       if (!checkObjectIDs(conversationId)) {
-        reject({ error: true, message: "param_invalid" });
+        return reject({ error: true, message: "param_invalid" });
       }
 
       const newMessage = new Message({
@@ -245,7 +245,7 @@ const sendMessage = async ({ conversationId, message, type, userId }) => {
       });
 
       const infoMessAfterInsert = await newMessage.save().catch((error) => {
-        reject({ error: true, message: error.message });
+        return reject({ error: true, message: error.message });
       });
 
       await Conversation.findByIdAndUpdate(
@@ -259,25 +259,25 @@ const sendMessage = async ({ conversationId, message, type, userId }) => {
       await Message.aggregate([
         {
           $match: {
-            conversation: mongoose.Types.ObjectId(infoMessAfterInsert._id),
+            _id: mongoose.Types.ObjectId(infoMessAfterInsert._id),
           },
         },
         ...messagesLookup,
       ])
         .then((data) => {
-          resolve(data);
+          return resolve(data);
         })
         .catch((error) => {
-          reject({ error: true, message: error.message });
+          return reject({ error: true, message: error.message });
         });
     } catch (error) {
-      reject({ error: true, message: error.message });
+      return reject({ error: true, message: error.message });
     }
   });
 };
 
 const getMessages = async ({ conversationId, currentPage }) => {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve, reject) => {
     try {
       const page = Number(currentPage) || 1;
       const perPage = 20;

@@ -1,40 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React from "react";
+import { useParams, Link } from "react-router-dom";
+import { Result } from "antd";
 
 import Messages from "../components/Message/Messages";
-import NotFound from "../components/Message/NotFound";
 import SideBar from "../components/Message/SideBar";
 import "../assets/styles/_message.scss";
 
 const MessagePage = () => {
 	const { conversationId } = useParams();
-	const [isExist, setExist] = useState(false);
-	const { infoUser } = useSelector((state) => state.users);
-
-	useEffect(() => {
-		if (
-			infoUser &&
-			infoUser.conversations.length &&
-			infoUser.conversations.includes(conversationId)
-		) {
-			setExist(true);
-		}
-	}, [conversationId]);
 	return (
-		<div className="chat">
-			{isExist ? (
-				<>
+		<>
+			{conversationId === "NotFound" ? (
+				<Result
+					status="warning"
+					title="Bạn chưa có cuộc trò chuyện nào	."
+					extra={
+						<Link to="/" className="btn btn-primary">
+							Trở về trang chủ
+						</Link>
+					}
+				/>
+			) : (
+				<div className="chat">
 					<SideBar />
 					<Messages conversationId={conversationId} />
-				</>
-			) : (
-				<>
-					<SideBar />
-					<NotFound />
-				</>
+				</div>
 			)}
-		</div>
+		</>
 	);
 };
 

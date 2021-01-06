@@ -11,10 +11,11 @@ function connect() {
 	return (dispatch) => {
 		socketClient.connect().then((socket) => {
 			dispatch(connectSocket(socket));
-			socket.on("SSC_SEND_MESSAGE", ({ infoMessage }) => {
+			socket.on("SSC_SEND_MESSAGE", ({ data }) => {
+				console.log(data);
 				dispatch({
 					type: messageConstants.SEND_MESSAGE_SUCCESS,
-					payload: infoMessage,
+					payload: { data: data[0] },
 				});
 			});
 		});

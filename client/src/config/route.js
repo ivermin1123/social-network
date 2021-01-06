@@ -21,6 +21,7 @@ const CF_ROUTE_POST = {
 };
 
 const CF_ROUTE_CONVERSATION = {
+	GET_CONVERSATION_ID: `${API_URL}/api/conversation/getConversationId`,
 	GET_CONVERSATION: `${API_URL}/api/conversation/getConversation`,
 	GET_CONVERSATIONS: `${API_URL}/api/conversation/getConversations`,
 	CREATE_CONVERSATION: `${API_URL}/api/conversation/addConversation`,

@@ -52,6 +52,7 @@ const AccountPage = (props) => {
 				<div className="author author_big">
 					<div className="author__container">
 						<AuthorDetail
+							isMySelf={infoUser._id === accountId}
 							userData={userData}
 							isSendReq={isSendReq}
 							isFriend={isFriend}

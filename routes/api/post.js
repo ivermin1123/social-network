@@ -18,7 +18,7 @@ router.post(
   postController.getPost
 );
 
-router.get("/getPosts", helpers.checkAuth, postController.getPosts);
+router.post("/getPosts", helpers.checkAuth, postController.getPosts);
 
 router.post("/getUserPosts", helpers.checkAuth, postController.getUserPosts);
 

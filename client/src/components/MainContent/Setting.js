@@ -38,6 +38,7 @@ const Setting = ({ ...props }) => {
 									onClick={() => {
 										setPopupTag(item.title);
 									}}
+									key={item.title}
 								>
 									{item.name}
 								</button>
@@ -56,7 +57,10 @@ const Setting = ({ ...props }) => {
 						{popupTags
 							? popupTags.map((item) => {
 									return (
-										<option value={item.title}>
+										<option
+											value={item.title}
+											key={item.title}
+										>
 											{item.name}
 										</option>
 									);

@@ -21,7 +21,7 @@ const configToast = {
 };
 
 const AuthorDetail = ({ ...props }) => {
-	const { userData, isType } = props;
+	const { userData, isMySelf } = props;
 	// const { infoUser } = props;
 	const [show, setShow] = useState(false);
 	const [description, setDescription] = useState("");
@@ -114,7 +114,7 @@ const AuthorDetail = ({ ...props }) => {
 					content={content}
 					title={null}
 					placement="bottom"
-					trigger={isType === 0 ? "click" : ""}
+					trigger={isMySelf ? "click" : ""}
 					className="ava ava_online"
 				>
 					{userData.avatar && userData.avatar.length ? (

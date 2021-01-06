@@ -170,6 +170,7 @@ function ApplySocketIO(io) {
         "CSS_SEND_MESSAGE",
         async ({ message, conversationId, type, userId }, callback) => {
           const user = getUser(socket.id);
+          console.log({ message, conversationId, type, userId });
           const infoMessage = await MESSAGE.sendMessage({
             conversationId,
             message,
@@ -183,7 +184,7 @@ function ApplySocketIO(io) {
             dataSendClient = infoMessage.data;
           }
           io.to(user.room).emit("SSC_SEND_MESSAGE", {
-            infoMessage,
+            data: infoMessage,
           });
 
           //   callback();

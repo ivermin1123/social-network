@@ -8,7 +8,6 @@ function users(
 		deleting: false,
 		hasError: false,
 		infoUser: null,
-		lastConversation: null,
 	},
 	action
 ) {
@@ -46,8 +45,8 @@ function users(
 			return {
 				...state,
 				infoUser: action.payload.data,
-				lastConversation: action.payload.data.lastConversation[0],
 				sendReqFri: action.payload.data.sendFriReq,
+				lastConversation: action.payload.data.lastConversation,
 				receiveReqFri: action.payload.data.receiveReqFri,
 				loadingUser: false,
 			};

@@ -9,7 +9,8 @@ import ButtonSVG from "../ButtonSVG";
 import messageActions from "../../actions/message.actions";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
-function checkTime(mess1, mess2) {
+function checkTime(mess1, mess2, arrToCalculator) {
+	console.log({ mess1, mess2, arrToCalculator });
 	const time1m = moment(mess1.createdAt).unix();
 	const time2m = moment(mess2.createdAt).unix();
 
@@ -31,7 +32,8 @@ function dataToShow(arrToCalculator) {
 		} else {
 			const result = checkTime(
 				arrToCalculator[i],
-				arrToCalculator[i + 1]
+				arrToCalculator[i + 1],
+				arrToCalculator
 			);
 			if (!result) {
 				arrToShow.push(arr.reverse());
@@ -45,8 +47,8 @@ function dataToShow(arrToCalculator) {
 function Messages(props) {
 	const {
 		messages,
-		conversationOpen,
 		isConnecting,
+		conversationId,
 		loadingMessage,
 		conversations,
 		loadingConversation,
@@ -56,25 +58,30 @@ function Messages(props) {
 	const { socket } = useSelector((state) => state.socket);
 
 	useEffect(() => {
-		dispatch(messageActions.getMessages(conversationOpen.id));
+		dispatch(messageActions.getMessages(conversationId));
 		if (isConnecting) {
 			socket.emit("CSS_JOIN", {
 				name: `${infoUser.username}`,
-				room: conversationOpen.id,
+				room: conversationId,
 			});
 		}
 	}, []);
 
 	let arrToShow = [];
 	if (!loadingMessage) {
+		// if (!messages.data.length) return null;
+		console.log({ messages });
 		arrToShow = dataToShow(messages.data);
 	}
 
 	let conversationName;
 	if (!loadingConversation) {
 		const conversation = conversations.data.filter(
-			(conversation) => conversation._id === conversationOpen.id
+			(conversation) => conversation._id === conversationId
 		);
+		if (!conversation.length) {
+			return <h2>Cuộc trò chuyện này không tồn tại</h2>;
+		}
 		conversationName = conversation[0].name;
 		if (conversation[0].members.length === 2) {
 			conversation[0].members.forEach((member) => {
@@ -83,6 +90,8 @@ function Messages(props) {
 				}
 			});
 		}
+	} else {
+		return null;
 	}
 
 	return (
@@ -140,7 +149,7 @@ function Messages(props) {
 					</div>
 				</div>
 			</ScrollToBottom>
-			<MessageFooter conversationOpen={conversationOpen} />
+			<MessageFooter conversationOpen={conversationId} />
 		</div>
 	);
 }

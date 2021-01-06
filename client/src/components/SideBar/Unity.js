@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import sprite from "../../assets/icons/sprite.svg";
 
 function App(props) {
-	const { conversationOpen } = props;
-	const conversationId = conversationOpen.id || "notFound";
+	const { lastConversation } = props;
+	const conversationId = lastConversation.length
+		? lastConversation[0]._id
+		: "NotFound";
 
 	const UnityItem = (props) => {
 		const { icon, name, counter, href } = props;
@@ -32,7 +34,7 @@ function App(props) {
 					icon="icon-chat"
 					name="Chat"
 					counter={10}
-					href={`/message/${conversationId}`}
+					href={`/message/t/${conversationId}`}
 				/>
 				<UnityItem icon="icon-settings" name="Setting" />
 				<UnityItem icon="icon-chart" name="Analytics" />
@@ -42,7 +44,7 @@ function App(props) {
 }
 
 const mapStateToProps = (state) => ({
-	conversationOpen: state.conversations.conversationOpen,
+	lastConversation: state.users.lastConversation,
 });
 
 export default connect(mapStateToProps)(App);

@@ -3,7 +3,7 @@ import messageConstants from "../constants/message.constants";
 const initialState = {
 	loadingMessage: true,
 	message: null,
-	messages: null,
+	messages: [],
 };
 
 export default function message(state = initialState, action) {

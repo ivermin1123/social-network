@@ -7,7 +7,7 @@ function ProfileItem(props) {
 	return (
 		<Link
 			className={`header__link${isOpenPopup ? "js-popup-open" : ""}`}
-			to={href}
+			to={href || "#/"}
 			onClick={handleClick ? (e) => handleClick(e) : null}
 		>
 			<div className="header__img">

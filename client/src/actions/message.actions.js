@@ -40,9 +40,10 @@ const getMessages = (conversationId) => (dispatch) => {
 const sendMessage = (conversationId, message, type) => (dispatch) => {
 	return messageService.sendMessage(conversationId, message, type).then(
 		(data) => {
+			console.log({ data });
 			dispatch({
 				type: messageConstants.SEND_MESSAGE_SUCCESS,
-				payload: { data: data.data },
+				payload: { data },
 			});
 
 			return Promise.resolve();

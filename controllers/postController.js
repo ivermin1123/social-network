@@ -42,7 +42,8 @@ export const getPost = async (req, res) => {
 export const getPosts = async (req, res) => {
   try {
     // const { userId } = req.userData;
-    await POST.getPosts()
+    const { currentPage } = req.body;
+    await POST.getPosts({ currentPage })
       .then((data) => {
         res.status(200).json({ error: false, data });
       })

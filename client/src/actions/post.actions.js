@@ -65,19 +65,19 @@ const getUserPosts = (postId) => (dispatch) => {
 	);
 };
 
-const getListPosts = () => (dispatch) => {
+const getListPosts = ({ page }) => (dispatch) => {
 	function request() {
 		return { type: postConstants.GET_LIST_POST_REQUEST };
 	}
 	dispatch(request());
-	return postService.getPosts().then(
+	return postService.getPosts({ currentPage: page }).then(
 		(data) => {
 			dispatch({
 				type: postConstants.GET_LIST_POST_SUCCESS,
 				payload: { posts: data },
 			});
 
-			return Promise.resolve();
+			return Promise.resolve(data);
 		},
 		(error) => {
 			const message =

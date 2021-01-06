@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { MongooseDocument } from "mongoose";
 import { checkObjectIDs } from "../utils/db-check";
 import _ from "lodash";
 
@@ -172,7 +172,7 @@ const createConversation = async ({ body, userId }) => {
         if (infoConversationCheck) {
           const arrNameCheck = infoConversationCheck.name.split(",");
           if (_.isEqual(arrName.sort(), arrNameCheck.sort())) {
-            reject({ message: "conversation is exist" });
+            return reject({ message: "conversation is exist" });
           }
         }
       }
@@ -273,6 +273,73 @@ const getConversation = async ({ conversationId, userId }) => {
   });
 };
 
+const getConversationId = async ({ user, userId }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const infoUser = await User.findById(userId).catch((err) =>
+        reject({ error: true, message: err.message })
+      );
+      const infoConversation = await Conversation.aggregate([
+        {
+          $match: { $expr: { $in: ["$_id", infoUser.conversations] } },
+        },
+        {
+          $match: { isGroup: false },
+        },
+        {
+          $unwind: "$members",
+        },
+        {
+          $match: { members: mongoose.Types.ObjectId(user) },
+        },
+      ]).catch((err) => reject({ error: true, message: err.message }));
+
+      if (infoConversation.length) return resolve(infoConversation[0]);
+
+      const members = [user, userId];
+      const checkUser = await User.find({
+        $or: [{ _id: user }, { _id: userId }],
+      }).countDocuments();
+      if (checkUser !== 2) {
+        console.log(checkUser);
+        return reject("params_invalid");
+      }
+      const newConversation = new Conversation({
+        isGroup: false,
+        members,
+        author: userId,
+      });
+
+      const infoConversationAfterInsert = await newConversation
+        .save()
+        .catch((error) => {
+          return reject({ error: true, message: error.message });
+        });
+
+      const promisesUpdateUser = [];
+      members.forEach((member) => {
+        promisesUpdateUser.push(
+          User.findByIdAndUpdate(
+            member,
+            {
+              $push: { conversations: infoConversationAfterInsert._id },
+            },
+            { new: true }
+          )
+        );
+      });
+
+      await Promise.all(promisesUpdateUser).catch((error) => {
+        return reject({ error: true, message: error.message });
+      });
+
+      return resolve(infoConversationAfterInsert);
+    } catch (error) {
+      return reject({ message: error.message });
+    }
+  });
+};
+
 const getConversations = async ({ userId }) => {
   return new Promise(async (resolve, reject) => {
     try {
@@ -299,4 +366,5 @@ export default {
   createConversation,
   getConversation,
   getConversations,
+  getConversationId,
 };

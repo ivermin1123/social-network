@@ -46,15 +46,21 @@ function Chat() {
 	};
 
 	return (
-		<div className="sidebar__group">
-			<div className="sidebar__caption caption-sm">Người liên hệ</div>
-			<div className="sidebar__list">
-				{infoUser &&
-					infoUser.friends.map((user) => (
-						<ChatItem user={user} key={user._id} />
-					))}
-			</div>
-		</div>
+		<>
+			{infoUser.friends.length ? (
+				<div className="sidebar__group">
+					<div className="sidebar__caption caption-sm">
+						Người liên hệ
+					</div>
+					<div className="sidebar__list">
+						{infoUser &&
+							infoUser.friends.map((user) => (
+								<ChatItem user={user} key={user._id} />
+							))}
+					</div>
+				</div>
+			) : null}
+		</>
 	);
 }
 

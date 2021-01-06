@@ -72,7 +72,7 @@ const AuthorButton = ({ ...props }) => {
 			) : (
 				<div>
 					<Link
-						to="#/"
+						to={`/message/${receiver}`}
 						type="button"
 						className="author__btn btn btn_purple"
 					>

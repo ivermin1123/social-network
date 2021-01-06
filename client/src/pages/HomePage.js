@@ -1,14 +1,14 @@
 import React from "react";
 
 import NewsFeed from "../components/NewsFeed";
-import UserItem from "../components/MainContent/UserItem";
 import PostForm from "../components/Post/PostForm";
-import sprite from "../assets/icons/sprite.svg";
+// import UserItem from "../components/MainContent/UserItem";
+// import sprite from "../assets/icons/sprite.svg";
 
 function HomePage() {
 	return (
 		<div className="page__center">
-			<div className="users">
+			{/* <div className="users">
 				<div className="users__container">
 					<div className="users__info h6">
 						Maybe you know that person ?
@@ -28,7 +28,7 @@ function HomePage() {
 						<UserItem name="Yến Nhi" />
 					</div>
 				</div>
-			</div>
+			</div> */}
 			<div className="collection">
 				{/* <div className="collection__head">
 					<div className="collection__title h5">Recently Post</div>

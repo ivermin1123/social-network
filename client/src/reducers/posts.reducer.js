@@ -3,7 +3,9 @@ import postConstants from "../constants/post.constants";
 const initialState = {
 	loadingPost: true,
 	post: null,
-	posts: null,
+	posts: {
+		data: [],
+	},
 	userPosts: null,
 };
 
@@ -30,7 +32,10 @@ export default function posts(state = initialState, action) {
 		case postConstants.GET_LIST_POST_SUCCESS:
 			return {
 				...state,
-				posts: payload.posts,
+				// posts: {
+				// 	...state.posts,
+				// 	data: [...payload.posts.data, ...state.posts.data],
+				// },
 				loadingPost: false,
 			};
 		case postConstants.GET_LIST_POST_FAILURE:

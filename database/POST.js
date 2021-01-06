@@ -297,15 +297,19 @@ const getPostById = async ({ postId }) => {
   });
 };
 
-const getPosts = async () => {
+const getPosts = async ({ currentPage }) => {
   return new Promise(async (resolve, reject) => {
     try {
+      let page = Number(currentPage) || 1;
+      let perPage = 5;
+
       const query = [
         {
           $facet: {
             posts: [
               { $sort: { createdAt: -1 } },
-              { $limit: 10 },
+              { $skip: page * perPage - perPage },
+              { $limit: perPage },
               ...postsLookup,
             ],
           },
@@ -314,13 +318,13 @@ const getPosts = async () => {
 
       await Post.aggregate(query)
         .then((data) => {
-          resolve(data[0].posts);
+          return resolve(data[0].posts);
         })
         .catch((error) => {
-          reject(error.message);
+          return reject(error.message);
         });
     } catch (error) {
-      reject(error.message);
+      return reject(error.message);
     }
   });
 };

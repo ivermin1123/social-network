@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FbImageLibrary from "react-fb-image-grid";
+import { Avatar } from "antd";
 
 import { Theme } from "../../constants/index";
 import postActions from "../../actions/post.actions";
@@ -123,13 +124,12 @@ const PostForm = ({ ...props }) => {
 			<div className="post-form">
 				<div className="post-form-top">
 					{userData.avatar && userData.avatar.length ? (
-						<img
+						<Avatar
 							className="img_avt"
 							src={`${LINK_CONSTANT.LINK_S3}${userData.avatar[0].path}`}
-							alt=""
 						/>
 					) : (
-						<img className="img_avt" src={ava} alt="" />
+						<Avatar className="img_avt" src={ava} />
 					)}
 					<button
 						type="button"
@@ -170,16 +170,15 @@ const PostForm = ({ ...props }) => {
 				<Modal.Body bsPrefix="post-form-modal__body">
 					<div className="post-form-modal__body-account">
 						{userData.avatar && userData.avatar.length ? (
-							<img
+							<Avatar
 								className="img_avt"
 								src={`${LINK_CONSTANT.LINK_S3}${userData.avatar[0].path}`}
-								alt=""
 							/>
 						) : (
-							<img className="img_avt" src={ava} alt="" />
+							<Avatar className="img_avt" src={ava} />
 						)}
 						<span className="post-form-modal__body-account-author">
-							Tu Nguyen
+							{userData.firstName} {userData.lastName}
 						</span>
 					</div>
 					<div className="post-form-modal__body-content">

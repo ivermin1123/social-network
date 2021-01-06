@@ -26,8 +26,23 @@ function getConversations() {
 		});
 }
 
+function getConversationId({ user }) {
+	return axios
+		.post(
+			CF_ROUTE_CONVERSATION.GET_CONVERSATION_ID,
+			{
+				user,
+			},
+			configAxios
+		)
+		.then((response) => {
+			return response.data;
+		});
+}
+
 const conversationService = {
 	getConversation,
+	getConversationId,
 	getConversations,
 };
 

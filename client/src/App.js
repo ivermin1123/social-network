@@ -5,6 +5,7 @@ import { useDispatch, connect } from "react-redux";
 import { clearAlert } from "./actions/alert.actions";
 import history from "./helpers/history";
 import PrivateRoute from "./components";
+import MessageCheck from "./components/MessageCheck";
 
 const Navigation = lazy(() => import("./pages/Navigation"));
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -13,6 +14,7 @@ const LoginPage = lazy(() => import("./pages/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
 const MessagePage = lazy(() => import("./pages/MessagePage"));
 const FriendRequestPage = lazy(() => import("./pages/FriendRequestPage"));
+const _404Page = lazy(() => import("./pages/_404Page"));
 
 function App() {
 	const dispatch = useDispatch();
@@ -47,7 +49,16 @@ function App() {
 						/>
 						<PrivateRoute
 							exact
-							path="/message/:conversationId"
+							path="/message/:userId"
+							component={() => (
+								<Navigation>
+									<MessageCheck />
+								</Navigation>
+							)}
+						/>
+						<PrivateRoute
+							exact
+							path="/message/t/:conversationId"
 							component={() => (
 								<Navigation>
 									<MessagePage />
@@ -65,6 +76,7 @@ function App() {
 						/>
 						<Route path="/login" component={LoginPage} />
 						<Route path="/register" component={RegisterPage} />
+						<Route path="*" exact component={_404Page} />
 					</Switch>
 				</Suspense>
 			</Router>

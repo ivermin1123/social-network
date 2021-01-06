@@ -5,13 +5,16 @@ export const getMessages = async (req, res) => {
     const { conversationId, currentPage } = req.body;
     const { userId } = req.userData;
 
-    const infoMessages = await MESSAGE.getMessages({
+    await MESSAGE.getMessages({
       conversationId,
       currentPage,
-    }).catch((error) => {
-      res.status(500).json(infoMessages);
-    });
-    res.status(200).json({ error: false, data: infoMessages });
+    })
+      .then((data) => {
+        res.status(200).json({ error: false, data });
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
   } catch (error) {
     res.status(500).json({ error: true, message: error.message });
   }

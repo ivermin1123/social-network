@@ -29,6 +29,7 @@ function sendMessage(conversationId, message, type) {
 			configAxios
 		)
 		.then((response) => {
+			console.log({ response });
 			return response.data;
 		});
 }

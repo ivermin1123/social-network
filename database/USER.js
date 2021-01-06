@@ -156,6 +156,24 @@ const userLookup = [
   },
   {
     $lookup: {
+      from: "conversations",
+      let: { conversations: "$conversations" },
+      pipeline: [
+        {
+          $match: { $expr: { $in: ["$_id", "$$conversations"] } },
+        },
+        {
+          $sort: { updatedAt: -1 },
+        },
+        {
+          $limit: 1,
+        },
+      ],
+      as: "lastConversation",
+    },
+  },
+  {
+    $lookup: {
       from: "files",
       localField: "avatar",
       foreignField: "_id",
@@ -168,26 +186,6 @@ const userLookup = [
       localField: "coverImage",
       foreignField: "_id",
       as: "coverImage",
-    },
-  },
-  {
-    $lookup: {
-      from: "conversations",
-      let: { conversations: "$conversations" },
-      pipeline: [
-        {
-          $match: { $expr: { $in: ["$_id", "$$conversations"] } },
-        },
-        { $sort: { updatedAt: -1 } },
-        { $limit: 1 },
-        {
-          $project: {
-            _id: 1,
-            name: 1,
-          },
-        },
-      ],
-      as: "lastConversation",
     },
   },
   {
@@ -283,6 +281,19 @@ const getUser = async ({ userIdToGet }) => {
         {
           $match: {
             _id: mongoose.Types.ObjectId(userIdToGet),
+          },
+        },
+        {
+          $addFields: {
+            conversations: {
+              $cond: {
+                if: {
+                  $ne: [{ $type: "$conversations" }, "array"],
+                },
+                then: [],
+                else: "$conversations",
+              },
+            },
           },
         },
         ...userLookup,

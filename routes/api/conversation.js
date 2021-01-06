@@ -24,4 +24,11 @@ router.get(
   conversationController.getConversations
 );
 
+router.post(
+  "/getConversationId",
+  helpers.checkAuth,
+  validator.conversationValidator.getConversationId,
+  conversationController.getConversationId
+);
+
 export default router;

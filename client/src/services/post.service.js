@@ -16,9 +16,15 @@ function getPost(postId) {
 		});
 }
 
-function getPosts() {
+function getPosts({ currentPage }) {
 	return axios
-		.get(CF_ROUTE_POST.GET_POSTS, { headers: configAxios.headers })
+		.post(
+			CF_ROUTE_POST.GET_POSTS,
+			{
+				currentPage,
+			},
+			configAxios
+		)
 		.then((response) => {
 			return response.data;
 		});

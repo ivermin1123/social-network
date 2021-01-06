@@ -28,7 +28,7 @@ function App(props) {
 
 	return (
 		<div className="sidebar__group">
-			<div className="sidebar__caption caption-sm">Unity</div>
+			<div className="sidebar__caption caption-sm">Lối tắt</div>
 			<div className="sidebar__menu">
 				<UnityItem
 					icon="icon-chat"

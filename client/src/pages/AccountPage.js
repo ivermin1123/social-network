@@ -74,7 +74,11 @@ const AccountPage = (props) => {
 						)}
 					</div>
 				</div>
-				<Catalog userData={userData} isFriend={isFriend} />
+				<Catalog
+					userData={userData}
+					isFriend={isFriend}
+					isMySelf={infoUser._id === accountId}
+				/>
 			</div>
 		</div>
 	) : null;

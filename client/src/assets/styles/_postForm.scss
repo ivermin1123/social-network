@@ -36,6 +36,9 @@ button {
 			outline: none;
 			padding-left: 20px;
 		}
+		&__btn:hover {
+			opacity: 0.8;
+		}
 	}
 	.post-form-bot {
 		margin-top: 12px;

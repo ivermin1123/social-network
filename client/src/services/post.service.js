@@ -30,12 +30,13 @@ function getPosts({ currentPage }) {
 		});
 }
 
-function getUserPosts(userId) {
+function getUserPosts({ userId, currentPage }) {
 	return axios
-		.get(
+		.post(
 			CF_ROUTE_POST.GET_USER_POSTS,
 			{
 				userId,
+				currentPage,
 			},
 			configAxios
 		)

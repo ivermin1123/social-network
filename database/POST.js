@@ -228,7 +228,7 @@ const createPost = async ({ body, userId }) => {
         });
 
         await Promise.all(promises).catch((error) => {
-          reject(error.message);
+          return reject(error.message);
         });
       }
 
@@ -329,9 +329,12 @@ const getPosts = async ({ currentPage }) => {
   });
 };
 
-const getUserPosts = async ({ userId }) => {
+const getUserPosts = async ({ userId, currentPage }) => {
   return new Promise(async (resolve, reject) => {
     try {
+      let page = Number(currentPage) || 1;
+      let perPage = 5;
+
       const query = [
         {
           $facet: {
@@ -342,7 +345,8 @@ const getUserPosts = async ({ userId }) => {
                 },
               },
               { $sort: { createdAt: -1 } },
-              { $limit: 10 },
+              { $skip: page * perPage - perPage },
+              { $limit: perPage },
               ...postsLookup,
             ],
           },

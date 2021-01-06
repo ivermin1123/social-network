@@ -139,7 +139,7 @@ const AuthorDetail = ({ ...props }) => {
 								? `${userData.followers.length} người theo dõi`
 								: `${userData.friends.length} bạn bè` || ""}
 						</div>
-						<div className="author__parameter h6">120 videos</div>
+						{/* <div className="author__parameter h6">120 videos</div> */}
 					</div>
 				</div>
 			</div>

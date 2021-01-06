@@ -136,7 +136,7 @@ const PostForm = ({ ...props }) => {
 						className="post-form-top__btn"
 						onClick={() => setShow(true)}
 					>
-						Bạn ơi, bạn đang nghĩ gì vậy nè?
+						Bạn ơi, bạn đang nghĩ gì thế?
 					</button>
 				</div>
 				{/* <div className="post-form-bot">
@@ -185,7 +185,7 @@ const PostForm = ({ ...props }) => {
 						<textarea
 							value={description}
 							type="text"
-							placeholder="Bạn mình ơi, bạn đang nghĩ gì vậy nè"
+							placeholder="Bạn ơi, bạn đang nghĩ gì thế?"
 							onChange={(e) => setDescription(e.target.value)}
 						/>
 						<ImageGrid />

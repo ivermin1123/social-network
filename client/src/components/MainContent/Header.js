@@ -40,7 +40,7 @@ function Header(props) {
 						<svg className="icon icon-location">
 							<use href={`${sprite}#icon-location`} />
 						</svg>
-						Browse
+						Menu
 						<svg className="icon icon-arrow-down">
 							<use href={`${sprite}#icon-arrow-down`} />
 						</svg>
@@ -58,7 +58,7 @@ function Header(props) {
 				<input
 					className="header__input"
 					type="text"
-					placeholder="Search Everything"
+					placeholder="Tìm kiếm ..."
 				/>
 				<button type="button" className="header__btn-search">
 					<svg className="icon icon-search">

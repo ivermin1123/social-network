@@ -62,8 +62,7 @@ const Post = (props) => {
 						{postN.isUpdated === true ? "(Edited)" : null}
 					</div>
 				</div>
-				{postN.author[0]._id === infoUser._id ||
-				infoUser.level === 100 ? (
+				{postN.author[0]._id === infoUser._id ? (
 					<div className="post-header__right">
 						<Dropdown
 							overlay={

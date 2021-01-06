@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import ava from "../../assets/image/ava-1.png";
 import LINK_CONSTANT from "../../constants/link.constants";
 
@@ -10,10 +12,10 @@ const Friends = ({ ...props }) => {
 				{userData.friends &&
 					userData.friends.map((item) => {
 						return (
-							<a
+							<Link
 								key={item._id}
 								className="friend-item-row"
-								href={`/account/${item._id}`}
+								to={`/account/${item._id}`}
 							>
 								<div className="friend-item-row__avatar">
 									{item.avatar && item.avatar.length ? (
@@ -35,7 +37,7 @@ const Friends = ({ ...props }) => {
 										{item.firstName} {item.lastName}
 									</div>
 								</div>
-							</a>
+							</Link>
 						);
 					})}
 			</div>

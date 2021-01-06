@@ -33,15 +33,15 @@ const getPost = (postId) => (dispatch) => {
 	);
 };
 
-const getUserPosts = (postId) => (dispatch) => {
-	return postService.getPost(postId).then(
+const getUserPosts = ({ userId, page }) => (dispatch) => {
+	return postService.getUserPosts({ userId, currentPage: page }).then(
 		(data) => {
 			dispatch({
 				type: postConstants.GET_USER_POSTS_SUCCESS,
 				payload: { post: data },
 			});
 
-			return Promise.resolve();
+			return Promise.resolve(data);
 		},
 		(error) => {
 			const message =

@@ -56,12 +56,27 @@ function getUserData(userId) {
 		});
 }
 
+function searchUser({ key }) {
+	return axios
+		.post(
+			CF_ROUTE_USER.SEARCH_USER,
+			{
+				key,
+			},
+			configAxios
+		)
+		.then((response) => {
+			return response.data;
+		});
+}
+
 const userService = {
 	login,
 	logout,
 	register,
 	getUserData,
 	changePassword,
+	searchUser,
 };
 
 export default userService;

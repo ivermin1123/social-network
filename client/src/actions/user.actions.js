@@ -204,6 +204,43 @@ const getUserProfile = (userId) => (dispatch) => {
 		}
 	);
 };
+
+const searchUser = ({ key }) => (dispatch) => {
+	function request() {
+		return { type: userConstants.SEARCH_USER_REQUEST };
+	}
+	dispatch(request());
+	return userService.searchUser({ key }).then(
+		(data) => {
+			dispatch({
+				type: userConstants.SEARCH_USER_SUCCESS,
+				payload: { data },
+			});
+
+			return Promise.resolve(data);
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: userConstants.SEARCH_USER_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
 const userActions = {
 	login,
 	logout,
@@ -212,6 +249,7 @@ const userActions = {
 	updateUserImage,
 	getUser,
 	getUserProfile,
+	searchUser,
 };
 
 export default userActions;

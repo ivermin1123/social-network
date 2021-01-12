@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
 import { reducer as form } from "redux-form";
 import { routerReducer } from "react-router-redux";
+import { reducer as toastrReducer } from "react-redux-toastr";
 
 import authentication from "./authentication.reducer";
 import registration from "./registration.reducer";
@@ -24,4 +25,5 @@ export default combineReducers({
 	alert,
 	form,
 	posts,
+	toastr: toastrReducer,
 });

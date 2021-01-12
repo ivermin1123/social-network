@@ -6,6 +6,7 @@ import messageConstants from "./message.constants";
 import reactionConstants from "./reaction.constants";
 import commentConstants from "./comment.constants";
 import friendRequestConstants from "./friendRequest.constants";
+import notifyConstants from "./notify.constants";
 import LINK from "./link.constants";
 
 import Tabs from "./tabs";
@@ -23,4 +24,5 @@ export {
 	Tabs,
 	LINK,
 	Theme,
+	notifyConstants,
 };

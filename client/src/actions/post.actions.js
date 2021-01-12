@@ -1,15 +1,19 @@
 import { postConstants, alertConstants } from "../constants";
 import { postService, uploadService } from "../services";
 
-const getPost = (postId) => (dispatch) => {
-	return postService.getPost(postId).then(
+const getPost = ({ postId }) => (dispatch) => {
+	function request() {
+		return { type: postConstants.GETPOST_REQUEST };
+	}
+	dispatch(request());
+	return postService.getPost({ postId }).then(
 		(data) => {
 			dispatch({
 				type: postConstants.GETPOST_SUCCESS,
-				payload: { post: data },
+				payload: { data },
 			});
 
-			return Promise.resolve();
+			return Promise.resolve(data);
 		},
 		(error) => {
 			const message =
@@ -141,7 +145,7 @@ const deletePost = ({ userId, postId }) => (dispatch) => {
 				payload: { postDelete: data.data },
 			});
 
-			return Promise.resolve();
+			return Promise.resolve(data.data);
 		},
 		(error) => {
 			const message =

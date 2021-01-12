@@ -5,6 +5,7 @@ import * as commentController from "./commentController";
 import * as messageController from "./messageController";
 import * as conversationController from "./conversationController";
 import * as friendRequestController from "./friendRequestController";
+import * as notifyController from "./notifyController";
 
 export {
   conversationController,
@@ -14,4 +15,5 @@ export {
   reactionController,
   commentController,
   messageController,
+  notifyController,
 };

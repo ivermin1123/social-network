@@ -7,6 +7,7 @@ import socketService from "./socket.service";
 import reactionService from "./reaction.service";
 import commentService from "./comment.service";
 import friendReqService from "./friendReqService.service";
+import notifyService from "./notify.service";
 
 export {
 	postService,
@@ -18,4 +19,5 @@ export {
 	messageService,
 	reactionService,
 	commentService,
+	notifyService,
 };

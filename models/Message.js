@@ -17,6 +17,12 @@ const messageSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Conversation",
     },
+    images: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "File",
+      },
+    ],
     status: Number,
     /**
      * 0: Message

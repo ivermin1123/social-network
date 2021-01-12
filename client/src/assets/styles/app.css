@@ -5536,9 +5536,9 @@ body.dark .games .slick-dots li.slick-active button:before {
 
 .player__wrap {
 	position: absolute;
-	top: -32px;
-	right: -24px;
-	width: 420px;
+	top: 15px;
+	right: 0px;
+	width: 100%;
 	padding-bottom: 16px;
 	border-radius: 20px;
 	background: #ffffff;
@@ -11344,7 +11344,7 @@ body.dark .views__item:before {
 @media only screen and (max-width: 1259px) {
 	.header__item_browse {
 		width: 130px;
-		margin-right: 40px;
+		margin-right: 300px;
 	}
 	.header__search {
 		width: 180px;
@@ -11373,7 +11373,7 @@ body.dark .views__item:before {
 	.collection__list {
 		-ms-flex-wrap: wrap;
 		flex-wrap: wrap;
-		margin-top: -32px;
+		margin-top: -5px;
 	}
 	.collection__list .card {
 		-webkit-box-flex: 0;

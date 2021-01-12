@@ -1,22 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
+import { message } from "antd";
+
 import { Tabs, Theme, LINK } from "../../constants/index";
 import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
 import userAction from "../../actions/user.actions";
-import "react-toastify/dist/ReactToastify.css";
-
-const configToast = {
-	position: "top-right",
-	autoClose: 1000,
-	hideProgressBar: false,
-	closeOnClick: true,
-	pauseOnHover: true,
-	draggable: true,
-	progress: undefined,
-};
 
 const Cover = (props) => {
 	const [sumFriend, setSumFriend] = useState(0);
@@ -53,11 +43,10 @@ const Cover = (props) => {
 	const handleFile = (e) => {
 		const img = e.target.files[0];
 		if (img && img.size >= MAX_POST_IMAGE_SIZE) {
-			toast(
+			message.error(
 				`🦄 File size should be less then ${
 					MAX_POST_IMAGE_SIZE / 1000000
-				}MB`,
-				configToast
+				}MB`
 			);
 		}
 		if (img && img) {
@@ -76,12 +65,12 @@ const Cover = (props) => {
 			// Redux call
 			dispatch(userAction.updateUserImage(file, data, dataSaveServer))
 				.then(() => {
-					toast(`🦄 Upload Image Success`);
+					message.success("🦄 Upload Success");
 					handleReset();
 					setShow(false);
 				})
 				.catch(() => {
-					toast(`🦄 Upload Image Fail`);
+					message.error("🦄 Upload Fail");
 					handleReset();
 				});
 		} catch (error) {
@@ -90,17 +79,6 @@ const Cover = (props) => {
 	};
 	return (
 		<>
-			<ToastContainer
-				position="top-right"
-				autoClose={5000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/>
 			<div className="cover">
 				<div className="cover-image">
 					<img

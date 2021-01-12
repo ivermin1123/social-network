@@ -2,23 +2,12 @@ import React, { useState } from "react";
 import { useDispatch, connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-bootstrap/Modal";
-import { Popover, Avatar } from "antd";
-import { ToastContainer, toast } from "react-toastify";
+import { Popover, Avatar, message } from "antd";
 import ava from "../../assets/image/ava-1.png";
 import LINK_CONSTANT from "../../constants/link.constants";
 import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
 import { Theme } from "../../constants/index";
 import userAction from "../../actions/user.actions";
-
-const configToast = {
-	position: "top-right",
-	autoClose: 1000,
-	hideProgressBar: false,
-	closeOnClick: true,
-	pauseOnHover: true,
-	draggable: true,
-	progress: undefined,
-};
 
 const AuthorDetail = ({ ...props }) => {
 	const { userData, isMySelf } = props;
@@ -61,11 +50,10 @@ const AuthorDetail = ({ ...props }) => {
 	const handleFile = (e) => {
 		const img = e.target.files[0];
 		if (img && img.size >= MAX_POST_IMAGE_SIZE) {
-			toast(
+			message.error(
 				`🦄 File size should be less then ${
 					MAX_POST_IMAGE_SIZE / 1000000
-				}MB`,
-				configToast
+				}MB`
 			);
 		}
 		if (img && img) {
@@ -84,12 +72,12 @@ const AuthorDetail = ({ ...props }) => {
 			// Redux call
 			dispatch(userAction.updateUserImage(file, data, dataSaveServer))
 				.then(() => {
-					toast(`🦄 Upload Image Success`);
+					message.success("🦄 Upload Success");
 					handleReset();
 					setShow(false);
 				})
 				.catch(() => {
-					toast(`🦄 Upload Image Fail`);
+					message.error("🦄 Upload Fail");
 					handleReset();
 				});
 		} catch (error) {
@@ -98,17 +86,6 @@ const AuthorDetail = ({ ...props }) => {
 	};
 	return userData ? (
 		<>
-			<ToastContainer
-				position="top-right"
-				autoClose={5000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/>
 			<div className="author__details">
 				<Popover
 					content={content}

@@ -63,21 +63,22 @@ const userSchema = new Schema(
       default: false,
     },
     activityStatus: {
-      type: String,
-      default: "offline",
+      type: Boolean,
+      default: false,
     },
     level: {
       type: Number,
       default: 1,
     },
     numLog: Number,
-    lastActive: String,
+    lastActive: Date,
     activated: {
       type: Boolean,
       default: process.env.ENABLE_SEND_EMAIL === "true" ? false : true,
     },
     deactivated: {
       type: Boolean,
+      default: false,
     },
     lang: {
       type: String,

@@ -3,11 +3,6 @@ import Post from "./Post/Post";
 import PostForm from "./Post/PostForm";
 import NewsFeed from "./NewsFeed";
 
-// Component's Navbar
-import DropdownMenu from "./Navbar/DropdownMenu";
-import NavItem from "./Navbar/NavItem";
-import SearchBox from "./Navbar/SearchBox";
-
 // Component AccountPage
 import Cover from "./AccountComponent/Cover";
 import Introduction from "./AccountComponent/Introduction";
@@ -32,9 +27,6 @@ export {
 	Post,
 	PostForm,
 	FormField,
-	NavItem,
-	SearchBox,
-	DropdownMenu,
 	Introduction,
 	Friends,
 	Cover,

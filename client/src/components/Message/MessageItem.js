@@ -1,13 +1,13 @@
 import React from "react";
 import moment from "moment";
 
-import { Tooltip } from "antd";
+import { Tooltip, Avatar } from "antd";
 import ButtonSVG from "../ButtonSVG";
-import avatar1 from "../../assets/image/ava-1.png";
+import LINK from "../../constants/link.constants";
+// import avatar1 from "../../assets/image/ava-1.png";
 
 function MessageItem(props) {
-	const { message, listMessage, isRight, fullName } = props;
-
+	const { message, listMessage, isRight, fullName, avatar } = props;
 	const MessageAction = () => {
 		return (
 			<div className="messages__actions">
@@ -23,7 +23,12 @@ function MessageItem(props) {
 		<div className={`messages__item${isRight ? "_right" : ""}`}>
 			{isRight ? null : (
 				<div className="messages__ava">
-					<img className="messages__pic" src={avatar1} alt="" />
+					<Avatar
+						size={56}
+						className="messages__pic"
+						src={`${LINK.LINK_S3}${avatar}`}
+						alt=""
+					/>
 				</div>
 			)}
 			<div className="messages__details">
@@ -73,7 +78,12 @@ function MessageItem(props) {
 			</div>
 			{isRight ? (
 				<div className="messages__ava">
-					<img className="messages__pic" src={avatar1} alt="" />
+					<Avatar
+						size={56}
+						className="messages__pic"
+						src={`${LINK.LINK_S3}${avatar}`}
+						alt=""
+					/>
 				</div>
 			) : null}
 		</div>

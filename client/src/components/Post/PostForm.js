@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FbImageLibrary from "react-fb-image-grid";
-import { Avatar } from "antd";
+import { Avatar, message } from "antd";
 
 import { Theme } from "../../constants/index";
 import postActions from "../../actions/post.actions";
@@ -12,16 +11,6 @@ import { MAX_POST_IMAGE_SIZE } from "../../constants/ImageSize";
 import LINK_CONSTANT from "../../constants/link.constants";
 import "../../assets/styles/_postForm.scss";
 import ava from "../../assets/image/ava-1.png";
-
-const configToast = {
-	position: "top-right",
-	autoClose: 1000,
-	hideProgressBar: false,
-	closeOnClick: true,
-	pauseOnHover: true,
-	draggable: true,
-	progress: undefined,
-};
 
 const PostForm = ({ ...props }) => {
 	const userData = useSelector((state) => state.users.infoUser);
@@ -44,11 +33,10 @@ const PostForm = ({ ...props }) => {
 			while (i >= 0) {
 				const img = listFile[i];
 				if (img && img.size >= MAX_POST_IMAGE_SIZE) {
-					toast(
+					message.error(
 						`🦄 File size should be less then ${
 							MAX_POST_IMAGE_SIZE / 1000000
-						}MB`,
-						configToast
+						}MB`
 					);
 				}
 				if (img && img.size < MAX_POST_IMAGE_SIZE) {
@@ -75,12 +63,12 @@ const PostForm = ({ ...props }) => {
 			// Redux call
 			dispatch(postActions.createPost(arrFile, data, dataSaveServer))
 				.then(() => {
-					toast(`🦄 Upload Success`);
+					message.success("🦄 Upload Success");
 					handleReset();
 					setShow(false);
 				})
 				.catch((err) => {
-					toast(`🦄 Upload Fail`);
+					message.error("🦄 Upload Fail");
 					handleReset();
 					console.log(err);
 				});
@@ -110,17 +98,6 @@ const PostForm = ({ ...props }) => {
 	};
 	return (
 		<>
-			<ToastContainer
-				position="top-right"
-				autoClose={5000}
-				hideProgressBar={false}
-				newestOnTop={false}
-				closeOnClick
-				rtl={false}
-				pauseOnFocusLoss
-				draggable
-				pauseOnHover
-			/>
 			<div className="post-form">
 				<div className="post-form-top">
 					{userData.avatar && userData.avatar.length ? (

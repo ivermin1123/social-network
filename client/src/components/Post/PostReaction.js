@@ -93,16 +93,28 @@ function PostReaction(props) {
 	const { postN, setPostN } = props;
 	const dispatch = useDispatch();
 	const { infoUser } = useSelector((state) => state.users);
+	const { socket } = useSelector((state) => state.socket);
 	const [isHover, setIsHover] = useState(false);
 	const [reactName, setReactName] = useState("Thích");
 	const [reactIcon, setReactIcon] = useState(thumUp);
 	const [typeR, setTypeR] = useState();
+	let isLike = 0;
 	const handleLike = (type) => {
 		setIsHover(false);
-		setReactionPost(type, setReactIcon, setReactName, setTypeR);
 		dispatch(reactionActions.likePost(postN._id, type)).then((res) => {
 			setPostN(res.data);
+			if (infoUser._id !== postN.author[0]._id) {
+				socket.emit("CSS_LIKE_POST", {
+					notifyBy: infoUser._id,
+					notifyTo: postN.author[0]._id,
+					type: 1,
+					postId: postN._id,
+					reactType: type,
+					isLike: reactIcon === thumUp,
+				});
+			}
 		});
+		setReactionPost(type, setReactIcon, setReactName, setTypeR);
 	};
 
 	const handleLikeButton = () => {
@@ -115,7 +127,6 @@ function PostReaction(props) {
 	};
 
 	// hover for reaction
-	let isLike = 0;
 	useEffect(() => {
 		postN.reactions.forEach((reaction) => {
 			if (reaction.author[0]._id === infoUser._id) {

@@ -9,6 +9,7 @@ import commentsRouter from "../routes/api/comment";
 import conversationsRouter from "../routes/api/conversation";
 import friendRequestRouter from "../routes/api/friendRequest";
 import messagesRouter from "../routes/api/message";
+import notificationRouter from "../routes/api/notification";
 import publicRouter from "../routes/api/public";
 
 function AppRouter(app) {
@@ -26,6 +27,7 @@ function AppRouter(app) {
   app.use("/api/comment/", commentsRouter);
   app.use("/api/conversation/", conversationsRouter);
   app.use("/api/message/", messagesRouter);
+  app.use("/api/notification/", notificationRouter);
   app.use("/api/friend-request", friendRequestRouter);
   app.use("/api/", publicRouter);
 

@@ -2,7 +2,7 @@ import axios from "axios";
 import { CF_ROUTE_POST } from "../config/route";
 import configAxios from "../helpers/auth-header";
 
-function getPost(postId) {
+function getPost({ postId }) {
 	return axios
 		.post(
 			CF_ROUTE_POST.GET_POST,

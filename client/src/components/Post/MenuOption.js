@@ -10,16 +10,17 @@ import {
 import postActions from "../../actions/post.actions";
 
 function MenuOption(props) {
-	const { clickFunc, setVisible, post, user } = props;
+	const { clickFunc, setVisible, post, user, setListP } = props;
 	const dispatch = useDispatch();
 	const deletePost = () => {
 		dispatch(
 			postActions.deletePost({ userId: user._id, postId: post._id })
-		).then(() => {
+		).then((data) => {
 			notification.success({
 				message: "Bài viết đã được xóa.",
 				// description: "Bài viết đã được xóa.",
 			});
+			setListP(data._id);
 		});
 	};
 	const handleDeletePost = () => {

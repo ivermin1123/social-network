@@ -6,14 +6,15 @@ import { clearAlert } from "./actions/alert.actions";
 import history from "./helpers/history";
 import PrivateRoute from "./components";
 import MessageCheck from "./components/MessageCheck";
+import MessagePage from "./pages/MessagePage";
 
 const Navigation = lazy(() => import("./pages/Navigation"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const AccountPage = lazy(() => import("./pages/AccountPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 const RegisterPage = lazy(() => import("./pages/RegisterPage"));
-const MessagePage = lazy(() => import("./pages/MessagePage"));
 const FriendRequestPage = lazy(() => import("./pages/FriendRequestPage"));
+const SinglePostPage = lazy(() => import("./pages/SinglePostPage"));
 const _404Page = lazy(() => import("./pages/_404Page"));
 
 function App() {
@@ -44,6 +45,15 @@ function App() {
 							component={() => (
 								<Navigation>
 									<AccountPage />
+								</Navigation>
+							)}
+						/>
+						<PrivateRoute
+							exact
+							path="/post/:postId"
+							component={() => (
+								<Navigation>
+									<SinglePostPage />
 								</Navigation>
 							)}
 						/>

@@ -34,4 +34,13 @@ router.post(
   userController.changePassword
 );
 
+router.post(
+  "/changePassword",
+  helpers.checkAuth,
+  validator.userValidator.changePassword,
+  userController.changePassword
+);
+
+router.post("/searchUser", helpers.checkAuth, userController.searchUser);
+
 export default router;

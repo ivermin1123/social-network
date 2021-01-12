@@ -1,3 +1,4 @@
+@import "react-redux-toastr/src/styles/index";
 body {
 	min-width: 375px;
 	font-family: "Inter", sans-serif !important;
@@ -509,6 +510,12 @@ body.dark {
 .ant-image-preview-img {
 	display: initial !important;
 }
+
+// .notifications__list {
+// 	max-height: 315px;
+// 	overflow: hidden;
+// 	overflow-y: scroll;
+// }
 // .modal-edit-post {
 // 	.ant-modal-content {
 // 		.ant-modal-header {

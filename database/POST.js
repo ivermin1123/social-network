@@ -275,7 +275,7 @@ const getPostById = async ({ postId }) => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!checkObjectIDs(postId))
-        reject({ error: true, message: "param_invalid" });
+        return reject({ error: true, message: "param_invalid" });
       await Post.aggregate([
         {
           $match: { _id: mongoose.Types.ObjectId(postId) },
@@ -286,13 +286,13 @@ const getPostById = async ({ postId }) => {
         },
       ])
         .then((data) => {
-          resolve(data);
+          return resolve(data);
         })
         .catch((error) => {
-          reject(error.message);
+          return reject(error.message);
         });
     } catch (error) {
-      reject(error.message);
+      return reject(error.message);
     }
   });
 };

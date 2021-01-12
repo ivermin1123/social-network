@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, connect } from "react-redux";
 import { Avatar } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import HeaderItem from "./HeaderItem";
 import NotificationItem from "./NotificationItem";
@@ -9,7 +11,9 @@ import ProfileItem from "./ProfileItem";
 import sprite from "../../assets/icons/sprite.svg";
 import avatar2 from "../../assets/image/avatarDefault.png";
 import userActions from "../../actions/user.actions";
+import notifyActions from "../../actions/notify.actions";
 import LINK_CONSTANTS from "../../constants/link.constants";
+import SearchBar from "./SearchBar";
 import Setting from "./Setting";
 
 function Header(props) {
@@ -19,12 +23,39 @@ function Header(props) {
 	const [isActive3, setActive3] = useState(false);
 	const [isActive4, setActive4] = useState(false);
 	const [isModalShow, setIsModalShow] = useState(false);
+	const [page, setPage] = useState(1);
+	const [hasMore, setHasMore] = useState(true);
+	const [listNotify, setListNotify] = useState();
+	const [totalNotify, setTotalNotify] = useState(0);
 
 	const { infoUser } = props;
 	const handleLogout = (e) => {
 		e.preventDefault();
 		dispatch(userActions.logout());
 	};
+
+	const fetchMoreData = () => {
+		dispatch(notifyActions.getUserNotify({ currentPage: page + 1 })).then(
+			(data) => {
+				if (data.data.length === 0) {
+					setHasMore(false);
+				}
+				setListNotify(listNotify.concat(data.data));
+				setTotalNotify(data.totalNotify);
+			}
+		);
+		setPage(page + 1);
+	};
+
+	useEffect(() => {
+		dispatch(notifyActions.getUserNotify({ currentPage: 1 })).then(
+			(data) => {
+				console.log({ data });
+				setListNotify(data.data);
+				setTotalNotify(data.totalNotify);
+			}
+		);
+	}, []);
 
 	return (
 		<div className="header">
@@ -53,19 +84,7 @@ function Header(props) {
 					</div>
 				</div>
 			</OutsideClick>
-
-			<form className="header__search" style={{ display: "none" }}>
-				<input
-					className="header__input"
-					type="text"
-					placeholder="Tìm kiếm ..."
-				/>
-				<button type="button" className="header__btn-search">
-					<svg className="icon icon-search">
-						<use href={`${sprite}#icon-search`} />
-					</svg>
-				</button>
-			</form>
+			<SearchBar sprite={sprite} />
 			<div className="header__control">
 				<OutsideClick callback={setActive2} classN="header__item">
 					<div
@@ -110,7 +129,9 @@ function Header(props) {
 							<svg className="icon icon-bell">
 								<use href={`${sprite}#icon-bell`} />
 							</svg>
-							<div className="header__counter">999</div>
+							<div className="header__counter">
+								{totalNotify === 0 ? null : totalNotify}
+							</div>
 						</button>
 						<div className="header__body js-header-body">
 							<div className="notifications">
@@ -118,17 +139,51 @@ function Header(props) {
 									Recent Notification
 								</div> */}
 								<div className="notifications__list">
-									<NotificationItem
-										name="Quốc Hoàng"
-										time="2h"
-										content="Commented on"
-										mention="Your last video"
-									/>
-									<NotificationItem
-										name="Anh Tú"
-										time="4h"
-										content="Send you a message 🌈."
-									/>
+									{listNotify ? (
+										<InfiniteScroll
+											// style={{
+											// 	overflow: "hidden",
+											// 	padding: "1px",
+											// }}
+											dataLength={listNotify.length}
+											next={fetchMoreData}
+											height={315}
+											hasMore={hasMore}
+											loader={
+												<div
+													style={{ display: "flex" }}
+												>
+													<LoadingOutlined
+														style={{
+															fontSize: "50px",
+															color: "#08c",
+															margin: "auto",
+														}}
+													/>
+												</div>
+											}
+											endMessage={
+												<p
+													style={{
+														textAlign: "center",
+													}}
+													className="notifications__item"
+												>
+													<b>
+														Yay! Bạn đã xem hết tất
+														cả các bài viết rồi. 😛
+													</b>
+												</p>
+											}
+										>
+											{listNotify.map((notify) => (
+												<NotificationItem
+													key={notify._id}
+													notify={notify}
+												/>
+											))}
+										</InfiniteScroll>
+									) : null}
 								</div>
 							</div>
 						</div>

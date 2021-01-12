@@ -108,3 +108,17 @@ export const getUser = async (req, res) => {
     res.status(500).json({ error: true, message: error.message });
   }
 };
+
+export async function searchUser(req, res) {
+  try {
+    const { key } = req.body;
+    const infoUserAfterUpdate = await USER.searchUser({
+      key,
+    }).catch((error) => {
+      return res.status(200).json(error);
+    });
+    res.status(200).json({ error: false, data: infoUserAfterUpdate });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+}

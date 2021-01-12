@@ -9,6 +9,7 @@ const CF_ROUTE_USER = {
 	GET_USER: `${API_URL}/api/user/getUser`,
 	UPDATE_USER_IMAGE: `${API_URL}/api/user/updateUserImage`,
 	CHANGE_PASSWORD: `${API_URL}/api/user/changePassword`,
+	SEARCH_USER: `${API_URL}/api/user/searchUser`,
 };
 
 const CF_ROUTE_POST = {
@@ -50,6 +51,10 @@ const CF_ROUTE_FRIEND_REQUEST = {
 	UNFRIEND: `${API_URL}/api/friend-request/unfriend`,
 };
 
+const CF_ROUTE_NOTIFY = {
+	GET_USER_NOTIFY: `${API_URL}/api/notification/getUserNotify`,
+};
+
 const CF_ROUTE_PUBLIC = {
 	GENERATE_LINK_S3: `${API_URL}/api/generate-link-upload-s3`,
 };
@@ -63,4 +68,5 @@ export {
 	CF_ROUTE_REACTION,
 	CF_ROUTE_COMMENT,
 	CF_ROUTE_FRIEND_REQUEST,
+	CF_ROUTE_NOTIFY,
 };

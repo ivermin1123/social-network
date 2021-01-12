@@ -23,10 +23,14 @@ const NewsFeed = () => {
 			if (posts.data.length === 0) {
 				setHasMore(false);
 			}
-			// console.log("LIST POST", posts.data);
 			setListPosts(listPosts.concat(posts.data));
 		});
 		setPage(page + 1);
+	};
+
+	const setListPostExceptOne = (idPost) => {
+		const newArr = listPosts.filter((post) => post._id !== idPost);
+		setListPosts(newArr);
 	};
 
 	// if (loadingPost) {
@@ -64,7 +68,11 @@ const NewsFeed = () => {
 					}
 				>
 					{listPosts.map((post) => (
-						<Post post={post} key={post._id} />
+						<Post
+							post={post}
+							key={post._id}
+							setListP={setListPostExceptOne}
+						/>
 					))}
 				</InfiniteScroll>
 			)}

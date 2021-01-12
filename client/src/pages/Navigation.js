@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector, connect } from "react-redux";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+// import { message } from "antd";
 
 import {
 	connect as connectSocket,
@@ -82,6 +83,8 @@ function Navigation(props) {
 
 const mapStateToProps = (state) => ({
 	loadingUser: state.users.loadingUser,
+	isConnecting: state.socket.isConnecting,
+	socket: state.socket.socket,
 });
 
 export default connect(mapStateToProps)(Navigation);

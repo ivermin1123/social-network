@@ -43,15 +43,20 @@ export default function posts(state = initialState, action) {
 				...state,
 				loadingPost: false,
 			};
+		case postConstants.GETPOST_REQUEST:
+			return {
+				...state,
+				loadingPost: true,
+			};
 		case postConstants.GETPOST_SUCCESS:
 			return {
 				...state,
-				post: payload.post,
+				loadingPost: false,
 			};
 		case postConstants.GETPOST_FAILURE:
 			return {
 				...state,
-				post: null,
+				loadingPost: false,
 			};
 
 		case postConstants.GET_USER_POSTS_SUCCESS:

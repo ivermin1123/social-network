@@ -2,6 +2,8 @@ import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import redisAdapter from "socket.io-redis";
 import MESSAGE from "../database/MESSAGE";
+import USER from "../database/USER";
+import NOTIFY from "../database/NOTIFY";
 import { REDIS_SEPARATOR } from "./redis";
 import mongoose from "mongoose";
 import "../models/User";
@@ -76,6 +78,10 @@ const replaceExist = (arr, userId, socketID, username) => {
   return newArr;
 };
 
+function getKeyByValue(object, value) {
+  return Object.keys(object).find((key) => object[key] === value);
+}
+
 const anAsyncFunction = async (item) => {
   let infoUser = await User.findById(item.userId);
   delete infoUser.password;
@@ -112,7 +118,7 @@ function ApplySocketIO(io) {
       subClient: sub,
     })
   );
-  const sockets = {};
+  let listUser = [];
   io.use(async (socket, next) => {
     const { id: socketID } = socket;
     arraySocketConnect.push(socketID);
@@ -139,7 +145,14 @@ function ApplySocketIO(io) {
       // io.in(socket.userData.userId).clients((err, clients) => {
       //   //userController.changeStatus(socket.userData.userId, clients, io);
       // });
-      sockets[socket.io] = socket;
+      socket.on("CSS_LOGIN", async (data) => {
+        // saving userId to object with socket ID
+        listUser.push({
+          socketID: socket.id,
+          userId: data.userId,
+        });
+        await USER.updateStatus({ userId: data.userId, isOffline: false });
+      });
       const { id: socketID } = socket;
       console.log(`New client connected ${socketID}`.rainbow);
 
@@ -170,7 +183,6 @@ function ApplySocketIO(io) {
         "CSS_SEND_MESSAGE",
         async ({ message, conversationId, type, userId }, callback) => {
           const user = getUser(socket.id);
-          console.log({ message, conversationId, type, userId });
           const infoMessage = await MESSAGE.sendMessage({
             conversationId,
             message,
@@ -196,21 +208,54 @@ function ApplySocketIO(io) {
         // 	 socket.to(data.userId).emit("stoppedTyping", { roomId: data.roomId });
         //   }})
       });
-      socket.on("disconnect", () => {
-        console.log(`bye ${socketID}`);
-        delete sockets[socket.id];
-        const user = removeUser(socket.id);
 
-        if (user) {
-          io.to(user.room).emit("message", {
-            user: "Admin",
-            text: `${user.name} has left.`,
-          });
-          io.to(user.room).emit("roomData", {
-            room: user.room,
-            users: getUsersInRoom(user.room),
+      socket.on(
+        "CSS_LIKE_POST",
+        async (
+          { notifyBy, notifyTo, type, postId, reactType, isLike },
+          callback
+        ) => {
+          //   console.log({ notifyBy, notifyTo, type, postId, reactType });
+          await NOTIFY.notifyTo({
+            notifyBy,
+            notifyTo,
+            type,
+            postId,
+          }).then((data) => {
+            listUser.forEach((user) => {
+              if (user.userId == notifyTo) {
+                console.log("TRUE");
+                if (isLike) {
+                  io.to(user.socketID).emit("SSC_LIKE_POST", {
+                    notifyBy,
+                    notifyTo,
+                    type,
+                    postId,
+                    data,
+                    reactType,
+                  });
+                }
+              }
+            });
           });
         }
+      );
+
+      socket.on("disconnect", async () => {
+        console.log(`bye ${socketID}`);
+        // remove saved socket from users object
+        listUser = listUser.filter(
+          (user) => user.userId != socket.userData.userId
+        );
+        await USER.updateStatus({
+          userId: socket.userData.userId,
+          isOffline: true,
+        });
+
+        // const userToDelete = users.filter(
+        //   (user) => user.userId == socket.userData.userId
+        // );
+        // delete users[socketID];
       });
     });
 }

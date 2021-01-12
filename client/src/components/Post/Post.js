@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -18,13 +18,13 @@ import EditPost from "./EditPost";
 import LINK_CONSTANT from "../../constants/link.constants";
 
 const Post = (props) => {
+	const { post, isShowComment, setListP } = props;
 	const { infoUser } = useSelector((state) => state.users);
 	const [isModalVisible, setIsModalVisible] = useState(false);
 	const [showComment, setShowComment] = useState(false);
 	const [optionShow, setOptionShow] = useState(false);
 	const [visible, setVisible] = useState(false);
 
-	const { post } = props;
 	const [postN, setPostN] = useState(post);
 	const fullName = `${postN.author[0].firstName} ${postN.author[0].lastName}`;
 	const timePost = { time: null, isEdit: false };
@@ -39,6 +39,12 @@ const Post = (props) => {
 	postN.files.forEach((file) => {
 		imageArray.push(`${LINK_CONSTANT.LINK_S3}${file.path}`);
 	});
+
+	useEffect(() => {
+		if (isShowComment) {
+			setShowComment(true);
+		}
+	}, [isShowComment]);
 	return postN && postN.author ? (
 		<div className="post">
 			<div className="post-header">
@@ -58,8 +64,10 @@ const Post = (props) => {
 						</Link>
 					</div>
 					<div className="post-header__created">
-						{timePost.time}{" "}
-						{postN.isUpdated === true ? "(Edited)" : null}
+						<Link to={`/post/${postN._id}`}>
+							{timePost.time}{" "}
+							{postN.isUpdated === true ? "(Edited)" : null}
+						</Link>
 					</div>
 				</div>
 				{postN.author[0]._id === infoUser._id ? (
@@ -71,6 +79,7 @@ const Post = (props) => {
 									setVisible={setVisible}
 									post={postN}
 									user={infoUser}
+									setListP={setListP}
 								/>
 							}
 							placement="bottomRight"

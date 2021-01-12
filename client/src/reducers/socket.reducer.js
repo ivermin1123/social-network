@@ -1,6 +1,6 @@
 import socketConstants from "../constants/socket.constants";
 
-const initialState = {};
+const initialState = { isConnecting: true };
 export default function socket(state = initialState, action) {
 	switch (action.type) {
 		case socketConstants.CONNECT:

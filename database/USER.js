@@ -458,10 +458,10 @@ const getUsers = async ({ userId }) => {
   return new Promise(async (resolve, reject) => {
     try {
       const infoUser = await User.findById(userId).catch((error) => {
-        reject({ error: true, message: error.message });
+        return reject({ error: true, message: error.message });
       });
       if (infoUser.level !== 100) {
-        reject({ error: true, message: "Access denied." });
+        return reject({ error: true, message: "Access denied." });
       } else {
         await User.find()
           .populate("posts")
@@ -469,9 +469,58 @@ const getUsers = async ({ userId }) => {
           .sort({ createdAt: -1 })
           .limit(100)
           .then((data) => {
-            resolve(data);
+            return resolve(data);
           });
       }
+    } catch (error) {
+      return reject(error.message);
+    }
+  });
+};
+
+const updateStatus = async ({ userId, isOffline }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const objectData = isOffline
+        ? {
+            activityStatus: false,
+            lastActive: new Date(),
+          }
+        : {
+            activityStatus: true,
+          };
+      await User.findByIdAndUpdate(userId, objectData, { new: true });
+    } catch (error) {
+      reject(error.message);
+    }
+  });
+};
+
+const searchUser = async ({ key }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const arraySearch = key.map((el) => new RegExp(el, "i"));
+      await User.find({
+        $or: [
+          { username: { $in: arraySearch } },
+          { firstName: { $in: arraySearch } },
+          { lastName: { $in: arraySearch } },
+        ],
+      })
+        .populate("avatar")
+        .limit(5)
+        .select({
+          firstName: 1,
+          lastName: 1,
+          avatar: 1,
+          _id: 1,
+        })
+        .then((data) => {
+          return resolve(data);
+        })
+        .catch((err) => {
+          return reject(err.message);
+        });
     } catch (error) {
       reject(error.message);
     }
@@ -485,4 +534,6 @@ export default {
   getUsers,
   changePassword,
   login,
+  updateStatus,
+  searchUser,
 };

@@ -1,4 +1,4 @@
-import userConstants from "../constants/user.constants";
+import { userConstants } from "../constants";
 
 function users(
 	state = {
@@ -6,8 +6,9 @@ function users(
 		loadingUserProfile: true,
 		updatingUser: false,
 		deleting: false,
-		hasError: false,
+		loadingNotify: true,
 		infoUser: null,
+		notify: null,
 	},
 	action
 ) {

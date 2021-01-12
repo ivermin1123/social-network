@@ -113,6 +113,9 @@ function Messages(props) {
 								if (arr[0].sender[0]._id === infoUser._id) {
 									return (
 										<MessageItem
+											avatar={
+												arr[0].sender[0].avatar[0].path
+											}
 											listMessage={arr}
 											isRight
 											fullName={fullName}
@@ -122,6 +125,7 @@ function Messages(props) {
 								}
 								return (
 									<MessageItem
+										avatar={arr[0].sender[0].avatar[0].path}
 										fullName={fullName}
 										listMessage={arr}
 										key={arr[0]._id}
@@ -131,6 +135,7 @@ function Messages(props) {
 							if (arr[0].sender[0]._id === infoUser._id) {
 								return (
 									<MessageItem
+										avatar={arr[0].sender[0].avatar[0].path}
 										isRight
 										fullName={fullName}
 										message={arr[0]}
@@ -140,6 +145,7 @@ function Messages(props) {
 							}
 							return (
 								<MessageItem
+									avatar={arr[0].sender[0].avatar[0].path}
 									fullName={fullName}
 									message={arr[0]}
 									key={arr[0]._id}

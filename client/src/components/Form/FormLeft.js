@@ -1,15 +1,16 @@
 import React from "react";
 import sprite from "../../assets/icons/sprite.svg";
-import LogoWhite from "../../Icons/LogoWhite";
+// import LogoWhite from "../../Icons/LogoWhite";
+import logo from "../../assets/image/logo_hutech_2.png";
 
 const FormLeft = () => {
 	return (
 		<div className="login__wrap">
 			<a className="login__logo" href="/">
-				<LogoWhite />
+				<img src={logo} alt="" style={{ marginLeft: "10px" }} />
 			</a>
-			<div className="login__info">A Video Gaming Platfrom UI Kit</div>
-			<div className="games">
+			<div className="login__info">Tri thức, đạo đức, sáng tạo.</div>
+			<div className="games" style={{ display: "none" }}>
 				<a className="games__item" href="/#">
 					<div className="games__preview">
 						<img
@@ -53,7 +54,7 @@ const FormLeft = () => {
 					</div>
 				</a>
 			</div>
-			<a className="login__add" href="/#">
+			<a className="login__add" href="/#" style={{ display: "none" }}>
 				<svg className="icon icon-add-square">
 					<svg className="icon icon-add">
 						<use href={`${sprite}#icon-add-square`} />

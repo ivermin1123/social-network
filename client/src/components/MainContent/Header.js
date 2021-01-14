@@ -101,13 +101,13 @@ function Header(props) {
 							</svg>
 						</button>
 						<div className="header__body js-header-body">
-							<HeaderItem
+							{/* <HeaderItem
 								name="New Videos"
 								icon1="icon-camera"
 								icon2="icon-add"
-							/>
+							/> */}
 							<HeaderItem
-								name="Go live"
+								name="Livestream"
 								icon1="icon-star"
 								icon2="icon-live"
 							/>

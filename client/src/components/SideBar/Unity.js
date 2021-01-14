@@ -32,12 +32,12 @@ function App(props) {
 			<div className="sidebar__menu">
 				<UnityItem
 					icon="icon-chat"
-					name="Chat"
-					counter={10}
+					name="Trò Chuyện"
+					// counter={10}
 					href={`/message/t/${conversationId}`}
 				/>
-				<UnityItem icon="icon-settings" name="Setting" />
-				<UnityItem icon="icon-chart" name="Analytics" />
+				{/* <UnityItem icon="icon-settings" name="Setting" />
+				<UnityItem icon="icon-chart" name="Analytics" /> */}
 			</div>
 		</div>
 	);

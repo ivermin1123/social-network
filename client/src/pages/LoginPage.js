@@ -5,7 +5,7 @@ import { notification } from "antd";
 import { FormLeft } from "../components/_components";
 import userActions from "../actions/user.actions";
 import sprite from "../assets/icons/sprite.svg";
-import bgSignIn from "../assets/image/bg-sign-in.png";
+import bgSignIn from "../assets/image/bg_1_89.png";
 
 const LoginPage = (props) => {
 	const [inputs, setInputs] = useState({
@@ -121,13 +121,13 @@ const LoginPage = (props) => {
 							Tiếp tục
 						</button>
 					</form>
-					<div className="login__or">Hoặc tiếp tục với</div>
+					{/* <div className="login__or">Hoặc tiếp tục với</div>
 					<button
 						className="login__btn btn btn_blue btn_wide"
 						type="button"
 					>
 						Google
-					</button>
+					</button> */}
 				</div>
 			</div>
 		</div>

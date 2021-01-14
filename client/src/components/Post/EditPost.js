@@ -8,7 +8,7 @@ import postActions from "../../actions/post.actions";
 import LINK_CONSTANT from "../../constants/link.constants";
 
 function EditPost(props) {
-	const { post, fullName, setVisible } = props;
+	const { post, fullName, setVisible, setDescription } = props;
 	const dispatch = useDispatch();
 	const postInput = useRef(null);
 	const [value, setValue] = useState(post.description);
@@ -28,6 +28,7 @@ function EditPost(props) {
 						message: "Cập nhật thành công",
 						// description: "Bài viết đã được xóa.",
 					});
+					setDescription(value);
 				})
 				.catch(() => {
 					notification.error({

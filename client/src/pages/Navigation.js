@@ -9,8 +9,8 @@ import {
 	disconnect as disconnectSocket,
 } from "../actions/socket.actions";
 import userActions from "../actions/user.actions";
-import logo from "../assets/icons/logo_1.svg";
-import logoWhite from "../assets/icons/logo-white.svg";
+import logo from "../assets/image/logo_hutech_1.png";
+import logoWhite from "../assets/image/logo_hutech_2.png";
 import Wrapper from "../components/SideBar/Wrapper";
 import BottomControl from "../components/SideBar/BottomControl";
 import Header from "../components/MainContent/Header";
@@ -48,7 +48,7 @@ function Navigation(props) {
 	}
 
 	return (
-		<div className={`page${open ? " toggle" : ""}`}>
+		<div className={`page${open ? " toggle" : ""} player__group`}>
 			<div className={`sidebar${open ? " active" : ""}`}>
 				<div className="sidebar__top">
 					<Link className="sidebar__logo" to="/">

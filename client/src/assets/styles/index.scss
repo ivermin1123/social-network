@@ -523,7 +523,11 @@ body.dark {
 		}
 	}
 }
-
+.sidebar.active {
+	.sidebar__download {
+		display: none;
+	}
+}
 // .notifications__list {
 // 	max-height: 315px;
 // 	overflow: hidden;

@@ -26,6 +26,7 @@ const Post = (props) => {
 	const [visible, setVisible] = useState(false);
 
 	const [postN, setPostN] = useState(post);
+	const [description, setDescription] = useState(postN.description);
 	const fullName = `${postN.author[0].firstName} ${postN.author[0].lastName}`;
 	const timePost = { time: null, isEdit: false };
 	if (postN.isUpdated === true) {
@@ -104,7 +105,7 @@ const Post = (props) => {
 				<div className="post-body__content">
 					<span
 						dangerouslySetInnerHTML={{
-							__html: postN.description,
+							__html: description,
 						}}
 					/>
 				</div>
@@ -168,6 +169,7 @@ const Post = (props) => {
 					post={postN}
 					fullName={fullName}
 					setVisible={setVisible}
+					setDescription={setDescription}
 				/>
 			</Modal>
 		</div>

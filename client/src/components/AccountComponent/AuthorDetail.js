@@ -72,13 +72,10 @@ const AuthorDetail = ({ ...props }) => {
 			// Redux call
 			dispatch(userAction.updateUserImage(file, data, dataSaveServer))
 				.then(() => {
-					message.success("🦄 Upload Success");
-					handleReset();
-					setShow(false);
+					window.location.reload();
 				})
 				.catch(() => {
-					message.error("🦄 Upload Fail");
-					handleReset();
+					window.location.reload();
 				});
 		} catch (error) {
 			console.log(error);

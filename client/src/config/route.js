@@ -10,6 +10,7 @@ const CF_ROUTE_USER = {
 	UPDATE_USER_IMAGE: `${API_URL}/api/user/updateUserImage`,
 	CHANGE_PASSWORD: `${API_URL}/api/user/changePassword`,
 	SEARCH_USER: `${API_URL}/api/user/searchUser`,
+	UPDATE_USER_INFORMATION: `${API_URL}/api/user/updateUserInformation`,
 };
 
 const CF_ROUTE_POST = {
@@ -53,6 +54,7 @@ const CF_ROUTE_FRIEND_REQUEST = {
 
 const CF_ROUTE_NOTIFY = {
 	GET_USER_NOTIFY: `${API_URL}/api/notification/getUserNotify`,
+	SEEN_NOTIFY: `${API_URL}/api/notification/seenNotify`,
 };
 
 const CF_ROUTE_PUBLIC = {

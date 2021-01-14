@@ -13,48 +13,49 @@ const ChangePassword = ({ show }) => {
 	const [submitted, setSubmitted] = useState(false);
 	const [reTypePassError, setReTypePassError] = useState(false);
 
-		const openNotificationWithIcon = (type, err) => {
-			notification[type]({
-				message: err,
-				description: "Bạn vui lòng thử lại",
-			});
-		};
+	const openNotificationWithIcon = (type, err) => {
+		notification[type]({
+			message: err,
+			description: "Thông báo",
+		});
+	};
 	function handleChange(e) {
 		const { name, value } = e.target;
-		setPass((pass) => ({ ...pass, [name]: value }));
-	}
-	function handleRetypePassword(event) {
-		const { name, value } = event.target;
-		if (value !== pass.newPassword) {
-			setReTypePassError(true);
-		} else {
-			setReTypePassError(false);
-			openNotificationWithIcon("warning", "Mật khẩu không trùng khớp");
-		}
 		setPass((pass) => ({ ...pass, [name]: value }));
 	}
 
 	function handleSubmit(e) {
 		e.preventDefault();
-		setSubmitted(true);
-		if (pass.currPassword && pass.newPassword) {
-			if (!reTypePassError) {
-				dispatch(
-					userActions.changePassword(
-						pass.currPassword,
-						pass.newPassword
+		if (pass.repeat_password !== pass.newPassword) {
+			setReTypePassError(true);
+			openNotificationWithIcon("warning", "Mật khẩu không trùng khớp");
+		} else {
+			setReTypePassError(false);
+			setSubmitted(true);
+			if (pass.currPassword && pass.newPassword) {
+				if (!reTypePassError) {
+					dispatch(
+						userActions.changePassword(
+							pass.currPassword,
+							pass.newPassword
+						)
 					)
-				).catch(() => {
-					setSubmitted(false);
-				});
+						.then(() => {
+							openNotificationWithIcon(
+								"success",
+								"Cập nhật mật khẩu thành công"
+							);
+							dispatch(userActions.logout());
+						})
+						.catch(() => {
+							setSubmitted(false);
+						});
+				}
 			}
 		}
 	}
 	return (
 		<div style={{ display: show }}>
-			<div>
-				<p>Đổi mật khẩu</p>
-			</div>
 			<form name="form" onSubmit={handleSubmit}>
 				<div className="popup__user">
 					<div className="field">
@@ -97,7 +98,7 @@ const ChangePassword = ({ show }) => {
 								submitted={submitted}
 								name="repeat_password"
 								value={pass.repeat_password}
-								onChange={handleRetypePassword}
+								onChange={handleChange}
 							/>
 						</div>
 					</div>

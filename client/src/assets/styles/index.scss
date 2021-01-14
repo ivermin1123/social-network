@@ -511,6 +511,19 @@ body.dark {
 	display: initial !important;
 }
 
+.slick-current {
+	img {
+		box-shadow: 0 0 6px 2px #ffffff !important;
+	}
+}
+.main__nav {
+	.slick-active {
+		div {
+			margin: 0 3px;
+		}
+	}
+}
+
 // .notifications__list {
 // 	max-height: 315px;
 // 	overflow: hidden;

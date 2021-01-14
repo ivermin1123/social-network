@@ -37,10 +37,22 @@ function connect() {
 	};
 }
 
+const emit = (event, data) => () => {
+	console.log("CO NE");
+	return socketClient.emit(event, data).then(
+		(data) => {
+			return Promise.resolve(data);
+		},
+		(error) => {
+			return Promise.reject(error);
+		}
+	);
+};
+
 function disconnect() {
 	return () => {
 		socketClient.disconnect();
 	};
 }
 
-export { connect, disconnect };
+export { connect, disconnect, emit };

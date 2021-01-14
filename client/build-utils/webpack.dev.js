@@ -97,6 +97,9 @@ module.exports = {
 		],
 	},
 	plugins: [
+		new webpack.ProvidePlugin({
+			process: "process/browser",
+		}),
 		new webpack.LoaderOptionsPlugin({
 			test: /\.jsx?$/,
 			options: {

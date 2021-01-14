@@ -26,10 +26,9 @@ const notificationSchema = Schema(
      * Comment
      * 3: Like comment
      * 4: Reply comment
-     * 5: Like reply comment
      * Friend Request
-     * 6: New friend request
-     * 7: Accept friend request
+     * 5: New friend request
+     * 6: Accept friend request
      * Message
      */
     type: Number,

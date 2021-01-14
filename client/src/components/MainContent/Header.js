@@ -27,7 +27,6 @@ function Header(props) {
 	const [hasMore, setHasMore] = useState(true);
 	const [listNotify, setListNotify] = useState();
 	const [totalNotify, setTotalNotify] = useState(0);
-
 	const { infoUser } = props;
 	const handleLogout = (e) => {
 		e.preventDefault();
@@ -147,7 +146,8 @@ function Header(props) {
 											// }}
 											dataLength={listNotify.length}
 											next={fetchMoreData}
-											height={315}
+											height="auto"
+											maxHeight={315}
 											hasMore={hasMore}
 											loader={
 												<div
@@ -183,7 +183,11 @@ function Header(props) {
 												/>
 											))}
 										</InfiniteScroll>
-									) : null}
+									) : (
+										<h4 style={{ textAlign: "center" }}>
+											Bạn không có thông báo mới nào
+										</h4>
+									)}
 								</div>
 							</div>
 						</div>

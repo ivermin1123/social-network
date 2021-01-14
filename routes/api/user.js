@@ -35,10 +35,9 @@ router.post(
 );
 
 router.post(
-  "/changePassword",
+  "/updateUserInformation",
   helpers.checkAuth,
-  validator.userValidator.changePassword,
-  userController.changePassword
+  userController.updateUserInformation
 );
 
 router.post("/searchUser", helpers.checkAuth, userController.searchUser);

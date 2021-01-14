@@ -1,5 +1,5 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
@@ -7,8 +7,7 @@ import LINK_CONSTANT from "../../constants/link.constants";
 import avatar1 from "../../assets/image/ava-1.png";
 
 function ConversationItem(props) {
-	const { conversation } = props;
-	const { infoUser } = useSelector((state) => state.users);
+	const { conversation, infoUser } = props;
 	const { members, lastMessage } = conversation;
 
 	let conversationName = conversation.name;
@@ -61,4 +60,8 @@ function ConversationItem(props) {
 	);
 }
 
-export default ConversationItem;
+const mapStateToProps = (state) => ({
+	infoUser: state.users.infoUser,
+});
+
+export default connect(mapStateToProps)(ConversationItem);

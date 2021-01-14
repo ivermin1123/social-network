@@ -4,13 +4,13 @@ import { PopupUser, ChangePassword } from "../_components";
 
 const Setting = ({ ...props }) => {
 	const { infoUser, visible, handleOk, handleCancel } = props;
-	const [popupTag, setPopupTag] = useState(0);
+	const [popupTag, setPopupTag] = useState("profile");
 	const popupTags = [
 		{ title: "profile", name: "Thông tin cá nhân" },
 		{ title: "password", name: "Đổi mật khẩu" },
-		{ title: "email", name: "Email" },
-		{ title: "notification", name: "Thông báo" },
-		{ title: "settings", name: "Cài đặt" },
+		// { title: "email", name: "Email" },
+		// { title: "notification", name: "Thông báo" },
+		// { title: "settings", name: "Cài đặt" },
 	];
 	return (
 		<Modal
@@ -18,6 +18,7 @@ const Setting = ({ ...props }) => {
 			wrapClassName="popup__form"
 			title="Cài đặt tài khoản"
 			visible={visible}
+			getContainer={false}
 			onOk={handleOk}
 			onCancel={handleCancel}
 			style={{
@@ -73,10 +74,12 @@ const Setting = ({ ...props }) => {
 			<PopupUser
 				infoUser={infoUser}
 				show={popupTag === "profile" ? "block" : "none"}
+				submitName="Cập nhật"
 			/>
 			<ChangePassword
 				infoUser={infoUser}
 				show={popupTag === "password" ? "block" : "none"}
+				submitName="Đổi mật khẩu"
 			/>
 		</Modal>
 	);

@@ -1,7 +1,6 @@
 import React, { useEffect, Suspense, lazy } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { useDispatch, connect } from "react-redux";
-// import { LoadingOutlined } from "@ant-design/icons";
 import { clearAlert } from "./actions/alert.actions";
 import history from "./helpers/history";
 import PrivateRoute from "./components";

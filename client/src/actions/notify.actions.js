@@ -37,7 +37,40 @@ const getUserNotify = ({ currentPage }) => (dispatch) => {
 	);
 };
 
+const seenNotify = ({ notifyId }) => (dispatch) => {
+	return notifyService.seenNotify({ notifyId }).then(
+		(data) => {
+			dispatch({
+				type: notifyConstants.SEEN_NOTIFY_SUCCESS,
+				payload: { data },
+			});
+
+			return Promise.resolve(data);
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: notifyConstants.SEEN_NOTIFY_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
 const notifyActions = {
 	getUserNotify,
+	seenNotify,
 };
 export default notifyActions;

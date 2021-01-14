@@ -97,6 +97,14 @@ const notifyLookup = [
       as: "comment",
     },
   },
+  {
+    $lookup: {
+      from: "comments",
+      localField: "commentReply",
+      foreignField: "_id",
+      as: "commentReply",
+    },
+  },
 ];
 
 const notifyTo = async ({
@@ -167,9 +175,7 @@ const notifyTo = async ({
 const seenNotify = async ({ userId, notifyId }) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let page = Number(currentPage) || 1;
-      let perPage = 5;
-
+      console.log({ userId, notifyId });
       await Notification.findByIdAndUpdate(
         notifyId,
         {

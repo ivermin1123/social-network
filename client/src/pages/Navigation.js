@@ -26,6 +26,10 @@ function Navigation(props) {
 	};
 
 	useEffect(() => {
+		dispatch(userActions.getUser(user._id));
+	}, []);
+
+	useEffect(() => {
 		dispatch(connectSocket());
 		dispatch(userActions.getUser(user._id));
 
@@ -33,7 +37,6 @@ function Navigation(props) {
 		return () => dispatch(disconnectSocket());
 		//
 	}, []);
-
 	if (loadingUser) {
 		return (
 			<div className={`page${open ? " toggle" : ""}`}>
@@ -43,6 +46,7 @@ function Navigation(props) {
 			</div>
 		);
 	}
+
 	return (
 		<div className={`page${open ? " toggle" : ""}`}>
 			<div className={`sidebar${open ? " active" : ""}`}>
@@ -83,8 +87,6 @@ function Navigation(props) {
 
 const mapStateToProps = (state) => ({
 	loadingUser: state.users.loadingUser,
-	isConnecting: state.socket.isConnecting,
-	socket: state.socket.socket,
 });
 
 export default connect(mapStateToProps)(Navigation);

@@ -522,7 +522,31 @@ const searchUser = async ({ key }) => {
           return reject(err.message);
         });
     } catch (error) {
-      reject(error.message);
+      return reject(error.message);
+    }
+  });
+};
+
+const updateUserInformation = async ({ userId, body }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const { firstName, lastName } = body;
+      await User.findByIdAndUpdate(
+        userId,
+        {
+          firstName,
+          lastName,
+        },
+        { new: true }
+      )
+        .then((data) => {
+          return resolve();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      return reject(error.message);
     }
   });
 };
@@ -536,4 +560,5 @@ export default {
   login,
   updateStatus,
   searchUser,
+  updateUserInformation,
 };

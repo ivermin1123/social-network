@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, connect, useSelector } from "react-redux";
+import { useDispatch, connect } from "react-redux";
 import moment from "moment";
 
 import ScrollToBottom from "react-scroll-to-bottom";
@@ -7,10 +7,10 @@ import MessageItem from "./MessageItem";
 import MessageFooter from "./MessageFooter";
 import ButtonSVG from "../ButtonSVG";
 import messageActions from "../../actions/message.actions";
+import { emit } from "../../actions/socket.actions";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
-function checkTime(mess1, mess2, arrToCalculator) {
-	console.log({ mess1, mess2, arrToCalculator });
+function checkTime(mess1, mess2) {
 	const time1m = moment(mess1.createdAt).unix();
 	const time2m = moment(mess2.createdAt).unix();
 
@@ -47,30 +47,19 @@ function dataToShow(arrToCalculator) {
 function Messages(props) {
 	const {
 		messages,
-		isConnecting,
+		// isConnecting,
 		conversationId,
 		loadingMessage,
 		conversations,
 		loadingConversation,
+		infoUser,
 	} = props;
 	const dispatch = useDispatch();
-	const { infoUser } = useSelector((state) => state.users);
-	const { socket } = useSelector((state) => state.socket);
-
-	useEffect(() => {
-		dispatch(messageActions.getMessages(conversationId));
-		if (isConnecting) {
-			socket.emit("CSS_JOIN", {
-				name: `${infoUser.username}`,
-				room: conversationId,
-			});
-		}
-	}, []);
+	// const { socket } = useSelector((state) => state.socket);
 
 	let arrToShow = [];
 	if (!loadingMessage) {
 		// if (!messages.data.length) return null;
-		console.log({ messages });
 		arrToShow = dataToShow(messages.data);
 	}
 
@@ -93,6 +82,20 @@ function Messages(props) {
 	} else {
 		return null;
 	}
+
+	useEffect(() => {
+		dispatch(messageActions.getMessages(conversationId));
+		dispatch(
+			emit("CSS_JOIN", {
+				name: `${infoUser.username}`,
+				room: conversationId,
+			})
+		);
+	}, []);
+
+	// useEffect(() => {
+
+	// }, []);
 
 	return (
 		<div className="chat__container">
@@ -155,18 +158,20 @@ function Messages(props) {
 					</div>
 				</div>
 			</ScrollToBottom>
-			<MessageFooter conversationOpen={conversationId} />
+			<MessageFooter
+				conversationOpen={conversationId}
+				infoUser={infoUser}
+			/>
 		</div>
 	);
 }
 
 const mapStateToProps = (state) => ({
-	conversationOpen: state.conversations.conversationOpen,
 	conversations: state.conversations.conversations,
 	loadingConversation: state.conversations.loadingConversation,
 	messages: state.messages.messages,
 	loadingMessage: state.messages.loadingMessage,
-	isConnecting: state.socket.isConnecting,
+	infoUser: state.users.infoUser,
 });
 
 export default connect(mapStateToProps)(Messages);

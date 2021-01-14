@@ -70,6 +70,14 @@ function searchUser({ key }) {
 		});
 }
 
+function updateUserInformation({ body }) {
+	return axios
+		.post(CF_ROUTE_USER.UPDATE_USER_INFORMATION, { body }, configAxios)
+		.then((response) => {
+			return response.data;
+		});
+}
+
 const userService = {
 	login,
 	logout,
@@ -77,6 +85,7 @@ const userService = {
 	getUserData,
 	changePassword,
 	searchUser,
+	updateUserInformation,
 };
 
 export default userService;

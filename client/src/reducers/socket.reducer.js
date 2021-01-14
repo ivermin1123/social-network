@@ -12,7 +12,7 @@ export default function socket(state = initialState, action) {
 			return {
 				...state,
 				socket: action.socket,
-				isConnecting: true,
+				isConnecting: false,
 				connectError: null,
 			};
 		case socketConstants.CONNECT_FAIL:

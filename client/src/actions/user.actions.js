@@ -132,6 +132,7 @@ const register = (username, email, password) => (dispatch) => {
 		}
 	);
 };
+
 const getUser = (userId) => (dispatch) => {
 	function request() {
 		return { type: userConstants.GET_USER_REQUEST };
@@ -241,6 +242,42 @@ const searchUser = ({ key }) => (dispatch) => {
 	);
 };
 
+const updateUserInformation = ({ body }) => (dispatch) => {
+	return userService.updateUserInformation({ body }).then(
+		(res) => {
+			dispatch({
+				type: userConstants.GET_USER_SUCCESS,
+				payload: { data: res.data },
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: res.data,
+			});
+			return Promise.resolve();
+		},
+		(error) => {
+			const message =
+				(error.response &&
+					error.response.data &&
+					error.response.data.message) ||
+				error.message ||
+				error.toString();
+
+			dispatch({
+				type: userConstants.UPDATE_USER_INFORMATION_FAILURE,
+			});
+
+			dispatch({
+				type: alertConstants.SET_ALERT,
+				payload: message,
+			});
+
+			return Promise.reject();
+		}
+	);
+};
+
 const userActions = {
 	login,
 	logout,
@@ -250,6 +287,7 @@ const userActions = {
 	getUser,
 	getUserProfile,
 	searchUser,
+	updateUserInformation,
 };
 
 export default userActions;

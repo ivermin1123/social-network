@@ -3,9 +3,8 @@ import { useSelector } from "react-redux";
 
 function MessageFooter(props) {
 	const [message, setMessage] = useState("");
-	const { conversationOpen } = props;
+	const { conversationOpen, infoUser } = props;
 	const { socket } = useSelector((state) => state.socket);
-	const { infoUser } = useSelector((state) => state.users);
 	function handleSubmit(e) {
 		e.preventDefault();
 		socket.emit("CSS_SEND_MESSAGE", {

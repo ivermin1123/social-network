@@ -5,7 +5,7 @@ import mainPic1 from "../../assets/image/main-pic-1.png";
 import mainPic2 from "../../assets/image/main-pic-2.jpg";
 import mainPic3 from "../../assets/image/main-pic-3.jpg";
 import mainPic4 from "../../assets/image/main-pic-4.jpg";
-import league from "../../assets/image/league-of-legends.png";
+// import league from "../../assets/image/league-of-legends.png";
 
 const SliderComponent = ({ ...props }) => {
 	const { isSendReq, isFriend } = props;
@@ -54,7 +54,7 @@ const SliderComponent = ({ ...props }) => {
 		);
 	};
 	const MainSlide = (props) => {
-		const { className, image, title, text } = props;
+		const { className, image } = props;
 		return (
 			<div className={className}>
 				<div
@@ -64,7 +64,7 @@ const SliderComponent = ({ ...props }) => {
 					}}
 				>
 					<div className="main__details">
-						<div className="main__live live live_big">Live</div>
+						{/* <div className="main__live live live_big">Live</div>
 						<div className="main__title h4">{title || ""}</div>
 						<div className="main__parameters">
 							<div className="main__parameter">
@@ -78,9 +78,13 @@ const SliderComponent = ({ ...props }) => {
 								<div className="main__text">{text || ""}</div>
 							</div>
 							<div className="main__parameter">🇺🇸 English</div>
-						</div>
+						</div> */}
 						{isSendReq === false && isFriend === false ? (
-							<a className="main__btn btn btn_purple" href="/#">
+							<a
+								className="main__btn btn btn_purple"
+								href="/#"
+								style={{ color: "white" }}
+							>
 								Chỉnh sửa ảnh bìa
 							</a>
 						) : null}
@@ -92,6 +96,7 @@ const SliderComponent = ({ ...props }) => {
 	const settings = {
 		dotsClass: "main__nav",
 		infinite: true,
+		// autoplay: true,
 		nextArrow: (
 			<ButtonArrow className="slick-next" icon="icon-arrow-next" />
 		),
@@ -119,6 +124,10 @@ const SliderComponent = ({ ...props }) => {
 									image={item.image}
 									title={item.title}
 									text={item.text}
+									style={{
+										backgroundImage:
+											"linear-gradient(180deg, rgba(58, 62, 69, 0) 31%, rgba(27, 29, 33, 0.9) 82%)",
+									}}
 								/>
 							);
 						})}
@@ -132,17 +141,20 @@ const SliderComponent = ({ ...props }) => {
 							setNav2(slider);
 						}}
 						slidesToShow={4}
-						swipeToSlide="true"
-						focusOnSelect="true"
+						swipeToSlide
+						focusOnSelect
+						useCSS
 					>
 						{list.map((item, index) => {
 							return (
-								<div
+								<img
 									key={index.toString()}
 									className="main__preview"
+									src={item.image}
 									style={{
-										backgroundImage: `url(${item.image})`,
+										width: "96px",
 									}}
+									alt=""
 								/>
 							);
 						})}

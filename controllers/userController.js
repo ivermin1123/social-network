@@ -122,3 +122,28 @@ export async function searchUser(req, res) {
     res.status(500).json({ error: true, message: error.message });
   }
 }
+
+export async function updateUserInformation(req, res) {
+  try {
+    const { userId } = req.userData;
+    const { body } = req.body;
+    await USER.updateUserInformation({
+      userId,
+      body,
+    }).catch((error) => {
+      return res.status(500).json(error);
+    });
+
+    await USER.getUser({
+      userIdToGet: userId,
+    })
+      .then((data) => {
+        res.status(200).json({ error: false, data });
+      })
+      .catch((error) => {
+        res.status(500).json(error);
+      });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error.message });
+  }
+}

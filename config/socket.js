@@ -161,19 +161,19 @@ function ApplySocketIO(io) {
         const { error, user } = addUser({ id: socket.id, name, room });
         if (user) {
           socket.join(user.room);
-          socket.emit("message", {
-            user: "admin",
-            text: `${user.name}, welcome to room ${user.room}.`,
-          });
-          socket.broadcast.to(user.room).emit("message", {
-            user: "admin",
-            text: `${user.name} has joined!`,
-          });
+          //   socket.emit("message", {
+          //     user: "admin",
+          //     text: `${user.name}, welcome to room ${user.room}.`,
+          //   });
+          //   socket.broadcast.to(user.room).emit("message", {
+          //     user: "admin",
+          //     text: `${user.name} has joined!`,
+          //   });
 
-          io.to(user.room).emit("roomData", {
-            room: user.room,
-            users: getUsersInRoom(user.room),
-          });
+          //   io.to(user.room).emit("roomData", {
+          //     room: user.room,
+          //     users: getUsersInRoom(user.room),
+          //   });
         }
 
         //   callback();
@@ -182,20 +182,14 @@ function ApplySocketIO(io) {
       socket.on(
         "CSS_SEND_MESSAGE",
         async ({ message, conversationId, type, userId }, callback) => {
-          const user = getUser(socket.id);
           const infoMessage = await MESSAGE.sendMessage({
             conversationId,
             message,
             type,
             userId,
           });
-          let dataSendClient;
-          if (infoMessage.error) {
-            dataSendClient = infoMessage.message;
-          } else {
-            dataSendClient = infoMessage.data;
-          }
-          io.to(user.room).emit("SSC_SEND_MESSAGE", {
+
+          io.to(conversationId).emit("SSC_SEND_MESSAGE", {
             data: infoMessage,
           });
 
@@ -216,16 +210,15 @@ function ApplySocketIO(io) {
           callback
         ) => {
           //   console.log({ notifyBy, notifyTo, type, postId, reactType });
-          await NOTIFY.notifyTo({
-            notifyBy,
-            notifyTo,
-            type,
-            postId,
-          }).then((data) => {
-            listUser.forEach((user) => {
-              if (user.userId == notifyTo) {
-                console.log("TRUE");
-                if (isLike) {
+          if (isLike) {
+            await NOTIFY.notifyTo({
+              notifyBy,
+              notifyTo,
+              type,
+              postId,
+            }).then((data) => {
+              listUser.forEach((user) => {
+                if (user.userId == notifyTo) {
                   io.to(user.socketID).emit("SSC_LIKE_POST", {
                     notifyBy,
                     notifyTo,
@@ -235,9 +228,9 @@ function ApplySocketIO(io) {
                     reactType,
                   });
                 }
-              }
+              });
             });
-          });
+          }
         }
       );
 

@@ -16,8 +16,23 @@ function getUserNotify({ currentPage }) {
 		});
 }
 
+function seenNotify({ notifyId }) {
+	return axios
+		.post(
+			CF_ROUTE_NOTIFY.SEEN_NOTIFY,
+			{
+				notifyId,
+			},
+			configAxios
+		)
+		.then((response) => {
+			return response.data;
+		});
+}
+
 const notifyService = {
 	getUserNotify,
+	seenNotify,
 };
 
 export default notifyService;

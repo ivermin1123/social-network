@@ -10,4 +10,6 @@ router.post(
   notifyController.getUserNotify
 );
 
+router.post("/seenNotify", helpers.checkAuth, notifyController.seenNotify);
+
 export default router;

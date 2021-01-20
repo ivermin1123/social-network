@@ -27,7 +27,7 @@ function Header(props) {
 	const [hasMore, setHasMore] = useState(true);
 	const [listNotify, setListNotify] = useState();
 	const [totalNotify, setTotalNotify] = useState(0);
-	const { infoUser } = props;
+	const { infoUser, handleOpen, loadingUser } = props;
 	const handleLogout = (e) => {
 		e.preventDefault();
 		dispatch(userActions.logout());
@@ -49,16 +49,19 @@ function Header(props) {
 	useEffect(() => {
 		dispatch(notifyActions.getUserNotify({ currentPage: 1 })).then(
 			(data) => {
-				console.log({ data });
 				setListNotify(data.data);
 				setTotalNotify(data.totalNotify);
 			}
 		);
 	}, []);
 
-	return (
+	return loadingUser === false ? (
 		<div className="header">
-			<button type="button" className="header__burger" />
+			<button
+				type="button"
+				className="header__burger"
+				onClick={handleOpen}
+			/>
 			<OutsideClick callback={setActive1}>
 				<div
 					className={`header__item header__item_browse js-header-item${
@@ -201,7 +204,7 @@ function Header(props) {
 					}`}
 					onClick={() => setActive4(!isActive4)}
 				>
-					<a className="header__head" href="#/">
+					<span className="header__head" href="#/">
 						<Avatar
 							size={48}
 							className="header__pic"
@@ -211,7 +214,7 @@ function Header(props) {
 									: avatar2
 							}
 						/>
-					</a>
+					</span>
 					<div className="header__body">
 						<ProfileItem
 							icon="icon-profile"
@@ -250,11 +253,12 @@ function Header(props) {
 				}}
 			/>
 		</div>
-	);
+	) : null;
 }
 
 const mapStateToProps = (state) => ({
 	infoUser: state.users.infoUser,
+	loadingUser: state.users.loadingUser,
 });
 
 export default connect(mapStateToProps)(Header);

@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { useDispatch, connect } from "react-redux";
+import React from "react";
+import { useSelector, connect } from "react-redux";
 import moment from "moment";
 
 import ScrollToBottom from "react-scroll-to-bottom";
 import MessageItem from "./MessageItem";
 import MessageFooter from "./MessageFooter";
 import ButtonSVG from "../ButtonSVG";
-import messageActions from "../../actions/message.actions";
-import { emit } from "../../actions/socket.actions";
+// import messageActions from "../../actions/message.actions";
+// import { emit } from "../../actions/socket.actions";
 import "react-perfect-scrollbar/dist/css/styles.css";
 
 function checkTime(mess1, mess2) {
@@ -46,16 +46,15 @@ function dataToShow(arrToCalculator) {
 
 function Messages(props) {
 	const {
-		messages,
 		// isConnecting,
 		conversationId,
+		messages,
 		loadingMessage,
 		conversations,
 		loadingConversation,
-		infoUser,
 	} = props;
-	const dispatch = useDispatch();
-	// const { socket } = useSelector((state) => state.socket);
+
+	const { infoUser } = useSelector((state) => state.users);
 
 	let arrToShow = [];
 	if (!loadingMessage) {
@@ -82,20 +81,6 @@ function Messages(props) {
 	} else {
 		return null;
 	}
-
-	useEffect(() => {
-		dispatch(messageActions.getMessages(conversationId));
-		dispatch(
-			emit("CSS_JOIN", {
-				name: `${infoUser.username}`,
-				room: conversationId,
-			})
-		);
-	}, []);
-
-	// useEffect(() => {
-
-	// }, []);
 
 	return (
 		<div className="chat__container">
@@ -166,6 +151,7 @@ function Messages(props) {
 	);
 }
 
+// export default Messages;
 const mapStateToProps = (state) => ({
 	conversations: state.conversations.conversations,
 	loadingConversation: state.conversations.loadingConversation,

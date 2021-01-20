@@ -20,13 +20,13 @@ function connect() {
 			dispatch(connectSocket(socket));
 			socket.emit("CSS_LOGIN", { userId: user.user._id });
 			socket.on("SSC_SEND_MESSAGE", ({ data }) => {
+				console.log("DATA socket", data);
 				dispatch({
 					type: messageConstants.SEND_MESSAGE_SUCCESS,
 					payload: { data: data[0] },
 				});
 			});
 			socket.on("SSC_LIKE_POST", () => {
-				console.log("YES YES YES");
 				toastr.light(
 					"Thông báo",
 					"Có ai đó vừa like bài viết của bạn",

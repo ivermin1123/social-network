@@ -1,12 +1,14 @@
 import React from "react";
+import { connect } from "react-redux";
 
 import NewsFeed from "../components/NewsFeed";
 import PostForm from "../components/Post/PostForm";
 // import UserItem from "../components/MainContent/UserItem";
 // import sprite from "../assets/icons/sprite.svg";
 
-function HomePage() {
-	return (
+function HomePage(props) {
+	const { loadingUser } = props;
+	return loadingUser === false ? (
 		<div className="page__center">
 			{/* <div className="users">
 				<div className="users__container">
@@ -48,7 +50,12 @@ function HomePage() {
 				</div>
 			</div>
 		</div>
-	);
+	) : null;
 }
 
-export default HomePage;
+const mapStateToProps = (state) => ({
+	loadingUser: state.users.loadingUser,
+});
+
+export default connect(mapStateToProps)(HomePage);
+// export default HomePage;

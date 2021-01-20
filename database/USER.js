@@ -490,8 +490,9 @@ const updateStatus = async ({ userId, isOffline }) => {
             activityStatus: true,
           };
       await User.findByIdAndUpdate(userId, objectData, { new: true });
+      return resolve();
     } catch (error) {
-      reject(error.message);
+      return reject(error.message);
     }
   });
 };

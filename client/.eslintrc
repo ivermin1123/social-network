@@ -1,75 +1,78 @@
 {
-  "extends": "airbnb",
-  "parser": "babel-eslint",
-  "parserOptions": {
-    "ecmaVersion": 6,
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
-  "env": {
-    "browser": true,
-    "node": true,
-    "mocha": true,
-    "es6": true
-  },
-  "rules": {
-	"react/no-danger": 0,
-	"react/jsx-wrap-multilines": 0,
-	"react/jsx-curly-newline": 0,
-	"jsx-a11y/anchor-is-valid": 0,
-	"jsx-a11y/no-noninteractive-element-interactions": 0,
-	"jsx-a11y/click-events-have-key-events": 0,
-	"jsx-a11y/no-static-element-interactions": 0,
-	"jsx-a11y/control-has-associated-label": 0,
-	"no-underscore-dangle": 0,
-	"no-mixed-spaces-and-tabs": 0,
-	"no-confusing-arrow": 0,
-	"operator-linebreak": 0,
-	"no-shadow": 0,
-	"object-curly-newline": 0,
-	"comma-dangle": 0,
-	"react/jsx-indent": 0,
-	"indent": 0,
-	"react/jsx-indent-props": [2, "tab"],
-	"react/jsx-props-no-spreading": 0,
-	"react/prop-types": 0,
-	"no-tabs": 0,
-	"quotes": 0,
-	"import/no-extraneous-dependencies": [
-		"error",
-		{
-			"devDependencies": true
+	"extends": "airbnb",
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"ecmaFeatures": {
+			"jsx": true
 		}
+	},
+	"plugins": [
+		// ...
+		"react-hooks"
 	],
-	"import/no-cycle": 0,
-	"implicit-arrow-linebreak": 0,
-    "no-restricted-globals": "off",
-    "no-plusplus": "off",
-    "no-console": "off",
-    "no-param-reassign": "off",
-    "space-before-function-paren": "off",
-    "react/forbid-prop-types": "off",
-    "react/prefer-stateless-function": "warn",
-    "react/jsx-one-expression-per-line": "off",
-    "react/jsx-filename-extension": [
-      1,
-      {
-        "extensions": [
-          ".js",
-          ".jsx"
-        ]
-      }
-    ],
-    "linebreak-style": "off",
-    "global-require": "off",
-    "semi": "warn",
-    "arrow-body-style": "off",
-    "no-multiple-empty-lines": [
-      "warn",
-      {
-        "max": 1
-      }
-    ]
-  }
+	"env": {
+		"browser": true,
+		"node": true,
+		"mocha": true,
+		"es6": true
+	},
+	"rules": {
+		"react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
+		"react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
+		"react/no-danger": 0,
+		"react/jsx-wrap-multilines": 0,
+		"react/jsx-curly-newline": 0,
+		"jsx-a11y/anchor-is-valid": 0,
+		"jsx-a11y/no-noninteractive-element-interactions": 0,
+		"jsx-a11y/click-events-have-key-events": 0,
+		"jsx-a11y/no-static-element-interactions": 0,
+		"jsx-a11y/control-has-associated-label": 0,
+		"no-underscore-dangle": 0,
+		"no-mixed-spaces-and-tabs": 0,
+		"no-confusing-arrow": 0,
+		"operator-linebreak": 0,
+		"no-shadow": 0,
+		"object-curly-newline": 0,
+		"comma-dangle": 0,
+		"react/jsx-indent": 0,
+		"indent": 0,
+		"react/jsx-indent-props": [2, "tab"],
+		"react/jsx-props-no-spreading": 0,
+		"react/prop-types": 0,
+		"no-tabs": 0,
+		"quotes": 0,
+		"import/no-extraneous-dependencies": [
+			"error",
+			{
+				"devDependencies": true
+			}
+		],
+		"import/no-cycle": 0,
+		"implicit-arrow-linebreak": 0,
+		"no-restricted-globals": "off",
+		"no-plusplus": "off",
+		"no-console": "off",
+		"no-param-reassign": "off",
+		"space-before-function-paren": "off",
+		"react/forbid-prop-types": "off",
+		"react/prefer-stateless-function": "warn",
+		"react/jsx-one-expression-per-line": "off",
+		"react/jsx-filename-extension": [
+			1,
+			{
+				"extensions": [".js", ".jsx"]
+			}
+		],
+		"linebreak-style": "off",
+		"global-require": "off",
+		"semi": "warn",
+		"arrow-body-style": "off",
+		"no-multiple-empty-lines": [
+			"warn",
+			{
+				"max": 1
+			}
+		]
+	}
 }

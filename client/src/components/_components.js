@@ -8,7 +8,6 @@ import Cover from "./AccountComponent/Cover";
 import Introduction from "./AccountComponent/Introduction";
 import Friends from "./AccountComponent/Friends";
 import Images from "./AccountComponent/Images";
-import Wall from "./AccountComponent/Wall";
 import Catalog from "./AccountComponent/Catalog";
 import AuthorButton from "./AccountComponent/AuthorButton";
 import AuthorDetail from "./AccountComponent/AuthorDetail";
@@ -31,7 +30,6 @@ export {
 	Friends,
 	Cover,
 	Images,
-	Wall,
 	// new 11/12
 	Games,
 	AuthorButton,

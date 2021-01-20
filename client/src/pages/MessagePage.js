@@ -1,13 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import { useDispatch, useSelector, connect } from "react-redux";
 import { Result } from "antd";
 
 import Messages from "../components/Message/Messages";
 import SideBar from "../components/Message/SideBar";
+import messageActions from "../actions/message.actions";
+import conversationActions from "../actions/conversation.actions";
+import { emit } from "../actions/socket.actions";
 import "../assets/styles/_message.scss";
 
-const MessagePage = () => {
+const MessagePage = (props) => {
 	const { conversationId } = useParams();
+	const { isConnecting } = props;
+
+	const dispatch = useDispatch();
+	// const { socket } = useSelector((state) => state.socket);
+	const { infoUser } = useSelector((state) => state.users);
+
+	useEffect(() => {
+		if (!isConnecting && infoUser) {
+			dispatch(conversationActions.getListConversations());
+			dispatch(messageActions.getMessages(conversationId));
+			dispatch(
+				emit("CSS_JOIN", {
+					name: `${infoUser.username}`,
+					room: conversationId,
+				})
+			);
+			// socket.emit("CSS_JOIN", {
+			// 	name: `${infoUser.username}`,
+			// 	room: conversationId,
+			// });
+		}
+	}, [dispatch, conversationId, infoUser, isConnecting]);
 	return (
 		<>
 			{conversationId === "NotFound" ? (
@@ -30,4 +56,8 @@ const MessagePage = () => {
 	);
 };
 
-export default MessagePage;
+const mapStateToProps = (state) => ({
+	isConnecting: state.socket.isConnecting,
+});
+
+export default connect(mapStateToProps)(MessagePage);

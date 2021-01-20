@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, connect } from "react-redux";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 import SlideToggle from "react-slide-toggle";
 
-import conversationActions from "../../actions/conversation.actions";
+// import conversationActions from "../../actions/conversation.actions";
 import ConversationItem from "./ConversationItem";
 
 function SideBar(props) {
 	const { conversations, loadingConversation } = props;
 	const [searchCon, setSearchCon] = useState("");
 	const [isActive, setActive] = useState(true);
-	const dispatch = useDispatch();
-	useEffect(() => {
-		dispatch(conversationActions.getListConversations());
-	}, []);
+	// const dispatch = useDispatch();
 
 	const handleActive = () => {
 		setActive(!isActive);
 	};
+
 	if (loadingConversation) {
 		return null;
 	}
